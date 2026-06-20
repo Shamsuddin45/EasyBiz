@@ -1,0 +1,522 @@
+﻿namespace EasyBiz
+{
+    partial class BankReceipt
+    {
+        private System.ComponentModel.IContainer components = null;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && components != null) components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            panelHeader = new Panel();
+            lblHeader = new Label();
+            comboBankId = new ComboBox();
+            comboBankName = new ComboBox();
+            label_bankId = new Label();
+            label_bankName = new Label();
+            label_bankBal = new Label();
+            txtBankBalance = new TextBox();
+            comboPartyId = new ComboBox();
+            comboPartyName = new ComboBox();
+            label_partyId = new Label();
+            label_partyName = new Label();
+            label_preBal = new Label();
+            txtPreBalance = new TextBox();
+            label_date = new Label();
+            dateInvoice = new DateTimePicker();
+            label_voucher = new Label();
+            txtVoucherNo = new TextBox();
+            label_cheque = new Label();
+            txtChequeNo = new TextBox();
+            label_desc = new Label();
+            txtDescription = new TextBox();
+            label_amount = new Label();
+            txtAmount = new TextBox();
+            gridLines = new DataGridView();
+            colSno = new DataGridViewTextBoxColumn();
+            colPartyId = new DataGridViewTextBoxColumn();
+            colPartyName = new DataGridViewTextBoxColumn();
+            colDesc = new DataGridViewTextBoxColumn();
+            colAmount = new DataGridViewTextBoxColumn();
+            colChequeNo = new DataGridViewTextBoxColumn();
+            label_total = new Label();
+            txtTotal = new TextBox();
+            BtnDeleteRow = new CustomButton();
+            BtnSave = new CustomButton();
+            BtnClose = new CustomButton();
+            panelHeader.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridLines).BeginInit();
+            SuspendLayout();
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.SeaGreen;
+            panelHeader.Controls.Add(lblHeader);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1207, 55);
+            panelHeader.TabIndex = 0;
+            // 
+            // lblHeader
+            // 
+            lblHeader.AutoSize = true;
+            lblHeader.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            lblHeader.ForeColor = Color.White;
+            lblHeader.Location = new Point(456, 10);
+            lblHeader.Name = "lblHeader";
+            lblHeader.Size = new Size(294, 37);
+            lblHeader.TabIndex = 0;
+            lblHeader.Text = "Bank Receipt Voucher";
+            // 
+            // comboBankId
+            // 
+            comboBankId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBankId.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBankId.Font = new Font("Segoe UI", 11F);
+            comboBankId.Location = new Point(95, 72);
+            comboBankId.Name = "comboBankId";
+            comboBankId.Size = new Size(160, 33);
+            comboBankId.TabIndex = 1;
+            comboBankId.SelectedIndexChanged += comboBankId_SelectedIndexChanged;
+            // 
+            // comboBankName
+            // 
+            comboBankName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBankName.Font = new Font("Segoe UI", 11F);
+            comboBankName.Location = new Point(324, 72);
+            comboBankName.Name = "comboBankName";
+            comboBankName.Size = new Size(316, 33);
+            comboBankName.TabIndex = 2;
+            comboBankName.SelectedIndexChanged += comboBankName_SelectedIndexChanged;
+            // 
+            // label_bankId
+            // 
+            label_bankId.AutoSize = true;
+            label_bankId.Font = new Font("Segoe UI", 11F);
+            label_bankId.Location = new Point(18, 75);
+            label_bankId.Name = "label_bankId";
+            label_bankId.Size = new Size(76, 25);
+            label_bankId.TabIndex = 3;
+            label_bankId.Text = "Bank ID";
+            // 
+            // label_bankName
+            // 
+            label_bankName.AutoSize = true;
+            label_bankName.Font = new Font("Segoe UI", 11F);
+            label_bankName.Location = new Point(261, 75);
+            label_bankName.Name = "label_bankName";
+            label_bankName.Size = new Size(57, 25);
+            label_bankName.TabIndex = 4;
+            label_bankName.Text = "Bank:";
+            // 
+            // label_bankBal
+            // 
+            label_bankBal.AutoSize = true;
+            label_bankBal.Font = new Font("Segoe UI", 11F);
+            label_bankBal.Location = new Point(650, 75);
+            label_bankBal.Name = "label_bankBal";
+            label_bankBal.Size = new Size(84, 25);
+            label_bankBal.TabIndex = 5;
+            label_bankBal.Text = "Bank Bal";
+            // 
+            // txtBankBalance
+            // 
+            txtBankBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            txtBankBalance.Location = new Point(730, 72);
+            txtBankBalance.Name = "txtBankBalance";
+            txtBankBalance.ReadOnly = true;
+            txtBankBalance.Size = new Size(200, 32);
+            txtBankBalance.TabIndex = 6;
+            // 
+            // comboPartyId
+            // 
+            comboPartyId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyId.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboPartyId.Font = new Font("Segoe UI", 11F);
+            comboPartyId.Location = new Point(95, 117);
+            comboPartyId.Name = "comboPartyId";
+            comboPartyId.Size = new Size(160, 33);
+            comboPartyId.TabIndex = 7;
+            comboPartyId.SelectedIndexChanged += comboPartyId_SelectedIndexChanged;
+            // 
+            // comboPartyName
+            // 
+            comboPartyName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyName.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboPartyName.Font = new Font("Segoe UI", 11F);
+            comboPartyName.Location = new Point(95, 162);
+            comboPartyName.Name = "comboPartyName";
+            comboPartyName.Size = new Size(475, 33);
+            comboPartyName.TabIndex = 8;
+            comboPartyName.SelectedIndexChanged += comboPartyName_SelectedIndexChanged;
+            // 
+            // label_partyId
+            // 
+            label_partyId.AutoSize = true;
+            label_partyId.Font = new Font("Segoe UI", 11F);
+            label_partyId.Location = new Point(18, 120);
+            label_partyId.Name = "label_partyId";
+            label_partyId.Size = new Size(77, 25);
+            label_partyId.TabIndex = 9;
+            label_partyId.Text = "Party ID";
+            // 
+            // label_partyName
+            // 
+            label_partyName.AutoSize = true;
+            label_partyName.Font = new Font("Segoe UI", 11F);
+            label_partyName.Location = new Point(31, 165);
+            label_partyName.Name = "label_partyName";
+            label_partyName.Size = new Size(58, 25);
+            label_partyName.TabIndex = 10;
+            label_partyName.Text = "Party:";
+            // 
+            // label_preBal
+            // 
+            label_preBal.AutoSize = true;
+            label_preBal.Font = new Font("Segoe UI", 11F);
+            label_preBal.Location = new Point(580, 165);
+            label_preBal.Name = "label_preBal";
+            label_preBal.Size = new Size(71, 25);
+            label_preBal.TabIndex = 11;
+            label_preBal.Text = "Pre Bal";
+            // 
+            // txtPreBalance
+            // 
+            txtPreBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            txtPreBalance.Location = new Point(650, 162);
+            txtPreBalance.Name = "txtPreBalance";
+            txtPreBalance.ReadOnly = true;
+            txtPreBalance.Size = new Size(220, 32);
+            txtPreBalance.TabIndex = 12;
+            // 
+            // label_date
+            // 
+            label_date.AutoSize = true;
+            label_date.Font = new Font("Segoe UI", 11F);
+            label_date.Location = new Point(960, 79);
+            label_date.Name = "label_date";
+            label_date.Size = new Size(51, 25);
+            label_date.TabIndex = 13;
+            label_date.Text = "Date";
+            // 
+            // dateInvoice
+            // 
+            dateInvoice.Font = new Font("Segoe UI", 11F);
+            dateInvoice.Format = DateTimePickerFormat.Short;
+            dateInvoice.Location = new Point(1017, 75);
+            dateInvoice.Name = "dateInvoice";
+            dateInvoice.Size = new Size(178, 32);
+            dateInvoice.TabIndex = 14;
+            // 
+            // label_voucher
+            // 
+            label_voucher.AutoSize = true;
+            label_voucher.Font = new Font("Segoe UI", 11F);
+            label_voucher.Location = new Point(943, 172);
+            label_voucher.Name = "label_voucher";
+            label_voucher.Size = new Size(98, 25);
+            label_voucher.TabIndex = 15;
+            label_voucher.Text = "Voucher #";
+            // 
+            // txtVoucherNo
+            // 
+            txtVoucherNo.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            txtVoucherNo.ForeColor = Color.ForestGreen;
+            txtVoucherNo.Location = new Point(1047, 165);
+            txtVoucherNo.Name = "txtVoucherNo";
+            txtVoucherNo.ReadOnly = true;
+            txtVoucherNo.Size = new Size(148, 32);
+            txtVoucherNo.TabIndex = 16;
+            txtVoucherNo.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label_cheque
+            // 
+            label_cheque.AutoSize = true;
+            label_cheque.Font = new Font("Segoe UI", 11F);
+            label_cheque.Location = new Point(12, 216);
+            label_cheque.Name = "label_cheque";
+            label_cheque.Size = new Size(77, 25);
+            label_cheque.TabIndex = 17;
+            label_cheque.Text = "Cheque";
+            // 
+            // txtChequeNo
+            // 
+            txtChequeNo.Font = new Font("Segoe UI", 11F);
+            txtChequeNo.Location = new Point(95, 209);
+            txtChequeNo.Name = "txtChequeNo";
+            txtChequeNo.Size = new Size(175, 32);
+            txtChequeNo.TabIndex = 18;
+            // 
+            // label_desc
+            // 
+            label_desc.AutoSize = true;
+            label_desc.Font = new Font("Segoe UI", 11F);
+            label_desc.Location = new Point(18, 258);
+            label_desc.Name = "label_desc";
+            label_desc.Size = new Size(108, 25);
+            label_desc.TabIndex = 19;
+            label_desc.Text = "Description";
+            // 
+            // txtDescription
+            // 
+            txtDescription.Font = new Font("Segoe UI", 11F);
+            txtDescription.Location = new Point(132, 255);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(438, 32);
+            txtDescription.TabIndex = 20;
+            txtDescription.KeyPress += txtDescription_KeyPress;
+            // 
+            // label_amount
+            // 
+            label_amount.AutoSize = true;
+            label_amount.Font = new Font("Segoe UI", 11F);
+            label_amount.Location = new Point(582, 258);
+            label_amount.Name = "label_amount";
+            label_amount.Size = new Size(79, 25);
+            label_amount.TabIndex = 21;
+            label_amount.Text = "Amount";
+            // 
+            // txtAmount
+            // 
+            txtAmount.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            txtAmount.ForeColor = Color.ForestGreen;
+            txtAmount.Location = new Point(667, 255);
+            txtAmount.Name = "txtAmount";
+            txtAmount.Size = new Size(203, 32);
+            txtAmount.TabIndex = 22;
+            txtAmount.TextAlign = HorizontalAlignment.Center;
+            txtAmount.KeyPress += txtAmount_KeyPress;
+            // 
+            // gridLines
+            // 
+            gridLines.AllowUserToAddRows = false;
+            gridLines.AllowUserToDeleteRows = false;
+            gridLines.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 245, 245);
+            gridLines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            gridLines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridLines.BackgroundColor = Color.White;
+            gridLines.BorderStyle = BorderStyle.None;
+            gridLines.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridLines.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 45, 48);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            gridLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            gridLines.ColumnHeadersHeight = 42;
+            gridLines.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            gridLines.Columns.AddRange(new DataGridViewColumn[] { colSno, colPartyId, colPartyName, colDesc, colAmount, colChequeNo });
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new Padding(5);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            gridLines.DefaultCellStyle = dataGridViewCellStyle6;
+            gridLines.EnableHeadersVisualStyles = false;
+            gridLines.GridColor = Color.LightGray;
+            gridLines.Location = new Point(10, 300);
+            gridLines.MultiSelect = false;
+            gridLines.Name = "gridLines";
+            gridLines.RowHeadersVisible = false;
+            gridLines.RowHeadersWidth = 51;
+            gridLines.RowTemplate.Height = 38;
+            gridLines.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridLines.Size = new Size(1185, 400);
+            gridLines.TabIndex = 23;
+            // 
+            // colSno
+            // 
+            colSno.HeaderText = "#";
+            colSno.MinimumWidth = 6;
+            colSno.Name = "colSno";
+            colSno.ReadOnly = true;
+            // 
+            // colPartyId
+            // 
+            colPartyId.HeaderText = "Party ID";
+            colPartyId.MinimumWidth = 6;
+            colPartyId.Name = "colPartyId";
+            colPartyId.Visible = false;
+            // 
+            // colPartyName
+            // 
+            colPartyName.HeaderText = "Party / Payer";
+            colPartyName.MinimumWidth = 6;
+            colPartyName.Name = "colPartyName";
+            // 
+            // colDesc
+            // 
+            colDesc.HeaderText = "Description";
+            colDesc.MinimumWidth = 6;
+            colDesc.Name = "colDesc";
+            // 
+            // colAmount
+            // 
+            colAmount.HeaderText = "Amount";
+            colAmount.MinimumWidth = 6;
+            colAmount.Name = "colAmount";
+            // 
+            // colChequeNo
+            // 
+            colChequeNo.HeaderText = "Cheque #";
+            colChequeNo.MinimumWidth = 6;
+            colChequeNo.Name = "colChequeNo";
+            // 
+            // label_total
+            // 
+            label_total.AutoSize = true;
+            label_total.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            label_total.Location = new Point(930, 712);
+            label_total.Name = "label_total";
+            label_total.Size = new Size(64, 28);
+            label_total.TabIndex = 24;
+            label_total.Text = "Total:";
+            // 
+            // txtTotal
+            // 
+            txtTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            txtTotal.ForeColor = Color.ForestGreen;
+            txtTotal.Location = new Point(985, 709);
+            txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
+            txtTotal.Size = new Size(210, 34);
+            txtTotal.TabIndex = 25;
+            txtTotal.TextAlign = HorizontalAlignment.Center;
+            // 
+            // BtnDeleteRow
+            // 
+            BtnDeleteRow.BackColor = Color.Red;
+            BtnDeleteRow.BackgroundColor = Color.Red;
+            BtnDeleteRow.BorderColor = Color.Transparent;
+            BtnDeleteRow.BorderRadius = 6;
+            BtnDeleteRow.BorderSize = 0;
+            BtnDeleteRow.FlatAppearance.BorderSize = 0;
+            BtnDeleteRow.FlatStyle = FlatStyle.Flat;
+            BtnDeleteRow.ForeColor = Color.White;
+            BtnDeleteRow.Location = new Point(10, 712);
+            BtnDeleteRow.Name = "BtnDeleteRow";
+            BtnDeleteRow.Size = new Size(130, 34);
+            BtnDeleteRow.TabIndex = 26;
+            BtnDeleteRow.Text = "Delete Row";
+            BtnDeleteRow.TextColor = Color.White;
+            BtnDeleteRow.UseVisualStyleBackColor = false;
+            BtnDeleteRow.Click += BtnDeleteRow_Click;
+            // 
+            // BtnSave
+            // 
+            BtnSave.BackColor = Color.SeaGreen;
+            BtnSave.BackgroundColor = Color.SeaGreen;
+            BtnSave.BorderColor = Color.Transparent;
+            BtnSave.BorderRadius = 8;
+            BtnSave.BorderSize = 0;
+            BtnSave.FlatAppearance.BorderSize = 0;
+            BtnSave.FlatStyle = FlatStyle.Flat;
+            BtnSave.Font = new Font("Segoe UI", 11F);
+            BtnSave.ForeColor = Color.White;
+            BtnSave.Location = new Point(603, 760);
+            BtnSave.Name = "BtnSave";
+            BtnSave.Size = new Size(225, 50);
+            BtnSave.TabIndex = 27;
+            BtnSave.Text = "Post Receipt (Ctrl+S)";
+            BtnSave.TextColor = Color.White;
+            BtnSave.UseVisualStyleBackColor = false;
+            BtnSave.Click += BtnSave_Click;
+            // 
+            // BtnClose
+            // 
+            BtnClose.BackColor = Color.FromArgb(192, 64, 0);
+            BtnClose.BackgroundColor = Color.FromArgb(192, 64, 0);
+            BtnClose.BorderColor = Color.Transparent;
+            BtnClose.BorderRadius = 8;
+            BtnClose.BorderSize = 0;
+            BtnClose.FlatAppearance.BorderSize = 0;
+            BtnClose.FlatStyle = FlatStyle.Flat;
+            BtnClose.Font = new Font("Segoe UI", 11F);
+            BtnClose.ForeColor = Color.White;
+            BtnClose.Location = new Point(440, 760);
+            BtnClose.Name = "BtnClose";
+            BtnClose.Size = new Size(157, 50);
+            BtnClose.TabIndex = 28;
+            BtnClose.Text = "Close (Esc)";
+            BtnClose.TextColor = Color.White;
+            BtnClose.UseVisualStyleBackColor = false;
+            BtnClose.Click += BtnClose_Click;
+            // 
+            // BankReceipt
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1207, 830);
+            Controls.Add(panelHeader);
+            Controls.Add(comboBankId);
+            Controls.Add(comboBankName);
+            Controls.Add(label_bankId);
+            Controls.Add(label_bankName);
+            Controls.Add(label_bankBal);
+            Controls.Add(txtBankBalance);
+            Controls.Add(comboPartyId);
+            Controls.Add(comboPartyName);
+            Controls.Add(label_partyId);
+            Controls.Add(label_partyName);
+            Controls.Add(label_preBal);
+            Controls.Add(txtPreBalance);
+            Controls.Add(label_date);
+            Controls.Add(dateInvoice);
+            Controls.Add(label_voucher);
+            Controls.Add(txtVoucherNo);
+            Controls.Add(label_cheque);
+            Controls.Add(txtChequeNo);
+            Controls.Add(label_desc);
+            Controls.Add(txtDescription);
+            Controls.Add(label_amount);
+            Controls.Add(txtAmount);
+            Controls.Add(gridLines);
+            Controls.Add(label_total);
+            Controls.Add(txtTotal);
+            Controls.Add(BtnDeleteRow);
+            Controls.Add(BtnSave);
+            Controls.Add(BtnClose);
+            Name = "BankReceipt";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Bank Receipt Voucher";
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridLines).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
+        }
+
+        private Panel panelHeader;
+        private Label lblHeader;
+        private ComboBox comboBankId, comboBankName;
+        private Label label_bankId, label_bankName, label_bankBal;
+        private TextBox txtBankBalance;
+        private ComboBox comboPartyId, comboPartyName;
+        private Label label_partyId, label_partyName, label_preBal;
+        private TextBox txtPreBalance;
+        private Label label_date, label_voucher;
+        private DateTimePicker dateInvoice;
+        private TextBox txtVoucherNo;
+        private Label label_cheque;
+        private TextBox txtChequeNo;
+        private Label label_desc, label_amount;
+        private TextBox txtDescription, txtAmount;
+        private DataGridView gridLines;
+        private DataGridViewTextBoxColumn colSno, colPartyId, colPartyName, colDesc, colAmount, colChequeNo;
+        private Label label_total;
+        private TextBox txtTotal;
+        private CustomButton BtnDeleteRow, BtnSave, BtnClose;
+    }
+}
