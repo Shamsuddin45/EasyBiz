@@ -12,7 +12,21 @@ namespace EasyBiz
         {
             InitializeComponent();
             LoadAccounts();
-            dateTimePicker1.Value = DateTime.Now.AddDays(-30); // Default: last 30 days
+            setupDates();
+        }
+
+        private void setupDates()
+        {
+            if (checkAllDates.Checked != true)
+            {
+                dateTimePicker1.Value = DateTime.Now.AddDays(-30);
+                dateTimePicker2.Value = DateTime.Now;
+            }
+            else
+            {
+                dateTimePicker1.Value = new DateTime(2000, 01, 01);
+                dateTimePicker2.Value = new DateTime(2100, 01, 01);
+            }
         }
 
         // ── PDF Export ───────────────────────────────────────────────────────
@@ -324,6 +338,11 @@ namespace EasyBiz
                     e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
                 }
             }
+        }
+
+        private void checkAllDates_CheckedChanged(object sender, EventArgs e)
+        {
+            setupDates();
         }
     }
 }

@@ -412,10 +412,10 @@ namespace EasyBiz
             {
                 if (decimal.TryParse(txtAmount.Text, out decimal amount))
                 {
-                    if (txtChequeNo.Text.Trim() != "") 
+                    if (txtChequeNo.Text.Trim() != "")
                     {
                         txtDescription.Text += $" Chq# {txtChequeNo.Text.Trim()}";
-                    } 
+                    }
                 }
                 AddRow(comboPartyName.Text, txtDescription.Text, amount);
                 txtDescription.Clear();
@@ -440,10 +440,25 @@ namespace EasyBiz
                 PostEntry();
         }
         private void BtnClose_Click(object sender, EventArgs e)
+        {            
+            Close();
+        }
+
+        private void BankReceipt_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Close? Unsaved data will be lost.", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                Close();
+            if (comboBankName.Text != "" || comboPartyName.Text != "" || txtChequeNo.Text != "" || txtDescription.Text != "" || txtAmount.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Bank Receipt Voucher?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

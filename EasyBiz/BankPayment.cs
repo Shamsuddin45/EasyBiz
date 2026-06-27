@@ -435,8 +435,8 @@ namespace EasyBiz
                 txtAmount.Clear();
                 txtChequeNo.Clear();
                 comboPartyName.Focus();
-            }            
-        }       
+            }
+        }
 
         private void BtnDeleteRow_Click(object sender, EventArgs e)
         {
@@ -459,10 +459,25 @@ namespace EasyBiz
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
+        {            
+             Close();
+        }
+
+        private void BankPayment_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (MessageBox.Show("Close? Unsaved data will be lost.", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                Close();
+            if (comboBankName.Text != "" || comboPartyName.Text != "" || txtChequeNo.Text != "" || txtDescription.Text != "" || txtAmount.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Bank Payment Voucher?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

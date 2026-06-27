@@ -110,7 +110,7 @@ namespace EasyBiz
             else
             {
                 cmd.Parameters.AddWithValue("@isUnit", 0);
-            }            
+            }
             cmd.Parameters.AddWithValue("@sr", (double)numSaleRate.Value);
             cmd.Parameters.AddWithValue("@pr", (double)numPurchaseRate.Value);
             cmd.Parameters.AddWithValue("@min", (double)numMinStock.Value);
@@ -187,7 +187,7 @@ namespace EasyBiz
         {
             if (comboBox1.SelectedItem == "Weight")
             {
-                comboUnit.Enabled= false;
+                comboUnit.Enabled = false;
                 comboWeightUnit.Enabled = true;
             }
             else
@@ -195,6 +195,23 @@ namespace EasyBiz
                 comboUnit.Enabled = true;
                 comboWeightUnit.Enabled = false;
             }
+        }
+
+        private void ProductSetup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (txtProductName.Text != "" || txtDescription.Text != "" || numSaleRate.Value != 0 || numPurchaseRate.Value != 0)
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Product Setup?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

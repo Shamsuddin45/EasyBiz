@@ -434,11 +434,7 @@ namespace EasyBiz
         }
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to close? Unsaved data will be lost.", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                Close();
-            }
+            Close();
         }
 
         private void comboAccountId_SelectedIndexChanged(object sender, EventArgs e)
@@ -517,6 +513,23 @@ namespace EasyBiz
                     RecalcTotal();
                 }
             }
+        }
+
+        private void CashReceipts_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (comboAccountName.Text != "" || txtDescription.Text != "" || txtAmount.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Cash Receipt Voucher?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

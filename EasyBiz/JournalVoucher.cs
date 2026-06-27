@@ -26,7 +26,7 @@ namespace EasyBiz
             {
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
-                    return true;                
+                    return true;
 
                 case Keys.Escape:
                     BtnClose_Click(this, EventArgs.Empty);
@@ -417,13 +417,9 @@ namespace EasyBiz
                 MessageBox.Show(ex.Message);
             }
         }
-        private void BtnClose_Click(object sender, EventArgs e) 
-        {
-            var result = MessageBox.Show("Are you sure you want to close? Unsaved changes will be lost.", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result == DialogResult.Yes)
-            {
-                Close(); 
-            }
+        private void BtnClose_Click(object sender, EventArgs e)
+        {            
+              Close();            
         }
 
         private void comboAccountId_SelectedIndexChanged(object sender, EventArgs e)
@@ -439,7 +435,7 @@ namespace EasyBiz
         }
 
         private void comboAccountName_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
             if (comboAccountName.SelectedIndex != -1)
             {
                 // Sync account ID with selected name
@@ -502,7 +498,7 @@ namespace EasyBiz
             // FOCUS TO NEXT CONTROL ON ENTER
             if (e.KeyChar == (char)Keys.Enter)
             {
-                                
+
             }
         }
 
@@ -522,6 +518,23 @@ namespace EasyBiz
             {
                 txtCredit.Focus();
             }
+        }
+
+        private void JournalVoucher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (comboAccountName.Text != "" || txtDescription.Text != "" || txtDebit.Text != "" || txtCredit.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Journal Voucher?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

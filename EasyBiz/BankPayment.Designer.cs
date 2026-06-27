@@ -40,6 +40,12 @@
             label_amount = new Label();
             txtAmount = new TextBox();
             gridLines = new DataGridView();
+            colSno = new DataGridViewTextBoxColumn();
+            colPartyId = new DataGridViewTextBoxColumn();
+            colPartyName = new DataGridViewTextBoxColumn();
+            colDesc = new DataGridViewTextBoxColumn();
+            colAmount = new DataGridViewTextBoxColumn();
+            colChequeNo = new DataGridViewTextBoxColumn();
             label_total = new Label();
             txtTotal = new TextBox();
             BtnDeleteRow = new CustomButton();
@@ -49,12 +55,6 @@
             panel2 = new Panel();
             panel3 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
-            colSno = new DataGridViewTextBoxColumn();
-            colPartyId = new DataGridViewTextBoxColumn();
-            colPartyName = new DataGridViewTextBoxColumn();
-            colDesc = new DataGridViewTextBoxColumn();
-            colAmount = new DataGridViewTextBoxColumn();
-            colChequeNo = new DataGridViewTextBoxColumn();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridLines).BeginInit();
             panel1.SuspendLayout();
@@ -344,6 +344,46 @@
             gridLines.Size = new Size(1186, 343);
             gridLines.TabIndex = 23;
             // 
+            // colSno
+            // 
+            colSno.HeaderText = "#";
+            colSno.MinimumWidth = 6;
+            colSno.Name = "colSno";
+            colSno.ReadOnly = true;
+            // 
+            // colPartyId
+            // 
+            colPartyId.HeaderText = "Party ID";
+            colPartyId.MinimumWidth = 6;
+            colPartyId.Name = "colPartyId";
+            colPartyId.ReadOnly = true;
+            colPartyId.Visible = false;
+            // 
+            // colPartyName
+            // 
+            colPartyName.HeaderText = "Party / Payee";
+            colPartyName.MinimumWidth = 6;
+            colPartyName.Name = "colPartyName";
+            colPartyName.ReadOnly = true;
+            // 
+            // colDesc
+            // 
+            colDesc.HeaderText = "Description";
+            colDesc.MinimumWidth = 6;
+            colDesc.Name = "colDesc";
+            // 
+            // colAmount
+            // 
+            colAmount.HeaderText = "Amount";
+            colAmount.MinimumWidth = 6;
+            colAmount.Name = "colAmount";
+            // 
+            // colChequeNo
+            // 
+            colChequeNo.HeaderText = "Cheque #";
+            colChequeNo.MinimumWidth = 6;
+            colChequeNo.Name = "colChequeNo";
+            // 
             // label_total
             // 
             label_total.AutoSize = true;
@@ -495,46 +535,6 @@
             tableLayoutPanel1.Size = new Size(1198, 737);
             tableLayoutPanel1.TabIndex = 33;
             // 
-            // colSno
-            // 
-            colSno.HeaderText = "#";
-            colSno.MinimumWidth = 6;
-            colSno.Name = "colSno";
-            colSno.ReadOnly = true;
-            // 
-            // colPartyId
-            // 
-            colPartyId.HeaderText = "Party ID";
-            colPartyId.MinimumWidth = 6;
-            colPartyId.Name = "colPartyId";
-            colPartyId.ReadOnly = true;
-            colPartyId.Visible = false;
-            // 
-            // colPartyName
-            // 
-            colPartyName.HeaderText = "Party / Payee";
-            colPartyName.MinimumWidth = 6;
-            colPartyName.Name = "colPartyName";
-            colPartyName.ReadOnly = true;
-            // 
-            // colDesc
-            // 
-            colDesc.HeaderText = "Description";
-            colDesc.MinimumWidth = 6;
-            colDesc.Name = "colDesc";
-            // 
-            // colAmount
-            // 
-            colAmount.HeaderText = "Amount";
-            colAmount.MinimumWidth = 6;
-            colAmount.Name = "colAmount";
-            // 
-            // colChequeNo
-            // 
-            colChequeNo.HeaderText = "Cheque #";
-            colChequeNo.MinimumWidth = 6;
-            colChequeNo.Name = "colChequeNo";
-            // 
             // BankPayment
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -544,6 +544,7 @@
             Name = "BankPayment";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Bank Payment Voucher";
+            FormClosing += BankPayment_FormClosing;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gridLines).EndInit();

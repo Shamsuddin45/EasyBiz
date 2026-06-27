@@ -419,6 +419,7 @@
             Name = "JournalVoucher";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Journal Voucher";
+            FormClosing += JournalVoucher_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);

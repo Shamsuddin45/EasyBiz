@@ -11,7 +11,7 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             comboCategory.SelectedItem = "Receivables";
-            LoadAccounts();            
+            LoadAccounts();
         }
 
         protected override void OnShown(EventArgs e)
@@ -184,15 +184,7 @@ namespace EasyBiz
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            if (txtNewAccount.Text != "" || txtAddress.Text != "" || txtContact.Text != "")
-            {
-                var result = MessageBox.Show("Are you sure you want to close the Accounts Setup?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    Close();
-                }
-            }
-            else { Close(); }
+            Close();
         }
 
         /// <summary>
@@ -323,8 +315,7 @@ namespace EasyBiz
 
         private void comboCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
-            txtNewAccount.Focus();
+
         }
 
         private void comboSearchName_SelectedIndexChanged(object sender, EventArgs e)
@@ -375,8 +366,8 @@ namespace EasyBiz
 
         private void txtContact_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) 
-            { 
+            if (e.KeyCode == Keys.Enter)
+            {
                 if (BtnSave.Enabled == true) { BtnSave.Focus(); }
                 else { BtnUpdate.Focus(); }
             }
@@ -384,8 +375,34 @@ namespace EasyBiz
 
         private void AccountsSetup_Load(object sender, EventArgs e)
         {
-            
+
         }
+
+        private void AccountsSetup_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (txtNewAccount.Text != "" || txtAddress.Text != "" || txtContact.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Accounts Setup?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
+        }
+
+        private void comboCategory_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
+                txtNewAccount.Focus();
+            }
+    }
     }
 }
 

@@ -378,6 +378,7 @@
             Controls.Add(label1);
             Name = "ProductSetup";
             Text = "Product Setup";
+            FormClosing += ProductSetup_FormClosing;
             ((System.ComponentModel.ISupportInitialize)numSaleRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).EndInit();

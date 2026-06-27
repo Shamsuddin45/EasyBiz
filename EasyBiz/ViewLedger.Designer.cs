@@ -188,6 +188,7 @@
             checkAllDates.TabIndex = 3;
             checkAllDates.Text = "All Dates";
             checkAllDates.UseVisualStyleBackColor = true;
+            checkAllDates.CheckedChanged += checkAllDates_CheckedChanged;
             // 
             // dataGridView1
             // 
@@ -239,14 +240,13 @@
             // 
             sno.HeaderText = "Sno";
             sno.MinimumWidth = 4;
-            sno.Width = 80;
             sno.Name = "sno";
             sno.ReadOnly = true;
             // 
             // date
             // 
             date.HeaderText = "Date";
-            date.Width = 120;
+            date.MinimumWidth = 6;
             date.Name = "date";
             date.ReadOnly = true;
             // 
@@ -254,7 +254,6 @@
             // 
             voucher_no.HeaderText = "Voucher#";
             voucher_no.MinimumWidth = 6;
-            voucher_no.Width = 100;
             voucher_no.Name = "voucher_no";
             voucher_no.ReadOnly = true;
             // 

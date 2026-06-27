@@ -439,6 +439,7 @@
             Name = "CashReceipts";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cash Receipt Voucher";
+            FormClosing += CashReceipts_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

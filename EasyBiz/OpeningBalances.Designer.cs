@@ -262,6 +262,7 @@
             Name = "OpeningBalances";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Opening Balances";
+            FormClosing += OpeningBalances_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);

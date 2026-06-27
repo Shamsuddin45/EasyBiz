@@ -550,6 +550,7 @@
             txtTotal.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtTotal.Location = new Point(1091, 565);
             txtTotal.Name = "txtTotal";
+            txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(156, 38);
             txtTotal.TabIndex = 45;
             // 
@@ -558,6 +559,7 @@
             txtNetAmount.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNetAmount.Location = new Point(1092, 668);
             txtNetAmount.Name = "txtNetAmount";
+            txtNetAmount.ReadOnly = true;
             txtNetAmount.Size = new Size(155, 38);
             txtNetAmount.TabIndex = 46;
             // 
@@ -604,6 +606,7 @@
             Name = "SaleInvoice";
             StartPosition = FormStartPosition.CenterParent;
             Text = "SaleInvoice";
+            FormClosing += SaleInvoice_FormClosing;
             ((System.ComponentModel.ISupportInitialize)gridItems).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();

@@ -43,7 +43,7 @@ namespace EasyBiz
             gridItems.BorderStyle = BorderStyle.None;
             gridItems.BackgroundColor = Color.White;
             gridItems.AllowUserToAddRows = false;
-            gridItems.AllowUserToDeleteRows = false;
+            gridItems.AllowUserToDeleteRows = true;
             gridItems.AllowUserToResizeRows = false;
             gridItems.MultiSelect = false;
             gridItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -138,7 +138,7 @@ namespace EasyBiz
         {
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT product_id, product_name, purchase_rate, current_qty, current_weight, unit, weight_unit FROM products ORDER BY product_name";
+            cmd.CommandText = "SELECT product_id, product_name, purchase_rate, current_qty, current_weight, unit, weight_unit, isUnit FROM products ORDER BY product_name";
             using var r = cmd.ExecuteReader();
             comboProduct.Items.Clear();
             comboProduct.Tag = new System.Collections.Generic.List<object[]>();
@@ -149,7 +149,7 @@ namespace EasyBiz
                 list.Add(new object[] {
                     r.GetInt32(0), r.GetString(1),
                     r.GetDouble(2), r.GetDouble(3),
-                    r.GetDouble(4), r.GetString(5), r.GetString(6)
+                    r.GetDouble(4), r.GetString(5), r.GetString(6), r.GetInt16(7)
                 });
             }
         }
@@ -190,7 +190,7 @@ namespace EasyBiz
                     txtDescription.Text = r.IsDBNull(3) ? "" : r.GetString(3);
 
                     // Discount
-                    numDiscount.Value = r.IsDBNull(4) ? 0 : r.GetDecimal(4);
+                    txtDiscount.Text = r.IsDBNull(4) ? "0" : r.GetDecimal(4).ToString("N2");
 
                     // Payment mode
                     string pm = r.IsDBNull(5) ? "Credit" : r.GetString(5);
@@ -244,10 +244,10 @@ namespace EasyBiz
             RecalcTotal();
 
             // Reset item-input section ready for optional extra lines
-            comboProduct.SelectedIndex = -1;
-            numQty.Value = 0;
-            numWeight.Value = 0;
-            numRate.Value = 0;
+            comboProduct.SelectedIndex = -1;            
+            txtQty.Text = "0";            
+            txtWeight.Text = "0";
+            txtRate.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
         }
@@ -268,39 +268,56 @@ namespace EasyBiz
         private void comboProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboProduct.SelectedIndex < 0) return;
-            var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
+            if (comboProduct.Tag is not List<object[]> list) return;
+            //var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
+            if (comboProduct.SelectedIndex >= list.Count) return;
             var prod = list[comboProduct.SelectedIndex];
-            numRate.Value = (decimal)(double)prod[2];
+            txtRate.Text = Convert.ToDecimal(prod[2]).ToString("N2");
             lblStockQty.Text = $"Qty: {(double)prod[3]:N2} {prod[5]}";
             lblStockWt.Text = $"Weight: {(double)prod[4]:N3} {prod[6]}";
-            numQty.Focus();
+            bool isUnit = Convert.ToInt32(prod[7]) == 1;
+
+            txtQty.Enabled = isUnit;
+            txtWeight.Enabled = !isUnit;
+
+            if (isUnit)
+            {
+                txtWeight.Text = "0";
+                txtQty.Focus();
+            }
+            else
+            {
+                txtQty.Text = "0";
+                txtWeight.Focus();
+            }
         }
 
         private void BtnAddItem_Click(object sender, EventArgs e)
         {
             if (comboProduct.SelectedIndex < 0) { MessageBox.Show("Select a product."); return; }
-            if (numQty.Value <= 0 && numWeight.Value <= 0)
+            if (txtQty.Text == "0" && txtWeight.Text == "0")
             { MessageBox.Show("Enter quantity or weight."); return; }
-            if (numRate.Value <= 0) { MessageBox.Show("Enter a valid rate."); return; }
+            if (txtRate.Text == "0") { MessageBox.Show("Enter a valid rate."); return; }
+            if (txtAmount.Text == "0") { MessageBox.Show("Enter amount properly!"); return; }
 
             var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
             var prod = list[comboProduct.SelectedIndex];
 
-            decimal qty = numQty.Value;
-            decimal weight = numWeight.Value;
-            decimal rate = numRate.Value;
-            decimal amount = (qty > 0 ? qty : weight) * rate;
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
+            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0; ;
 
             int rowIndex = gridItems.Rows.Add();
             var row = gridItems.Rows[rowIndex];
             row.Cells["colProductId"].Value = prod[0].ToString();
             row.Cells["colProductName"].Value = prod[1].ToString();
             row.Cells["colUnit"].Value = prod[5].ToString();
-            row.Cells["colQty"].Value = qty.ToString("N3");
-            row.Cells["colWeight"].Value = weight.ToString("N3");
+            row.Cells["colQty"].Value = qty;
+            row.Cells["colWeight"].Value = weight;
             row.Cells["colWeightUnit"].Value = prod[6].ToString();
-            row.Cells["colRate"].Value = rate.ToString("N2");
-            row.Cells["colAmount"].Value = amount.ToString("N2");
+            row.Cells["colRate"].Value = rate;
+            row.Cells["colAmount"].Value = amount;
 
             RecalcTotal();
             ResetItemInputs();
@@ -315,18 +332,18 @@ namespace EasyBiz
                 if (decimal.TryParse(r.Cells["colAmount"].Value?.ToString(), out var a))
                     total += a;
             }
-            numTotal.Value = total;
-            numNetAmount.Value = total - numDiscount.Value;
+            txtTotal.Text= total.ToString("N2");
+            txtNetAmount.Text = (total - decimal.Parse(txtDiscount.Text)).ToString("N2");
         }
-
-        private void numDiscount_ValueChanged(object sender, EventArgs e) => RecalcTotal();
 
         private void ResetItemInputs()
         {
             comboProduct.SelectedIndex = -1;
-            numQty.Value = 0;
-            numWeight.Value = 0;
-            numRate.Value = 0;
+            txtQty.Text = "0";
+            txtWeight.Text = "0";
+            txtRate.Text = "0";
+            txtAmount.Text = "0";
+            txtDiscount.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
             comboProduct.Focus();
@@ -363,9 +380,9 @@ namespace EasyBiz
                 int accountId = int.Parse(comboPartyId.SelectedItem!.ToString()!);
                 string accountName = comboPartyName.SelectedItem!.ToString()!;
                 string payMode = comboPaymentMode.SelectedItem!.ToString()!;
-                decimal total = numTotal.Value;
-                decimal discount = numDiscount.Value;
-                decimal net = numNetAmount.Value;
+                decimal total = decimal.Parse(txtTotal.Text);
+                decimal discount = decimal.Parse(txtDiscount.Text);
+                decimal net = decimal.Parse(txtNetAmount.Text);
                 string desc = txtDescription.Text.Trim();
 
                 int voucherNo;
@@ -558,59 +575,63 @@ namespace EasyBiz
                     if (qty > 0)
                     {
                         if (itemSummary.Length > 0) itemSummary.Append(", ");
-                        itemSummary.Append($"{productName} ({qty:N3} x {rate:N2})");
+                        if (discount > 0)
+                        { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2}) discount: {discount}"); }
+                        else { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2})"); }
                     }
                     else if (weight > 0)
                     {
                         if (itemSummary.Length > 0) itemSummary.Append(", ");
-                        itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2})");
+                        if (discount > 0)
+                        { itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2}) discount: {discount}"); }
+                        else { itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2})"); }
                     }
-                }
 
-                // 4. Accounting entry — Credit supplier/cash, Debit purchases
-                int creditAccountId = payMode == "Cash" ? 10001 : accountId;
-                string creditAccName = payMode == "Cash" ? "Cash In Hand" : accountName;
+                    // 4. Accounting entry — Credit supplier/cash, Debit purchases
+                    int creditAccountId = payMode == "Cash" ? 10001 : accountId;
+                    string creditAccName = payMode == "Cash" ? "Cash In Hand" : accountName;
 
-                string finalDescription = $"Purchase Inv #{voucherNo}";
-                if (!string.IsNullOrWhiteSpace(desc))
-                    finalDescription += $" - {desc}";
-                if (itemSummary.Length > 0)
-                    finalDescription += $" [{itemSummary}]";
+                    string finalDescription = $"Purchase Inv #{voucherNo}";
+                    if (!string.IsNullOrWhiteSpace(desc))
+                        finalDescription += $" - {desc}";
+                    if (itemSummary.Length > 0)
+                        finalDescription += $" [{itemSummary}]";
 
-                using (var cmd = new SqliteCommand(@"
+                    using (var cmd = new SqliteCommand(@"
             INSERT INTO transactions
                 (transaction_type, voucher_no, account_id, account_name,
                  description, debit, credit, transaction_date)
             VALUES ('Purchase Invoice',@v,@aid,@an,@d,0,@net,@dt)", conn, txn))
-                {
-                    cmd.Parameters.AddWithValue("@v", voucherNo);
-                    cmd.Parameters.AddWithValue("@aid", creditAccountId);
-                    cmd.Parameters.AddWithValue("@an", creditAccName);
-                    cmd.Parameters.AddWithValue("@d", finalDescription);
-                    cmd.Parameters.AddWithValue("@net", (double)net);
-                    cmd.Parameters.AddWithValue("@dt", date);
-                    cmd.ExecuteNonQuery();
+                    {
+                        cmd.Parameters.AddWithValue("@v", voucherNo);
+                        cmd.Parameters.AddWithValue("@aid", creditAccountId);
+                        cmd.Parameters.AddWithValue("@an", creditAccName);
+                        cmd.Parameters.AddWithValue("@d", finalDescription);
+                        cmd.Parameters.AddWithValue("@net", (double)net);
+                        cmd.Parameters.AddWithValue("@dt", date);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    using (var cmd = new SqliteCommand(
+                        "UPDATE accounts SET current_balance = current_balance - @a WHERE account_id = @id",
+                        conn, txn))
+                    {
+                        cmd.Parameters.AddWithValue("@a", (double)net);
+                        cmd.Parameters.AddWithValue("@id", creditAccountId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    txn.Commit();
+
+                    string mode = _editingVoucherNo.HasValue ? "updated" : "posted";
+                    MessageBox.Show($"Purchase Invoice #{voucherNo} {mode} successfully!",
+                        "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Reset to new-entry mode
+                    _editingVoucherNo = null;
+                    txtVoucherNo.ReadOnly = false;
+                    ResetForm();
                 }
-
-                using (var cmd = new SqliteCommand(
-                    "UPDATE accounts SET current_balance = current_balance - @a WHERE account_id = @id",
-                    conn, txn))
-                {
-                    cmd.Parameters.AddWithValue("@a", (double)net);
-                    cmd.Parameters.AddWithValue("@id", creditAccountId);
-                    cmd.ExecuteNonQuery();
-                }
-
-                txn.Commit();
-
-                string mode = _editingVoucherNo.HasValue ? "updated" : "posted";
-                MessageBox.Show($"Purchase Invoice #{voucherNo} {mode} successfully!",
-                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Reset to new-entry mode
-                _editingVoucherNo = null;
-                txtVoucherNo.ReadOnly = false;
-                ResetForm();
             }
             catch (Exception ex)
             {
@@ -623,9 +644,9 @@ namespace EasyBiz
         {
             gridItems.Rows.Clear();
             txtDescription.Clear();
-            numDiscount.Value = 0;
-            numTotal.Value = 0;
-            numNetAmount.Value = 0;
+            txtDiscount.Text = "0";
+            txtTotal.Text = "0";
+            txtNetAmount.Text = "0";
             comboPartyName.SelectedIndex = -1;
             comboPartyId.SelectedIndex = -1;
             comboPaymentMode.SelectedItem = "Credit";
@@ -648,9 +669,25 @@ namespace EasyBiz
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Close? Unsaved data will be lost.", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                Close();
+            Close();
         }
+
+        private void PurchaseInvoice_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (comboPartyName.Text != "" || comboProduct.Text != "" || txtDescription.Text != "" || gridItems.Rows.Count != 0)
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Purchase Invoice?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
+        }
+        
     }
 }

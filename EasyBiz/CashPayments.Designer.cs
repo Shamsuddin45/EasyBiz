@@ -436,6 +436,7 @@
             Name = "CashPayments";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cash Payment Voucher";
+            FormClosing += CashPayments_FormClosing;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);

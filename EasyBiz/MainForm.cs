@@ -217,10 +217,12 @@ namespace EasyBiz
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /*
             var result = MessageBox.Show("Are you sure you want to exit?", "Confirm Exit",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.No)
                 e.Cancel = true;
+            */
         }
 
         private void BtnEditTransactions_Click(object sender, EventArgs e)

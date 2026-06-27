@@ -12,9 +12,9 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panelHeader = new Panel();
             lblHeader = new Label();
             panelInput = new Panel();
@@ -389,29 +389,29 @@
             gridCheques.AllowUserToAddRows = false;
             gridCheques.AllowUserToDeleteRows = false;
             gridCheques.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 245, 245);
-            gridCheques.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
+            gridCheques.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             gridCheques.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridCheques.BackgroundColor = Color.White;
             gridCheques.BorderStyle = BorderStyle.None;
             gridCheques.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             gridCheques.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            gridCheques.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 45, 48);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            gridCheques.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             gridCheques.ColumnHeadersHeight = 42;
             gridCheques.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridCheques.Columns.AddRange(new DataGridViewColumn[] { colChequeId, colChequeNo, colChequeDate, colBankName, colPartyName, colAmount, colDirection, colStatus, colDesc, colClearedDate });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.Padding = new Padding(4);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 120, 215);
-            dataGridViewCellStyle6.SelectionForeColor = Color.White;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            gridCheques.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new Padding(4);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            gridCheques.DefaultCellStyle = dataGridViewCellStyle3;
             gridCheques.Dock = DockStyle.Fill;
             gridCheques.EnableHeadersVisualStyles = false;
             gridCheques.GridColor = Color.LightGray;
@@ -619,6 +619,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cheque Book Manager";
             WindowState = FormWindowState.Maximized;
+            FormClosing += ChequeBook_FormClosing;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelInput.ResumeLayout(false);

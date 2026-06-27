@@ -76,7 +76,7 @@ namespace EasyBiz
             if (statusFilter != "All")
                 cmd.Parameters.AddWithValue("@status", statusFilter);
 
-            using var r = cmd.ExecuteReader();            
+            using var r = cmd.ExecuteReader();
             while (r.Read())
             {
                 int ri = gridCheques.Rows.Add();
@@ -280,6 +280,23 @@ namespace EasyBiz
                 string party = row.Cells["colPartyName"].Value?.ToString()?.ToLower() ?? "";
                 row.Visible = string.IsNullOrEmpty(q) || no.Contains(q) || party.Contains(q);
             }
+        }
+
+        private void ChequeBook_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (comboBankName.Text != "" || comboPartyName.Text != "" || txtChequeNo.Text != "" || txtDesc.Text != "" || txtAmount.Text != "")
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Cheque Book Manager?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

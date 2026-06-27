@@ -118,7 +118,7 @@ namespace EasyBiz
                         continue;
 
                     decimal oldOpeningBalance = reader.IsDBNull(0) ? 0 : reader.GetDecimal(0);
-                    decimal currentBalance = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1);                    
+                    decimal currentBalance = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1);
 
                     reader.Close();
 
@@ -133,7 +133,7 @@ namespace EasyBiz
                 WHERE account_id = @id",
                         connection, transaction);
 
-                    updateCmd.Parameters.AddWithValue("@ob", newOpeningBalance);                    
+                    updateCmd.Parameters.AddWithValue("@ob", newOpeningBalance);
                     updateCmd.Parameters.AddWithValue("@cb", newCurrentBalance);
                     updateCmd.Parameters.AddWithValue("@id", accountId);
 
@@ -205,5 +205,14 @@ namespace EasyBiz
                               accountName.Contains(searchText);
             }
         }
+
+        private void OpeningBalances_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var msg = MessageBox.Show("Are you sure want to close?", "Confirm close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (msg != DialogResult.Yes)
+            {
+                e.Cancel = true;
+            }
     }
+}
 }

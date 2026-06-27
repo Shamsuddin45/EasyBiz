@@ -45,7 +45,7 @@ namespace EasyBiz
             gridItems.BorderStyle = BorderStyle.None;
             gridItems.BackgroundColor = Color.White;
             gridItems.AllowUserToAddRows = false;
-            gridItems.AllowUserToDeleteRows = false;
+            gridItems.AllowUserToDeleteRows = true;
             gridItems.AllowUserToResizeRows = false;
             gridItems.MultiSelect = false;
             gridItems.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -364,6 +364,7 @@ namespace EasyBiz
             txtQty.Text = "0";
             txtWeight.Text = "0";
             txtRate.Text = "0";
+            txtDiscount.Text = "0";
             txtAmount.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
@@ -614,7 +615,7 @@ namespace EasyBiz
                     if (qty > 0)
                     {
                         if (itemSummary.Length > 0) itemSummary.Append(", ");
-                        if (discount > 0) 
+                        if (discount > 0)
                         { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2}) discount: {discount:N2}"); }
                         else { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2})"); }
                     }
@@ -746,10 +747,8 @@ namespace EasyBiz
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Close? Unsaved data will be lost.", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                Close();
+        {            
+            Close();
         }
 
         private void numQty_KeyDown(object sender, KeyEventArgs e)
@@ -864,6 +863,23 @@ namespace EasyBiz
             decimal discount = decimal.TryParse(txtDiscount.Text, out var d) ? d : 0;
 
             txtNetAmount.Text = (amount - discount).ToString("N2");
+        }
+
+        private void SaleInvoice_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (comboProduct.Text != "" || comboPartyName.Text != "" || gridItems.Rows.Count != 0)
+            {
+                var result = MessageBox.Show("Are you sure you want to close the Sale Invoice?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else { e.Cancel = false; }
         }
     }
 }

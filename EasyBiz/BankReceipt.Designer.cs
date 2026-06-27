@@ -12,9 +12,9 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panelHeader = new Panel();
             lblHeader = new Label();
             comboBankId = new ComboBox();
@@ -309,29 +309,29 @@
             gridLines.AllowUserToAddRows = false;
             gridLines.AllowUserToDeleteRows = false;
             gridLines.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(245, 245, 245);
-            gridLines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
+            gridLines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             gridLines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridLines.BackgroundColor = Color.White;
             gridLines.BorderStyle = BorderStyle.None;
             gridLines.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             gridLines.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            gridLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 45, 48);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            gridLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             gridLines.ColumnHeadersHeight = 42;
             gridLines.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridLines.Columns.AddRange(new DataGridViewColumn[] { colSno, colPartyId, colPartyName, colDesc, colAmount, colChequeNo });
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = Color.White;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.Padding = new Padding(5);
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(0, 120, 215);
-            dataGridViewCellStyle9.SelectionForeColor = Color.White;
-            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.False;
-            gridLines.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            gridLines.DefaultCellStyle = dataGridViewCellStyle3;
             gridLines.EnableHeadersVisualStyles = false;
             gridLines.GridColor = Color.LightGray;
             gridLines.Location = new Point(0, 3);
@@ -543,6 +543,7 @@
             Name = "BankReceipt";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Bank Receipt Voucher";
+            FormClosing += BankReceipt_FormClosing;
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gridLines).EndInit();

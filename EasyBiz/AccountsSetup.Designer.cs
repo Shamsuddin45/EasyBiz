@@ -190,7 +190,7 @@
             comboCategory.Name = "comboCategory";
             comboCategory.Size = new Size(223, 36);
             comboCategory.TabIndex = 3;
-            comboCategory.SelectedIndexChanged += comboCategory_SelectedIndexChanged;
+            comboCategory.KeyDown += comboCategory_KeyDown;
             // 
             // groupBox1
             // 
@@ -354,6 +354,7 @@
             Name = "AccountsSetup";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Accounts Setup";
+            FormClosing += AccountsSetup_FormClosing;
             Load += AccountsSetup_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
