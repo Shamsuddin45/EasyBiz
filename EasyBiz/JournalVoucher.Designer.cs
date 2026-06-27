@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label6 = new Label();
             comboAccountId = new ComboBox();
             label5 = new Label();
@@ -56,14 +56,20 @@
             txtCredit = new TextBox();
             label8 = new Label();
             txtInvoiceNumber = new TextBox();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            panel1 = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(51, 47);
+            label6.Location = new Point(52, 51);
             label6.Name = "label6";
             label6.Size = new Size(69, 28);
             label6.TabIndex = 25;
@@ -75,7 +81,7 @@
             comboAccountId.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboAccountId.Font = new Font("Segoe UI", 12F);
             comboAccountId.FormattingEnabled = true;
-            comboAccountId.Location = new Point(126, 44);
+            comboAccountId.Location = new Point(127, 48);
             comboAccountId.Name = "comboAccountId";
             comboAccountId.Size = new Size(193, 36);
             comboAccountId.TabIndex = 24;
@@ -85,7 +91,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(325, 49);
+            label5.Location = new Point(326, 53);
             label5.Name = "label5";
             label5.Size = new Size(66, 28);
             label5.TabIndex = 23;
@@ -94,7 +100,7 @@
             // txtPreBalance
             // 
             txtPreBalance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtPreBalance.Location = new Point(397, 46);
+            txtPreBalance.Location = new Point(398, 50);
             txtPreBalance.Name = "txtPreBalance";
             txtPreBalance.Size = new Size(296, 34);
             txtPreBalance.TabIndex = 22;
@@ -103,7 +109,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(126, 212);
+            label4.Location = new Point(127, 186);
             label4.Name = "label4";
             label4.Size = new Size(60, 28);
             label4.TabIndex = 21;
@@ -113,7 +119,7 @@
             // 
             txtDebit.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtDebit.ForeColor = Color.LightSeaGreen;
-            txtDebit.Location = new Point(192, 209);
+            txtDebit.Location = new Point(193, 183);
             txtDebit.Name = "txtDebit";
             txtDebit.Size = new Size(210, 34);
             txtDebit.TabIndex = 3;
@@ -124,7 +130,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(8, 156);
+            label3.Location = new Point(9, 137);
             label3.Name = "label3";
             label3.Size = new Size(112, 28);
             label3.TabIndex = 19;
@@ -133,7 +139,7 @@
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 12F);
-            txtDescription.Location = new Point(126, 156);
+            txtDescription.Location = new Point(127, 137);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(567, 34);
             txtDescription.TabIndex = 2;
@@ -143,7 +149,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(18, 105);
+            label2.Location = new Point(19, 98);
             label2.Name = "label2";
             label2.Size = new Size(102, 28);
             label2.TabIndex = 17;
@@ -155,7 +161,7 @@
             comboAccountName.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboAccountName.Font = new Font("Segoe UI", 12F);
             comboAccountName.FormattingEnabled = true;
-            comboAccountName.Location = new Point(126, 102);
+            comboAccountName.Location = new Point(127, 95);
             comboAccountName.Name = "comboAccountName";
             comboAccountName.Size = new Size(567, 36);
             comboAccountName.TabIndex = 1;
@@ -166,7 +172,7 @@
             // 
             dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(857, 41);
+            dateTimePicker1.Location = new Point(858, 45);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(192, 34);
             dateTimePicker1.TabIndex = 5;
@@ -175,7 +181,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(798, 41);
+            label1.Location = new Point(799, 45);
             label1.Name = "label1";
             label1.Size = new Size(53, 28);
             label1.TabIndex = 14;
@@ -186,36 +192,37 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 245, 245);
-            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 45, 48);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.ColumnHeadersHeight = 45;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, accountId, accountname, desc, debit, credit });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.Padding = new Padding(5);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 120, 215);
-            dataGridViewCellStyle6.SelectionForeColor = Color.White;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(8, 282);
+            dataGridView1.Location = new Point(3, 253);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
@@ -223,7 +230,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1075, 401);
+            dataGridView1.Size = new Size(1088, 423);
             dataGridView1.TabIndex = 26;
             // 
             // sno
@@ -280,7 +287,7 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 12F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(738, 689);
+            BtnClose.Location = new Point(6, 3);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(150, 50);
             BtnClose.TabIndex = 7;
@@ -300,7 +307,7 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 12F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(894, 689);
+            BtnSave.Location = new Point(162, 3);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(188, 50);
             BtnSave.TabIndex = 6;
@@ -313,7 +320,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(413, 212);
+            label7.Location = new Point(414, 186);
             label7.Name = "label7";
             label7.Size = new Size(65, 28);
             label7.TabIndex = 30;
@@ -323,7 +330,7 @@
             // 
             txtCredit.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtCredit.ForeColor = Color.LightSeaGreen;
-            txtCredit.Location = new Point(483, 209);
+            txtCredit.Location = new Point(484, 183);
             txtCredit.Name = "txtCredit";
             txtCredit.Size = new Size(210, 34);
             txtCredit.TabIndex = 4;
@@ -334,7 +341,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(760, 108);
+            label8.Location = new Point(761, 101);
             label8.Name = "label8";
             label8.Size = new Size(91, 28);
             label8.TabIndex = 32;
@@ -344,42 +351,80 @@
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.LightSeaGreen;
-            txtInvoiceNumber.Location = new Point(857, 102);
+            txtInvoiceNumber.Location = new Point(858, 95);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
             txtInvoiceNumber.Size = new Size(192, 34);
             txtInvoiceNumber.TabIndex = 31;
             txtInvoiceNumber.TextAlign = HorizontalAlignment.Center;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            flowLayoutPanel1.Controls.Add(BtnSave);
+            flowLayoutPanel1.Controls.Add(BtnClose);
+            flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanel1.Location = new Point(738, 682);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(353, 62);
+            flowLayoutPanel1.TabIndex = 33;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(txtCredit);
+            panel1.Controls.Add(txtDebit);
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(label6);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(comboAccountId);
+            panel1.Controls.Add(txtInvoiceNumber);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(txtPreBalance);
+            panel1.Controls.Add(txtDescription);
+            panel1.Controls.Add(dateTimePicker1);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(label3);
+            panel1.Controls.Add(comboAccountName);
+            panel1.Controls.Add(label2);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1088, 244);
+            panel1.TabIndex = 34;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 2);
+            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 57.2F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.466666F));
+            tableLayoutPanel1.Size = new Size(1094, 750);
+            tableLayoutPanel1.TabIndex = 35;
             // 
             // JournalVoucher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1094, 750);
-            Controls.Add(label8);
-            Controls.Add(txtInvoiceNumber);
-            Controls.Add(label7);
-            Controls.Add(txtCredit);
-            Controls.Add(BtnClose);
-            Controls.Add(BtnSave);
-            Controls.Add(dataGridView1);
-            Controls.Add(label6);
-            Controls.Add(comboAccountId);
-            Controls.Add(label5);
-            Controls.Add(txtPreBalance);
-            Controls.Add(label4);
-            Controls.Add(txtDebit);
-            Controls.Add(label3);
-            Controls.Add(txtDescription);
-            Controls.Add(label2);
-            Controls.Add(comboAccountName);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(label1);
+            Controls.Add(tableLayoutPanel1);
             Name = "JournalVoucher";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Journal Voucher";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -409,5 +454,8 @@
         private DataGridViewTextBoxColumn desc;
         private DataGridViewTextBoxColumn debit;
         private DataGridViewTextBoxColumn credit;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel1;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

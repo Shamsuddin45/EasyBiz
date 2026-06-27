@@ -85,8 +85,9 @@ namespace EasyBiz
                     product_id   INTEGER PRIMARY KEY AUTOINCREMENT,
                     product_name TEXT NOT NULL UNIQUE,
                     description  TEXT,
-                    unit         TEXT NOT NULL DEFAULT 'PCS',   -- PCS, KG, TON, MTR, LTR, etc.
-                    weight_unit  TEXT NOT NULL DEFAULT 'KG',    -- KG, TON, G, LBS
+                    unit         TEXT DEFAULT 'N/A',   -- PCS, KG, TON, MTR, LTR, etc.
+                    weight_unit  TEXT DEFAULT 'N/A',    -- KG, MUN, TON, G, LBS
+                    isUnit       BOOLEAN DEFAULT 1,    -- 1 = unit based, 0 = weight based
                     sale_rate    REAL DEFAULT 0,
                     purchase_rate REAL DEFAULT 0,
                     current_qty  REAL DEFAULT 0,               -- pieces / units in stock

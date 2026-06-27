@@ -11,8 +11,13 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             comboCategory.SelectedItem = "Receivables";
-            LoadAccounts();
+            LoadAccounts();            
+        }
 
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            txtNewAccount.Focus();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -179,11 +184,15 @@ namespace EasyBiz
 
         private void BtnClose_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to close the Accounts Setup?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            if (txtNewAccount.Text != "" || txtAddress.Text != "" || txtContact.Text != "")
             {
-                Close();
+                var result = MessageBox.Show("Are you sure you want to close the Accounts Setup?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    Close();
+                }
             }
+            else { Close(); }
         }
 
         /// <summary>
@@ -315,6 +324,7 @@ namespace EasyBiz
         private void comboCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
+            txtNewAccount.Focus();
         }
 
         private void comboSearchName_SelectedIndexChanged(object sender, EventArgs e)
@@ -338,7 +348,7 @@ namespace EasyBiz
             }
             BtnSave.Enabled = false;
             BtnUpdate.Enabled = true;
-        }        
+        }
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
@@ -352,5 +362,30 @@ namespace EasyBiz
         {
             RefreshForm();
         }
+
+        private void txtNewAccount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { txtAddress.Focus(); }
+        }
+
+        private void txtAddress_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) { txtContact.Focus(); }
+        }
+
+        private void txtContact_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) 
+            { 
+                if (BtnSave.Enabled == true) { BtnSave.Focus(); }
+                else { BtnUpdate.Focus(); }
+            }
+        }
+
+        private void AccountsSetup_Load(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
+

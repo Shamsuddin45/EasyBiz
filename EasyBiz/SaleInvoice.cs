@@ -57,10 +57,10 @@ namespace EasyBiz
             gridItems.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             gridItems.ColumnHeadersHeight = 40;
 
-            gridItems.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(41, 128, 185);
+            gridItems.ColumnHeadersDefaultCellStyle.BackColor = Color.RoyalBlue;
             gridItems.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
             gridItems.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            gridItems.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridItems.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             // Rows
             gridItems.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
@@ -81,24 +81,25 @@ namespace EasyBiz
 
             // Column Alignment
             gridItems.Columns["colQty"].DefaultCellStyle.Alignment =
-                DataGridViewContentAlignment.MiddleCenter;
+                DataGridViewContentAlignment.MiddleLeft;
 
             gridItems.Columns["colWeight"].DefaultCellStyle.Alignment =
-                DataGridViewContentAlignment.MiddleCenter;
+                DataGridViewContentAlignment.MiddleLeft;
 
             gridItems.Columns["colRate"].DefaultCellStyle.Alignment =
-                DataGridViewContentAlignment.MiddleRight;
+                DataGridViewContentAlignment.MiddleLeft;
 
             gridItems.Columns["colAmount"].DefaultCellStyle.Alignment =
-                DataGridViewContentAlignment.MiddleRight;
+                DataGridViewContentAlignment.MiddleLeft;
 
             // Currency Format
             gridItems.Columns["colRate"].DefaultCellStyle.Format = "N2";
             gridItems.Columns["colAmount"].DefaultCellStyle.Format = "N2";
         }
 
+
         // ── 1. Verify voucher exists ─────────────────────────────────────────────────
-        public void CheckIfSaleVoucherExists(int voucherNo)
+        private bool CheckIfSaleVoucherExists(int voucherNo)
         {
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = new SqliteCommand(
@@ -110,7 +111,10 @@ namespace EasyBiz
                 MessageBox.Show(
                     $"Sale Invoice #{voucherNo} does not exist.",
                     "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return count > 0;
+
         }
+
 
         // ── Voucher Number ───────────────────────────────────────────────────
         private void ShowVoucherNo()
@@ -142,7 +146,7 @@ namespace EasyBiz
         {
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT product_id, product_name, sale_rate, current_qty, current_weight, unit, weight_unit FROM products ORDER BY product_name";
+            cmd.CommandText = "SELECT product_id, product_name, sale_rate, current_qty, current_weight, unit, weight_unit, isUnit FROM products ORDER BY product_name";
             using var r = cmd.ExecuteReader();
             comboProduct.Items.Clear();
             comboProduct.Tag = new System.Collections.Generic.List<object[]>(); // store product data
@@ -153,7 +157,7 @@ namespace EasyBiz
                 list.Add(new object[] {
                     r.GetInt32(0), r.GetString(1),
                     r.GetDouble(2), r.GetDouble(3),
-                    r.GetDouble(4), r.GetString(5), r.GetString(6)
+                    r.GetDouble(4), r.GetString(5), r.GetString(6), r.GetInt16(7)
                 });
             }
         }
@@ -161,7 +165,8 @@ namespace EasyBiz
         // ── 2. Load invoice into the form for editing ────────────────────────────────
         public void LoadTransactionForEditing(int voucherNo)
         {
-            CheckIfSaleVoucherExists(voucherNo);
+            if (!CheckIfSaleVoucherExists(voucherNo))
+                return;
 
             _editingVoucherNo = voucherNo;
             txtVoucherNo.Text = voucherNo.ToString();
@@ -193,7 +198,7 @@ namespace EasyBiz
                     txtDescription.Text = r.IsDBNull(3) ? "" : r.GetString(3);
 
                     // Discount
-                    numDiscount.Value = r.IsDBNull(4) ? 0 : r.GetDecimal(4);
+                    txtDiscount.Text = r.IsDBNull(4) ? "0" : r.GetDecimal(4).ToString("N2");
 
                     // Payment mode
                     string pm = r.IsDBNull(5) ? "Credit" : r.GetString(5);
@@ -246,9 +251,9 @@ namespace EasyBiz
 
             // Reset item-input section (leave combos blank, ready for extra lines)
             comboProduct.SelectedIndex = -1;
-            numQty.Value = 0;
-            numWeight.Value = 0;
-            numRate.Value = 0;
+            txtQty.Text = "0";
+            txtWeight.Text = "0";
+            txtRate.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
         }
@@ -269,14 +274,40 @@ namespace EasyBiz
         // ── Product Selection — auto-fill rate & show stock ──────────────────
         private void comboProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboProduct.SelectedIndex < 0) return;
-            var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
+            if (comboProduct.SelectedIndex < 0)
+                return;
+
+            if (comboProduct.Tag is not List<object[]> list)
+                return;
+
+            if (comboProduct.SelectedIndex >= list.Count)
+                return;
+
             var prod = list[comboProduct.SelectedIndex];
-            // prod: [0]=id [1]=name [2]=sale_rate [3]=qty [4]=weight [5]=unit [6]=weight_unit
-            numRate.Value = (decimal)(double)prod[2];
-            lblStockQty.Text = $"Qty: {(double)prod[3]:N2} {prod[5]}";
-            lblStockWt.Text = $"Weight: {(double)prod[4]:N3} {prod[6]}";
-            numQty.Focus();
+
+            txtRate.Text = Convert.ToDecimal(prod[2]).ToString("N2");
+
+            lblStockQty.Text =
+                $"Qty: {Convert.ToDouble(prod[3]):N2} {prod[5]}";
+
+            lblStockWt.Text =
+                $"Weight: {Convert.ToDouble(prod[4]):N3} {prod[6]}";
+
+            bool isUnit = Convert.ToInt32(prod[7]) == 1;
+
+            txtQty.Enabled = isUnit;
+            txtWeight.Enabled = !isUnit;
+
+            if (isUnit)
+            {
+                txtWeight.Text = "0";
+                txtQty.Focus();
+            }
+            else
+            {
+                txtQty.Text = "0";
+                txtWeight.Focus();
+            }
         }
 
         // ── Add Item Row ─────────────────────────────────────────────────────
@@ -284,29 +315,31 @@ namespace EasyBiz
         {
             if (comboProduct.SelectedIndex < 0)
             { MessageBox.Show("Select a product."); return; }
-            if (numQty.Value <= 0 && numWeight.Value <= 0)
+            if (txtQty.Text == "0" && txtWeight.Text == "0")
             { MessageBox.Show("Enter quantity or weight."); return; }
-            if (numRate.Value <= 0)
+            if (txtRate.Text == "0")
             { MessageBox.Show("Rate cannot be zero."); return; }
+            if (txtAmount.Text == "0")
+            { MessageBox.Show("Amount cannot be zero."); return; }
 
             var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
             var prod = list[comboProduct.SelectedIndex];
 
-            decimal qty = numQty.Value;
-            decimal weight = numWeight.Value;
-            decimal rate = numRate.Value;
-            decimal amount = (qty > 0 ? qty : weight) * rate;
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
+            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
 
             int rowIndex = gridItems.Rows.Add();
             var row = gridItems.Rows[rowIndex];
             row.Cells["colProductId"].Value = prod[0].ToString();
             row.Cells["colProductName"].Value = prod[1].ToString();
             row.Cells["colUnit"].Value = prod[5].ToString();
-            row.Cells["colQty"].Value = qty.ToString("N3");
-            row.Cells["colWeight"].Value = weight.ToString("N3");
+            row.Cells["colQty"].Value = qty;
+            row.Cells["colWeight"].Value = weight;
             row.Cells["colWeightUnit"].Value = prod[6].ToString();
-            row.Cells["colRate"].Value = rate.ToString("N2");
-            row.Cells["colAmount"].Value = amount.ToString("N2");
+            row.Cells["colRate"].Value = rate;
+            row.Cells["colAmount"].Value = amount;
 
             RecalcTotal();
             ResetItemInputs();
@@ -321,18 +354,17 @@ namespace EasyBiz
                 if (decimal.TryParse(r.Cells["colAmount"].Value?.ToString(), out var a))
                     total += a;
             }
-            numTotal.Value = total;
-            numNetAmount.Value = total - numDiscount.Value;
+            txtTotal.Text = total.ToString("N2");
+            txtNetAmount.Text = (total - decimal.Parse(txtDiscount.Text)).ToString("N2");
         }
-
-        private void numDiscount_ValueChanged(object sender, EventArgs e) => RecalcTotal();
 
         private void ResetItemInputs()
         {
             comboProduct.SelectedIndex = -1;
-            numQty.Value = 0;
-            numWeight.Value = 0;
-            numRate.Value = 0;
+            txtQty.Text = "0";
+            txtWeight.Text = "0";
+            txtRate.Text = "0";
+            txtAmount.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
             comboProduct.Focus();
@@ -371,12 +403,12 @@ namespace EasyBiz
                 using var txn = conn.BeginTransaction();
 
                 string date = dateInvoice.Value.ToString("yyyy-MM-dd");
-                int accountId = int.Parse(comboPartyId.SelectedItem!.ToString()!);
+                int accountId = int.TryParse(comboPartyId.SelectedItem!.ToString()!, out var accId) ? accId : 0;
                 string accountName = comboPartyName.SelectedItem!.ToString()!;
                 string payMode = comboPaymentMode.SelectedItem!.ToString()!;
-                decimal total = numTotal.Value;
-                decimal discount = numDiscount.Value;
-                decimal net = numNetAmount.Value;
+                decimal total = decimal.TryParse(txtTotal.Text, out var t) ? t : 0;
+                decimal discount = decimal.TryParse(txtDiscount.Text, out var d) ? d : 0;
+                decimal net = decimal.TryParse(txtNetAmount.Text, out var n) ? n : 0;
                 string desc = txtDescription.Text.Trim();
 
                 int voucherNo;
@@ -443,7 +475,6 @@ namespace EasyBiz
                 "sale_invoice_items",
                 "transactions" })
                     {
-                        string col = tbl == "transactions" ? "transaction_type = 'Sale Invoice' AND voucher_no" : "voucher_no";
 
                         using var cmd = new SqliteCommand(
                             tbl == "transactions"
@@ -506,12 +537,16 @@ namespace EasyBiz
 
                     int productId = int.Parse(row.Cells["colProductId"].Value!.ToString()!);
                     string productName = row.Cells["colProductName"].Value!.ToString()!;
-                    decimal qty = decimal.Parse(row.Cells["colQty"].Value!.ToString()!);                    
+                    decimal qty = decimal.Parse(row.Cells["colQty"].Value!.ToString()!);
                     decimal weight = decimal.Parse(row.Cells["colWeight"].Value!.ToString()!);
-                    string weightUnit = row.Cells["colWeightUnit"].Value!.ToString()!;                    
+                    string weightUnit = row.Cells["colWeightUnit"].Value!.ToString()!;
                     decimal rate = decimal.Parse(row.Cells["colRate"].Value!.ToString()!);
                     decimal amount = decimal.Parse(row.Cells["colAmount"].Value!.ToString()!);
-
+                    if (amount <= 0)
+                    {
+                        MessageBox.Show($"Line item '{productName}' has zero amount. Skipping this item.");
+                        continue; // skip zero-amount items
+                    }
                     // a. Insert line item
                     using (var cmd = new SqliteCommand(@"
                 INSERT INTO sale_invoice_items
@@ -523,7 +558,7 @@ namespace EasyBiz
                         cmd.Parameters.AddWithValue("@v", voucherNo);
                         cmd.Parameters.AddWithValue("@pid", productId);
                         cmd.Parameters.AddWithValue("@pn", productName);
-                        cmd.Parameters.AddWithValue("@qty", (double)qty);                        
+                        cmd.Parameters.AddWithValue("@qty", (double)qty);
                         cmd.Parameters.AddWithValue("@wt", (double)weight);
                         cmd.Parameters.AddWithValue("@wu", weightUnit);
                         cmd.Parameters.AddWithValue("@rate", (double)rate);
@@ -579,12 +614,16 @@ namespace EasyBiz
                     if (qty > 0)
                     {
                         if (itemSummary.Length > 0) itemSummary.Append(", ");
-                        itemSummary.Append($"{productName} ({qty:N3} x {rate:N2})");
+                        if (discount > 0) 
+                        { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2}) discount: {discount:N2}"); }
+                        else { itemSummary.Append($"{productName} ({qty:N3} x {rate:N2})"); }
                     }
                     else if (weight > 0)
                     {
                         if (itemSummary.Length > 0) itemSummary.Append(", ");
-                        itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2})");
+                        if (discount > 0)
+                        { itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2}) discount: {discount:N2}"); }
+                        else { itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2})"); }
                     }
                 }
 
@@ -626,16 +665,16 @@ namespace EasyBiz
 
                 string mode = _editingVoucherNo.HasValue ? "updated" : "posted";
                 MessageBox.Show($"Sale Invoice #{voucherNo} {mode} successfully!",
-                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);                
+                    "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 // ── NEW: offer to print a thermal receipt ───────────────────────
                 if (MessageBox.Show("Print receipt now?", "Print Receipt",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {                    
+                {
                     ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, payMode, net, total, discount), preview: true);
                     // pass preview:true above while you're tuning the layout on a real printer
                 }
-                
+
                 // Reset to new-entry mode
                 _editingVoucherNo = null;
                 txtVoucherNo.ReadOnly = false;
@@ -648,8 +687,8 @@ namespace EasyBiz
             }
         }
 
-   private ReceiptData BuildReceiptData(int voucherNo, string customerName, string paymentMode,
-    decimal net, decimal total, decimal discount)
+        private ReceiptData BuildReceiptData(int voucherNo, string customerName, string paymentMode,
+         decimal net, decimal total, decimal discount)
         {
             var data = new ReceiptData
             {
@@ -683,9 +722,9 @@ namespace EasyBiz
         {
             gridItems.Rows.Clear();
             txtDescription.Clear();
-            numDiscount.Value = 0;
-            numTotal.Value = 0;
-            numNetAmount.Value = 0;
+            txtDiscount.Text = "0";
+            txtTotal.Text = "0";
+            txtNetAmount.Text = "0";
             comboPartyName.SelectedIndex = -1;
             comboPartyId.SelectedIndex = -1;
             comboPaymentMode.SelectedItem = "Credit";
@@ -711,6 +750,120 @@ namespace EasyBiz
             if (MessageBox.Show("Close? Unsaved data will be lost.", "Confirm",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 Close();
+        }
+
+        private void numQty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnAddItem_Click(sender, e);
+                comboProduct.Focus();
+            }
+        }
+
+        private void numWeight_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnAddItem_Click(sender, e);
+                comboProduct.Focus();
+            }
+        }
+
+        private void txtQty_TextChanged(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(txtQty.Text, out decimal qty) &&
+                decimal.TryParse(txtRate.Text, out decimal rate))
+            {
+                decimal total = qty * rate;
+                txtAmount.Text = total.ToString("N2");
+            }
+        }
+
+        private void txtWeight_TextChanged(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(txtWeight.Text, out decimal weight) &&
+                decimal.TryParse(txtRate.Text, out decimal rate))
+            {
+                decimal total = weight * rate;
+                txtAmount.Text = total.ToString("N2");
+            }
+        }
+
+        private void txtRate_TextChanged(object sender, EventArgs e)
+        {
+
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
+
+            decimal amount = (qty > 0 ? qty : weight) * rate;
+            txtAmount.Text = amount.ToString("N2");
+
+        }
+
+        private void txtQty_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtRate.Focus();
+            }
+        }
+
+        private void txtRate_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtAmount.Focus();
+            }
+        }
+
+        private void txtDiscount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnSave_Click(sender, e);
+            }
+        }
+
+        private void txtAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnAddItem_Click(sender, e);
+            }
+        }
+
+        private void txtWeight_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtRate.Focus();
+            }
+        }
+
+        private void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
+
+            decimal rate = 0;
+
+            if (qty > 0)
+                rate = amount / qty;
+            else if (weight > 0)
+                rate = amount / weight;
+
+            txtRate.Text = rate.ToString("N2");
+        }
+
+        private void txtDiscount_TextChanged(object sender, EventArgs e)
+        {
+            decimal amount = decimal.TryParse(txtTotal.Text, out var a) ? a : 0;
+            decimal discount = decimal.TryParse(txtDiscount.Text, out var d) ? d : 0;
+
+            txtNetAmount.Text = (amount - discount).ToString("N2");
         }
     }
 }

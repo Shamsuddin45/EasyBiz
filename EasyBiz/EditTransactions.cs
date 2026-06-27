@@ -90,5 +90,19 @@ namespace EasyBiz
         {
             GetTransactions();
         }
+
+        private void comboType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            txtVoucherNo.Focus();
+        }
+
+        private void txtVoucherNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                BtnGo_Click(sender, e);
+            }
+        }
+    
     }
 }

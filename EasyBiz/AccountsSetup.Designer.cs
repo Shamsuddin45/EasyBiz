@@ -47,8 +47,14 @@
             BtnRefresh = new CustomButton();
             BtnClose = new CustomButton();
             numAccountId = new NumericUpDown();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            panel1 = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numAccountId).BeginInit();
+            flowLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // label6
@@ -70,14 +76,14 @@
             comboSearchId.Location = new Point(194, 22);
             comboSearchId.Name = "comboSearchId";
             comboSearchId.Size = new Size(193, 36);
-            comboSearchId.TabIndex = 18;
+            comboSearchId.TabIndex = 1;
             comboSearchId.SelectedIndexChanged += comboSearchId_SelectedIndexChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(212, 270);
+            label3.Location = new Point(60, 77);
             label3.Name = "label3";
             label3.Size = new Size(128, 28);
             label3.TabIndex = 17;
@@ -86,10 +92,11 @@
             // txtNewAccount
             // 
             txtNewAccount.Font = new Font("Segoe UI", 12F);
-            txtNewAccount.Location = new Point(346, 267);
+            txtNewAccount.Location = new Point(194, 74);
             txtNewAccount.Name = "txtNewAccount";
             txtNewAccount.Size = new Size(567, 34);
-            txtNewAccount.TabIndex = 16;
+            txtNewAccount.TabIndex = 4;
+            txtNewAccount.KeyDown += txtNewAccount_KeyDown;
             // 
             // label2
             // 
@@ -110,14 +117,14 @@
             comboSearchName.Location = new Point(194, 72);
             comboSearchName.Name = "comboSearchName";
             comboSearchName.Size = new Size(567, 36);
-            comboSearchName.TabIndex = 14;
+            comboSearchName.TabIndex = 2;
             comboSearchName.SelectedIndexChanged += comboSearchName_SelectedIndexChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(260, 370);
+            label1.Location = new Point(108, 179);
             label1.Name = "label1";
             label1.Size = new Size(80, 28);
             label1.TabIndex = 21;
@@ -126,17 +133,18 @@
             // txtContact
             // 
             txtContact.Font = new Font("Segoe UI", 12F);
-            txtContact.Location = new Point(346, 367);
+            txtContact.Location = new Point(194, 179);
             txtContact.Name = "txtContact";
             txtContact.PlaceholderText = "03xxxxxxxxx";
             txtContact.Size = new Size(229, 34);
-            txtContact.TabIndex = 20;
+            txtContact.TabIndex = 6;
+            txtContact.KeyDown += txtContact_KeyDown;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(258, 317);
+            label4.Location = new Point(106, 127);
             label4.Name = "label4";
             label4.Size = new Size(82, 28);
             label4.TabIndex = 23;
@@ -145,16 +153,17 @@
             // txtAddress
             // 
             txtAddress.Font = new Font("Segoe UI", 12F);
-            txtAddress.Location = new Point(346, 317);
+            txtAddress.Location = new Point(194, 127);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(567, 34);
-            txtAddress.TabIndex = 22;
+            txtAddress.TabIndex = 5;
+            txtAddress.KeyDown += txtAddress_KeyDown;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(271, 216);
+            label5.Location = new Point(119, 27);
             label5.Name = "label5";
             label5.Size = new Size(69, 28);
             label5.TabIndex = 25;
@@ -164,7 +173,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(592, 216);
+            label7.Location = new Point(440, 27);
             label7.Name = "label7";
             label7.Size = new Size(92, 28);
             label7.TabIndex = 27;
@@ -177,10 +186,10 @@
             comboCategory.Font = new Font("Segoe UI", 12F);
             comboCategory.FormattingEnabled = true;
             comboCategory.Items.AddRange(new object[] { "Cash", "Banks", "Assets", "Capital", "Brokers", "Personal Ledgers", "Payables", "Receivables", "Employees", "Expenses", "Others" });
-            comboCategory.Location = new Point(690, 213);
+            comboCategory.Location = new Point(538, 24);
             comboCategory.Name = "comboCategory";
             comboCategory.Size = new Size(223, 36);
-            comboCategory.TabIndex = 26;
+            comboCategory.TabIndex = 3;
             comboCategory.SelectedIndexChanged += comboCategory_SelectedIndexChanged;
             // 
             // groupBox1
@@ -189,9 +198,9 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(comboSearchId);
             groupBox1.Controls.Add(label6);
-            groupBox1.Location = new Point(152, 12);
+            groupBox1.Location = new Point(3, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(770, 125);
+            groupBox1.Size = new Size(770, 137);
             groupBox1.TabIndex = 28;
             groupBox1.TabStop = false;
             groupBox1.Text = "Search Account";
@@ -207,10 +216,10 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(734, 476);
+            BtnSave.Location = new Point(585, 3);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(188, 50);
-            BtnSave.TabIndex = 29;
+            BtnSave.TabIndex = 7;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -228,10 +237,10 @@
             BtnUpdate.FlatStyle = FlatStyle.Flat;
             BtnUpdate.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BtnUpdate.ForeColor = Color.White;
-            BtnUpdate.Location = new Point(540, 476);
+            BtnUpdate.Location = new Point(391, 3);
             BtnUpdate.Name = "BtnUpdate";
             BtnUpdate.Size = new Size(188, 50);
-            BtnUpdate.TabIndex = 30;
+            BtnUpdate.TabIndex = 8;
             BtnUpdate.Text = "Update (Ctrl+U)";
             BtnUpdate.TextColor = Color.White;
             BtnUpdate.UseVisualStyleBackColor = false;
@@ -248,10 +257,10 @@
             BtnRefresh.FlatStyle = FlatStyle.Flat;
             BtnRefresh.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(346, 476);
+            BtnRefresh.Location = new Point(197, 3);
             BtnRefresh.Name = "BtnRefresh";
             BtnRefresh.Size = new Size(188, 50);
-            BtnRefresh.TabIndex = 31;
+            BtnRefresh.TabIndex = 9;
             BtnRefresh.Text = "Refresh (Ctrl+R)";
             BtnRefresh.TextColor = Color.White;
             BtnRefresh.UseVisualStyleBackColor = false;
@@ -268,10 +277,10 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(152, 476);
+            BtnClose.Location = new Point(3, 3);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(188, 50);
-            BtnClose.TabIndex = 32;
+            BtnClose.TabIndex = 10;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -280,41 +289,81 @@
             // numAccountId
             // 
             numAccountId.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numAccountId.Location = new Point(346, 213);
+            numAccountId.Location = new Point(194, 24);
             numAccountId.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numAccountId.Name = "numAccountId";
             numAccountId.ReadOnly = true;
             numAccountId.Size = new Size(188, 34);
             numAccountId.TabIndex = 33;
             // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            flowLayoutPanel1.AutoSize = true;
+            flowLayoutPanel1.Controls.Add(BtnSave);
+            flowLayoutPanel1.Controls.Add(BtnUpdate);
+            flowLayoutPanel1.Controls.Add(BtnRefresh);
+            flowLayoutPanel1.Controls.Add(BtnClose);
+            flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanel1.Location = new Point(295, 474);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(776, 56);
+            flowLayoutPanel1.TabIndex = 34;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(comboCategory);
+            panel1.Controls.Add(label5);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(label4);
+            panel1.Controls.Add(txtContact);
+            panel1.Controls.Add(numAccountId);
+            panel1.Controls.Add(txtAddress);
+            panel1.Controls.Add(txtNewAccount);
+            panel1.Controls.Add(label3);
+            panel1.Location = new Point(3, 183);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1068, 285);
+            panel1.TabIndex = 35;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panel1, 0, 1);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 2);
+            tableLayoutPanel1.Controls.Add(groupBox1, 0, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 53.5911674F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 13.0755072F));
+            tableLayoutPanel1.Size = new Size(1074, 543);
+            tableLayoutPanel1.TabIndex = 36;
+            // 
             // AccountsSetup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1074, 543);
-            Controls.Add(numAccountId);
-            Controls.Add(BtnClose);
-            Controls.Add(BtnRefresh);
-            Controls.Add(BtnUpdate);
-            Controls.Add(BtnSave);
-            Controls.Add(groupBox1);
-            Controls.Add(label7);
-            Controls.Add(comboCategory);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(txtAddress);
-            Controls.Add(label1);
-            Controls.Add(txtContact);
-            Controls.Add(label3);
-            Controls.Add(txtNewAccount);
+            Controls.Add(tableLayoutPanel1);
+            MaximizeBox = false;
             Name = "AccountsSetup";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Accounts Setup";
+            Load += AccountsSetup_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numAccountId).EndInit();
+            flowLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -338,5 +387,8 @@
         private CustomButton BtnRefresh;
         private CustomButton BtnClose;
         private NumericUpDown numAccountId;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel1;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

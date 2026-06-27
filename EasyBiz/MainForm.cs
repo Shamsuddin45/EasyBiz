@@ -13,8 +13,9 @@ namespace EasyBiz
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
-            ShowCashDetails();
+            ShowCashDetails();            
         }
+
 
         public void ShowCashDetails()
         {
@@ -36,6 +37,7 @@ namespace EasyBiz
                             decimal cashBalance = reader.GetDecimal(0);
                             decimal bankBalance = reader.GetDecimal(1);
 
+                           /* 
                             BtnCashDetails.Text =
                                 $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";
                             if (cashBalance < 0 || bankBalance < 0)
@@ -46,6 +48,7 @@ namespace EasyBiz
                             {
                                 BtnCashDetails.ForeColor = System.Drawing.Color.Green;
                             }
+                           */
                         }
                     }
                 }
@@ -362,8 +365,17 @@ namespace EasyBiz
         }
 
         private void MainForm_Load(object sender, EventArgs e)
-        {
-
+        {            
+             // Resize all buttons images for consistency
+             foreach (var btn in new[] { BtnCashPayment, BtnCashReceipt, BtnJournalVoucher, BtnPurchaseInvoice, BtnSalesInvoice, BtnEditTransactions, BtnLedgerReport, BtnCashBook, BtnBankPayment, BtnBankReceipt, BtnStockReport, BtnTrialBalance, BtnAccountsSetup, BtnProductSetup, BtnOpeningBalances, BtnChequeBook, BtnSettings, BtnBackupData })
+             {
+                 if (btn?.Image != null)
+                 {
+                     int width = (int)(btn.Width * 0.3);   // 30% of button width
+                     int height = (int)(btn.Height * 0.5); // 50% of button height
+                     btn.Image = new Bitmap(btn.Image, new System.Drawing.Size(width, height));                   
+                 }
+             }                
         }
 
         private void BtnCashDetails_Click(object sender, EventArgs e)

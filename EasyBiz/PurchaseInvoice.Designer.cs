@@ -47,14 +47,6 @@
             label8 = new Label();
             numWeight = new NumericUpDown();
             gridItems = new DataGridView();
-            colProductId = new DataGridViewTextBoxColumn();
-            colProductName = new DataGridViewTextBoxColumn();
-            colUnit = new DataGridViewTextBoxColumn();
-            colQty = new DataGridViewTextBoxColumn();
-            colWeight = new DataGridViewTextBoxColumn();
-            colWeightUnit = new DataGridViewTextBoxColumn();
-            colRate = new DataGridViewTextBoxColumn();
-            colAmount = new DataGridViewTextBoxColumn();
             numDiscount = new NumericUpDown();
             numNetAmount = new NumericUpDown();
             numTotal = new NumericUpDown();
@@ -72,6 +64,14 @@
             groupBox1 = new GroupBox();
             panel1 = new Panel();
             lblHeader = new Label();
+            colProductId = new DataGridViewTextBoxColumn();
+            colProductName = new DataGridViewTextBoxColumn();
+            colUnit = new DataGridViewTextBoxColumn();
+            colQty = new DataGridViewTextBoxColumn();
+            colWeight = new DataGridViewTextBoxColumn();
+            colWeightUnit = new DataGridViewTextBoxColumn();
+            colRate = new DataGridViewTextBoxColumn();
+            colAmount = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)numQty).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numWeight).BeginInit();
@@ -281,62 +281,6 @@
             gridItems.Size = new Size(1057, 188);
             gridItems.TabIndex = 22;
             // 
-            // colProductId
-            // 
-            colProductId.HeaderText = "Product Id";
-            colProductId.MinimumWidth = 6;
-            colProductId.Name = "colProductId";
-            colProductId.Width = 125;
-            // 
-            // colProductName
-            // 
-            colProductName.HeaderText = "Product Name";
-            colProductName.MinimumWidth = 6;
-            colProductName.Name = "colProductName";
-            colProductName.Width = 125;
-            // 
-            // colUnit
-            // 
-            colUnit.HeaderText = "Unit";
-            colUnit.MinimumWidth = 6;
-            colUnit.Name = "colUnit";
-            colUnit.Width = 125;
-            // 
-            // colQty
-            // 
-            colQty.HeaderText = "Qty";
-            colQty.MinimumWidth = 6;
-            colQty.Name = "colQty";
-            colQty.Width = 125;
-            // 
-            // colWeight
-            // 
-            colWeight.HeaderText = "Weight";
-            colWeight.MinimumWidth = 6;
-            colWeight.Name = "colWeight";
-            colWeight.Width = 125;
-            // 
-            // colWeightUnit
-            // 
-            colWeightUnit.HeaderText = "Weight Unit";
-            colWeightUnit.MinimumWidth = 6;
-            colWeightUnit.Name = "colWeightUnit";
-            colWeightUnit.Width = 125;
-            // 
-            // colRate
-            // 
-            colRate.HeaderText = "Rate";
-            colRate.MinimumWidth = 6;
-            colRate.Name = "colRate";
-            colRate.Width = 125;
-            // 
-            // colAmount
-            // 
-            colAmount.HeaderText = "Amount";
-            colAmount.MinimumWidth = 6;
-            colAmount.Name = "colAmount";
-            colAmount.Width = 125;
-            // 
             // numDiscount
             // 
             numDiscount.Font = new Font("Segoe UI", 12F);
@@ -544,6 +488,66 @@
             lblHeader.Size = new Size(236, 38);
             lblHeader.TabIndex = 0;
             lblHeader.Text = "Purchase Invoice";
+            // 
+            // colProductId
+            // 
+            colProductId.HeaderText = "Product Id";
+            colProductId.MinimumWidth = 6;
+            colProductId.Name = "colProductId";
+            colProductId.ReadOnly = true;
+            colProductId.Width = 125;
+            // 
+            // colProductName
+            // 
+            colProductName.HeaderText = "Product Name";
+            colProductName.MinimumWidth = 6;
+            colProductName.Name = "colProductName";
+            colProductName.ReadOnly = true;
+            colProductName.Width = 125;
+            // 
+            // colUnit
+            // 
+            colUnit.HeaderText = "Unit";
+            colUnit.MinimumWidth = 6;
+            colUnit.Name = "colUnit";
+            colUnit.ReadOnly = true;
+            colUnit.Width = 125;
+            // 
+            // colQty
+            // 
+            colQty.HeaderText = "Qty";
+            colQty.MinimumWidth = 6;
+            colQty.Name = "colQty";
+            colQty.Width = 125;
+            // 
+            // colWeight
+            // 
+            colWeight.HeaderText = "Weight";
+            colWeight.MinimumWidth = 6;
+            colWeight.Name = "colWeight";
+            colWeight.Width = 125;
+            // 
+            // colWeightUnit
+            // 
+            colWeightUnit.HeaderText = "Weight Unit";
+            colWeightUnit.MinimumWidth = 6;
+            colWeightUnit.Name = "colWeightUnit";
+            colWeightUnit.ReadOnly = true;
+            colWeightUnit.Width = 125;
+            // 
+            // colRate
+            // 
+            colRate.HeaderText = "Rate";
+            colRate.MinimumWidth = 6;
+            colRate.Name = "colRate";
+            colRate.Width = 125;
+            // 
+            // colAmount
+            // 
+            colAmount.HeaderText = "Amount";
+            colAmount.MinimumWidth = 6;
+            colAmount.Name = "colAmount";
+            colAmount.Width = 125;
             // 
             // PurchaseInvoice
             // 

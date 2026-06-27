@@ -21,6 +21,7 @@ namespace EasyBiz
             comboWeightUnit.Items.AddRange(new[] { "KG", "TON", "G", "LBS", "MUN" });
             comboUnit.SelectedItem = "PCS";
             comboWeightUnit.SelectedItem = "KG";
+            comboBox1.SelectedItem = "Quantity"; // Default selection
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -84,7 +85,7 @@ namespace EasyBiz
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = new SqliteCommand(
                 "SELECT COALESCE(MAX(product_id), 0) + 1 FROM products", conn);
-            numProductId.Text = cmd.ExecuteScalar()!.ToString();            
+            numProductId.Text = cmd.ExecuteScalar()!.ToString();
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -96,12 +97,20 @@ namespace EasyBiz
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
                 INSERT INTO products (product_name, description, unit, weight_unit,
-                                      sale_rate, purchase_rate, min_stock_qty)
-                VALUES (@name, @desc, @unit, @wu, @sr, @pr, @min)";
+                                      isUnit, sale_rate, purchase_rate, min_stock_qty)
+                VALUES (@name, @desc, @unit, @wu, @isUnit, @sr, @pr, @min)";
             cmd.Parameters.AddWithValue("@name", txtProductName.Text.Trim());
             cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@unit", comboUnit.Text);
             cmd.Parameters.AddWithValue("@wu", comboWeightUnit.Text);
+            if (comboBox1.SelectedItem == "Quantity")
+            {
+                cmd.Parameters.AddWithValue("@isUnit", 1);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@isUnit", 0);
+            }            
             cmd.Parameters.AddWithValue("@sr", (double)numSaleRate.Value);
             cmd.Parameters.AddWithValue("@pr", (double)numPurchaseRate.Value);
             cmd.Parameters.AddWithValue("@min", (double)numMinStock.Value);
@@ -147,7 +156,7 @@ namespace EasyBiz
                 this.Close();
             }
             catch (Exception ex) { MessageBox.Show("Error: " + ex.Message); }
-        }        
+        }
 
         private void comboSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -164,7 +173,7 @@ namespace EasyBiz
             txtDescription.Clear();
             numSaleRate.Value = 0;
             numPurchaseRate.Value = 0;
-            numMinStock.Value = 0;            
+            numMinStock.Value = 0;
             comboSearch.SelectedIndex = -1;
             ShowVoucherNo();
             BtnUpdate.Enabled = false;
@@ -173,5 +182,19 @@ namespace EasyBiz
         }
         private void BtnRefresh_Click(object sender, EventArgs e) => ClearForm();
         private void BtnClose_Click(object sender, EventArgs e) => Close();
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem == "Weight")
+            {
+                comboUnit.Enabled= false;
+                comboWeightUnit.Enabled = true;
+            }
+            else
+            {
+                comboUnit.Enabled = true;
+                comboWeightUnit.Enabled = false;
+            }
+        }
     }
 }

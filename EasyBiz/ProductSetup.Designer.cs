@@ -52,6 +52,8 @@
             BtnRefresh = new CustomButton();
             BtnClose = new CustomButton();
             toolTipMinStockQty = new ToolTip(components);
+            comboBox1 = new ComboBox();
+            label10 = new Label();
             ((System.ComponentModel.ISupportInitialize)numSaleRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).BeginInit();
@@ -64,9 +66,10 @@
             label1.Font = new Font("Segoe UI", 12F);
             label1.Location = new Point(717, 14);
             label1.Name = "label1";
-            label1.Size = new Size(144, 28);
+            label1.Size = new Size(152, 28);
             label1.TabIndex = 0;
-            label1.Text = "Search Product";
+            label1.Text = "*Search Product";
+            toolTipMinStockQty.SetToolTip(label1, "Select a product to view or edit its details");
             // 
             // comboSearch
             // 
@@ -90,10 +93,10 @@
             // 
             // txtProductName
             // 
-            txtProductName.Font = new Font("Segoe UI", 12F);
+            txtProductName.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtProductName.Location = new Point(166, 98);
             txtProductName.Name = "txtProductName";
-            txtProductName.Size = new Size(441, 34);
+            txtProductName.Size = new Size(457, 38);
             txtProductName.TabIndex = 3;
             // 
             // txtDescription
@@ -102,7 +105,7 @@
             txtDescription.Location = new Point(166, 146);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(441, 67);
+            txtDescription.Size = new Size(457, 67);
             txtDescription.TabIndex = 5;
             // 
             // label3
@@ -140,16 +143,16 @@
             comboWeightUnit.DropDownStyle = ComboBoxStyle.DropDownList;
             comboWeightUnit.Font = new Font("Segoe UI", 12F);
             comboWeightUnit.FormattingEnabled = true;
-            comboWeightUnit.Location = new Point(456, 237);
+            comboWeightUnit.Location = new Point(479, 237);
             comboWeightUnit.Name = "comboWeightUnit";
-            comboWeightUnit.Size = new Size(151, 36);
+            comboWeightUnit.Size = new Size(144, 36);
             comboWeightUnit.TabIndex = 9;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(333, 242);
+            label5.Location = new Point(356, 240);
             label5.Name = "label5";
             label5.Size = new Size(117, 28);
             label5.TabIndex = 8;
@@ -167,21 +170,25 @@
             // 
             // numSaleRate
             // 
-            numSaleRate.Font = new Font("Segoe UI", 12F);
+            numSaleRate.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numSaleRate.Location = new Point(166, 305);
             numSaleRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numSaleRate.Name = "numSaleRate";
-            numSaleRate.Size = new Size(150, 34);
+            numSaleRate.Size = new Size(150, 38);
             numSaleRate.TabIndex = 11;
+            numSaleRate.TextAlign = HorizontalAlignment.Center;
+            numSaleRate.ThousandsSeparator = true;
             // 
             // numPurchaseRate
             // 
-            numPurchaseRate.Font = new Font("Segoe UI", 12F);
-            numPurchaseRate.Location = new Point(479, 305);
+            numPurchaseRate.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numPurchaseRate.Location = new Point(479, 303);
             numPurchaseRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numPurchaseRate.Name = "numPurchaseRate";
-            numPurchaseRate.Size = new Size(128, 34);
+            numPurchaseRate.Size = new Size(144, 38);
             numPurchaseRate.TabIndex = 13;
+            numPurchaseRate.TextAlign = HorizontalAlignment.Center;
+            numPurchaseRate.ThousandsSeparator = true;
             // 
             // label7
             // 
@@ -195,34 +202,37 @@
             // 
             // numMinStock
             // 
-            numMinStock.Font = new Font("Segoe UI", 12F);
+            numMinStock.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numMinStock.Location = new Point(166, 358);
             numMinStock.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numMinStock.Name = "numMinStock";
-            numMinStock.Size = new Size(150, 34);
+            numMinStock.Size = new Size(150, 38);
             numMinStock.TabIndex = 15;
+            numMinStock.TextAlign = HorizontalAlignment.Center;
+            numMinStock.ThousandsSeparator = true;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
             label8.ForeColor = Color.IndianRed;
-            label8.Location = new Point(21, 360);
+            label8.Location = new Point(16, 360);
             label8.Name = "label8";
-            label8.Size = new Size(136, 28);
+            label8.Size = new Size(144, 28);
             label8.TabIndex = 14;
-            label8.Text = "Min Stock Qty";
+            label8.Text = "*Min Stock Qty";
             toolTipMinStockQty.SetToolTip(label8, "Enter a minimum stock quantity. \r\nProduct row will turn red in the Stock Report when the available stock reaches or falls below this quantity.");
             // 
             // numProductId
             // 
-            numProductId.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            numProductId.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             numProductId.Location = new Point(166, 43);
             numProductId.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numProductId.Name = "numProductId";
             numProductId.ReadOnly = true;
-            numProductId.Size = new Size(150, 34);
+            numProductId.Size = new Size(150, 38);
             numProductId.TabIndex = 17;
+            numProductId.TextAlign = HorizontalAlignment.Center;
             // 
             // label9
             // 
@@ -315,11 +325,35 @@
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
+            // comboBox1
+            // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.Font = new Font("Segoe UI", 12F);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Weight", "Quantity" });
+            comboBox1.Location = new Point(452, 45);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(172, 36);
+            comboBox1.TabIndex = 23;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 12F);
+            label10.Location = new Point(340, 47);
+            label10.Name = "label10";
+            label10.Size = new Size(106, 28);
+            label10.TabIndex = 22;
+            label10.Text = "Select Unit";
+            // 
             // ProductSetup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1040, 565);
+            Controls.Add(comboBox1);
+            Controls.Add(label10);
             Controls.Add(BtnClose);
             Controls.Add(BtnRefresh);
             Controls.Add(BtnUpdate);
@@ -377,5 +411,7 @@
         private CustomButton BtnRefresh;
         private CustomButton BtnClose;
         private ToolTip toolTipMinStockQty;
+        private ComboBox comboBox1;
+        private Label label10;
     }
 }

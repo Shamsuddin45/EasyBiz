@@ -336,6 +336,16 @@ namespace EasyBiz
                         row.DefaultCellStyle.BackColor = Color.FromArgb(235, 245, 255); // Soft cyan
                         row.DefaultCellStyle.ForeColor = Color.FromArgb(0, 102, 102);   // Dark cyan text
                     }
+                    else if (transactionType.StartsWith("Bank Payment"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(235, 235, 255); // Soft blue
+                        row.DefaultCellStyle.ForeColor = Color.FromArgb(0, 0, 153);     // Dark blue text
+                    }
+                    else if (transactionType.StartsWith("Bank Receipt"))
+                    {
+                        row.DefaultCellStyle.BackColor = Color.FromArgb(235, 255, 255); // Soft cyan
+                        row.DefaultCellStyle.ForeColor = Color.FromArgb(0, 153, 153);   // Dark cyan text
+                    }                    
                     else
                     {
                         // 4. Default reset fallback to prevent scrolling display bugs

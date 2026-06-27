@@ -76,8 +76,7 @@ namespace EasyBiz
             if (statusFilter != "All")
                 cmd.Parameters.AddWithValue("@status", statusFilter);
 
-            using var r = cmd.ExecuteReader();
-            int sno = 1;
+            using var r = cmd.ExecuteReader();            
             while (r.Read())
             {
                 int ri = gridCheques.Rows.Add();
