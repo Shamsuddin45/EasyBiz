@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace EasyBiz
 {
@@ -15,19 +16,23 @@ namespace EasyBiz
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
-            LoadProducts();
-            ShowVoucherNo();
             comboUnit.Items.AddRange(new[] { "PCS", "KG", "TON", "MTR", "LTR", "BAG", "BOX" });
             comboWeightUnit.Items.AddRange(new[] { "KG", "TON", "G", "LBS", "MUN" });
             comboUnit.SelectedItem = "PCS";
             comboWeightUnit.SelectedItem = "KG";
-            comboBox1.SelectedItem = "Quantity"; // Default selection
+            comboSelectUnit.SelectedItem = "Quantity"; // Default selection            
+            ClearForm();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Enter:
+                    // focus to the next control                
+                    this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                    return true;
+
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -40,43 +45,95 @@ namespace EasyBiz
                     BtnRefresh_Click(this, EventArgs.Empty);
                     return true;
 
+                case Keys.F1:
+                    comboSearch.Focus();
+                    return true;
+
                 case Keys.Escape:
                     BtnClose_Click(this, EventArgs.Empty);
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
+
+        
         private void LoadProducts()
         {
-            using var conn = DatabaseHelper.GetConnection();
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT product_id, product_name FROM products ORDER BY product_name";
-            using var reader = cmd.ExecuteReader();
-            comboSearch.Items.Clear();
-            while (reader.Read())
-                comboSearch.Items.Add($"{reader.GetInt32(0)} - {reader.GetString(1)}");
+            try
+            {
+                using var conn = DatabaseHelper.GetConnection();                
+
+                using var cmd = conn.CreateCommand();                
+                cmd.CommandText = "SELECT product_id, product_name FROM products ORDER BY product_name";
+
+                using var reader = cmd.ExecuteReader();
+
+                comboSearch.BeginUpdate(); // Prevents UI flickering during bulk add
+                comboSearch.Items.Clear();
+
+                while (reader.Read())
+                {
+                    comboSearch.Items.Add(new ProductItem
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1).Trim()
+                    });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading products: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                comboSearch.EndUpdate();
+            }
         }
+        public class ProductItem
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public override string ToString() => Name; // ensures combo shows only the name
+        }
+
 
         private void LoadProductDetails(int productId)
         {
             BtnUpdate.Enabled = true;
             BtnSave.Enabled = false;
-            using var conn = DatabaseHelper.GetConnection();
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = @"SELECT product_name, description, unit, weight_unit,
-                                       sale_rate, purchase_rate, min_stock_qty
-                                FROM products WHERE product_id = @id";
-            cmd.Parameters.AddWithValue("@id", productId);
-            using var r = cmd.ExecuteReader();
-            if (r.Read())
+
+            try
             {
-                txtProductName.Text = r.GetString(0);
-                txtDescription.Text = r.IsDBNull(1) ? "" : r.GetString(1);
-                comboUnit.Text = r.GetString(2);
-                comboWeightUnit.Text = r.GetString(3);
-                numSaleRate.Value = r.IsDBNull(4) ? 0 : (decimal)r.GetDouble(4);
-                numPurchaseRate.Value = r.IsDBNull(5) ? 0 : (decimal)r.GetDouble(5);
-                numMinStock.Value = r.IsDBNull(6) ? 0 : (decimal)r.GetDouble(6);
+                using var conn = DatabaseHelper.GetConnection();                
+
+                using var cmd = conn.CreateCommand();
+                cmd.CommandText = @"SELECT product_name, description, unit, weight_unit, 
+                                   sale_rate, purchase_rate, min_stock_qty, isUnit 
+                            FROM products WHERE product_id = @id";
+                cmd.Parameters.AddWithValue("@id", productId);
+
+                using var r = cmd.ExecuteReader();
+                if (r.Read())
+                {
+                    txtProductName.Text = r.GetString(0);
+                    txtDescription.Text = r.IsDBNull(1) ? "" : r.GetString(1);
+                    comboUnit.Text = r.IsDBNull(2) ? "" : r.GetString(2);
+                    comboWeightUnit.Text = r.IsDBNull(3) ? "" : r.GetString(3);
+
+                    // Safer conversion to decimal for NumericUpDown controls
+                    numSaleRate.Value = r.IsDBNull(4) ? 0 : Convert.ToDecimal(r.GetValue(4));
+                    numPurchaseRate.Value = r.IsDBNull(5) ? 0 : Convert.ToDecimal(r.GetValue(5));
+                    numMinStock.Value = r.IsDBNull(6) ? 0 : Convert.ToDecimal(r.GetValue(6));
+
+                    // Handles smallint/int conversion to bool cleanly
+                    bool isUnit = Convert.ToInt32(r.GetValue(7)) == 1;
+                    comboSelectUnit.Text = isUnit ? "Quantity" : "Weight";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading product details: {ex.Message}", "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -103,7 +160,7 @@ namespace EasyBiz
             cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@unit", comboUnit.Text);
             cmd.Parameters.AddWithValue("@wu", comboWeightUnit.Text);
-            if (comboBox1.SelectedItem == "Quantity")
+            if (comboSelectUnit.SelectedItem == "Quantity")
             {
                 cmd.Parameters.AddWithValue("@isUnit", 1);
             }
@@ -160,11 +217,11 @@ namespace EasyBiz
 
         private void comboSearch_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboSearch.SelectedItem == null) return;
-            string item = comboSearch.SelectedItem.ToString()!;
-            int id = int.Parse(item.Split('-')[0].Trim());
-            numProductId.Value = id;
-            LoadProductDetails(id);
+            if (comboSearch.SelectedItem == null) return;            
+            var item = (ProductItem)comboSearch.SelectedItem;            
+            int productId = item.Id;
+            numProductId.Value = productId;
+            LoadProductDetails(productId);
         }
 
         private void ClearForm()
@@ -185,7 +242,7 @@ namespace EasyBiz
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem == "Weight")
+            if (comboSelectUnit.SelectedItem == "Weight")
             {
                 comboUnit.Enabled = false;
                 comboWeightUnit.Enabled = true;
@@ -212,6 +269,11 @@ namespace EasyBiz
                 }
             }
             else { e.Cancel = false; }
+        }        
+
+        private void ProductSetup_Load(object sender, EventArgs e)
+        {
+            LoadProducts();
         }
     }
 }

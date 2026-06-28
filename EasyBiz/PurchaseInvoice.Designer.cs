@@ -30,8 +30,6 @@
         {
             txtVoucherNo = new TextBox();
             label2 = new Label();
-            comboPaymentMode = new ComboBox();
-            label1 = new Label();
             comboPartyName = new ComboBox();
             comboPartyId = new ComboBox();
             label4 = new Label();
@@ -99,26 +97,6 @@
             label2.TabIndex = 4;
             label2.Text = "Voucher No:";
             // 
-            // comboPaymentMode
-            // 
-            comboPaymentMode.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboPaymentMode.Font = new Font("Segoe UI", 12F);
-            comboPaymentMode.FormattingEnabled = true;
-            comboPaymentMode.Location = new Point(473, 99);
-            comboPaymentMode.Name = "comboPaymentMode";
-            comboPaymentMode.Size = new Size(165, 36);
-            comboPaymentMode.TabIndex = 7;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(323, 102);
-            label1.Name = "label1";
-            label1.Size = new Size(144, 28);
-            label1.TabIndex = 6;
-            label1.Text = "Payment Mode";
-            // 
             // comboPartyName
             // 
             comboPartyName.Font = new Font("Segoe UI", 12F);
@@ -126,7 +104,7 @@
             comboPartyName.Location = new Point(130, 219);
             comboPartyName.Name = "comboPartyName";
             comboPartyName.Size = new Size(344, 36);
-            comboPartyName.TabIndex = 11;
+            comboPartyName.TabIndex = 3;
             comboPartyName.SelectedIndexChanged += comboPartyName_SelectedIndexChanged;
             // 
             // comboPartyId
@@ -136,7 +114,7 @@
             comboPartyId.Location = new Point(130, 175);
             comboPartyId.Name = "comboPartyId";
             comboPartyId.Size = new Size(165, 36);
-            comboPartyId.TabIndex = 10;
+            comboPartyId.TabIndex = 2;
             comboPartyId.SelectedIndexChanged += comboPartyId_SelectedIndexChanged;
             // 
             // label4
@@ -176,7 +154,7 @@
             comboProduct.Location = new Point(14, 317);
             comboProduct.Name = "comboProduct";
             comboProduct.Size = new Size(353, 39);
-            comboProduct.TabIndex = 12;
+            comboProduct.TabIndex = 5;
             comboProduct.SelectedIndexChanged += comboProduct_SelectedIndexChanged;
             // 
             // label7
@@ -238,6 +216,7 @@
             gridItems.RowHeadersWidth = 51;
             gridItems.Size = new Size(1232, 188);
             gridItems.TabIndex = 22;
+            gridItems.TabStop = false;
             // 
             // colProductId
             // 
@@ -336,7 +315,7 @@
             dateInvoice.Location = new Point(730, 99);
             dateInvoice.Name = "dateInvoice";
             dateInvoice.Size = new Size(177, 34);
-            dateInvoice.TabIndex = 39;
+            dateInvoice.TabIndex = 1;
             // 
             // label12
             // 
@@ -354,7 +333,7 @@
             txtDescription.Location = new Point(599, 221);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(308, 34);
-            txtDescription.TabIndex = 41;
+            txtDescription.TabIndex = 4;
             // 
             // label13
             // 
@@ -380,6 +359,7 @@
             BtnDeleteRow.Name = "BtnDeleteRow";
             BtnDeleteRow.Size = new Size(124, 34);
             BtnDeleteRow.TabIndex = 43;
+            BtnDeleteRow.TabStop = false;
             BtnDeleteRow.Text = "Delete Row";
             BtnDeleteRow.TextColor = Color.White;
             BtnDeleteRow.UseVisualStyleBackColor = false;
@@ -395,14 +375,15 @@
             BtnAddItem.FlatAppearance.BorderSize = 0;
             BtnAddItem.FlatStyle = FlatStyle.Flat;
             BtnAddItem.ForeColor = Color.White;
-            BtnAddItem.Location = new Point(928, 322);
+            BtnAddItem.Location = new Point(913, 320);
             BtnAddItem.Name = "BtnAddItem";
             BtnAddItem.Size = new Size(130, 34);
-            BtnAddItem.TabIndex = 42;
+            BtnAddItem.TabIndex = 10;
             BtnAddItem.Text = "Add Item";
             BtnAddItem.TextColor = Color.White;
             BtnAddItem.UseVisualStyleBackColor = false;
             BtnAddItem.Click += BtnAddItem_Click;
+            BtnAddItem.Enter += BtnAddItem_Enter;
             // 
             // BtnClose
             // 
@@ -418,7 +399,7 @@
             BtnClose.Location = new Point(874, 721);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(144, 50);
-            BtnClose.TabIndex = 45;
+            BtnClose.TabIndex = 13;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -438,7 +419,7 @@
             BtnSave.Location = new Point(1024, 721);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(179, 50);
-            BtnSave.TabIndex = 44;
+            BtnSave.TabIndex = 12;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -491,8 +472,9 @@
             txtQty.Location = new Point(369, 316);
             txtQty.Name = "txtQty";
             txtQty.Size = new Size(108, 38);
-            txtQty.TabIndex = 50;
+            txtQty.TabIndex = 6;
             txtQty.Text = "0";
+            txtQty.TextChanged += txtQty_TextChanged;
             // 
             // txtWeight
             // 
@@ -500,8 +482,9 @@
             txtWeight.Location = new Point(480, 315);
             txtWeight.Name = "txtWeight";
             txtWeight.Size = new Size(108, 38);
-            txtWeight.TabIndex = 51;
+            txtWeight.TabIndex = 7;
             txtWeight.Text = "0";
+            txtWeight.TextChanged += txtWeight_TextChanged;
             // 
             // txtRate
             // 
@@ -509,8 +492,9 @@
             txtRate.Location = new Point(594, 316);
             txtRate.Name = "txtRate";
             txtRate.Size = new Size(108, 38);
-            txtRate.TabIndex = 52;
+            txtRate.TabIndex = 8;
             txtRate.Text = "0";
+            txtRate.TextChanged += txtRate_TextChanged;
             // 
             // txtAmount
             // 
@@ -518,8 +502,9 @@
             txtAmount.Location = new Point(708, 316);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(199, 38);
-            txtAmount.TabIndex = 53;
+            txtAmount.TabIndex = 9;
             txtAmount.Text = "0";
+            txtAmount.TextChanged += txtAmount_TextChanged;
             // 
             // txtDiscount
             // 
@@ -527,7 +512,7 @@
             txtDiscount.Location = new Point(1086, 596);
             txtDiscount.Name = "txtDiscount";
             txtDiscount.Size = new Size(160, 38);
-            txtDiscount.TabIndex = 54;
+            txtDiscount.TabIndex = 11;
             txtDiscount.Text = "0";
             // 
             // txtTotal
@@ -584,8 +569,6 @@
             Controls.Add(comboPartyId);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(comboPaymentMode);
-            Controls.Add(label1);
             Controls.Add(txtVoucherNo);
             Controls.Add(label2);
             Name = "PurchaseInvoice";
@@ -605,8 +588,6 @@
 
         private TextBox txtVoucherNo;
         private Label label2;
-        private ComboBox comboPaymentMode;
-        private Label label1;
         private ComboBox comboPartyName;
         private ComboBox comboPartyId;
         private Label label4;

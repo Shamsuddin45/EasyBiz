@@ -15,14 +15,17 @@ namespace EasyBiz
             LoadProducts();
             ShowVoucherNo();
             BeautifyGrid();
-            comboPaymentMode.Items.AddRange(new[] { "Credit", "Cash" });
-            comboPaymentMode.SelectedItem = "Credit";
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Enter:
+                    // focus to the next control                
+                    this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                    return true;
+
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -171,7 +174,7 @@ namespace EasyBiz
             {
                 cmd.CommandText = @"
             SELECT account_id, account_name, invoice_date,
-                   description, discount, payment_mode
+                   description, discount
             FROM   purchase_invoices
             WHERE  voucher_no = @v";
                 cmd.Parameters.AddWithValue("@v", voucherNo);
@@ -192,9 +195,6 @@ namespace EasyBiz
                     // Discount
                     txtDiscount.Text = r.IsDBNull(4) ? "0" : r.GetDecimal(4).ToString("N2");
 
-                    // Payment mode
-                    string pm = r.IsDBNull(5) ? "Credit" : r.GetString(5);
-                    comboPaymentMode.SelectedItem = pm;
                 }
             }
 
@@ -244,8 +244,8 @@ namespace EasyBiz
             RecalcTotal();
 
             // Reset item-input section ready for optional extra lines
-            comboProduct.SelectedIndex = -1;            
-            txtQty.Text = "0";            
+            comboProduct.SelectedIndex = -1;
+            txtQty.Text = "0";
             txtWeight.Text = "0";
             txtRate.Text = "0";
             lblStockQty.Text = "Qty: -";
@@ -332,7 +332,7 @@ namespace EasyBiz
                 if (decimal.TryParse(r.Cells["colAmount"].Value?.ToString(), out var a))
                     total += a;
             }
-            txtTotal.Text= total.ToString("N2");
+            txtTotal.Text = total.ToString("N2");
             txtNetAmount.Text = (total - decimal.Parse(txtDiscount.Text)).ToString("N2");
         }
 
@@ -343,7 +343,6 @@ namespace EasyBiz
             txtWeight.Text = "0";
             txtRate.Text = "0";
             txtAmount.Text = "0";
-            txtDiscount.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
             comboProduct.Focus();
@@ -379,7 +378,7 @@ namespace EasyBiz
                 string date = dateInvoice.Value.ToString("yyyy-MM-dd");
                 int accountId = int.Parse(comboPartyId.SelectedItem!.ToString()!);
                 string accountName = comboPartyName.SelectedItem!.ToString()!;
-                string payMode = comboPaymentMode.SelectedItem!.ToString()!;
+                //string payMode = comboPaymentMode.SelectedItem!.ToString()!;
                 decimal total = decimal.Parse(txtTotal.Text);
                 decimal discount = decimal.Parse(txtDiscount.Text);
                 decimal net = decimal.Parse(txtNetAmount.Text);
@@ -477,8 +476,8 @@ namespace EasyBiz
                 using (var cmd = new SqliteCommand(@"
             INSERT INTO purchase_invoices
                 (voucher_no, invoice_date, account_id, account_name, description,
-                 total_amount, discount, net_amount, payment_mode)
-            VALUES (@v,@dt,@aid,@an,@d,@tot,@disc,@net,@pm);
+                 total_amount, discount, net_amount)
+            VALUES (@v,@dt,@aid,@an,@d,@tot,@disc,@net);
             SELECT last_insert_rowid();", conn, txn))
                 {
                     cmd.Parameters.AddWithValue("@v", voucherNo);
@@ -489,7 +488,6 @@ namespace EasyBiz
                     cmd.Parameters.AddWithValue("@tot", (double)total);
                     cmd.Parameters.AddWithValue("@disc", (double)discount);
                     cmd.Parameters.AddWithValue("@net", (double)net);
-                    cmd.Parameters.AddWithValue("@pm", payMode);
                     purchaseId = (long)cmd.ExecuteScalar()!;
                 }
 
@@ -587,9 +585,9 @@ namespace EasyBiz
                         else { itemSummary.Append($"{productName} ({weight:N3} {weightUnit} x {rate:N2})"); }
                     }
 
-                    // 4. Accounting entry — Credit supplier/cash, Debit purchases
-                    int creditAccountId = payMode == "Cash" ? 10001 : accountId;
-                    string creditAccName = payMode == "Cash" ? "Cash In Hand" : accountName;
+                    // 4. Accounting entry 
+                    int creditAccountId = accountId;
+                    string creditAccName = accountName;
 
                     string finalDescription = $"Purchase Inv #{voucherNo}";
                     if (!string.IsNullOrWhiteSpace(desc))
@@ -649,7 +647,6 @@ namespace EasyBiz
             txtNetAmount.Text = "0";
             comboPartyName.SelectedIndex = -1;
             comboPartyId.SelectedIndex = -1;
-            comboPaymentMode.SelectedItem = "Credit";
             ShowVoucherNo();
             LoadProducts();
             comboPartyName.Focus();
@@ -688,6 +685,57 @@ namespace EasyBiz
             }
             else { e.Cancel = false; }
         }
-        
+
+        private void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            if (!txtAmount.Focused)
+                return;
+
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
+
+            if (qty > 0)
+                txtRate.Text = (amount / qty).ToString("N2");
+            else if (weight > 0)
+                txtRate.Text = (amount / weight).ToString("N2");
+        }
+
+        private void txtQty_TextChanged(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(txtQty.Text, out decimal qty) &&
+                decimal.TryParse(txtRate.Text, out decimal rate))
+            {
+                decimal total = qty * rate;
+                txtAmount.Text = total.ToString("N2");
+            }
+        }
+
+        private void txtWeight_TextChanged(object sender, EventArgs e)
+        {
+            if (decimal.TryParse(txtWeight.Text, out decimal weight) &&
+                decimal.TryParse(txtRate.Text, out decimal rate))
+            {
+                decimal total = weight * rate;
+                txtAmount.Text = total.ToString("N2");
+            }
+        }
+
+        private void txtRate_TextChanged(object sender, EventArgs e)
+        {
+            decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
+            decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
+            decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
+
+            decimal amount = (qty > 0 ? qty : weight) * rate;
+            txtAmount.Text = amount.ToString("N2");
+        }
+
+        private void BtnAddItem_Enter(object sender, EventArgs e)
+        {
+            BtnAddItem_Click(sender, e);
+        }
     }
+
+
 }

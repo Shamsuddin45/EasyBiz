@@ -16,15 +16,19 @@ namespace EasyBiz
             LoadAccounts();
             LoadProducts();
             ShowVoucherNo();
-            BeautifyGrid();
-            comboPaymentMode.Items.AddRange(new[] { "Credit", "Cash" });
-            comboPaymentMode.SelectedItem = "Credit";
+            BeautifyGrid();                        
+            comboPartyName.SelectedItem = "Cash In Hand";
+            comboProduct.Focus();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Enter:
+                    // focus to the next control                
+                    this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                    return true;
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -179,7 +183,7 @@ namespace EasyBiz
             {
                 cmd.CommandText = @"
             SELECT account_id, account_name, invoice_date,
-                   description, discount, payment_mode
+                   description, discount
             FROM   sale_invoices
             WHERE  voucher_no = @v";
                 cmd.Parameters.AddWithValue("@v", voucherNo);
@@ -199,10 +203,7 @@ namespace EasyBiz
 
                     // Discount
                     txtDiscount.Text = r.IsDBNull(4) ? "0" : r.GetDecimal(4).ToString("N2");
-
-                    // Payment mode
-                    string pm = r.IsDBNull(5) ? "Credit" : r.GetString(5);
-                    comboPaymentMode.SelectedItem = pm;
+                    
                 }
             }
 
@@ -364,7 +365,6 @@ namespace EasyBiz
             txtQty.Text = "0";
             txtWeight.Text = "0";
             txtRate.Text = "0";
-            txtDiscount.Text = "0";
             txtAmount.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
@@ -406,7 +406,7 @@ namespace EasyBiz
                 string date = dateInvoice.Value.ToString("yyyy-MM-dd");
                 int accountId = int.TryParse(comboPartyId.SelectedItem!.ToString()!, out var accId) ? accId : 0;
                 string accountName = comboPartyName.SelectedItem!.ToString()!;
-                string payMode = comboPaymentMode.SelectedItem!.ToString()!;
+                // ── REMOVED payMode VARIABLE HERE ──
                 decimal total = decimal.TryParse(txtTotal.Text, out var t) ? t : 0;
                 decimal discount = decimal.TryParse(txtDiscount.Text, out var d) ? d : 0;
                 decimal net = decimal.TryParse(txtNetAmount.Text, out var n) ? n : 0;
@@ -423,9 +423,9 @@ namespace EasyBiz
 
                     // 1a. Restore stock quantities from the old line items
                     using (var cmd = new SqliteCommand(@"
-                SELECT product_id, quantity, weight
-                FROM   sale_invoice_items
-                WHERE  voucher_no = @v", conn, txn))
+        SELECT product_id, quantity, weight
+        FROM   sale_invoice_items
+        WHERE  voucher_no = @v", conn, txn))
                     {
                         cmd.Parameters.AddWithValue("@v", voucherNo);
                         using var r = cmd.ExecuteReader();
@@ -436,10 +436,10 @@ namespace EasyBiz
                             double wt = r.GetDouble(2);
 
                             using var upd = new SqliteCommand(@"
-                        UPDATE products
-                        SET current_qty    = current_qty    + @qty,
-                            current_weight = current_weight + @wt
-                        WHERE product_id = @pid", conn, txn);
+                UPDATE products
+                SET current_qty    = current_qty    + @qty,
+                    current_weight = current_weight + @wt
+                WHERE product_id = @pid", conn, txn);
                             upd.Parameters.AddWithValue("@qty", qty);
                             upd.Parameters.AddWithValue("@wt", wt);
                             upd.Parameters.AddWithValue("@pid", pid);
@@ -449,10 +449,10 @@ namespace EasyBiz
 
                     // 1b. Reverse the old financial transaction (find old net & debit account)
                     using (var cmd = new SqliteCommand(@"
-                SELECT account_id, debit
-                FROM   transactions
-                WHERE  voucher_no        = @v
-                  AND  transaction_type  = 'Sale Invoice'", conn, txn))
+        SELECT account_id, debit
+        FROM   transactions
+        WHERE  voucher_no        = @v
+          AND  transaction_type  = 'Sale Invoice'", conn, txn))
                     {
                         cmd.Parameters.AddWithValue("@v", voucherNo);
                         using var r = cmd.ExecuteReader();
@@ -472,9 +472,9 @@ namespace EasyBiz
 
                     // 1c. Delete old records
                     foreach (string tbl in new[] {
-                "stock_movements",
-                "sale_invoice_items",
-                "transactions" })
+        "stock_movements",
+        "sale_invoice_items",
+        "transactions" })
                     {
 
                         using var cmd = new SqliteCommand(
@@ -511,11 +511,11 @@ namespace EasyBiz
                 // 2. Insert sale header
                 long saleId;
                 using (var cmd = new SqliteCommand(@"
-            INSERT INTO sale_invoices
-                (voucher_no, invoice_date, account_id, account_name, description,
-                 total_amount, discount, net_amount, payment_mode)
-            VALUES (@v,@dt,@aid,@an,@d,@tot,@disc,@net,@pm);
-            SELECT last_insert_rowid();", conn, txn))
+    INSERT INTO sale_invoices
+        (voucher_no, invoice_date, account_id, account_name, description,
+         total_amount, discount, net_amount)
+    VALUES (@v,@dt,@aid,@an,@d,@tot,@disc,@net);
+    SELECT last_insert_rowid();", conn, txn))
                 {
                     cmd.Parameters.AddWithValue("@v", voucherNo);
                     cmd.Parameters.AddWithValue("@dt", date);
@@ -525,7 +525,6 @@ namespace EasyBiz
                     cmd.Parameters.AddWithValue("@tot", (double)total);
                     cmd.Parameters.AddWithValue("@disc", (double)discount);
                     cmd.Parameters.AddWithValue("@net", (double)net);
-                    cmd.Parameters.AddWithValue("@pm", payMode);
                     saleId = (long)cmd.ExecuteScalar()!;
                 }
 
@@ -550,10 +549,10 @@ namespace EasyBiz
                     }
                     // a. Insert line item
                     using (var cmd = new SqliteCommand(@"
-                INSERT INTO sale_invoice_items
-                    (sale_id, voucher_no, product_id, product_name,
-                     quantity, weight, weight_unit, rate, amount)
-                VALUES (@sid,@v,@pid,@pn,@qty,@wt,@wu,@rate,@amt)", conn, txn))
+        INSERT INTO sale_invoice_items
+            (sale_id, voucher_no, product_id, product_name,
+             quantity, weight, weight_unit, rate, amount)
+        VALUES (@sid,@v,@pid,@pn,@qty,@wt,@wu,@rate,@amt)", conn, txn))
                     {
                         cmd.Parameters.AddWithValue("@sid", saleId);
                         cmd.Parameters.AddWithValue("@v", voucherNo);
@@ -569,10 +568,10 @@ namespace EasyBiz
 
                     // b. Reduce stock
                     using (var cmd = new SqliteCommand(@"
-                UPDATE products
-                SET current_qty    = current_qty    - @qty,
-                    current_weight = current_weight - @wt
-                WHERE product_id = @pid", conn, txn))
+        UPDATE products
+        SET current_qty    = current_qty    - @qty,
+            current_weight = current_weight - @wt
+        WHERE product_id = @pid", conn, txn))
                     {
                         cmd.Parameters.AddWithValue("@qty", (double)qty);
                         cmd.Parameters.AddWithValue("@wt", (double)weight);
@@ -592,11 +591,11 @@ namespace EasyBiz
 
                     // d. Record stock movement
                     using (var cmd = new SqliteCommand(@"
-                INSERT INTO stock_movements
-                    (movement_date, movement_type, voucher_type, voucher_no,
-                     product_id, product_name, qty_out, weight_out, rate, amount,
-                     balance_qty, balance_weight)
-                VALUES (@dt,'Sale','Sale Invoice',@v,@pid,@pn,@qo,@wo,@rate,@amt,@bq,@bw)", conn, txn))
+        INSERT INTO stock_movements
+            (movement_date, movement_type, voucher_type, voucher_no,
+             product_id, product_name, qty_out, weight_out, rate, amount,
+             balance_qty, balance_weight)
+        VALUES (@dt,'Sale','Sale Invoice',@v,@pid,@pn,@qo,@wo,@rate,@amt,@bq,@bw)", conn, txn))
                     {
                         cmd.Parameters.AddWithValue("@dt", date);
                         cmd.Parameters.AddWithValue("@v", voucherNo);
@@ -629,8 +628,9 @@ namespace EasyBiz
                 }
 
                 // 4. Accounting entry
-                int debitAccountId = payMode == "Cash" ? 10001 : accountId;
-                string debitAccName = payMode == "Cash" ? "Cash In Hand" : accountName;
+                // ── MODIFIED: Always use the selected accountId and accountName ──
+                int debitAccountId = accountId;
+                string debitAccName = accountName;
 
                 string finalDescription = $"Sale Inv #{voucherNo}";
                 if (!string.IsNullOrWhiteSpace(desc))
@@ -639,10 +639,10 @@ namespace EasyBiz
                     finalDescription += $" [{itemSummary}]";
 
                 using (var cmd = new SqliteCommand(@"
-            INSERT INTO transactions
-                (transaction_type, voucher_no, account_id, account_name,
-                 description, debit, credit, transaction_date)
-            VALUES ('Sale Invoice',@v,@aid,@an,@d,@net,0,@dt)", conn, txn))
+    INSERT INTO transactions
+        (transaction_type, voucher_no, account_id, account_name,
+         description, debit, credit, transaction_date)
+    VALUES ('Sale Invoice',@v,@aid,@an,@d,@net,0,@dt)", conn, txn))
                 {
                     cmd.Parameters.AddWithValue("@v", voucherNo);
                     cmd.Parameters.AddWithValue("@aid", debitAccountId);
@@ -672,8 +672,8 @@ namespace EasyBiz
                 if (MessageBox.Show("Print receipt now?", "Print Receipt",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, payMode, net, total, discount), preview: true);
-                    // pass preview:true above while you're tuning the layout on a real printer
+                    // ── MODIFIED: Removed payMode parameter from BuildReceiptData ──
+                    ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount), preview: true);
                 }
 
                 // Reset to new-entry mode
@@ -688,7 +688,7 @@ namespace EasyBiz
             }
         }
 
-        private ReceiptData BuildReceiptData(int voucherNo, string customerName, string paymentMode,
+        private ReceiptData BuildReceiptData(int voucherNo, string customerName,
          decimal net, decimal total, decimal discount)
         {
             var data = new ReceiptData
@@ -696,8 +696,7 @@ namespace EasyBiz
                 ShopName = "EasyBiz",   // hardcode your shop name here, or pull from a settings row
                 VoucherNo = voucherNo,
                 InvoiceDate = dateInvoice.Value,
-                CustomerName = customerName,
-                PaymentMode = paymentMode,
+                CustomerName = customerName,                
                 Total = total,
                 Discount = discount,
                 NetAmount = net
@@ -727,8 +726,7 @@ namespace EasyBiz
             txtTotal.Text = "0";
             txtNetAmount.Text = "0";
             comboPartyName.SelectedIndex = -1;
-            comboPartyId.SelectedIndex = -1;
-            comboPaymentMode.SelectedItem = "Credit";
+            comboPartyId.SelectedIndex = -1;            
             ShowVoucherNo();
             LoadProducts(); // refresh stock
             comboPartyName.Focus();
@@ -737,7 +735,7 @@ namespace EasyBiz
         private void comboPartyName_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboPartyName.SelectedIndex >= 0)
-                comboPartyId.SelectedIndex = comboPartyName.SelectedIndex;
+                comboPartyId.SelectedIndex = comboPartyName.SelectedIndex;            
         }
 
         private void comboPartyId_SelectedIndexChanged(object sender, EventArgs e)
@@ -747,7 +745,7 @@ namespace EasyBiz
         }
 
         private void BtnClose_Click(object sender, EventArgs e)
-        {            
+        {
             Close();
         }
 
@@ -801,22 +799,6 @@ namespace EasyBiz
 
         }
 
-        private void txtQty_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                txtRate.Focus();
-            }
-        }
-
-        private void txtRate_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                txtAmount.Focus();
-            }
-        }
-
         private void txtDiscount_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -825,36 +807,19 @@ namespace EasyBiz
             }
         }
 
-        private void txtAmount_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                BtnAddItem_Click(sender, e);
-            }
-        }
-
-        private void txtWeight_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                txtRate.Focus();
-            }
-        }
-
         private void txtAmount_TextChanged(object sender, EventArgs e)
         {
+            if (!txtAmount.Focused)
+                return;
+
             decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
             decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
             decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
 
-            decimal rate = 0;
-
             if (qty > 0)
-                rate = amount / qty;
+                txtRate.Text = (amount / qty).ToString("N2");
             else if (weight > 0)
-                rate = amount / weight;
-
-            txtRate.Text = rate.ToString("N2");
+                txtRate.Text = (amount / weight).ToString("N2");
         }
 
         private void txtDiscount_TextChanged(object sender, EventArgs e)
@@ -880,6 +845,11 @@ namespace EasyBiz
                 }
             }
             else { e.Cancel = false; }
+        }
+
+        private void BtnAddItem_Enter(object sender, EventArgs e)
+        {
+            BtnAddItem_Click(sender, e);
         }
     }
 }

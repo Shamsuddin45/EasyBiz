@@ -127,7 +127,7 @@ namespace EasyBiz
                     total_amount    REAL DEFAULT 0,
                     discount        REAL DEFAULT 0,
                     net_amount      REAL DEFAULT 0,
-                    payment_mode    TEXT DEFAULT 'Credit',  -- Cash / Credit
+                    -- payment_mode    TEXT DEFAULT 'Credit',  -- Cash / Credit
                     is_cancelled    INTEGER DEFAULT 0,
                     created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (account_id) REFERENCES accounts(account_id)
@@ -160,7 +160,7 @@ namespace EasyBiz
                     total_amount    REAL DEFAULT 0,
                     discount        REAL DEFAULT 0,
                     net_amount      REAL DEFAULT 0,
-                    payment_mode    TEXT DEFAULT 'Credit',
+                    -- payment_mode    TEXT DEFAULT 'Credit',
                     is_cancelled    INTEGER DEFAULT 0,
                     created_at      DATETIME DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (account_id) REFERENCES accounts(account_id)

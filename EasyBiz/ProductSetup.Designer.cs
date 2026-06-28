@@ -52,8 +52,9 @@
             BtnRefresh = new CustomButton();
             BtnClose = new CustomButton();
             toolTipMinStockQty = new ToolTip(components);
-            comboBox1 = new ComboBox();
+            comboSelectUnit = new ComboBox();
             label10 = new Label();
+            label11 = new Label();
             ((System.ComponentModel.ISupportInitialize)numSaleRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).BeginInit();
@@ -73,12 +74,15 @@
             // 
             // comboSearch
             // 
+            comboSearch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboSearch.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboSearch.Font = new Font("Segoe UI", 12F);
             comboSearch.FormattingEnabled = true;
             comboSearch.Location = new Point(717, 45);
             comboSearch.Name = "comboSearch";
             comboSearch.Size = new Size(311, 36);
             comboSearch.TabIndex = 1;
+            comboSearch.TabStop = false;
             comboSearch.SelectedIndexChanged += comboSearch_SelectedIndexChanged;
             // 
             // label2
@@ -97,16 +101,16 @@
             txtProductName.Location = new Point(166, 98);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(457, 38);
-            txtProductName.TabIndex = 3;
+            txtProductName.TabIndex = 1;
             // 
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 12F);
             txtDescription.Location = new Point(166, 146);
-            txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(457, 67);
-            txtDescription.TabIndex = 5;
+            txtDescription.PlaceholderText = "optional";
+            txtDescription.Size = new Size(457, 34);
+            txtDescription.TabIndex = 2;
             // 
             // label3
             // 
@@ -136,7 +140,7 @@
             comboUnit.Location = new Point(166, 237);
             comboUnit.Name = "comboUnit";
             comboUnit.Size = new Size(151, 36);
-            comboUnit.TabIndex = 7;
+            comboUnit.TabIndex = 3;
             // 
             // comboWeightUnit
             // 
@@ -146,7 +150,7 @@
             comboWeightUnit.Location = new Point(479, 237);
             comboWeightUnit.Name = "comboWeightUnit";
             comboWeightUnit.Size = new Size(144, 36);
-            comboWeightUnit.TabIndex = 9;
+            comboWeightUnit.TabIndex = 4;
             // 
             // label5
             // 
@@ -175,7 +179,7 @@
             numSaleRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numSaleRate.Name = "numSaleRate";
             numSaleRate.Size = new Size(150, 38);
-            numSaleRate.TabIndex = 11;
+            numSaleRate.TabIndex = 5;
             numSaleRate.TextAlign = HorizontalAlignment.Center;
             numSaleRate.ThousandsSeparator = true;
             // 
@@ -186,7 +190,7 @@
             numPurchaseRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numPurchaseRate.Name = "numPurchaseRate";
             numPurchaseRate.Size = new Size(144, 38);
-            numPurchaseRate.TabIndex = 13;
+            numPurchaseRate.TabIndex = 6;
             numPurchaseRate.TextAlign = HorizontalAlignment.Center;
             numPurchaseRate.ThousandsSeparator = true;
             // 
@@ -207,7 +211,7 @@
             numMinStock.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numMinStock.Name = "numMinStock";
             numMinStock.Size = new Size(150, 38);
-            numMinStock.TabIndex = 15;
+            numMinStock.TabIndex = 7;
             numMinStock.TextAlign = HorizontalAlignment.Center;
             numMinStock.ThousandsSeparator = true;
             // 
@@ -232,6 +236,7 @@
             numProductId.ReadOnly = true;
             numProductId.Size = new Size(150, 38);
             numProductId.TabIndex = 17;
+            numProductId.TabStop = false;
             numProductId.TextAlign = HorizontalAlignment.Center;
             // 
             // label9
@@ -258,7 +263,7 @@
             BtnSave.Location = new Point(848, 503);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(180, 50);
-            BtnSave.TabIndex = 18;
+            BtnSave.TabIndex = 9;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -279,7 +284,7 @@
             BtnUpdate.Location = new Point(629, 503);
             BtnUpdate.Name = "BtnUpdate";
             BtnUpdate.Size = new Size(213, 50);
-            BtnUpdate.TabIndex = 19;
+            BtnUpdate.TabIndex = 10;
             BtnUpdate.Text = "Update (Ctrl+U)";
             BtnUpdate.TextColor = Color.White;
             BtnUpdate.UseVisualStyleBackColor = false;
@@ -299,7 +304,7 @@
             BtnRefresh.Location = new Point(479, 503);
             BtnRefresh.Name = "BtnRefresh";
             BtnRefresh.Size = new Size(144, 50);
-            BtnRefresh.TabIndex = 20;
+            BtnRefresh.TabIndex = 11;
             BtnRefresh.Text = "Refresh [F5]";
             BtnRefresh.TextColor = Color.White;
             BtnRefresh.UseVisualStyleBackColor = false;
@@ -319,23 +324,23 @@
             BtnClose.Location = new Point(329, 503);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(144, 50);
-            BtnClose.TabIndex = 21;
+            BtnClose.TabIndex = 12;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
-            // comboBox1
+            // comboSelectUnit
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.Font = new Font("Segoe UI", 12F);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Weight", "Quantity" });
-            comboBox1.Location = new Point(452, 45);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(172, 36);
-            comboBox1.TabIndex = 23;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            comboSelectUnit.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboSelectUnit.Font = new Font("Segoe UI", 12F);
+            comboSelectUnit.FormattingEnabled = true;
+            comboSelectUnit.Items.AddRange(new object[] { "Weight", "Quantity" });
+            comboSelectUnit.Location = new Point(452, 45);
+            comboSelectUnit.Name = "comboSelectUnit";
+            comboSelectUnit.Size = new Size(172, 36);
+            comboSelectUnit.TabIndex = 8;
+            comboSelectUnit.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label10
             // 
@@ -347,12 +352,24 @@
             label10.TabIndex = 22;
             label10.Text = "Select Unit";
             // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("Segoe UI", 12F);
+            label11.ForeColor = SystemColors.ButtonShadow;
+            label11.Location = new Point(875, 14);
+            label11.Name = "label11";
+            label11.Size = new Size(45, 28);
+            label11.TabIndex = 24;
+            label11.Text = "[F1]";
+            // 
             // ProductSetup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1040, 565);
-            Controls.Add(comboBox1);
+            Controls.Add(label11);
+            Controls.Add(comboSelectUnit);
             Controls.Add(label10);
             Controls.Add(BtnClose);
             Controls.Add(BtnRefresh);
@@ -379,6 +396,7 @@
             Name = "ProductSetup";
             Text = "Product Setup";
             FormClosing += ProductSetup_FormClosing;
+            Load += ProductSetup_Load;
             ((System.ComponentModel.ISupportInitialize)numSaleRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).EndInit();
@@ -412,7 +430,8 @@
         private CustomButton BtnRefresh;
         private CustomButton BtnClose;
         private ToolTip toolTipMinStockQty;
-        private ComboBox comboBox1;
+        private ComboBox comboSelectUnit;
         private Label label10;
+        private Label label11;
     }
 }

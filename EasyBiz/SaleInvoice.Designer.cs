@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            comboPaymentMode = new ComboBox();
             label2 = new Label();
             txtVoucherNo = new TextBox();
             label3 = new Label();
@@ -79,26 +77,6 @@
             panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(332, 100);
-            label1.Name = "label1";
-            label1.Size = new Size(144, 28);
-            label1.TabIndex = 0;
-            label1.Text = "Payment Mode";
-            // 
-            // comboPaymentMode
-            // 
-            comboPaymentMode.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboPaymentMode.Font = new Font("Segoe UI", 12F);
-            comboPaymentMode.FormattingEnabled = true;
-            comboPaymentMode.Location = new Point(482, 97);
-            comboPaymentMode.Name = "comboPaymentMode";
-            comboPaymentMode.Size = new Size(165, 36);
-            comboPaymentMode.TabIndex = 1;
-            // 
             // label2
             // 
             label2.AutoSize = true;
@@ -117,6 +95,7 @@
             txtVoucherNo.ReadOnly = true;
             txtVoucherNo.Size = new Size(165, 34);
             txtVoucherNo.TabIndex = 3;
+            txtVoucherNo.TabStop = false;
             txtVoucherNo.TextAlign = HorizontalAlignment.Center;
             // 
             // label3
@@ -141,32 +120,38 @@
             // 
             // comboPartyId
             // 
+            comboPartyId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyId.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyId.Font = new Font("Segoe UI", 12F);
             comboPartyId.FormattingEnabled = true;
             comboPartyId.Location = new Point(136, 153);
             comboPartyId.Name = "comboPartyId";
             comboPartyId.Size = new Size(165, 36);
-            comboPartyId.TabIndex = 6;
+            comboPartyId.TabIndex = 3;
             comboPartyId.SelectedIndexChanged += comboPartyId_SelectedIndexChanged;
             // 
             // comboPartyName
             // 
+            comboPartyName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyName.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyName.Font = new Font("Segoe UI", 12F);
             comboPartyName.FormattingEnabled = true;
             comboPartyName.Location = new Point(136, 197);
             comboPartyName.Name = "comboPartyName";
             comboPartyName.Size = new Size(344, 36);
-            comboPartyName.TabIndex = 7;
+            comboPartyName.TabIndex = 4;
             comboPartyName.SelectedIndexChanged += comboPartyName_SelectedIndexChanged;
             // 
             // comboProduct
             // 
+            comboProduct.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboProduct.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboProduct.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProduct.FormattingEnabled = true;
             comboProduct.Location = new Point(6, 328);
             comboProduct.Name = "comboProduct";
             comboProduct.Size = new Size(342, 39);
-            comboProduct.TabIndex = 8;
+            comboProduct.TabIndex = 6;
             comboProduct.SelectedIndexChanged += comboProduct_SelectedIndexChanged;
             // 
             // label5
@@ -237,7 +222,8 @@
             gridItems.Name = "gridItems";
             gridItems.RowHeadersWidth = 51;
             gridItems.Size = new Size(1252, 188);
-            gridItems.TabIndex = 18;
+            gridItems.TabIndex = 11;
+            gridItems.TabStop = false;
             // 
             // colProductId
             // 
@@ -346,7 +332,7 @@
             dateInvoice.Location = new Point(715, 97);
             dateInvoice.Name = "dateInvoice";
             dateInvoice.Size = new Size(177, 34);
-            dateInvoice.TabIndex = 26;
+            dateInvoice.TabIndex = 2;
             // 
             // txtDescription
             // 
@@ -354,7 +340,7 @@
             txtDescription.Location = new Point(615, 199);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(277, 34);
-            txtDescription.TabIndex = 28;
+            txtDescription.TabIndex = 5;
             // 
             // label13
             // 
@@ -379,11 +365,12 @@
             BtnAddItem.Location = new Point(966, 328);
             BtnAddItem.Name = "BtnAddItem";
             BtnAddItem.Size = new Size(124, 34);
-            BtnAddItem.TabIndex = 32;
+            BtnAddItem.TabIndex = 11;
             BtnAddItem.Text = "Add Item";
             BtnAddItem.TextColor = Color.White;
             BtnAddItem.UseVisualStyleBackColor = false;
             BtnAddItem.Click += BtnAddItem_Click;
+            BtnAddItem.Enter += BtnAddItem_Enter;
             // 
             // BtnDeleteRow
             // 
@@ -399,6 +386,7 @@
             BtnDeleteRow.Name = "BtnDeleteRow";
             BtnDeleteRow.Size = new Size(128, 34);
             BtnDeleteRow.TabIndex = 33;
+            BtnDeleteRow.TabStop = false;
             BtnDeleteRow.Text = "Delete Row";
             BtnDeleteRow.TextColor = Color.White;
             BtnDeleteRow.UseVisualStyleBackColor = false;
@@ -418,7 +406,7 @@
             BtnSave.Location = new Point(1058, 785);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(188, 50);
-            BtnSave.TabIndex = 34;
+            BtnSave.TabIndex = 13;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -438,7 +426,7 @@
             BtnClose.Location = new Point(911, 785);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(141, 50);
-            BtnClose.TabIndex = 35;
+            BtnClose.TabIndex = 14;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -491,11 +479,10 @@
             txtQty.Location = new Point(354, 328);
             txtQty.Name = "txtQty";
             txtQty.Size = new Size(125, 38);
-            txtQty.TabIndex = 40;
+            txtQty.TabIndex = 7;
             txtQty.Text = "0";
             txtQty.TextAlign = HorizontalAlignment.Right;
             txtQty.TextChanged += txtQty_TextChanged;
-            txtQty.KeyDown += txtQty_KeyDown;
             // 
             // txtWeight
             // 
@@ -503,11 +490,10 @@
             txtWeight.Location = new Point(482, 328);
             txtWeight.Name = "txtWeight";
             txtWeight.Size = new Size(125, 38);
-            txtWeight.TabIndex = 41;
+            txtWeight.TabIndex = 8;
             txtWeight.Text = "0";
             txtWeight.TextAlign = HorizontalAlignment.Right;
             txtWeight.TextChanged += txtWeight_TextChanged;
-            txtWeight.KeyDown += txtWeight_KeyDown;
             // 
             // txtRate
             // 
@@ -515,11 +501,10 @@
             txtRate.Location = new Point(613, 328);
             txtRate.Name = "txtRate";
             txtRate.Size = new Size(125, 38);
-            txtRate.TabIndex = 42;
+            txtRate.TabIndex = 9;
             txtRate.Text = "0";
             txtRate.TextAlign = HorizontalAlignment.Right;
             txtRate.TextChanged += txtRate_TextChanged;
-            txtRate.KeyDown += txtRate_KeyDown;
             // 
             // txtDiscount
             // 
@@ -527,7 +512,7 @@
             txtDiscount.Location = new Point(1092, 617);
             txtDiscount.Name = "txtDiscount";
             txtDiscount.Size = new Size(154, 38);
-            txtDiscount.TabIndex = 43;
+            txtDiscount.TabIndex = 12;
             txtDiscount.Text = "0";
             txtDiscount.TextAlign = HorizontalAlignment.Right;
             txtDiscount.TextChanged += txtDiscount_TextChanged;
@@ -539,11 +524,10 @@
             txtAmount.Location = new Point(744, 328);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(211, 38);
-            txtAmount.TabIndex = 44;
+            txtAmount.TabIndex = 10;
             txtAmount.Text = "0";
             txtAmount.TextAlign = HorizontalAlignment.Right;
             txtAmount.TextChanged += txtAmount_TextChanged;
-            txtAmount.KeyDown += txtAmount_KeyDown;
             // 
             // txtTotal
             // 
@@ -553,6 +537,7 @@
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(156, 38);
             txtTotal.TabIndex = 45;
+            txtTotal.TabStop = false;
             // 
             // txtNetAmount
             // 
@@ -562,6 +547,7 @@
             txtNetAmount.ReadOnly = true;
             txtNetAmount.Size = new Size(155, 38);
             txtNetAmount.TabIndex = 46;
+            txtNetAmount.TabStop = false;
             // 
             // SaleInvoice
             // 
@@ -601,11 +587,9 @@
             Controls.Add(label3);
             Controls.Add(txtVoucherNo);
             Controls.Add(label2);
-            Controls.Add(comboPaymentMode);
-            Controls.Add(label1);
             Name = "SaleInvoice";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "SaleInvoice";
+            Text = "Sale Invoice";
             FormClosing += SaleInvoice_FormClosing;
             ((System.ComponentModel.ISupportInitialize)gridItems).EndInit();
             groupBox1.ResumeLayout(false);
@@ -617,9 +601,6 @@
         }
 
         #endregion
-
-        private Label label1;
-        private ComboBox comboPaymentMode;
         private Label label2;
         private TextBox txtVoucherNo;
         private Label label3;
