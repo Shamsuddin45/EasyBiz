@@ -366,18 +366,62 @@ namespace EasyBiz
             }
         }
 
+        private System.Drawing.Image ResizeImage(System.Drawing.Image image, int width, int height)
+        {
+            Bitmap resized = new Bitmap(width, height);
+
+            using (Graphics g = Graphics.FromImage(resized))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                g.DrawImage(image, 0, 0, width, height);
+            }
+
+            return resized;
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
-        {            
-             // Resize all buttons images for consistency
-             foreach (var btn in new[] { BtnCashPayment, BtnCashReceipt, BtnJournalVoucher, BtnPurchaseInvoice, BtnSalesInvoice, BtnEditTransactions, BtnLedgerReport, BtnCashBook, BtnBankPayment, BtnBankReceipt, BtnStockReport, BtnTrialBalance, BtnAccountsSetup, BtnProductSetup, BtnOpeningBalances, BtnChequeBook, BtnSettings, BtnBackupData })
-             {
-                 if (btn?.Image != null)
-                 {
-                     int width = (int)(btn.Width * 0.3);   // 30% of button width
-                     int height = (int)(btn.Height * 0.5); // 50% of button height
-                     btn.Image = new Bitmap(btn.Image, new System.Drawing.Size(width, height));                   
-                 }
-             }                
+        {
+            Button[] buttons =
+            {
+        BtnCashPayment,
+        BtnCashReceipt,
+        BtnJournalVoucher,
+        BtnPurchaseInvoice,
+        BtnSalesInvoice,
+        BtnEditTransactions,
+        BtnLedgerReport,
+        BtnCashBook,
+        BtnBankPayment,
+        BtnBankReceipt,
+        BtnStockReport,
+        BtnTrialBalance,
+        BtnAccountsSetup,
+        BtnProductSetup,
+        BtnOpeningBalances,
+        BtnChequeBook,
+        BtnSettings,
+        BtnBackupData
+    };
+
+            const double imageWidthRatio = 0.25;
+            const double imageHeightRatio = 0.45;
+
+            foreach (Button btn in buttons)
+            {
+                if (btn?.Image == null)
+                    continue;
+
+                int width = (int)(btn.Width * imageWidthRatio);
+                int height = (int)(btn.Height * imageHeightRatio);
+
+                System.Drawing.Image original = btn.Image;
+                btn.Image = ResizeImage(original, width, height);
+
+                original.Dispose();
+            }
         }
 
         private void BtnCashDetails_Click(object sender, EventArgs e)
