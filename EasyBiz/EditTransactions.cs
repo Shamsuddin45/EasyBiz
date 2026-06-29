@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace EasyBiz
 {
@@ -11,16 +12,21 @@ namespace EasyBiz
             comboType.SelectedIndex = 0;
         }
 
+        private void OpenTransaction<T>(int voucherNo)
+            where T : Form, new()
+        {
+            dynamic form = new T();
+            if (form.LoadTransactionForEditing(voucherNo))
+            {
+                form.ShowDialog();
+            }
+            
+        }
+
         private void GetTransactions()
         {
-            if (string.IsNullOrWhiteSpace(txtVoucherNo.Text))
-            {
-                MessageBox.Show("Please enter a voucher number.", "Input Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-            if (!int.TryParse(txtVoucherNo.Text, out int voucherNumber))
+            if (!int.TryParse(txtVoucherNo.Text.Trim(), out int voucherNumber))
             {
                 MessageBox.Show("Voucher number must be a whole number.", "Input Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -33,51 +39,37 @@ namespace EasyBiz
             {
                 case "Cash Payment":
                     {
-                        var form = new CashPayments();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<CashPayments>(voucherNumber);
                         break;
                     }
                 case "Cash Receipt":
                     {
-                        var form = new CashReceipts();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<CashReceipts>(voucherNumber);
                         break;
                     }
                 case "Journal Voucher":
                     {
-                        var form = new JournalVoucher();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<JournalVoucher>(voucherNumber);
                         break;
                     }
                 case "Sale Invoice":
                     {
-                        var form = new SaleInvoice();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<SaleInvoice>(voucherNumber);
                         break;
                     }
                 case "Purchase Invoice":
                     {
-                        var form = new PurchaseInvoice();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<PurchaseInvoice>(voucherNumber);
                         break;
                     }
                 case "Bank Payment":
                     {
-                        var form = new BankPayment();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<BankPayment>(voucherNumber);
                         break;
                     }
                 case "Bank Receipt":
                     {
-                        var form = new BankReceipt();
-                        form.LoadTransactionForEditing(voucherNumber);
-                        form.ShowDialog();
+                        OpenTransaction<BankReceipt>(voucherNumber);
                         break;
                     }
                 default:
@@ -100,9 +92,19 @@ namespace EasyBiz
         {
             if (e.KeyCode == Keys.Enter)
             {
-                BtnGo_Click(sender, e);
+                e.SuppressKeyPress = true;
+                BtnGo.PerformClick();
             }
         }
-    
+
+        private void txtVoucherNo_TextChanged(object sender, EventArgs e)
+        {
+            bool hasText = !string.IsNullOrWhiteSpace(txtVoucherNo.Text);
+
+            BtnGo.Enabled = hasText;
+            BtnGo.BackColor = hasText
+                ? Color.DodgerBlue
+                : Color.Silver;
+        }
     }
 }

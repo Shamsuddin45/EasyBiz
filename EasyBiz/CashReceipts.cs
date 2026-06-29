@@ -160,25 +160,30 @@ namespace EasyBiz
             RecalcTotal();
         }
 
-        public void CheckIfVoucherExists(int voucherNo)
+        private bool CheckIfVoucherExists(int voucherNo)
         {
             using (var connection = DatabaseHelper.GetConnection())
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "SELECT COUNT(*) FROM transactions WHERE voucher_no = @voucherNo AND transaction_type = @type";
                 command.Parameters.AddWithValue("@voucherNo", voucherNo);
-                command.Parameters.AddWithValue("@type", "Cash Payment");
+                command.Parameters.AddWithValue("@type", "Cash Receipt");
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                if (count == 0)
-                {
-                    MessageBox.Show($"Voucher number {voucherNo} does not exist for Cash Payment.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                return count > 0;
             }
         }
-        public void LoadTransactionForEditing(int voucherNo)
+        public bool LoadTransactionForEditing(int voucherNo)
         {
-            CheckIfVoucherExists(voucherNo);
+            if (!CheckIfVoucherExists(voucherNo))
+            {
+                MessageBox.Show(
+                    $"Voucher number {voucherNo} does not exist for Cash Receipt.",
+                    "Not Found",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return false;
+            }
             _editingVoucherNo = voucherNo;
             txtInvoiceNumber.Text = voucherNo.ToString();
             txtInvoiceNumber.ReadOnly = true; // lock it while editing
@@ -228,6 +233,7 @@ namespace EasyBiz
             comboAccountName.SelectedIndex = -1;
             comboAccountId.SelectedIndex = -1;
             txtPreBalance.Text = "0 Dr";
+            return true;
         }
 
         /// <summary>

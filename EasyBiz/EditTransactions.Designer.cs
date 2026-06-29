@@ -61,15 +61,17 @@
             txtVoucherNo.Size = new Size(223, 34);
             txtVoucherNo.TabIndex = 3;
             txtVoucherNo.TextAlign = HorizontalAlignment.Center;
+            txtVoucherNo.TextChanged += txtVoucherNo_TextChanged;
             txtVoucherNo.KeyDown += txtVoucherNo_KeyDown;
             // 
             // BtnGo
             // 
-            BtnGo.BackColor = Color.FromArgb(52, 152, 219);
-            BtnGo.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnGo.BackColor = Color.Silver;
+            BtnGo.BackgroundColor = Color.Silver;
             BtnGo.BorderColor = Color.Transparent;
             BtnGo.BorderRadius = 8;
             BtnGo.BorderSize = 0;
+            BtnGo.Enabled = false;
             BtnGo.FlatAppearance.BorderSize = 0;
             BtnGo.FlatStyle = FlatStyle.Flat;
             BtnGo.Font = new Font("Segoe UI", 12F);
@@ -78,7 +80,7 @@
             BtnGo.Name = "BtnGo";
             BtnGo.Size = new Size(171, 45);
             BtnGo.TabIndex = 4;
-            BtnGo.Text = "Ready !";
+            BtnGo.Text = "Go Edit";
             BtnGo.TextColor = Color.White;
             BtnGo.UseVisualStyleBackColor = false;
             BtnGo.Click += BtnGo_Click;
