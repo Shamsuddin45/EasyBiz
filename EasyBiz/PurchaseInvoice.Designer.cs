@@ -394,11 +394,11 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(874, 721);
+            BtnClose.Location = new Point(487, 629);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(144, 50);
+            BtnClose.Size = new Size(122, 50);
             BtnClose.TabIndex = 13;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -414,11 +414,11 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(1024, 721);
+            BtnSave.Location = new Point(615, 629);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(179, 50);
+            BtnSave.Size = new Size(157, 50);
             BtnSave.TabIndex = 12;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -537,7 +537,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1258, 797);
+            ClientSize = new Size(1258, 698);
             Controls.Add(txtNetAmount);
             Controls.Add(txtTotal);
             Controls.Add(txtDiscount);

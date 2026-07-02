@@ -65,7 +65,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(717, 14);
+            label1.Location = new Point(693, 18);
             label1.Name = "label1";
             label1.Size = new Size(152, 28);
             label1.TabIndex = 0;
@@ -78,7 +78,7 @@
             comboSearch.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboSearch.Font = new Font("Segoe UI", 12F);
             comboSearch.FormattingEnabled = true;
-            comboSearch.Location = new Point(717, 45);
+            comboSearch.Location = new Point(693, 49);
             comboSearch.Name = "comboSearch";
             comboSearch.Size = new Size(311, 36);
             comboSearch.TabIndex = 1;
@@ -89,7 +89,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(22, 101);
+            label2.Location = new Point(48, 103);
             label2.Name = "label2";
             label2.Size = new Size(138, 28);
             label2.TabIndex = 2;
@@ -98,7 +98,7 @@
             // txtProductName
             // 
             txtProductName.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtProductName.Location = new Point(166, 98);
+            txtProductName.Location = new Point(192, 100);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(457, 38);
             txtProductName.TabIndex = 1;
@@ -106,7 +106,7 @@
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 12F);
-            txtDescription.Location = new Point(166, 146);
+            txtDescription.Location = new Point(192, 148);
             txtDescription.Name = "txtDescription";
             txtDescription.PlaceholderText = "optional";
             txtDescription.Size = new Size(457, 34);
@@ -116,7 +116,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(45, 149);
+            label3.Location = new Point(71, 151);
             label3.Name = "label3";
             label3.Size = new Size(112, 28);
             label3.TabIndex = 4;
@@ -126,7 +126,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(111, 240);
+            label4.Location = new Point(136, 218);
             label4.Name = "label4";
             label4.Size = new Size(49, 28);
             label4.TabIndex = 6;
@@ -137,7 +137,7 @@
             comboUnit.DropDownStyle = ComboBoxStyle.DropDownList;
             comboUnit.Font = new Font("Segoe UI", 12F);
             comboUnit.FormattingEnabled = true;
-            comboUnit.Location = new Point(166, 237);
+            comboUnit.Location = new Point(191, 215);
             comboUnit.Name = "comboUnit";
             comboUnit.Size = new Size(151, 36);
             comboUnit.TabIndex = 3;
@@ -147,7 +147,7 @@
             comboWeightUnit.DropDownStyle = ComboBoxStyle.DropDownList;
             comboWeightUnit.Font = new Font("Segoe UI", 12F);
             comboWeightUnit.FormattingEnabled = true;
-            comboWeightUnit.Location = new Point(479, 237);
+            comboWeightUnit.Location = new Point(504, 215);
             comboWeightUnit.Name = "comboWeightUnit";
             comboWeightUnit.Size = new Size(144, 36);
             comboWeightUnit.TabIndex = 4;
@@ -156,7 +156,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(356, 240);
+            label5.Location = new Point(381, 218);
             label5.Name = "label5";
             label5.Size = new Size(117, 28);
             label5.TabIndex = 8;
@@ -166,7 +166,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(65, 307);
+            label6.Location = new Point(91, 309);
             label6.Name = "label6";
             label6.Size = new Size(92, 28);
             label6.TabIndex = 10;
@@ -175,7 +175,7 @@
             // numSaleRate
             // 
             numSaleRate.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numSaleRate.Location = new Point(166, 305);
+            numSaleRate.Location = new Point(192, 307);
             numSaleRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numSaleRate.Name = "numSaleRate";
             numSaleRate.Size = new Size(150, 38);
@@ -186,7 +186,7 @@
             // numPurchaseRate
             // 
             numPurchaseRate.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numPurchaseRate.Location = new Point(479, 303);
+            numPurchaseRate.Location = new Point(505, 305);
             numPurchaseRate.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numPurchaseRate.Name = "numPurchaseRate";
             numPurchaseRate.Size = new Size(144, 38);
@@ -198,7 +198,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(340, 307);
+            label7.Location = new Point(366, 309);
             label7.Name = "label7";
             label7.Size = new Size(133, 28);
             label7.TabIndex = 12;
@@ -207,7 +207,7 @@
             // numMinStock
             // 
             numMinStock.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numMinStock.Location = new Point(166, 358);
+            numMinStock.Location = new Point(192, 360);
             numMinStock.Maximum = new decimal(new int[] { 1215752191, 23, 0, 131072 });
             numMinStock.Name = "numMinStock";
             numMinStock.Size = new Size(150, 38);
@@ -220,7 +220,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
             label8.ForeColor = Color.IndianRed;
-            label8.Location = new Point(16, 360);
+            label8.Location = new Point(42, 362);
             label8.Name = "label8";
             label8.Size = new Size(144, 28);
             label8.TabIndex = 14;
@@ -230,7 +230,7 @@
             // numProductId
             // 
             numProductId.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numProductId.Location = new Point(166, 43);
+            numProductId.Location = new Point(192, 45);
             numProductId.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             numProductId.Name = "numProductId";
             numProductId.ReadOnly = true;
@@ -243,7 +243,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(55, 45);
+            label9.Location = new Point(81, 47);
             label9.Name = "label9";
             label9.Size = new Size(105, 28);
             label9.TabIndex = 16;
@@ -258,11 +258,11 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(848, 503);
+            BtnSave.Location = new Point(785, 147);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(180, 50);
+            BtnSave.Size = new Size(153, 50);
             BtnSave.TabIndex = 9;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -279,11 +279,11 @@
             BtnUpdate.Enabled = false;
             BtnUpdate.FlatAppearance.BorderSize = 0;
             BtnUpdate.FlatStyle = FlatStyle.Flat;
-            BtnUpdate.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnUpdate.Font = new Font("Segoe UI", 10.2F);
             BtnUpdate.ForeColor = Color.White;
-            BtnUpdate.Location = new Point(629, 503);
+            BtnUpdate.Location = new Point(785, 207);
             BtnUpdate.Name = "BtnUpdate";
-            BtnUpdate.Size = new Size(213, 50);
+            BtnUpdate.Size = new Size(153, 50);
             BtnUpdate.TabIndex = 10;
             BtnUpdate.Text = "Update (Ctrl+U)";
             BtnUpdate.TextColor = Color.White;
@@ -299,11 +299,11 @@
             BtnRefresh.BorderSize = 0;
             BtnRefresh.FlatAppearance.BorderSize = 0;
             BtnRefresh.FlatStyle = FlatStyle.Flat;
-            BtnRefresh.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnRefresh.Font = new Font("Segoe UI", 10.2F);
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(479, 503);
+            BtnRefresh.Location = new Point(803, 263);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new Size(144, 50);
+            BtnRefresh.Size = new Size(117, 50);
             BtnRefresh.TabIndex = 11;
             BtnRefresh.Text = "Refresh [F5]";
             BtnRefresh.TextColor = Color.White;
@@ -319,11 +319,11 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(329, 503);
+            BtnClose.Location = new Point(803, 319);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(144, 50);
+            BtnClose.Size = new Size(117, 50);
             BtnClose.TabIndex = 12;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -336,7 +336,7 @@
             comboSelectUnit.Font = new Font("Segoe UI", 12F);
             comboSelectUnit.FormattingEnabled = true;
             comboSelectUnit.Items.AddRange(new object[] { "Weight", "Quantity" });
-            comboSelectUnit.Location = new Point(452, 45);
+            comboSelectUnit.Location = new Point(478, 47);
             comboSelectUnit.Name = "comboSelectUnit";
             comboSelectUnit.Size = new Size(172, 36);
             comboSelectUnit.TabIndex = 8;
@@ -346,7 +346,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(340, 47);
+            label10.Location = new Point(366, 49);
             label10.Name = "label10";
             label10.Size = new Size(106, 28);
             label10.TabIndex = 22;
@@ -357,7 +357,7 @@
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 12F);
             label11.ForeColor = SystemColors.ButtonShadow;
-            label11.Location = new Point(875, 14);
+            label11.Location = new Point(851, 18);
             label11.Name = "label11";
             label11.Size = new Size(45, 28);
             label11.TabIndex = 24;
@@ -367,7 +367,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1040, 565);
+            ClientSize = new Size(1040, 460);
             Controls.Add(label11);
             Controls.Add(comboSelectUnit);
             Controls.Add(label10);

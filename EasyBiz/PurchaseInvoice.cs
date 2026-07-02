@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace EasyBiz
@@ -22,7 +23,8 @@ namespace EasyBiz
             switch (keyData)
             {
                 case Keys.Enter:
-                    // focus to the next control                
+                    if (ActiveControl == txtAmount)
+                    { BtnAddItem_Click(this, EventArgs.Empty); return true; }
                     this.SelectNextControl(this.ActiveControl, true, true, true, true);
                     return true;
 
@@ -99,7 +101,7 @@ namespace EasyBiz
         }
 
         // ── 1. Verify voucher exists ─────────────────────────────────────────────────
-        public void CheckIfPurchaseVoucherExists(int voucherNo)
+        public bool CheckIfPurchaseVoucherExists(int voucherNo)
         {
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = new SqliteCommand(
@@ -111,6 +113,7 @@ namespace EasyBiz
                 MessageBox.Show(
                     $"Purchase Invoice #{voucherNo} does not exist.",
                     "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return count > 0;
         }
 
         private void ShowVoucherNo()
@@ -159,14 +162,24 @@ namespace EasyBiz
 
 
         // ── 2. Load invoice into the form for editing ────────────────────────────────
-        public void LoadTransactionForEditing(int voucherNo)
+        public bool LoadTransactionForEditing(int voucherNo)
         {
-            CheckIfPurchaseVoucherExists(voucherNo);
+            if (!CheckIfPurchaseVoucherExists(voucherNo))
+            {
+                MessageBox.Show(
+                   $"Voucher number {voucherNo} does not exist for Purchase Invoice.",
+                   "Not Found",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+
+                return false;
+            }
 
             _editingVoucherNo = voucherNo;
             txtVoucherNo.Text = voucherNo.ToString();
             txtVoucherNo.ReadOnly = true;                      // lock while editing
             lblHeader.Text = $"Purchase Invoice # {voucherNo} (Edit Mode)";
+            lblHeader.Left = (this.ClientSize.Width - lblHeader.Width) / 2;
 
             // ── Load header ──────────────────────────────────────────────────────────
             using (var conn = DatabaseHelper.GetConnection())
@@ -250,6 +263,7 @@ namespace EasyBiz
             txtRate.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
+            return true;
         }
 
         // ── 3. Helper — select party combo by account_id ─────────────────────────────
@@ -265,11 +279,12 @@ namespace EasyBiz
                 }
             }
         }
+        
         private void comboProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
+            
             if (comboProduct.SelectedIndex < 0) return;
-            if (comboProduct.Tag is not List<object[]> list) return;
-            //var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
+            if (comboProduct.Tag is not List<object[]> list) return;            
             if (comboProduct.SelectedIndex >= list.Count) return;
             var prod = list[comboProduct.SelectedIndex];
             txtRate.Text = Convert.ToDecimal(prod[2]).ToString("N2");

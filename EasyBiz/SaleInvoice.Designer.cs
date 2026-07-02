@@ -374,7 +374,6 @@
             BtnAddItem.TextColor = Color.White;
             BtnAddItem.UseVisualStyleBackColor = false;
             BtnAddItem.Click += BtnAddItem_Click;
-            BtnAddItem.Enter += BtnAddItem_Enter;
             // 
             // BtnDeleteRow
             // 
@@ -407,7 +406,7 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(436, 599);
+            BtnSave.Location = new Point(442, 583);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(155, 50);
             BtnSave.TabIndex = 13;
@@ -427,7 +426,7 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(311, 599);
+            BtnClose.Location = new Point(317, 583);
             BtnClose.Name = "BtnClose";
             BtnClose.Size = new Size(113, 50);
             BtnClose.TabIndex = 14;

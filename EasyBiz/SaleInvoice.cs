@@ -26,9 +26,11 @@ namespace EasyBiz
             switch (keyData)
             {
                 case Keys.Enter:
-                    // focus to the next control                
+                    if (ActiveControl == txtAmount)
+                    { BtnAddItem_Click(this, EventArgs.Empty); return true; }
                     this.SelectNextControl(this.ActiveControl, true, true, true, true);
                     return true;
+
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -173,15 +175,24 @@ namespace EasyBiz
         }
 
         // ── 2. Load invoice into the form for editing ────────────────────────────────
-        public void LoadTransactionForEditing(int voucherNo)
+        public bool LoadTransactionForEditing(int voucherNo)
         {
             if (!CheckIfSaleVoucherExists(voucherNo))
-                return;
+            {
+                MessageBox.Show(
+                   $"Voucher number {voucherNo} does not exist for Sale Invoice.",
+                   "Not Found",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Information);
+
+                return false;
+            }
 
             _editingVoucherNo = voucherNo;
             txtVoucherNo.Text = voucherNo.ToString();
             txtVoucherNo.ReadOnly = true;                      // lock while editing
             lblHeader.Text = $"Sale Invoice # {voucherNo} (Edit Mode)";
+            lblHeader.Left = (this.ClientSize.Width - lblHeader.Width) / 2;
 
             // ── Load header ──────────────────────────────────────────────────────────
             using (var conn = DatabaseHelper.GetConnection())
@@ -263,6 +274,7 @@ namespace EasyBiz
             txtRate.Text = "0";
             lblStockQty.Text = "Qty: -";
             lblStockWt.Text = "Weight: -";
+            return true;
         }
 
         private void SelectPartyById(int accountId)
@@ -852,10 +864,6 @@ namespace EasyBiz
             }
             else { e.Cancel = false; }
         }
-
-        private void BtnAddItem_Enter(object sender, EventArgs e)
-        {
-            BtnAddItem_Click(sender, e);
-        }
+        
     }
 }

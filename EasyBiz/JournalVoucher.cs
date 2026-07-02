@@ -175,7 +175,7 @@ namespace EasyBiz
             }
         }
 
-        public void CheckIfVoucherExists(int voucherNo)
+        public bool CheckIfVoucherExists(int voucherNo)
         {
             using (var connection = DatabaseHelper.GetConnection())
             using (var command = connection.CreateCommand())
@@ -184,16 +184,21 @@ namespace EasyBiz
                 command.Parameters.AddWithValue("@voucherNo", voucherNo);
                 command.Parameters.AddWithValue("@type", "Journal Voucher");
                 int count = Convert.ToInt32(command.ExecuteScalar());
-                if (count == 0)
-                {
-                    MessageBox.Show($"Voucher number {voucherNo} does not exist for Journal Voucher.", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                return count > 0;
             }
         }
-        public void LoadTransactionForEditing(int voucherNo)
+        public bool LoadTransactionForEditing(int voucherNo)
         {
-            CheckIfVoucherExists(voucherNo);
+            if (!CheckIfVoucherExists(voucherNo))
+            {
+                MessageBox.Show(
+                    $"Voucher number {voucherNo} does not exist for Journal Voucher.",
+                    "Not Found",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return false;
+            }
             _editingVoucherNo = voucherNo;           // Store for PostEntry
             txtInvoiceNumber.Text = voucherNo.ToString(); // Show voucher
             txtInvoiceNumber.ReadOnly = true;                 // Lock while editing
@@ -239,6 +244,7 @@ namespace EasyBiz
             comboAccountName.SelectedIndex = -1;
             comboAccountId.SelectedIndex = -1;
             txtPreBalance.Text = "0 Dr";
+            return true;
         }
 
         public void PostEntry()

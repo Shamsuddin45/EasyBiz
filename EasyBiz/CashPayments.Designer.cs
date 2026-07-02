@@ -69,10 +69,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(844, 19);
+            label1.Font = new Font("Segoe UI", 10.2F);
+            label1.Location = new Point(844, 24);
             label1.Name = "label1";
-            label1.Size = new Size(53, 28);
+            label1.Size = new Size(46, 23);
             label1.TabIndex = 0;
             label1.Text = "Date";
             // 
@@ -94,16 +94,16 @@
             comboAccountName.Location = new Point(117, 75);
             comboAccountName.Name = "comboAccountName";
             comboAccountName.Size = new Size(567, 36);
-            comboAccountName.TabIndex = 2;
+            comboAccountName.TabIndex = 3;
             comboAccountName.SelectedIndexChanged += comboAccountName_SelectedIndexChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(9, 75);
+            label2.Font = new Font("Segoe UI", 10.2F);
+            label2.Location = new Point(21, 83);
             label2.Name = "label2";
-            label2.Size = new Size(102, 28);
+            label2.Size = new Size(90, 23);
             label2.TabIndex = 3;
             label2.Text = "A/C Name";
             // 
@@ -114,15 +114,14 @@
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(567, 34);
             txtDescription.TabIndex = 4;
-            txtDescription.KeyPress += txtDescription_KeyPress;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(-1, 120);
+            label3.Font = new Font("Segoe UI", 10.2F);
+            label3.Location = new Point(15, 125);
             label3.Name = "label3";
-            label3.Size = new Size(112, 28);
+            label3.Size = new Size(96, 23);
             label3.TabIndex = 5;
             label3.Text = "Description";
             // 
@@ -133,17 +132,16 @@
             txtAmount.Location = new Point(474, 157);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(210, 34);
-            txtAmount.TabIndex = 6;
+            txtAmount.TabIndex = 5;
             txtAmount.TextAlign = HorizontalAlignment.Center;
-            txtAmount.KeyPress += txtAmount_KeyPress;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(385, 160);
+            label4.Font = new Font("Segoe UI", 10.2F);
+            label4.Location = new Point(396, 165);
             label4.Name = "label4";
-            label4.Size = new Size(83, 28);
+            label4.Size = new Size(72, 23);
             label4.TabIndex = 7;
             label4.Text = "Amount";
             // 
@@ -156,12 +154,12 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 12F);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(900, 3);
+            BtnSave.Location = new Point(941, 3);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(188, 50);
-            BtnSave.TabIndex = 8;
+            BtnSave.Size = new Size(147, 50);
+            BtnSave.TabIndex = 6;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -176,12 +174,12 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 12F);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(738, 3);
+            BtnClose.Location = new Point(820, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(156, 50);
-            BtnClose.TabIndex = 9;
+            BtnClose.Size = new Size(115, 50);
+            BtnClose.TabIndex = 7;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -190,10 +188,10 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(402, 38);
+            label5.Font = new Font("Segoe UI", 10.2F);
+            label5.Location = new Point(410, 41);
             label5.Name = "label5";
-            label5.Size = new Size(66, 28);
+            label5.Size = new Size(58, 23);
             label5.TabIndex = 11;
             label5.Text = "PreBal";
             // 
@@ -204,14 +202,15 @@
             txtPreBalance.Name = "txtPreBalance";
             txtPreBalance.Size = new Size(210, 34);
             txtPreBalance.TabIndex = 10;
+            txtPreBalance.TabStop = false;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(42, 36);
+            label6.Font = new Font("Segoe UI", 10.2F);
+            label6.Location = new Point(50, 38);
             label6.Name = "label6";
-            label6.Size = new Size(69, 28);
+            label6.Size = new Size(61, 23);
             label6.TabIndex = 13;
             label6.Text = "A/C ID";
             // 
@@ -224,7 +223,7 @@
             comboAccountId.Location = new Point(117, 33);
             comboAccountId.Name = "comboAccountId";
             comboAccountId.Size = new Size(241, 36);
-            comboAccountId.TabIndex = 12;
+            comboAccountId.TabIndex = 2;
             comboAccountId.SelectedIndexChanged += comboAccountId_SelectedIndexChanged;
             // 
             // dataGridView1
@@ -256,7 +255,7 @@
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.Padding = new Padding(5);
             dataGridViewCellStyle3.SelectionBackColor = Color.LightCoral;
-            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.Dock = DockStyle.Fill;
@@ -271,6 +270,7 @@
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1091, 272);
             dataGridView1.TabIndex = 14;
+            dataGridView1.TabStop = false;
             // 
             // sno
             // 
@@ -315,10 +315,10 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(844, 129);
+            label7.Font = new Font("Segoe UI", 10.2F);
+            label7.Location = new Point(844, 93);
             label7.Name = "label7";
-            label7.Size = new Size(91, 28);
+            label7.Size = new Size(79, 23);
             label7.TabIndex = 16;
             label7.Text = "Invoice #";
             // 
@@ -326,11 +326,12 @@
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.Red;
-            txtInvoiceNumber.Location = new Point(844, 160);
+            txtInvoiceNumber.Location = new Point(844, 125);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
             txtInvoiceNumber.ReadOnly = true;
             txtInvoiceNumber.Size = new Size(192, 34);
             txtInvoiceNumber.TabIndex = 15;
+            txtInvoiceNumber.TabStop = false;
             txtInvoiceNumber.TextAlign = HorizontalAlignment.Center;
             // 
             // txtTotal
@@ -343,6 +344,7 @@
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(226, 34);
             txtTotal.TabIndex = 17;
+            txtTotal.TabStop = false;
             txtTotal.TextAlign = HorizontalAlignment.Center;
             // 
             // BtnDeleteRow
@@ -357,8 +359,9 @@
             BtnDeleteRow.ForeColor = Color.White;
             BtnDeleteRow.Location = new Point(3, 3);
             BtnDeleteRow.Name = "BtnDeleteRow";
-            BtnDeleteRow.Size = new Size(134, 34);
+            BtnDeleteRow.Size = new Size(115, 34);
             BtnDeleteRow.TabIndex = 18;
+            BtnDeleteRow.TabStop = false;
             BtnDeleteRow.Text = "Delete Row";
             BtnDeleteRow.TextColor = Color.White;
             BtnDeleteRow.UseVisualStyleBackColor = false;

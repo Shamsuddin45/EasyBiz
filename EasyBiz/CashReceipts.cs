@@ -20,12 +20,39 @@ namespace EasyBiz
             ShowVoucherNo();
             try { ShowVoucherNo(); }
             catch (Exception ex) { MessageBox.Show("Could not load voucher number: " + ex.Message); }
+            comboAccountName.Select();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Enter:
+
+                    if (ActiveControl == txtAmount)
+                    {
+                        if (decimal.TryParse(txtAmount.Text, out decimal amount))
+                        {
+                            AddRowToDataGridView(
+                                comboAccountName.Text,
+                                txtDescription.Text,
+                                amount);
+
+                            txtDescription.Clear();
+                            txtAmount.Clear();
+                            comboAccountName.Focus();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid amount.");
+                        }
+
+                        return true;
+                    }
+
+                    SelectNextControl(ActiveControl, true, true, true, true);
+                    return true;
+
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -464,31 +491,8 @@ namespace EasyBiz
 
                 // Update balance
                 UpdateBalance(comboAccountName.SelectedIndex);
-            }
-            txtDescription.Focus();
-        }
-
-        private void txtAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                string partyName = comboAccountName.Text;    // TextBox for party name
-                string description = txtDescription.Text; // TextBox for description
-                decimal amount;
-
-                if (decimal.TryParse(txtAmount.Text, out amount))
-                {
-                    AddRowToDataGridView(partyName, description, amount);
-                    txtDescription.Clear();
-                    txtAmount.Clear();
-                    comboAccountName.Focus();
-                }
-                else
-                {
-                    MessageBox.Show("Invalid amount entered.");
-                }
-            }
-        }
+            }            
+        }        
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -497,16 +501,7 @@ namespace EasyBiz
             {
                 PostEntry();
             }
-        }
-
-        private void txtDescription_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Move focus to amount field when Enter is pressed in description
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                txtAmount.Focus();
-            }
-        }
+        }        
 
         private void BtnDeleteRow_Click(object sender, EventArgs e)
         {
