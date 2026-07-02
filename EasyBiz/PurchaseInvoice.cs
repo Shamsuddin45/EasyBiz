@@ -67,8 +67,8 @@ namespace EasyBiz
 
             // Rows
             gridItems.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            gridItems.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            gridItems.DefaultCellStyle.SelectionForeColor = Color.White;
+            gridItems.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
+            gridItems.DefaultCellStyle.SelectionForeColor = Color.Black;
             gridItems.DefaultCellStyle.BackColor = Color.White;
             gridItems.DefaultCellStyle.ForeColor = Color.Black;
 
@@ -81,6 +81,13 @@ namespace EasyBiz
 
             // Row Height
             gridItems.RowTemplate.Height = 32;
+
+            // Adjust Column Widths
+            gridItems.Columns["colProductId"].Width = 80;
+            gridItems.Columns["colQty"].Width = 80;
+            gridItems.Columns["colWeight"].Width = 80;
+            gridItems.Columns["colRate"].Width = 80;
+            gridItems.Columns["colAmount"].Width = 120;
 
             // Column Alignment
             gridItems.Columns["colQty"].DefaultCellStyle.Alignment =
