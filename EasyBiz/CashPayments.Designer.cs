@@ -409,6 +409,7 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.BackColor = SystemColors.Control;
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));

@@ -12,9 +12,9 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             panelHeader = new Panel();
             lblHeader = new Label();
             comboBankId = new ComboBox();
@@ -51,16 +51,10 @@
             BtnDeleteRow = new CustomButton();
             BtnSave = new CustomButton();
             BtnClose = new CustomButton();
-            panel1 = new Panel();
-            panel2 = new Panel();
-            panel3 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            panelContainer = new Panel();
             panelHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridLines).BeginInit();
-            panel1.SuspendLayout();
-            panel2.SuspendLayout();
-            panel3.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            panelContainer.SuspendLayout();
             SuspendLayout();
             // 
             // panelHeader
@@ -68,9 +62,9 @@
             panelHeader.BackColor = Color.SeaGreen;
             panelHeader.Controls.Add(lblHeader);
             panelHeader.Dock = DockStyle.Top;
-            panelHeader.Location = new Point(3, 3);
+            panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1201, 49);
+            panelHeader.Size = new Size(1209, 50);
             panelHeader.TabIndex = 0;
             // 
             // lblHeader
@@ -78,7 +72,7 @@
             lblHeader.AutoSize = true;
             lblHeader.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             lblHeader.ForeColor = Color.White;
-            lblHeader.Location = new Point(464, 6);
+            lblHeader.Location = new Point(457, 6);
             lblHeader.Name = "lblHeader";
             lblHeader.Size = new Size(294, 37);
             lblHeader.TabIndex = 0;
@@ -89,7 +83,7 @@
             comboBankId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBankId.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBankId.Font = new Font("Segoe UI", 11F);
-            comboBankId.Location = new Point(90, 15);
+            comboBankId.Location = new Point(116, 154);
             comboBankId.Name = "comboBankId";
             comboBankId.Size = new Size(160, 33);
             comboBankId.TabIndex = 1;
@@ -100,46 +94,46 @@
             comboBankName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBankName.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBankName.Font = new Font("Segoe UI", 11F);
-            comboBankName.Location = new Point(319, 15);
+            comboBankName.Location = new Point(345, 154);
             comboBankName.Name = "comboBankName";
-            comboBankName.Size = new Size(316, 33);
+            comboBankName.Size = new Size(415, 33);
             comboBankName.TabIndex = 2;
             comboBankName.SelectedIndexChanged += comboBankName_SelectedIndexChanged;
             // 
             // label_bankId
             // 
             label_bankId.AutoSize = true;
-            label_bankId.Font = new Font("Segoe UI", 11F);
-            label_bankId.Location = new Point(13, 18);
+            label_bankId.Font = new Font("Segoe UI", 10.2F);
+            label_bankId.Location = new Point(43, 157);
             label_bankId.Name = "label_bankId";
-            label_bankId.Size = new Size(76, 25);
+            label_bankId.Size = new Size(69, 23);
             label_bankId.TabIndex = 3;
             label_bankId.Text = "Bank ID";
             // 
             // label_bankName
             // 
             label_bankName.AutoSize = true;
-            label_bankName.Font = new Font("Segoe UI", 11F);
-            label_bankName.Location = new Point(256, 18);
+            label_bankName.Font = new Font("Segoe UI", 10.2F);
+            label_bankName.Location = new Point(291, 157);
             label_bankName.Name = "label_bankName";
-            label_bankName.Size = new Size(57, 25);
+            label_bankName.Size = new Size(51, 23);
             label_bankName.TabIndex = 4;
             label_bankName.Text = "Bank:";
             // 
             // label_bankBal
             // 
             label_bankBal.AutoSize = true;
-            label_bankBal.Font = new Font("Segoe UI", 11F);
-            label_bankBal.Location = new Point(645, 18);
+            label_bankBal.Font = new Font("Segoe UI", 10.2F);
+            label_bankBal.Location = new Point(767, 157);
             label_bankBal.Name = "label_bankBal";
-            label_bankBal.Size = new Size(84, 25);
+            label_bankBal.Size = new Size(75, 23);
             label_bankBal.TabIndex = 5;
             label_bankBal.Text = "Bank Bal";
             // 
             // txtBankBalance
             // 
             txtBankBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            txtBankBalance.Location = new Point(725, 15);
+            txtBankBalance.Location = new Point(848, 153);
             txtBankBalance.Name = "txtBankBalance";
             txtBankBalance.ReadOnly = true;
             txtBankBalance.Size = new Size(200, 32);
@@ -150,7 +144,7 @@
             comboPartyId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboPartyId.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyId.Font = new Font("Segoe UI", 11F);
-            comboPartyId.Location = new Point(90, 60);
+            comboPartyId.Location = new Point(116, 193);
             comboPartyId.Name = "comboPartyId";
             comboPartyId.Size = new Size(160, 33);
             comboPartyId.TabIndex = 7;
@@ -161,46 +155,46 @@
             comboPartyName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboPartyName.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyName.Font = new Font("Segoe UI", 11F);
-            comboPartyName.Location = new Point(319, 63);
+            comboPartyName.Location = new Point(345, 191);
             comboPartyName.Name = "comboPartyName";
-            comboPartyName.Size = new Size(316, 33);
+            comboPartyName.Size = new Size(415, 33);
             comboPartyName.TabIndex = 8;
             comboPartyName.SelectedIndexChanged += comboPartyName_SelectedIndexChanged;
             // 
             // label_partyId
             // 
             label_partyId.AutoSize = true;
-            label_partyId.Font = new Font("Segoe UI", 11F);
-            label_partyId.Location = new Point(13, 63);
+            label_partyId.Font = new Font("Segoe UI", 10.2F);
+            label_partyId.Location = new Point(45, 196);
             label_partyId.Name = "label_partyId";
-            label_partyId.Size = new Size(77, 25);
+            label_partyId.Size = new Size(70, 23);
             label_partyId.TabIndex = 9;
             label_partyId.Text = "Party ID";
             // 
             // label_partyName
             // 
             label_partyName.AutoSize = true;
-            label_partyName.Font = new Font("Segoe UI", 11F);
-            label_partyName.Location = new Point(255, 66);
+            label_partyName.Font = new Font("Segoe UI", 10.2F);
+            label_partyName.Location = new Point(288, 196);
             label_partyName.Name = "label_partyName";
-            label_partyName.Size = new Size(58, 25);
+            label_partyName.Size = new Size(52, 23);
             label_partyName.TabIndex = 10;
             label_partyName.Text = "Party:";
             // 
             // label_preBal
             // 
             label_preBal.AutoSize = true;
-            label_preBal.Font = new Font("Segoe UI", 11F);
-            label_preBal.Location = new Point(655, 66);
+            label_preBal.Font = new Font("Segoe UI", 10.2F);
+            label_preBal.Location = new Point(780, 196);
             label_preBal.Name = "label_preBal";
-            label_preBal.Size = new Size(71, 25);
+            label_preBal.Size = new Size(63, 23);
             label_preBal.TabIndex = 11;
             label_preBal.Text = "Pre Bal";
             // 
             // txtPreBalance
             // 
             txtPreBalance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            txtPreBalance.Location = new Point(725, 63);
+            txtPreBalance.Location = new Point(848, 191);
             txtPreBalance.Name = "txtPreBalance";
             txtPreBalance.ReadOnly = true;
             txtPreBalance.Size = new Size(200, 32);
@@ -209,10 +203,10 @@
             // label_date
             // 
             label_date.AutoSize = true;
-            label_date.Font = new Font("Segoe UI", 11F);
-            label_date.Location = new Point(955, 22);
+            label_date.Font = new Font("Segoe UI", 10.2F);
+            label_date.Location = new Point(349, 64);
             label_date.Name = "label_date";
-            label_date.Size = new Size(51, 25);
+            label_date.Size = new Size(46, 23);
             label_date.TabIndex = 13;
             label_date.Text = "Date";
             // 
@@ -220,7 +214,7 @@
             // 
             dateInvoice.Font = new Font("Segoe UI", 11F);
             dateInvoice.Format = DateTimePickerFormat.Short;
-            dateInvoice.Location = new Point(1012, 18);
+            dateInvoice.Location = new Point(349, 90);
             dateInvoice.Name = "dateInvoice";
             dateInvoice.Size = new Size(178, 32);
             dateInvoice.TabIndex = 14;
@@ -228,38 +222,38 @@
             // label_voucher
             // 
             label_voucher.AutoSize = true;
-            label_voucher.Font = new Font("Segoe UI", 11F);
-            label_voucher.Location = new Point(937, 123);
+            label_voucher.Font = new Font("Segoe UI", 10.2F);
+            label_voucher.Location = new Point(116, 64);
             label_voucher.Name = "label_voucher";
-            label_voucher.Size = new Size(98, 25);
+            label_voucher.Size = new Size(83, 23);
             label_voucher.TabIndex = 15;
-            label_voucher.Text = "Voucher #";
+            label_voucher.Text = "Voucher#";
             // 
             // txtVoucherNo
             // 
             txtVoucherNo.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             txtVoucherNo.ForeColor = Color.ForestGreen;
-            txtVoucherNo.Location = new Point(1041, 116);
+            txtVoucherNo.Location = new Point(114, 90);
             txtVoucherNo.Name = "txtVoucherNo";
             txtVoucherNo.ReadOnly = true;
-            txtVoucherNo.Size = new Size(148, 32);
+            txtVoucherNo.Size = new Size(162, 32);
             txtVoucherNo.TabIndex = 16;
             txtVoucherNo.TextAlign = HorizontalAlignment.Center;
             // 
             // label_cheque
             // 
             label_cheque.AutoSize = true;
-            label_cheque.Font = new Font("Segoe UI", 11F);
-            label_cheque.Location = new Point(11, 116);
+            label_cheque.Font = new Font("Segoe UI", 10.2F);
+            label_cheque.Location = new Point(47, 254);
             label_cheque.Name = "label_cheque";
-            label_cheque.Size = new Size(72, 25);
+            label_cheque.Size = new Size(60, 23);
             label_cheque.TabIndex = 17;
-            label_cheque.Text = "Cheq #";
+            label_cheque.Text = "Cheq#";
             // 
             // txtChequeNo
             // 
             txtChequeNo.Font = new Font("Segoe UI", 11F);
-            txtChequeNo.Location = new Point(89, 112);
+            txtChequeNo.Location = new Point(113, 250);
             txtChequeNo.Name = "txtChequeNo";
             txtChequeNo.Size = new Size(160, 32);
             txtChequeNo.TabIndex = 18;
@@ -267,29 +261,29 @@
             // label_desc
             // 
             label_desc.AutoSize = true;
-            label_desc.Font = new Font("Segoe UI", 11F);
-            label_desc.Location = new Point(270, 119);
+            label_desc.Font = new Font("Segoe UI", 10.2F);
+            label_desc.Location = new Point(293, 254);
             label_desc.Name = "label_desc";
-            label_desc.Size = new Size(108, 25);
+            label_desc.Size = new Size(46, 23);
             label_desc.TabIndex = 19;
-            label_desc.Text = "Description";
+            label_desc.Text = "Desc";
             // 
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 11F);
-            txtDescription.Location = new Point(384, 116);
+            txtDescription.Location = new Point(345, 249);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(480, 32);
+            txtDescription.Size = new Size(417, 32);
             txtDescription.TabIndex = 20;
             txtDescription.KeyPress += txtDescription_KeyPress;
             // 
             // label_amount
             // 
             label_amount.AutoSize = true;
-            label_amount.Font = new Font("Segoe UI", 11F);
-            label_amount.Location = new Point(299, 172);
+            label_amount.Font = new Font("Segoe UI", 10.2F);
+            label_amount.Location = new Point(771, 254);
             label_amount.Name = "label_amount";
-            label_amount.Size = new Size(79, 25);
+            label_amount.Size = new Size(72, 23);
             label_amount.TabIndex = 21;
             label_amount.Text = "Amount";
             // 
@@ -297,9 +291,9 @@
             // 
             txtAmount.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             txtAmount.ForeColor = Color.ForestGreen;
-            txtAmount.Location = new Point(384, 169);
+            txtAmount.Location = new Point(848, 249);
             txtAmount.Name = "txtAmount";
-            txtAmount.Size = new Size(203, 32);
+            txtAmount.Size = new Size(200, 32);
             txtAmount.TabIndex = 22;
             txtAmount.TextAlign = HorizontalAlignment.Center;
             txtAmount.KeyPress += txtAmount_KeyPress;
@@ -309,39 +303,39 @@
             gridLines.AllowUserToAddRows = false;
             gridLines.AllowUserToDeleteRows = false;
             gridLines.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
-            gridLines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(245, 245, 245);
+            gridLines.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             gridLines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridLines.BackgroundColor = Color.White;
             gridLines.BorderStyle = BorderStyle.None;
             gridLines.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             gridLines.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            gridLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(45, 45, 48);
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            gridLines.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             gridLines.ColumnHeadersHeight = 42;
             gridLines.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             gridLines.Columns.AddRange(new DataGridViewColumn[] { colSno, colPartyId, colPartyName, colDesc, colAmount, colChequeNo });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle3.Padding = new Padding(5);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 120, 215);
-            dataGridViewCellStyle3.SelectionForeColor = Color.White;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            gridLines.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = Color.White;
+            dataGridViewCellStyle12.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle12.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle12.Padding = new Padding(5);
+            dataGridViewCellStyle12.SelectionBackColor = Color.FromArgb(0, 120, 215);
+            dataGridViewCellStyle12.SelectionForeColor = Color.White;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.False;
+            gridLines.DefaultCellStyle = dataGridViewCellStyle12;
             gridLines.EnableHeadersVisualStyles = false;
             gridLines.GridColor = Color.LightGray;
-            gridLines.Location = new Point(0, 3);
+            gridLines.Location = new Point(10, 315);
             gridLines.MultiSelect = false;
             gridLines.Name = "gridLines";
             gridLines.RowHeadersVisible = false;
             gridLines.RowHeadersWidth = 51;
             gridLines.RowTemplate.Height = 38;
             gridLines.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridLines.Size = new Size(1201, 292);
+            gridLines.Size = new Size(1185, 211);
             gridLines.TabIndex = 23;
             // 
             // colSno
@@ -388,7 +382,7 @@
             // 
             label_total.AutoSize = true;
             label_total.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            label_total.Location = new Point(917, 307);
+            label_total.Location = new Point(915, 538);
             label_total.Name = "label_total";
             label_total.Size = new Size(64, 28);
             label_total.TabIndex = 24;
@@ -398,7 +392,7 @@
             // 
             txtTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             txtTotal.ForeColor = Color.ForestGreen;
-            txtTotal.Location = new Point(987, 301);
+            txtTotal.Location = new Point(985, 532);
             txtTotal.Name = "txtTotal";
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(210, 34);
@@ -415,7 +409,7 @@
             BtnDeleteRow.FlatAppearance.BorderSize = 0;
             BtnDeleteRow.FlatStyle = FlatStyle.Flat;
             BtnDeleteRow.ForeColor = Color.White;
-            BtnDeleteRow.Location = new Point(9, 301);
+            BtnDeleteRow.Location = new Point(12, 532);
             BtnDeleteRow.Name = "BtnDeleteRow";
             BtnDeleteRow.Size = new Size(130, 34);
             BtnDeleteRow.TabIndex = 26;
@@ -433,11 +427,11 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 11F);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(168, 3);
+            BtnSave.Location = new Point(567, 618);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(225, 50);
+            BtnSave.Size = new Size(191, 50);
             BtnSave.TabIndex = 27;
             BtnSave.Text = "Post Receipt (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -453,93 +447,62 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 11F);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(5, 3);
+            BtnClose.Location = new Point(437, 618);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(157, 50);
+            BtnClose.Size = new Size(124, 50);
             BtnClose.TabIndex = 28;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
-            // panel1
+            // panelContainer
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            panel1.Controls.Add(BtnSave);
-            panel1.Controls.Add(BtnClose);
-            panel1.Location = new Point(807, 621);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(397, 57);
-            panel1.TabIndex = 29;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(gridLines);
-            panel2.Controls.Add(BtnDeleteRow);
-            panel2.Controls.Add(txtTotal);
-            panel2.Controls.Add(label_total);
-            panel2.Location = new Point(3, 269);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(1201, 346);
-            panel2.TabIndex = 30;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(txtAmount);
-            panel3.Controls.Add(label_amount);
-            panel3.Controls.Add(txtVoucherNo);
-            panel3.Controls.Add(txtDescription);
-            panel3.Controls.Add(comboBankId);
-            panel3.Controls.Add(label_desc);
-            panel3.Controls.Add(comboBankName);
-            panel3.Controls.Add(txtChequeNo);
-            panel3.Controls.Add(label_bankId);
-            panel3.Controls.Add(label_cheque);
-            panel3.Controls.Add(label_bankName);
-            panel3.Controls.Add(label_voucher);
-            panel3.Controls.Add(label_bankBal);
-            panel3.Controls.Add(txtPreBalance);
-            panel3.Controls.Add(txtBankBalance);
-            panel3.Controls.Add(dateInvoice);
-            panel3.Controls.Add(comboPartyId);
-            panel3.Controls.Add(label_date);
-            panel3.Controls.Add(comboPartyName);
-            panel3.Controls.Add(label_preBal);
-            panel3.Controls.Add(label_partyId);
-            panel3.Controls.Add(label_partyName);
-            panel3.Location = new Point(3, 58);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(1200, 204);
-            panel3.TabIndex = 31;
-            // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Controls.Add(panel1, 0, 3);
-            tableLayoutPanel1.Controls.Add(panelHeader, 0, 0);
-            tableLayoutPanel1.Controls.Add(panel3, 0, 1);
-            tableLayoutPanel1.Controls.Add(panel2, 0, 2);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.072289F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 30.7132454F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 51.2372627F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.898108F));
-            tableLayoutPanel1.Size = new Size(1207, 687);
-            tableLayoutPanel1.TabIndex = 32;
+            panelContainer.AutoScroll = true;
+            panelContainer.AutoScrollMargin = new Size(10, 10);
+            panelContainer.Controls.Add(gridLines);
+            panelContainer.Controls.Add(BtnDeleteRow);
+            panelContainer.Controls.Add(txtTotal);
+            panelContainer.Controls.Add(label_total);
+            panelContainer.Controls.Add(BtnSave);
+            panelContainer.Controls.Add(BtnClose);
+            panelContainer.Controls.Add(txtAmount);
+            panelContainer.Controls.Add(label_amount);
+            panelContainer.Controls.Add(txtVoucherNo);
+            panelContainer.Controls.Add(txtDescription);
+            panelContainer.Controls.Add(comboBankId);
+            panelContainer.Controls.Add(label_desc);
+            panelContainer.Controls.Add(comboBankName);
+            panelContainer.Controls.Add(txtChequeNo);
+            panelContainer.Controls.Add(label_bankId);
+            panelContainer.Controls.Add(label_cheque);
+            panelContainer.Controls.Add(label_bankName);
+            panelContainer.Controls.Add(label_voucher);
+            panelContainer.Controls.Add(label_bankBal);
+            panelContainer.Controls.Add(txtPreBalance);
+            panelContainer.Controls.Add(txtBankBalance);
+            panelContainer.Controls.Add(dateInvoice);
+            panelContainer.Controls.Add(comboPartyId);
+            panelContainer.Controls.Add(label_date);
+            panelContainer.Controls.Add(comboPartyName);
+            panelContainer.Controls.Add(label_preBal);
+            panelContainer.Controls.Add(label_partyId);
+            panelContainer.Controls.Add(label_partyName);
+            panelContainer.Dock = DockStyle.Fill;
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Name = "panelContainer";
+            panelContainer.Size = new Size(1209, 680);
+            panelContainer.TabIndex = 29;
             // 
             // BankReceipt
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1207, 687);
-            Controls.Add(tableLayoutPanel1);
+            ClientSize = new Size(1209, 680);
+            Controls.Add(panelHeader);
+            Controls.Add(panelContainer);
             Name = "BankReceipt";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Bank Receipt Voucher";
@@ -547,12 +510,8 @@
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gridLines).EndInit();
-            panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
+            panelContainer.ResumeLayout(false);
+            panelContainer.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -581,9 +540,6 @@
         private DataGridViewTextBoxColumn colDesc;
         private DataGridViewTextBoxColumn colAmount;
         private DataGridViewTextBoxColumn colChequeNo;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
-        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panelContainer;
     }
 }
