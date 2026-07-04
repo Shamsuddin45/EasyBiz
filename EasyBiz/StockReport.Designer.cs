@@ -60,12 +60,16 @@
             smBalQty = new DataGridViewTextBoxColumn();
             smBalWt = new DataGridViewTextBoxColumn();
             BtnLoadMovements = new CustomButton();
-            BtnRefreshStock = new CustomButton();
             BtnExportMovements = new CustomButton();
             BtnExportSummary = new CustomButton();
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
+            checkAllDates = new CheckBox();
+            label5 = new Label();
+            comboMovementType = new ComboBox();
+            label4 = new Label();
+            comboPartyFilter = new ComboBox();
             panelContainer = new Panel();
             ((System.ComponentModel.ISupportInitialize)gridStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridMovements).BeginInit();
@@ -213,7 +217,7 @@
             comboProductFilter.Anchor = AnchorStyles.Left;
             comboProductFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProductFilter.FormattingEnabled = true;
-            comboProductFilter.Location = new Point(439, 75);
+            comboProductFilter.Location = new Point(57, 152);
             comboProductFilter.Name = "comboProductFilter";
             comboProductFilter.Size = new Size(310, 36);
             comboProductFilter.TabIndex = 5;
@@ -223,7 +227,7 @@
             label3.Anchor = AnchorStyles.Left;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(439, 44);
+            label3.Location = new Point(57, 121);
             label3.Name = "label3";
             label3.Size = new Size(85, 28);
             label3.TabIndex = 6;
@@ -338,7 +342,7 @@
             BtnLoadMovements.FlatStyle = FlatStyle.Flat;
             BtnLoadMovements.Font = new Font("Segoe UI", 10.2F);
             BtnLoadMovements.ForeColor = Color.White;
-            BtnLoadMovements.Location = new Point(762, 75);
+            BtnLoadMovements.Location = new Point(439, 73);
             BtnLoadMovements.Name = "BtnLoadMovements";
             BtnLoadMovements.Size = new Size(118, 36);
             BtnLoadMovements.TabIndex = 8;
@@ -346,27 +350,6 @@
             BtnLoadMovements.TextColor = Color.White;
             BtnLoadMovements.UseVisualStyleBackColor = false;
             BtnLoadMovements.Click += BtnLoadMovements_Click;
-            // 
-            // BtnRefreshStock
-            // 
-            BtnRefreshStock.Anchor = AnchorStyles.Left;
-            BtnRefreshStock.BackColor = Color.FromArgb(0, 192, 0);
-            BtnRefreshStock.BackgroundColor = Color.FromArgb(0, 192, 0);
-            BtnRefreshStock.BorderColor = Color.Transparent;
-            BtnRefreshStock.BorderRadius = 2;
-            BtnRefreshStock.BorderSize = 0;
-            BtnRefreshStock.FlatAppearance.BorderSize = 0;
-            BtnRefreshStock.FlatStyle = FlatStyle.Flat;
-            BtnRefreshStock.Font = new Font("Segoe UI", 10.2F);
-            BtnRefreshStock.ForeColor = Color.White;
-            BtnRefreshStock.Location = new Point(886, 75);
-            BtnRefreshStock.Name = "BtnRefreshStock";
-            BtnRefreshStock.Size = new Size(118, 36);
-            BtnRefreshStock.TabIndex = 9;
-            BtnRefreshStock.Text = "Refresh";
-            BtnRefreshStock.TextColor = Color.White;
-            BtnRefreshStock.UseVisualStyleBackColor = false;
-            BtnRefreshStock.Click += BtnRefreshStock_Click;
             // 
             // BtnExportMovements
             // 
@@ -380,9 +363,9 @@
             BtnExportMovements.FlatStyle = FlatStyle.Flat;
             BtnExportMovements.Font = new Font("Segoe UI", 10.2F);
             BtnExportMovements.ForeColor = Color.White;
-            BtnExportMovements.Location = new Point(359, 146);
+            BtnExportMovements.Location = new Point(899, 78);
             BtnExportMovements.Name = "BtnExportMovements";
-            BtnExportMovements.Size = new Size(221, 36);
+            BtnExportMovements.Size = new Size(210, 36);
             BtnExportMovements.TabIndex = 13;
             BtnExportMovements.Text = "Export Movements";
             BtnExportMovements.TextColor = Color.White;
@@ -401,9 +384,9 @@
             BtnExportSummary.FlatStyle = FlatStyle.Flat;
             BtnExportSummary.Font = new Font("Segoe UI", 10.2F);
             BtnExportSummary.ForeColor = Color.White;
-            BtnExportSummary.Location = new Point(586, 146);
+            BtnExportSummary.Location = new Point(899, 36);
             BtnExportSummary.Name = "BtnExportSummary";
-            BtnExportSummary.Size = new Size(224, 36);
+            BtnExportSummary.Size = new Size(210, 36);
             BtnExportSummary.TabIndex = 14;
             BtnExportSummary.Text = "Export Summary";
             BtnExportSummary.TextColor = Color.White;
@@ -435,12 +418,16 @@
             // panel3
             // 
             panel3.AutoScroll = true;
+            panel3.Controls.Add(checkAllDates);
+            panel3.Controls.Add(label5);
+            panel3.Controls.Add(comboMovementType);
+            panel3.Controls.Add(label4);
+            panel3.Controls.Add(comboPartyFilter);
             panel3.Controls.Add(BtnExportMovements);
             panel3.Controls.Add(dateTo);
             panel3.Controls.Add(label1);
             panel3.Controls.Add(BtnLoadMovements);
             panel3.Controls.Add(dateFrom);
-            panel3.Controls.Add(BtnRefreshStock);
             panel3.Controls.Add(label2);
             panel3.Controls.Add(BtnExportSummary);
             panel3.Controls.Add(comboProductFilter);
@@ -450,6 +437,60 @@
             panel3.Name = "panel3";
             panel3.Size = new Size(1121, 222);
             panel3.TabIndex = 17;
+            // 
+            // checkAllDates
+            // 
+            checkAllDates.AutoSize = true;
+            checkAllDates.Checked = true;
+            checkAllDates.CheckState = CheckState.Checked;
+            checkAllDates.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            checkAllDates.Location = new Point(439, 23);
+            checkAllDates.Name = "checkAllDates";
+            checkAllDates.Size = new Size(99, 27);
+            checkAllDates.TabIndex = 19;
+            checkAllDates.Text = "All Dates";
+            checkAllDates.UseVisualStyleBackColor = true;
+            checkAllDates.CheckedChanged += checkAllDates_CheckedChanged;
+            // 
+            // label5
+            // 
+            label5.Anchor = AnchorStyles.Left;
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 12F);
+            label5.Location = new Point(687, 121);
+            label5.Name = "label5";
+            label5.Size = new Size(57, 28);
+            label5.TabIndex = 18;
+            label5.Text = "Type:";
+            // 
+            // comboMovementType
+            // 
+            comboMovementType.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboMovementType.FormattingEnabled = true;
+            comboMovementType.Location = new Point(687, 152);
+            comboMovementType.Name = "comboMovementType";
+            comboMovementType.Size = new Size(192, 36);
+            comboMovementType.TabIndex = 17;
+            // 
+            // label4
+            // 
+            label4.Anchor = AnchorStyles.Left;
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F);
+            label4.Location = new Point(373, 121);
+            label4.Name = "label4";
+            label4.Size = new Size(60, 28);
+            label4.TabIndex = 16;
+            label4.Text = "Party:";
+            // 
+            // comboPartyFilter
+            // 
+            comboPartyFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboPartyFilter.FormattingEnabled = true;
+            comboPartyFilter.Location = new Point(373, 152);
+            comboPartyFilter.Name = "comboPartyFilter";
+            comboPartyFilter.Size = new Size(308, 36);
+            comboPartyFilter.TabIndex = 15;
             // 
             // panelContainer
             // 
@@ -495,7 +536,6 @@
         private Label label3;
         private DataGridView gridMovements;
         private CustomButton BtnLoadMovements;
-        private CustomButton BtnRefreshStock;
         private CustomButton BtnExportMovements;
         private CustomButton BtnExportSummary;
         private Panel panel1;
@@ -525,5 +565,10 @@
         private DataGridViewTextBoxColumn csPurRate;
         private DataGridViewTextBoxColumn csValue;
         private Panel panelContainer;
+        private ComboBox comboPartyFilter;
+        private Label label4;
+        private Label label5;
+        private ComboBox comboMovementType;
+        private CheckBox checkAllDates;
     }
 }

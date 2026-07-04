@@ -105,12 +105,14 @@ namespace EasyBiz
 
         /// <summary>
         /// Generates a Stock Movement Ledger PDF for a date range,
-        /// optionally filtered to a single product.
+        /// optionally filtered to a single product, party, and/or movement type.
         /// </summary>
         public static void GenerateMovements(
             string outputPath,
             string companyName,
-            string productFilter,   // "" = all products, else product name
+            string productFilter,       // "" = all products, else product name
+            string partyFilter,         // "" = all parties, else party/account name
+            string movementTypeFilter,  // FEATURE: "" = Both, else "Sale" or "Purchase"
             DateTime fromDate,
             DateTime toDate,
             List<StockMovementRow> rows)
@@ -125,8 +127,8 @@ namespace EasyBiz
                         x.FontFamily("Arial").FontSize(9).FontColor(TextDark));
 
                     page.Header().Element(ctx =>
-                        ComposeMovementHeader(ctx, companyName, productFilter,
-                                              fromDate, toDate));
+                        ComposeMovementHeader(ctx, companyName, productFilter, partyFilter,
+                                              movementTypeFilter, fromDate, toDate));
 
                     page.Content().PaddingTop(8).Element(ctx =>
                         ComposeMovementTable(ctx, rows));
@@ -316,7 +318,8 @@ namespace EasyBiz
         // ════════════════════════════════════════════════════════════════════
 
         private static void ComposeMovementHeader(IContainer container,
-            string companyName, string productFilter,
+            string companyName, string productFilter, string partyFilter,
+            string movementTypeFilter, // FEATURE: "" = Both, else "Sale"/"Purchase"
             DateTime fromDate, DateTime toDate)
         {
             container.Column(col =>
@@ -346,6 +349,8 @@ namespace EasyBiz
                     });
 
                 // Sub-header band
+                // FEATURE: added a fourth RelativeItem for the Sale/Purchase/Both movement-type
+                // filter, next to Product and Party, ahead of the colour-key legend.
                 col.Item()
                     .Background(SubHeaderBg)
                     .PaddingHorizontal(12).PaddingVertical(6)
@@ -357,6 +362,24 @@ namespace EasyBiz
                             txt.Span(string.IsNullOrWhiteSpace(productFilter)
                                     ? "All Products"
                                     : productFilter)
+                               .Bold().FontColor(White).FontSize(10);
+                        });
+
+                        row.RelativeItem().Text(txt =>
+                        {
+                            txt.Span("Party: ").FontColor("#D6EAF8").FontSize(9);
+                            txt.Span(string.IsNullOrWhiteSpace(partyFilter)
+                                    ? "All Parties"
+                                    : partyFilter)
+                               .Bold().FontColor(White).FontSize(10);
+                        });
+
+                        row.RelativeItem().Text(txt =>
+                        {
+                            txt.Span("Type: ").FontColor("#D6EAF8").FontSize(9);
+                            txt.Span(string.IsNullOrWhiteSpace(movementTypeFilter)
+                                    ? "Both"
+                                    : movementTypeFilter)
                                .Bold().FontColor(White).FontSize(10);
                         });
 

@@ -408,7 +408,7 @@ namespace EasyBiz
     };
 
             const double imageWidthRatio = 0.25;
-            const double imageHeightRatio = 0.45;
+            const double imageHeightRatio = 0.35;
 
             foreach (Button btn in buttons)
             {
@@ -439,7 +439,7 @@ namespace EasyBiz
                 var btn = new Button
                 {
                     Text = module.DisplayName,
-                    Width = 140,
+                    Width = 220,
                     Height = 60,
                     Tag = module.FormType,
                     Margin = new Padding(6)

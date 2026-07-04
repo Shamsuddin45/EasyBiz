@@ -44,8 +44,7 @@ namespace EasyBiz
                     selectedKeys.Add(ModuleRegistry.AllModules[i].Key);
             }
 
-            FavoritesService.SaveFavorites(selectedKeys);
-            
+            FavoritesService.SaveFavorites(selectedKeys);            
             MessageBox.Show("Favourites saved.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             FavoritesUpdated?.Invoke(this, EventArgs.Empty);
         }

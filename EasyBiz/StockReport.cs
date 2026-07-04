@@ -14,8 +14,25 @@ namespace EasyBiz
             InitializeComponent();
             LoadStockSummary();
             LoadProducts();
+            LoadParties(); // FEATURE: populate party/customer filter dropdown
+            LoadMovementTypes(); // FEATURE: populate Sale/Purchase/Both filter dropdown
             BeautifyGrid(gridStock, Color.FromArgb(52, 152, 219));
             BeautifyGrid(gridMovements, Color.FromArgb(39, 174, 96));
+            setupDates();
+        }
+
+        private void setupDates()
+        {
+            if (checkAllDates.Checked != true)
+            {
+                dateFrom.Value = DateTime.Now;
+                dateTo.Value = DateTime.Now;
+            }
+            else
+            {
+                dateFrom.Value = new DateTime(2000, 01, 01);
+                dateTo.Value = new DateTime(2100, 01, 01);
+            }
         }
 
         // BUG FIX: Microsoft.Data.Sqlite's GetDouble() throws InvalidCastException when a
@@ -43,7 +60,7 @@ namespace EasyBiz
         private void BeautifyGrid(DataGridView grid, Color headerColor)
         {
             // Base grid setup
-            grid.BorderStyle = BorderStyle.Fixed3D;            
+            grid.BorderStyle = BorderStyle.Fixed3D;
             grid.BackgroundColor = Color.White;
             grid.EnableHeadersVisualStyles = false;
             grid.RowHeadersVisible = false;
@@ -161,6 +178,54 @@ namespace EasyBiz
             comboProductFilter.SelectedIndex = 0;
         }
 
+        // FEATURE: populate the party/customer filter dropdown from the accounts table.
+        // NOTE: stock_movements has no account_id column of its own — a movement's party is
+        // only reachable by joining back to sale_invoices / purchase_invoices on voucher_no
+        // (see LoadMovements/BuildMovementRows below). This just lists every account; narrow
+        // the WHERE clause here if you want to restrict to specific account_type values
+        // (e.g. 'Personal Ledgers', 'Receivables', 'Payables').
+        private void LoadParties()
+        {
+            comboPartyFilter.Items.Clear();
+            comboPartyFilter.Items.Add("-- All Parties --");
+            using var conn = DatabaseHelper.GetConnection();
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT account_id, account_name FROM accounts ORDER BY account_name";
+            using var r = cmd.ExecuteReader();
+            while (r.Read())
+                comboPartyFilter.Items.Add($"{r.GetInt32(0)} - {SafeString(r, 1)}");
+            comboPartyFilter.SelectedIndex = 0;
+        }
+
+        // FEATURE: populate the Sale / Purchase / Both movement-type filter dropdown.
+        // NOTE: requires a ComboBox named "comboMovementType" added to the form in the
+        // designer (drop it next to comboPartyFilter). Items are set here in code so the
+        // designer control can start empty.
+        private void LoadMovementTypes()
+        {
+            comboMovementType.Items.Clear();
+            comboMovementType.Items.Add("-- Both --");
+            comboMovementType.Items.Add("Sale");
+            comboMovementType.Items.Add("Purchase");
+            comboMovementType.SelectedIndex = 0;
+        }
+
+        // FEATURE: parses the movement-type combo selection into the exact string stored in
+        // stock_movements.movement_type ("Sale" / "Purchase"), or "" for "Both" (no filter).
+        private string GetSelectedMovementType()
+        {
+            if (comboMovementType.SelectedIndex <= 0) return "";
+            return comboMovementType.SelectedItem!.ToString()!;
+        }
+
+        // FEATURE: parses "{id} - {name}" combo selection into the account_id, or 0 for "All".
+        private int GetSelectedPartyId()
+        {
+            if (comboPartyFilter.SelectedIndex <= 0) return 0;
+            string sel = comboPartyFilter.SelectedItem!.ToString()!;
+            return int.Parse(sel.Split('-')[0].Trim());
+        }
+
         private void LoadMovements()
         {
             gridMovements.Rows.Clear();
@@ -174,21 +239,38 @@ namespace EasyBiz
                 productFilter = " AND sm.product_id = @pid";
             }
 
+            // FEATURE: resolve party filter (0 = all parties)
+            int partyId = GetSelectedPartyId();
+            string partyFilter = partyId > 0 ? " AND COALESCE(si.account_id, pi.account_id) = @partyId" : "";
+
+            // FEATURE: resolve Sale/Purchase/Both movement-type filter ("" = both)
+            string moveType = GetSelectedMovementType();
+            string moveTypeFilter = moveType != "" ? " AND sm.movement_type = @moveType" : "";
+
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = $@"
                 SELECT sm.movement_date, sm.movement_type, sm.voucher_type,
                        sm.voucher_no, sm.product_name, sm.qty_in, sm.qty_out,
                        sm.weight_in, sm.weight_out, sm.rate, sm.amount,
-                       sm.balance_qty, sm.balance_weight
+                       sm.balance_qty, sm.balance_weight,
+                       COALESCE(si.account_name, pi.account_name) AS party_name
                 FROM stock_movements sm
+                LEFT JOIN sale_invoices si
+                    ON sm.voucher_type = 'Sale Invoice' AND sm.voucher_no = si.voucher_no
+                LEFT JOIN purchase_invoices pi
+                    ON sm.voucher_type = 'Purchase Invoice' AND sm.voucher_no = pi.voucher_no
                 WHERE date(sm.movement_date) BETWEEN date(@from) AND date(@to)
                 {productFilter}
+                {partyFilter}
+                {moveTypeFilter}
                 ORDER BY sm.movement_date, sm.movement_id";
 
             cmd.Parameters.AddWithValue("@from", dateFrom.Value.ToString("yyyy-MM-dd"));
             cmd.Parameters.AddWithValue("@to", dateTo.Value.ToString("yyyy-MM-dd"));
             if (productId > 0) cmd.Parameters.AddWithValue("@pid", productId);
+            if (partyId > 0) cmd.Parameters.AddWithValue("@partyId", partyId);
+            if (moveType != "") cmd.Parameters.AddWithValue("@moveType", moveType);
 
             using var r = cmd.ExecuteReader();
             int sno = 1;
@@ -208,8 +290,8 @@ namespace EasyBiz
                 int rowIdx = gridMovements.Rows.Add();
                 var row = gridMovements.Rows[rowIdx];
                 row.Cells["smNo"].Value = sno++;
-                row.Cells["smDate"].Value = SafeString(r, 0);                
-                row.Cells["smVoucher"].Value = $"{SafeString(r, 2)} #{r.GetInt32(3)}";                
+                row.Cells["smDate"].Value = SafeString(r, 0);
+                row.Cells["smVoucher"].Value = $"{SafeString(r, 2)} #{r.GetInt32(3)}";
                 row.Cells["smProduct"].Value = SafeString(r, 4);
                 row.Cells["smQtyIn"].Value = qtyIn > 0 ? qtyIn.ToString("N3") : "-";
                 row.Cells["smQtyOut"].Value = qtyOut > 0 ? qtyOut.ToString("N3") : "-";
@@ -219,6 +301,9 @@ namespace EasyBiz
                 row.Cells["smAmount"].Value = amount.ToString("N2");
                 row.Cells["smBalQty"].Value = balQty.ToString("N3");
                 row.Cells["smBalWt"].Value = balWt.ToString("N3");
+                // NOTE: party_name is column index 13 (last). Only wire this into the grid
+                // if you add an "smParty" column to gridMovements in the designer.
+                // row.Cells["smParty"].Value = SafeString(r, 13);
 
                 string mType = SafeString(r, 1);
                 if (mType == "Sale")
@@ -274,7 +359,7 @@ namespace EasyBiz
             return rows;
         }
 
-        /// <summary>Reads stock_movements for the selected period/product.</summary>
+        /// <summary>Reads stock_movements for the selected period/product/party/type.</summary>
         private List<StockMovementRow> BuildMovementRows()
         {
             var rows = new List<StockMovementRow>();
@@ -288,21 +373,38 @@ namespace EasyBiz
                 productFilter = " AND sm.product_id = @pid";
             }
 
+            // FEATURE: resolve party filter (0 = all parties) — mirrors LoadMovements()
+            int partyId = GetSelectedPartyId();
+            string partyFilter = partyId > 0 ? " AND COALESCE(si.account_id, pi.account_id) = @partyId" : "";
+
+            // FEATURE: resolve Sale/Purchase/Both movement-type filter ("" = both) — mirrors LoadMovements()
+            string moveType = GetSelectedMovementType();
+            string moveTypeFilter = moveType != "" ? " AND sm.movement_type = @moveType" : "";
+
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = $@"
                 SELECT sm.movement_date, sm.movement_type, sm.voucher_type,
                        sm.voucher_no, sm.product_name, sm.qty_in, sm.qty_out,
                        sm.weight_in, sm.weight_out, sm.rate, sm.amount,
-                       sm.balance_qty, sm.balance_weight
+                       sm.balance_qty, sm.balance_weight,
+                       COALESCE(si.account_name, pi.account_name) AS party_name
                 FROM stock_movements sm
+                LEFT JOIN sale_invoices si
+                    ON sm.voucher_type = 'Sale Invoice' AND sm.voucher_no = si.voucher_no
+                LEFT JOIN purchase_invoices pi
+                    ON sm.voucher_type = 'Purchase Invoice' AND sm.voucher_no = pi.voucher_no
                 WHERE date(sm.movement_date) BETWEEN date(@from) AND date(@to)
                 {productFilter}
+                {partyFilter}
+                {moveTypeFilter}
                 ORDER BY sm.movement_date, sm.movement_id";
 
             cmd.Parameters.AddWithValue("@from", dateFrom.Value.ToString("yyyy-MM-dd"));
             cmd.Parameters.AddWithValue("@to", dateTo.Value.ToString("yyyy-MM-dd"));
             if (productId > 0) cmd.Parameters.AddWithValue("@pid", productId);
+            if (partyId > 0) cmd.Parameters.AddWithValue("@partyId", partyId);
+            if (moveType != "") cmd.Parameters.AddWithValue("@moveType", moveType);
 
             using var r = cmd.ExecuteReader();
             int sno = 1;
@@ -324,6 +426,9 @@ namespace EasyBiz
                     Amount = SafeDecimal(r, 10),
                     BalanceQty = SafeDecimal(r, 11),
                     BalanceWeight = SafeDecimal(r, 12)
+                    // NOTE: party_name is column index 13 — add a PartyName property to
+                    // StockMovementRow (and to StockReportPDF's rendering) if you want it
+                    // printed in the exported PDF.
                 });
             }
             return rows;
@@ -331,11 +436,13 @@ namespace EasyBiz
 
         // ── Button handlers ───────────────────────────────────────────────────
 
-        private void BtnRefreshStock_Click(object sender, EventArgs e) =>
+        private void BtnLoadMovements_Click(object sender, EventArgs e)
+        {
             LoadStockSummary();
-
-        private void BtnLoadMovements_Click(object sender, EventArgs e) =>
             LoadMovements();
+        }
+
+
 
         /// <summary>Export Current Stock Summary to PDF.</summary>
         private void BtnExportSummary_Click(object sender, EventArgs e)
@@ -373,13 +480,21 @@ namespace EasyBiz
             }
         }
 
-        /// <summary>Export Stock Movements for the selected period/product to PDF.</summary>
+        /// <summary>Export Stock Movements for the selected period/product/party/type to PDF.</summary>
         private void BtnExportMovements_Click(object sender, EventArgs e)
         {
             // Determine product label for the header
             string productLabel = comboProductFilter.SelectedIndex > 0
                 ? comboProductFilter.SelectedItem!.ToString()!.Split('-', 2)[1].Trim()
                 : "";
+
+            // FEATURE: party label for the header
+            string partyLabel = comboPartyFilter.SelectedIndex > 0
+                ? comboPartyFilter.SelectedItem!.ToString()!.Split('-', 2)[1].Trim()
+                : "";
+
+            // FEATURE: movement-type label for the header ("" = Both)
+            string moveTypeLabel = GetSelectedMovementType();
 
             using var dlg = new SaveFileDialog
             {
@@ -396,6 +511,8 @@ namespace EasyBiz
                     outputPath: dlg.FileName,
                     companyName: "EasyBiz",
                     productFilter: productLabel,
+                    partyFilter: partyLabel,
+                    movementTypeFilter: moveTypeLabel, // FEATURE: Sale / Purchase / "" (Both)
                     fromDate: dateFrom.Value.Date,
                     toDate: dateTo.Value.Date,
                     rows: rows);
@@ -414,6 +531,11 @@ namespace EasyBiz
                 MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void checkAllDates_CheckedChanged(object sender, EventArgs e)
+        {
+            setupDates();
         }
     }
 }

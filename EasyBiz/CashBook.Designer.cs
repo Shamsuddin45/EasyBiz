@@ -320,6 +320,7 @@
             Name = "CashBook";
             StartPosition = FormStartPosition.CenterParent;
             Text = "CashBook";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

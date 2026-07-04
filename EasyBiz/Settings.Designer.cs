@@ -65,7 +65,7 @@
             BtnSaveFavorites.BackColor = Color.FromArgb(52, 152, 219);
             BtnSaveFavorites.BackgroundColor = Color.FromArgb(52, 152, 219);
             BtnSaveFavorites.BorderColor = Color.Transparent;
-            BtnSaveFavorites.BorderRadius = 15;
+            BtnSaveFavorites.BorderRadius = 10;
             BtnSaveFavorites.BorderSize = 0;
             BtnSaveFavorites.FlatAppearance.BorderSize = 0;
             BtnSaveFavorites.FlatStyle = FlatStyle.Flat;
