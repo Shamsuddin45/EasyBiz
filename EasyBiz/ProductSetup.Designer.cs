@@ -55,19 +55,21 @@
             comboSelectUnit = new ComboBox();
             label10 = new Label();
             label11 = new Label();
+            panelContainer = new Panel();
             ((System.ComponentModel.ISupportInitialize)numSaleRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numProductId).BeginInit();
+            panelContainer.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(693, 18);
+            label1.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label1.Location = new Point(691, 26);
             label1.Name = "label1";
-            label1.Size = new Size(152, 28);
+            label1.Size = new Size(131, 20);
             label1.TabIndex = 0;
             label1.Text = "*Search Product";
             toolTipMinStockQty.SetToolTip(label1, "Select a product to view or edit its details");
@@ -88,10 +90,10 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(48, 103);
+            label2.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label2.Location = new Point(70, 112);
             label2.Name = "label2";
-            label2.Size = new Size(138, 28);
+            label2.Size = new Size(116, 20);
             label2.TabIndex = 2;
             label2.Text = "Product Name";
             // 
@@ -115,20 +117,20 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(71, 151);
+            label3.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label3.Location = new Point(91, 158);
             label3.Name = "label3";
-            label3.Size = new Size(112, 28);
+            label3.Size = new Size(95, 20);
             label3.TabIndex = 4;
             label3.Text = "Description";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(136, 218);
+            label4.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label4.Location = new Point(146, 225);
             label4.Name = "label4";
-            label4.Size = new Size(49, 28);
+            label4.Size = new Size(39, 20);
             label4.TabIndex = 6;
             label4.Text = "Unit";
             // 
@@ -155,20 +157,20 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(381, 218);
+            label5.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label5.Location = new Point(402, 223);
             label5.Name = "label5";
-            label5.Size = new Size(117, 28);
+            label5.Size = new Size(96, 20);
             label5.TabIndex = 8;
             label5.Text = "Weight Unit";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(91, 309);
+            label6.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label6.Location = new Point(104, 316);
             label6.Name = "label6";
-            label6.Size = new Size(92, 28);
+            label6.Size = new Size(82, 20);
             label6.TabIndex = 10;
             label6.Text = "Sale Rate";
             // 
@@ -197,10 +199,10 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(366, 309);
+            label7.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label7.Location = new Point(379, 316);
             label7.Name = "label7";
-            label7.Size = new Size(133, 28);
+            label7.Size = new Size(120, 20);
             label7.TabIndex = 12;
             label7.Text = "Purchase Rate";
             // 
@@ -218,11 +220,11 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F);
+            label8.Font = new Font("Microsoft Sans Serif", 10.2F);
             label8.ForeColor = Color.IndianRed;
-            label8.Location = new Point(42, 362);
+            label8.Location = new Point(65, 371);
             label8.Name = "label8";
-            label8.Size = new Size(144, 28);
+            label8.Size = new Size(120, 20);
             label8.TabIndex = 14;
             label8.Text = "*Min Stock Qty";
             toolTipMinStockQty.SetToolTip(label8, "Enter a minimum stock quantity. \r\nProduct row will turn red in the Stock Report when the available stock reaches or falls below this quantity.");
@@ -242,10 +244,10 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label9.Location = new Point(81, 47);
+            label9.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label9.Location = new Point(97, 56);
             label9.Name = "label9";
-            label9.Size = new Size(105, 28);
+            label9.Size = new Size(89, 20);
             label9.TabIndex = 16;
             label9.Text = "Product ID";
             // 
@@ -260,7 +262,7 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(785, 147);
+            BtnSave.Location = new Point(785, 151);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(153, 50);
             BtnSave.TabIndex = 9;
@@ -301,9 +303,9 @@
             BtnRefresh.FlatStyle = FlatStyle.Flat;
             BtnRefresh.Font = new Font("Segoe UI", 10.2F);
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(803, 263);
+            BtnRefresh.Location = new Point(785, 263);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new Size(117, 50);
+            BtnRefresh.Size = new Size(153, 50);
             BtnRefresh.TabIndex = 11;
             BtnRefresh.Text = "Refresh [F5]";
             BtnRefresh.TextColor = Color.White;
@@ -321,9 +323,9 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(803, 319);
+            BtnClose.Location = new Point(785, 319);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(117, 50);
+            BtnClose.Size = new Size(153, 50);
             BtnClose.TabIndex = 12;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -345,54 +347,65 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font("Segoe UI", 12F);
-            label10.Location = new Point(366, 49);
+            label10.Font = new Font("Microsoft Sans Serif", 10.2F);
+            label10.Location = new Point(381, 56);
             label10.Name = "label10";
-            label10.Size = new Size(106, 28);
+            label10.Size = new Size(91, 20);
             label10.TabIndex = 22;
             label10.Text = "Select Unit";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("Segoe UI", 12F);
+            label11.Font = new Font("Microsoft Sans Serif", 10.2F);
             label11.ForeColor = SystemColors.ButtonShadow;
-            label11.Location = new Point(851, 18);
+            label11.Location = new Point(828, 26);
             label11.Name = "label11";
-            label11.Size = new Size(45, 28);
+            label11.Size = new Size(38, 20);
             label11.TabIndex = 24;
             label11.Text = "[F1]";
+            // 
+            // panelContainer
+            // 
+            panelContainer.AutoScroll = true;
+            panelContainer.AutoScrollMargin = new Size(10, 10);
+            panelContainer.Controls.Add(label11);
+            panelContainer.Controls.Add(comboSelectUnit);
+            panelContainer.Controls.Add(label10);
+            panelContainer.Controls.Add(BtnClose);
+            panelContainer.Controls.Add(BtnRefresh);
+            panelContainer.Controls.Add(BtnUpdate);
+            panelContainer.Controls.Add(BtnSave);
+            panelContainer.Controls.Add(numProductId);
+            panelContainer.Controls.Add(label9);
+            panelContainer.Controls.Add(numMinStock);
+            panelContainer.Controls.Add(label8);
+            panelContainer.Controls.Add(numPurchaseRate);
+            panelContainer.Controls.Add(label7);
+            panelContainer.Controls.Add(numSaleRate);
+            panelContainer.Controls.Add(label6);
+            panelContainer.Controls.Add(comboWeightUnit);
+            panelContainer.Controls.Add(label5);
+            panelContainer.Controls.Add(comboUnit);
+            panelContainer.Controls.Add(label4);
+            panelContainer.Controls.Add(txtDescription);
+            panelContainer.Controls.Add(label3);
+            panelContainer.Controls.Add(txtProductName);
+            panelContainer.Controls.Add(label2);
+            panelContainer.Controls.Add(comboSearch);
+            panelContainer.Controls.Add(label1);
+            panelContainer.Dock = DockStyle.Fill;
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Name = "panelContainer";
+            panelContainer.Size = new Size(1040, 460);
+            panelContainer.TabIndex = 25;
             // 
             // ProductSetup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1040, 460);
-            Controls.Add(label11);
-            Controls.Add(comboSelectUnit);
-            Controls.Add(label10);
-            Controls.Add(BtnClose);
-            Controls.Add(BtnRefresh);
-            Controls.Add(BtnUpdate);
-            Controls.Add(BtnSave);
-            Controls.Add(numProductId);
-            Controls.Add(label9);
-            Controls.Add(numMinStock);
-            Controls.Add(label8);
-            Controls.Add(numPurchaseRate);
-            Controls.Add(label7);
-            Controls.Add(numSaleRate);
-            Controls.Add(label6);
-            Controls.Add(comboWeightUnit);
-            Controls.Add(label5);
-            Controls.Add(comboUnit);
-            Controls.Add(label4);
-            Controls.Add(txtDescription);
-            Controls.Add(label3);
-            Controls.Add(txtProductName);
-            Controls.Add(label2);
-            Controls.Add(comboSearch);
-            Controls.Add(label1);
+            Controls.Add(panelContainer);
             Name = "ProductSetup";
             Text = "Product Setup";
             FormClosing += ProductSetup_FormClosing;
@@ -401,8 +414,9 @@
             ((System.ComponentModel.ISupportInitialize)numPurchaseRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)numMinStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)numProductId).EndInit();
+            panelContainer.ResumeLayout(false);
+            panelContainer.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -433,5 +447,6 @@
         private ComboBox comboSelectUnit;
         private Label label10;
         private Label label11;
+        private Panel panelContainer;
     }
 }

@@ -70,13 +70,13 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(3, 121);
+            dataGridView1.Location = new Point(3, 91);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 42;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1146, 550);
+            dataGridView1.Size = new Size(958, 383);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
@@ -129,11 +129,11 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 11F);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(983, 3);
+            BtnSave.Location = new Point(814, 3);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(160, 48);
+            BtnSave.Size = new Size(141, 48);
             BtnSave.TabIndex = 1;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -149,11 +149,11 @@
             BtnRefresh.BorderSize = 0;
             BtnRefresh.FlatAppearance.BorderSize = 0;
             BtnRefresh.FlatStyle = FlatStyle.Flat;
-            BtnRefresh.Font = new Font("Segoe UI", 11F);
+            BtnRefresh.Font = new Font("Segoe UI", 10.2F);
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(817, 3);
+            BtnRefresh.Location = new Point(667, 3);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new Size(160, 48);
+            BtnRefresh.Size = new Size(141, 48);
             BtnRefresh.TabIndex = 2;
             BtnRefresh.Text = "Refresh [F5]";
             BtnRefresh.TextColor = Color.White;
@@ -169,11 +169,11 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 11F);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(675, 3);
+            BtnClose.Location = new Point(544, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(136, 48);
+            BtnClose.Size = new Size(117, 48);
             BtnClose.TabIndex = 3;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -185,9 +185,9 @@
             lblNote.Dock = DockStyle.Fill;
             lblNote.Font = new Font("Segoe UI", 10F);
             lblNote.ForeColor = Color.DimGray;
-            lblNote.Location = new Point(3, 64);
+            lblNote.Location = new Point(3, 48);
             lblNote.Name = "lblNote";
-            lblNote.Size = new Size(1146, 54);
+            lblNote.Size = new Size(958, 40);
             lblNote.TabIndex = 0;
             lblNote.Text = "Enter opening balances for each account. Leave blank for zero. Click Save when done.";
             // 
@@ -216,10 +216,10 @@
             flowLayoutPanel1.Controls.Add(BtnRefresh);
             flowLayoutPanel1.Controls.Add(BtnClose);
             flowLayoutPanel1.Dock = DockStyle.Fill;
-            flowLayoutPanel1.Location = new Point(3, 677);
+            flowLayoutPanel1.Location = new Point(3, 480);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.RightToLeft = RightToLeft.Yes;
-            flowLayoutPanel1.Size = new Size(1146, 60);
+            flowLayoutPanel1.Size = new Size(958, 78);
             flowLayoutPanel1.TabIndex = 6;
             // 
             // tableLayoutPanel1
@@ -237,10 +237,10 @@
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.648648F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 7.29729748F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 75.13513F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 8.783784F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 69.69697F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.6167555F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(1152, 740);
+            tableLayoutPanel1.Size = new Size(964, 561);
             tableLayoutPanel1.TabIndex = 7;
             // 
             // panel1
@@ -250,14 +250,14 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1146, 58);
+            panel1.Size = new Size(958, 42);
             panel1.TabIndex = 8;
             // 
             // OpeningBalances
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1152, 740);
+            ClientSize = new Size(964, 561);
             Controls.Add(tableLayoutPanel1);
             Name = "OpeningBalances";
             StartPosition = FormStartPosition.CenterParent;

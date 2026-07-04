@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Drawing; // BUG FIX: Color/Font/Padding/FontStyle live here — was missing, file would not compile
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace EasyBiz
@@ -13,48 +15,89 @@ namespace EasyBiz
             LoadStockSummary();
             LoadProducts();
             BeautifyGrid(gridStock, Color.FromArgb(52, 152, 219));
-            BeautifyGrid(gridMovements, Color.FromArgb(39, 174, 96));            
+            BeautifyGrid(gridMovements, Color.FromArgb(39, 174, 96));
+        }
+
+        // BUG FIX: Microsoft.Data.Sqlite's GetDouble() throws InvalidCastException when a
+        // REAL-affinity column happens to be stored with INTEGER storage class (e.g. a value
+        // of exactly 0, which is extremely common for qty/weight/rate columns). GetValue() +
+        // Convert.ToDouble() reads the value regardless of underlying storage class.
+        private static decimal SafeDecimal(SqliteDataReader r, int i)
+        {
+            if (r.IsDBNull(i)) return 0m;
+            return Convert.ToDecimal(r.GetValue(i));
+        }
+
+        private static double SafeDouble(SqliteDataReader r, int i)
+        {
+            if (r.IsDBNull(i)) return 0.0;
+            return Convert.ToDouble(r.GetValue(i));
+        }
+
+        // BUG FIX: guard against NULL text columns (e.g. weight_unit) throwing on GetString()
+        private static string SafeString(SqliteDataReader r, int i)
+        {
+            return r.IsDBNull(i) ? string.Empty : r.GetString(i);
         }
 
         private void BeautifyGrid(DataGridView grid, Color headerColor)
         {
-            grid.BorderStyle = BorderStyle.None;
+            // Base grid setup
+            grid.BorderStyle = BorderStyle.Fixed3D;            
             grid.BackgroundColor = Color.White;
             grid.EnableHeadersVisualStyles = false;
             grid.RowHeadersVisible = false;
-
             grid.AllowUserToAddRows = false;
             grid.AllowUserToDeleteRows = false;
             grid.AllowUserToResizeRows = false;
-
+            grid.AllowUserToResizeColumns = false;
+            grid.AllowUserToOrderColumns = false;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grid.MultiSelect = false;
             grid.ReadOnly = true;
+            grid.StandardTab = true;
 
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-            grid.GridColor = Color.FromArgb(220, 220, 220);
+            // Modern flat grid lines — thin, single-direction, low-contrast
+            grid.GridColor = Color.FromArgb(230, 232, 235);
             grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            grid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 
-            // Header Style
-            grid.ColumnHeadersHeight = 40;
+            // Header style — flat, bold, generous height
+            grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            grid.ColumnHeadersHeight = 44;
             grid.ColumnHeadersDefaultCellStyle.BackColor = headerColor;
             grid.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Regular);
             grid.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
+            grid.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
-            // Rows
-            grid.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            // Row / cell style
+            grid.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F);
             grid.DefaultCellStyle.BackColor = Color.White;
-            grid.DefaultCellStyle.ForeColor = Color.Black;
-            grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(52, 152, 219);
-            grid.DefaultCellStyle.SelectionForeColor = Color.White;
+            grid.DefaultCellStyle.ForeColor = Color.FromArgb(45, 45, 48);
+            grid.DefaultCellStyle.Padding = new Padding(8, 4, 8, 4);
+            grid.DefaultCellStyle.SelectionBackColor = Color.FromArgb(230, 240, 250);
+            grid.DefaultCellStyle.SelectionForeColor = Color.FromArgb(20, 20, 20);
+            grid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
-            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 247, 250);
+            // Zebra striping — subtle
+            grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 251);
 
-            grid.RowTemplate.Height = 35;
+            grid.RowTemplate.Height = 38;
+
+            // Remove focus rectangle on selected cell for a cleaner look
+            grid.CellPainting += (s, e) =>
+            {
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                    e.CellStyle.SelectionBackColor = grid.DefaultCellStyle.SelectionBackColor;
+            };
         }
+
 
         // ── Tab 1: Current Stock Summary ─────────────────────────────────────
         private void LoadStockSummary()
@@ -73,23 +116,28 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                decimal qty = (decimal)r.GetDouble(4);
-                decimal minQty = (decimal)r.GetDouble(6);
+                // BUG FIX: use SafeDecimal instead of (decimal)r.GetDouble(...) to avoid
+                // InvalidCastException when a value is stored with INTEGER storage class (e.g. 0)
+                decimal qty = SafeDecimal(r, 4);
+                decimal minQty = SafeDecimal(r, 6);
+                decimal weight = SafeDecimal(r, 5);
+                decimal saleRate = SafeDecimal(r, 7);
+                decimal purRate = SafeDecimal(r, 8);
                 bool lowStock = qty <= minQty && minQty > 0;
 
                 int rowIdx = gridStock.Rows.Add();
                 var row = gridStock.Rows[rowIdx];
                 row.Cells["csNo"].Value = sno++;
                 row.Cells["csId"].Value = r.GetInt32(0);
-                row.Cells["csProduct"].Value = r.GetString(1);
-                row.Cells["csUnit"].Value = r.GetString(2);
+                row.Cells["csProduct"].Value = SafeString(r, 1);
+                row.Cells["csUnit"].Value = SafeString(r, 2);
                 row.Cells["csQty"].Value = qty.ToString("N3");
-                row.Cells["csWeight"].Value = ((decimal)r.GetDouble(5)).ToString("N3");
-                row.Cells["csWeightUnit"].Value = r.GetString(3);
+                row.Cells["csWeight"].Value = weight.ToString("N3");
+                row.Cells["csWeightUnit"].Value = SafeString(r, 3);
                 row.Cells["csMinQty"].Value = minQty.ToString("N3");
-                row.Cells["csSaleRate"].Value = ((decimal)r.GetDouble(7)).ToString("N2");
-                row.Cells["csPurRate"].Value = ((decimal)r.GetDouble(8)).ToString("N2");
-                row.Cells["csValue"].Value = (qty * (decimal)r.GetDouble(7)).ToString("N2");
+                row.Cells["csSaleRate"].Value = saleRate.ToString("N2");
+                row.Cells["csPurRate"].Value = purRate.ToString("N2");
+                row.Cells["csValue"].Value = (qty * saleRate).ToString("N2");
 
                 if (lowStock)
                 {
@@ -109,7 +157,7 @@ namespace EasyBiz
             cmd.CommandText = "SELECT product_id, product_name FROM products ORDER BY product_name";
             using var r = cmd.ExecuteReader();
             while (r.Read())
-                comboProductFilter.Items.Add($"{r.GetInt32(0)} - {r.GetString(1)}");
+                comboProductFilter.Items.Add($"{r.GetInt32(0)} - {SafeString(r, 1)}");
             comboProductFilter.SelectedIndex = 0;
         }
 
@@ -146,23 +194,33 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
+                // BUG FIX: replaced r.GetDouble(...) calls with SafeDouble to prevent
+                // InvalidCastException on zero-valued qty/weight columns
+                double qtyIn = SafeDouble(r, 5);
+                double qtyOut = SafeDouble(r, 6);
+                double wtIn = SafeDouble(r, 7);
+                double wtOut = SafeDouble(r, 8);
+                double rate = SafeDouble(r, 9);
+                double amount = SafeDouble(r, 10);
+                double balQty = SafeDouble(r, 11);
+                double balWt = SafeDouble(r, 12);
+
                 int rowIdx = gridMovements.Rows.Add();
                 var row = gridMovements.Rows[rowIdx];
                 row.Cells["smNo"].Value = sno++;
-                row.Cells["smDate"].Value = r.GetString(0);
-                row.Cells["smType"].Value = r.GetString(1);
-                row.Cells["smVoucher"].Value = $"{r.GetString(2)} #{r.GetInt32(3)}";
-                row.Cells["smProduct"].Value = r.GetString(4);
-                row.Cells["smQtyIn"].Value = r.GetDouble(5) > 0 ? r.GetDouble(5).ToString("N3") : "-";
-                row.Cells["smQtyOut"].Value = r.GetDouble(6) > 0 ? r.GetDouble(6).ToString("N3") : "-";
-                row.Cells["smWtIn"].Value = r.GetDouble(7) > 0 ? r.GetDouble(7).ToString("N3") : "-";
-                row.Cells["smWtOut"].Value = r.GetDouble(8) > 0 ? r.GetDouble(8).ToString("N3") : "-";
-                row.Cells["smRate"].Value = r.GetDouble(9).ToString("N2");
-                row.Cells["smAmount"].Value = r.GetDouble(10).ToString("N2");
-                row.Cells["smBalQty"].Value = r.GetDouble(11).ToString("N3");
-                row.Cells["smBalWt"].Value = r.GetDouble(12).ToString("N3");
+                row.Cells["smDate"].Value = SafeString(r, 0);                
+                row.Cells["smVoucher"].Value = $"{SafeString(r, 2)} #{r.GetInt32(3)}";                
+                row.Cells["smProduct"].Value = SafeString(r, 4);
+                row.Cells["smQtyIn"].Value = qtyIn > 0 ? qtyIn.ToString("N3") : "-";
+                row.Cells["smQtyOut"].Value = qtyOut > 0 ? qtyOut.ToString("N3") : "-";
+                row.Cells["smWtIn"].Value = wtIn > 0 ? wtIn.ToString("N3") : "-";
+                row.Cells["smWtOut"].Value = wtOut > 0 ? wtOut.ToString("N3") : "-";
+                row.Cells["smRate"].Value = rate.ToString("N2");
+                row.Cells["smAmount"].Value = amount.ToString("N2");
+                row.Cells["smBalQty"].Value = balQty.ToString("N3");
+                row.Cells["smBalWt"].Value = balWt.ToString("N3");
 
-                string mType = r.GetString(1);
+                string mType = SafeString(r, 1);
                 if (mType == "Sale")
                 {
                     row.DefaultCellStyle.BackColor = Color.FromArgb(255, 235, 235);
@@ -195,20 +253,21 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                decimal qty = (decimal)r.GetDouble(4);
-                decimal sale = (decimal)r.GetDouble(7);
+                // BUG FIX: SafeDecimal instead of (decimal)r.GetDouble(...)
+                decimal qty = SafeDecimal(r, 4);
+                decimal sale = SafeDecimal(r, 7);
                 rows.Add(new StockSummaryRow
                 {
                     SrNo = sno++,
                     ProductId = r.GetInt32(0),
-                    ProductName = r.GetString(1),
-                    Unit = r.GetString(2),
-                    WeightUnit = r.GetString(3),
+                    ProductName = SafeString(r, 1),
+                    Unit = SafeString(r, 2),
+                    WeightUnit = SafeString(r, 3),
                     CurrentQty = qty,
-                    CurrentWeight = (decimal)r.GetDouble(5),
-                    MinStockQty = (decimal)r.GetDouble(6),
+                    CurrentWeight = SafeDecimal(r, 5),
+                    MinStockQty = SafeDecimal(r, 6),
                     SaleRate = sale,
-                    PurchaseRate = (decimal)r.GetDouble(8),
+                    PurchaseRate = SafeDecimal(r, 8),
                     StockValue = qty * sale
                 });
             }
@@ -249,21 +308,22 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
+                // BUG FIX: SafeDecimal instead of (decimal)r.GetDouble(...)
                 rows.Add(new StockMovementRow
                 {
                     SrNo = sno++,
-                    Date = r.GetString(0),
-                    MovementType = r.GetString(1),
-                    VoucherRef = $"{r.GetString(2)} #{r.GetInt32(3)}",
-                    ProductName = r.GetString(4),
-                    QtyIn = (decimal)r.GetDouble(5),
-                    QtyOut = (decimal)r.GetDouble(6),
-                    WeightIn = (decimal)r.GetDouble(7),
-                    WeightOut = (decimal)r.GetDouble(8),
-                    Rate = (decimal)r.GetDouble(9),
-                    Amount = (decimal)r.GetDouble(10),
-                    BalanceQty = (decimal)r.GetDouble(11),
-                    BalanceWeight = (decimal)r.GetDouble(12)
+                    Date = SafeString(r, 0),
+                    MovementType = SafeString(r, 1),
+                    VoucherRef = $"{SafeString(r, 2)} #{r.GetInt32(3)}",
+                    ProductName = SafeString(r, 4),
+                    QtyIn = SafeDecimal(r, 5),
+                    QtyOut = SafeDecimal(r, 6),
+                    WeightIn = SafeDecimal(r, 7),
+                    WeightOut = SafeDecimal(r, 8),
+                    Rate = SafeDecimal(r, 9),
+                    Amount = SafeDecimal(r, 10),
+                    BalanceQty = SafeDecimal(r, 11),
+                    BalanceWeight = SafeDecimal(r, 12)
                 });
             }
             return rows;
@@ -276,9 +336,6 @@ namespace EasyBiz
 
         private void BtnLoadMovements_Click(object sender, EventArgs e) =>
             LoadMovements();
-
-        private void BtnClose_Click(object sender, EventArgs e) =>
-            Close();
 
         /// <summary>Export Current Stock Summary to PDF.</summary>
         private void BtnExportSummary_Click(object sender, EventArgs e)

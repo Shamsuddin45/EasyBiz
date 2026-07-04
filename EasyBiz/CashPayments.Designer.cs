@@ -226,92 +226,97 @@
             comboAccountId.TabIndex = 2;
             comboAccountId.SelectedIndexChanged += comboAccountId_SelectedIndexChanged;
             // 
-            // dataGridView1
-            // 
+            // // dataGridView1 //
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(245, 245, 245);
+
+            // 1. Sleek Alternating Row Color (Very subtle off-white/gray)
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
             dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+
+            // 2. Modern Flat Header Style (Deep Charcoal / Navy Slate)
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            dataGridViewCellStyle2.BackColor = Color.Tomato; // Modern dark charcoal
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Regular); // Semibold looks cleaner than Bold
             dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(33, 37, 41);
             dataGridViewCellStyle2.SelectionForeColor = Color.White;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.ColumnHeadersHeight = 45;
+
+            dataGridView1.ColumnHeadersHeight = 48; // Slightly taller for better breathing room
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, accountId, accountname, desc, amount });
+
+            // 3. Clean Content Style with Soft Blue/Slate Selection
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = Color.White;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.Padding = new Padding(5);
-            dataGridViewCellStyle3.SelectionBackColor = Color.LightCoral;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(43, 43, 43); // Off-black is easier on the eyes
+            dataGridViewCellStyle3.Padding = new Padding(8, 4, 8, 4); // Added horizontal padding
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(225, 238, 254); // Soft, premium blue accent
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(15, 76, 129); // Dark blue text for contrast
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.GridColor = Color.LightGray;
+            dataGridView1.GridColor = Color.FromArgb(230, 234, 238); // Softer gridline color
             dataGridView1.Location = new Point(3, 220);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 40;
+            dataGridView1.RowTemplate.Height = 44; // Taller rows for a modern dashboard feel
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(1091, 272);
             dataGridView1.TabIndex = 14;
             dataGridView1.TabStop = false;
-            // 
-            // sno
-            // 
+
+            // // sno //
             sno.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            sno.HeaderText = "Sno";
+            sno.HeaderText = "SNo";
             sno.MinimumWidth = 6;
             sno.Name = "sno";
             sno.ReadOnly = true;
             sno.Width = 77;
-            // 
-            // accountId
-            // 
-            accountId.HeaderText = "account id";
+
+            // // accountId //
+            accountId.HeaderText = "Account ID";
             accountId.MinimumWidth = 6;
             accountId.Name = "accountId";
             accountId.Visible = false;
-            // 
-            // accountname
-            // 
+
+            // // accountname //
             accountname.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             accountname.HeaderText = "Account Name";
             accountname.MinimumWidth = 6;
             accountname.Name = "accountname";
             accountname.ReadOnly = true;
             accountname.Width = 164;
-            // 
-            // desc
-            // 
+
+            // // desc //
             desc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             desc.HeaderText = "Description";
             desc.MinimumWidth = 6;
             desc.Name = "desc";
-            // 
-            // amount
-            // 
+
+            // // amount //
             amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
+            // Optional UI polish: Right-align column header if it's numeric data
+            amount.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
+            amount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
             amount.HeaderText = "Amount";
             amount.MinimumWidth = 6;
             amount.Name = "amount";
             amount.Width = 112;
-            // 
             // label7
             // 
             label7.AutoSize = true;

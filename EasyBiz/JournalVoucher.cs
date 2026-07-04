@@ -18,12 +18,22 @@ namespace EasyBiz
             DatabaseHelper.InitializeDatabase();
             LoadAccounts();
             ShowVoucherNo();
+            comboAccountName.Select();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
+                case Keys.Enter:
+                    if (ActiveControl == txtCredit)
+                    {
+                        AddDataToGrid();
+                        return true;
+                    }
+                    SelectNextControl(this.ActiveControl, true, true, true, true);
+                    return true;            
+
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
                     return true;
@@ -434,8 +444,6 @@ namespace EasyBiz
             {
                 // Sync account name with selected ID
                 comboAccountName.SelectedIndex = comboAccountId.SelectedIndex;
-
-                // Update balance
                 UpdateBalance(comboAccountId.SelectedIndex);
             }
         }
@@ -445,50 +453,44 @@ namespace EasyBiz
             if (comboAccountName.SelectedIndex != -1)
             {
                 // Sync account ID with selected name
-                comboAccountId.SelectedIndex = comboAccountName.SelectedIndex;
-
-                // Update balance
+                comboAccountId.SelectedIndex = comboAccountName.SelectedIndex;             
                 UpdateBalance(comboAccountName.SelectedIndex);
-            }
-            txtDescription.Focus();
+            }            
         }
 
-        private void txtCredit_KeyPress(object sender, KeyPressEventArgs e)
+        public void AddDataToGrid()
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            string partyName = comboAccountName.Text;
+            string description = txtDescription.Text;
+
+            decimal debit = 0;
+            decimal credit = 0;
+
+            bool isValid =
+                (!string.IsNullOrWhiteSpace(txtDebit.Text) ||
+                 !string.IsNullOrWhiteSpace(txtCredit.Text)) &&
+
+                (string.IsNullOrWhiteSpace(txtDebit.Text) ||
+                 decimal.TryParse(txtDebit.Text, out debit)) &&
+
+                (string.IsNullOrWhiteSpace(txtCredit.Text) ||
+                 decimal.TryParse(txtCredit.Text, out credit));
+
+            if (isValid)
             {
-                string partyName = comboAccountName.Text;
-                string description = txtDescription.Text;
+                AddRowToDataGridView(partyName, description, debit, credit);
 
-                decimal debit = 0;
-                decimal credit = 0;
+                txtDescription.Clear();
+                txtDebit.Clear();
+                txtCredit.Clear();
 
-                bool isValid =
-                    (!string.IsNullOrWhiteSpace(txtDebit.Text) ||
-                     !string.IsNullOrWhiteSpace(txtCredit.Text)) &&
-
-                    (string.IsNullOrWhiteSpace(txtDebit.Text) ||
-                     decimal.TryParse(txtDebit.Text, out debit)) &&
-
-                    (string.IsNullOrWhiteSpace(txtCredit.Text) ||
-                     decimal.TryParse(txtCredit.Text, out credit));
-
-                if (isValid)
-                {
-                    AddRowToDataGridView(partyName, description, debit, credit);
-
-                    txtDescription.Clear();
-                    txtDebit.Clear();
-                    txtCredit.Clear();
-
-                    comboAccountName.Focus();
-                }
-                else
-                {
-                    MessageBox.Show("Enter a valid Debit or Credit amount.");
-                }
+                comboAccountName.Focus();
             }
-        }
+            else
+            {
+                MessageBox.Show("Enter a valid Debit or Credit amount.");
+            }
+        }        
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -515,16 +517,7 @@ namespace EasyBiz
             {
                 txtDebit.Focus();
             }
-        }
-
-        private void txtDebit_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // FOCUS TO NEXT CONTROL ON ENTER
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                txtCredit.Focus();
-            }
-        }
+        }        
 
         private void JournalVoucher_FormClosing(object sender, FormClosingEventArgs e)
         {

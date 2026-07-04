@@ -49,7 +49,6 @@
             gridMovements = new DataGridView();
             smNo = new DataGridViewTextBoxColumn();
             smDate = new DataGridViewTextBoxColumn();
-            smType = new DataGridViewTextBoxColumn();
             smVoucher = new DataGridViewTextBoxColumn();
             smProduct = new DataGridViewTextBoxColumn();
             smQtyIn = new DataGridViewTextBoxColumn();
@@ -62,27 +61,26 @@
             smBalWt = new DataGridViewTextBoxColumn();
             BtnLoadMovements = new CustomButton();
             BtnRefreshStock = new CustomButton();
-            BtnClose = new CustomButton();
-            label4 = new Label();
-            label5 = new Label();
             BtnExportMovements = new CustomButton();
             BtnExportSummary = new CustomButton();
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
-            panel4 = new Panel();
+            panelContainer = new Panel();
             ((System.ComponentModel.ISupportInitialize)gridStock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridMovements).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
+            panelContainer.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.Left;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(29, 45);
+            label1.Location = new Point(57, 44);
             label1.Name = "label1";
             label1.Size = new Size(58, 28);
             label1.TabIndex = 0;
@@ -90,27 +88,30 @@
             // 
             // dateFrom
             // 
+            dateFrom.Anchor = AnchorStyles.Left;
             dateFrom.Font = new Font("Segoe UI", 12F);
             dateFrom.Format = DateTimePickerFormat.Short;
-            dateFrom.Location = new Point(93, 45);
+            dateFrom.Location = new Point(57, 75);
             dateFrom.Name = "dateFrom";
             dateFrom.Size = new Size(185, 34);
             dateFrom.TabIndex = 1;
             // 
             // dateTo
             // 
+            dateTo.Anchor = AnchorStyles.Left;
             dateTo.Font = new Font("Segoe UI", 12F);
             dateTo.Format = DateTimePickerFormat.Short;
-            dateTo.Location = new Point(325, 46);
+            dateTo.Location = new Point(248, 75);
             dateTo.Name = "dateTo";
             dateTo.Size = new Size(185, 34);
             dateTo.TabIndex = 3;
             // 
             // label2
             // 
+            label2.Anchor = AnchorStyles.Left;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(287, 46);
+            label2.Location = new Point(248, 44);
             label2.Name = "label2";
             label2.Size = new Size(32, 28);
             label2.TabIndex = 2;
@@ -120,32 +121,36 @@
             // 
             gridStock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridStock.Columns.AddRange(new DataGridViewColumn[] { csNo, csId, csProduct, csUnit, csQty, csWeight, csWeightUnit, csMinQty, csSaleRate, csPurRate, csValue });
-            gridStock.Location = new Point(64, 53);
+            gridStock.Dock = DockStyle.Fill;
+            gridStock.Location = new Point(0, 0);
             gridStock.Name = "gridStock";
             gridStock.RowHeadersWidth = 51;
-            gridStock.Size = new Size(1432, 330);
+            gridStock.Size = new Size(1121, 397);
             gridStock.TabIndex = 4;
             // 
             // csNo
             // 
+            csNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             csNo.HeaderText = "Sr#";
             csNo.MinimumWidth = 6;
             csNo.Name = "csNo";
-            csNo.Width = 125;
+            csNo.Width = 60;
             // 
             // csId
             // 
+            csId.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             csId.HeaderText = "Id";
             csId.MinimumWidth = 6;
             csId.Name = "csId";
-            csId.Width = 125;
+            csId.Width = 51;
             // 
             // csProduct
             // 
+            csProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             csProduct.HeaderText = "Product";
             csProduct.MinimumWidth = 6;
             csProduct.Name = "csProduct";
-            csProduct.Width = 125;
+            csProduct.Width = 89;
             // 
             // csUnit
             // 
@@ -170,7 +175,7 @@
             // 
             // csWeightUnit
             // 
-            csWeightUnit.HeaderText = "Weight_Unit";
+            csWeightUnit.HeaderText = "Wt-Unit";
             csWeightUnit.MinimumWidth = 6;
             csWeightUnit.Name = "csWeightUnit";
             csWeightUnit.Width = 125;
@@ -205,18 +210,20 @@
             // 
             // comboProductFilter
             // 
+            comboProductFilter.Anchor = AnchorStyles.Left;
             comboProductFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProductFilter.FormattingEnabled = true;
-            comboProductFilter.Location = new Point(668, 45);
+            comboProductFilter.Location = new Point(439, 75);
             comboProductFilter.Name = "comboProductFilter";
             comboProductFilter.Size = new Size(310, 36);
             comboProductFilter.TabIndex = 5;
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Left;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(577, 48);
+            label3.Location = new Point(439, 44);
             label3.Name = "label3";
             label3.Size = new Size(85, 28);
             label3.TabIndex = 6;
@@ -225,19 +232,21 @@
             // gridMovements
             // 
             gridMovements.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridMovements.Columns.AddRange(new DataGridViewColumn[] { smNo, smDate, smType, smVoucher, smProduct, smQtyIn, smQtyOut, smWtIn, smWtOut, smRate, smAmount, smBalQty, smBalWt });
-            gridMovements.Location = new Point(64, 71);
+            gridMovements.Columns.AddRange(new DataGridViewColumn[] { smNo, smDate, smVoucher, smProduct, smQtyIn, smQtyOut, smWtIn, smWtOut, smRate, smAmount, smBalQty, smBalWt });
+            gridMovements.Dock = DockStyle.Fill;
+            gridMovements.Location = new Point(0, 0);
             gridMovements.Name = "gridMovements";
             gridMovements.RowHeadersWidth = 51;
-            gridMovements.Size = new Size(1688, 381);
+            gridMovements.Size = new Size(1121, 357);
             gridMovements.TabIndex = 7;
             // 
             // smNo
             // 
+            smNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             smNo.HeaderText = "Sr#";
             smNo.MinimumWidth = 6;
             smNo.Name = "smNo";
-            smNo.Width = 125;
+            smNo.Width = 60;
             // 
             // smDate
             // 
@@ -245,13 +254,6 @@
             smDate.MinimumWidth = 6;
             smDate.Name = "smDate";
             smDate.Width = 125;
-            // 
-            // smType
-            // 
-            smType.HeaderText = "Type";
-            smType.MinimumWidth = 6;
-            smType.Name = "smType";
-            smType.Width = 125;
             // 
             // smVoucher
             // 
@@ -262,10 +264,11 @@
             // 
             // smProduct
             // 
+            smProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             smProduct.HeaderText = "Product";
             smProduct.MinimumWidth = 6;
             smProduct.Name = "smProduct";
-            smProduct.Width = 125;
+            smProduct.Width = 89;
             // 
             // smQtyIn
             // 
@@ -283,14 +286,14 @@
             // 
             // smWtIn
             // 
-            smWtIn.HeaderText = "Weight_In";
+            smWtIn.HeaderText = "Wt-In";
             smWtIn.MinimumWidth = 6;
             smWtIn.Name = "smWtIn";
             smWtIn.Width = 125;
             // 
             // smWtOut
             // 
-            smWtOut.HeaderText = "Weight_Out";
+            smWtOut.HeaderText = "Wt-Out";
             smWtOut.MinimumWidth = 6;
             smWtOut.Name = "smWtOut";
             smWtOut.Width = 125;
@@ -325,6 +328,7 @@
             // 
             // BtnLoadMovements
             // 
+            BtnLoadMovements.Anchor = AnchorStyles.Left;
             BtnLoadMovements.BackColor = Color.FromArgb(52, 152, 219);
             BtnLoadMovements.BackgroundColor = Color.FromArgb(52, 152, 219);
             BtnLoadMovements.BorderColor = Color.Transparent;
@@ -334,9 +338,9 @@
             BtnLoadMovements.FlatStyle = FlatStyle.Flat;
             BtnLoadMovements.Font = new Font("Segoe UI", 10.2F);
             BtnLoadMovements.ForeColor = Color.White;
-            BtnLoadMovements.Location = new Point(990, 45);
+            BtnLoadMovements.Location = new Point(762, 75);
             BtnLoadMovements.Name = "BtnLoadMovements";
-            BtnLoadMovements.Size = new Size(136, 36);
+            BtnLoadMovements.Size = new Size(118, 36);
             BtnLoadMovements.TabIndex = 8;
             BtnLoadMovements.Text = "Load";
             BtnLoadMovements.TextColor = Color.White;
@@ -345,6 +349,7 @@
             // 
             // BtnRefreshStock
             // 
+            BtnRefreshStock.Anchor = AnchorStyles.Left;
             BtnRefreshStock.BackColor = Color.FromArgb(0, 192, 0);
             BtnRefreshStock.BackgroundColor = Color.FromArgb(0, 192, 0);
             BtnRefreshStock.BorderColor = Color.Transparent;
@@ -354,71 +359,30 @@
             BtnRefreshStock.FlatStyle = FlatStyle.Flat;
             BtnRefreshStock.Font = new Font("Segoe UI", 10.2F);
             BtnRefreshStock.ForeColor = Color.White;
-            BtnRefreshStock.Location = new Point(1132, 45);
+            BtnRefreshStock.Location = new Point(886, 75);
             BtnRefreshStock.Name = "BtnRefreshStock";
-            BtnRefreshStock.Size = new Size(136, 36);
+            BtnRefreshStock.Size = new Size(118, 36);
             BtnRefreshStock.TabIndex = 9;
             BtnRefreshStock.Text = "Refresh";
             BtnRefreshStock.TextColor = Color.White;
             BtnRefreshStock.UseVisualStyleBackColor = false;
             BtnRefreshStock.Click += BtnRefreshStock_Click;
             // 
-            // BtnClose
-            // 
-            BtnClose.Anchor = AnchorStyles.Right;
-            BtnClose.BackColor = Color.FromArgb(192, 0, 0);
-            BtnClose.BackgroundColor = Color.FromArgb(192, 0, 0);
-            BtnClose.BorderColor = Color.Transparent;
-            BtnClose.BorderRadius = 2;
-            BtnClose.BorderSize = 0;
-            BtnClose.FlatAppearance.BorderSize = 0;
-            BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 12F);
-            BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(1513, 273);
-            BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(239, 48);
-            BtnClose.TabIndex = 10;
-            BtnClose.Text = "Close";
-            BtnClose.TextColor = Color.White;
-            BtnClose.UseVisualStyleBackColor = false;
-            BtnClose.Click += BtnClose_Click;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(668, 6);
-            label4.Name = "label4";
-            label4.Size = new Size(204, 46);
-            label4.TabIndex = 11;
-            label4.Text = "--- Stock ---";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(707, 22);
-            label5.Name = "label5";
-            label5.Size = new Size(299, 46);
-            label5.TabIndex = 12;
-            label5.Text = "--- Movements ---";
-            // 
             // BtnExportMovements
             // 
-            BtnExportMovements.Anchor = AnchorStyles.Right;
+            BtnExportMovements.Anchor = AnchorStyles.Left;
             BtnExportMovements.BackColor = Color.FromArgb(192, 0, 192);
             BtnExportMovements.BackgroundColor = Color.FromArgb(192, 0, 192);
             BtnExportMovements.BorderColor = Color.Transparent;
-            BtnExportMovements.BorderRadius = 2;
+            BtnExportMovements.BorderRadius = 8;
             BtnExportMovements.BorderSize = 0;
             BtnExportMovements.FlatAppearance.BorderSize = 0;
             BtnExportMovements.FlatStyle = FlatStyle.Flat;
-            BtnExportMovements.Font = new Font("Segoe UI", 12F);
+            BtnExportMovements.Font = new Font("Segoe UI", 10.2F);
             BtnExportMovements.ForeColor = Color.White;
-            BtnExportMovements.Location = new Point(1513, 147);
+            BtnExportMovements.Location = new Point(359, 146);
             BtnExportMovements.Name = "BtnExportMovements";
-            BtnExportMovements.Size = new Size(239, 48);
+            BtnExportMovements.Size = new Size(221, 36);
             BtnExportMovements.TabIndex = 13;
             BtnExportMovements.Text = "Export Movements";
             BtnExportMovements.TextColor = Color.White;
@@ -427,19 +391,19 @@
             // 
             // BtnExportSummary
             // 
-            BtnExportSummary.Anchor = AnchorStyles.Right;
+            BtnExportSummary.Anchor = AnchorStyles.Left;
             BtnExportSummary.BackColor = Color.FromArgb(128, 128, 255);
             BtnExportSummary.BackgroundColor = Color.FromArgb(128, 128, 255);
             BtnExportSummary.BorderColor = Color.Transparent;
-            BtnExportSummary.BorderRadius = 2;
+            BtnExportSummary.BorderRadius = 8;
             BtnExportSummary.BorderSize = 0;
             BtnExportSummary.FlatAppearance.BorderSize = 0;
             BtnExportSummary.FlatStyle = FlatStyle.Flat;
-            BtnExportSummary.Font = new Font("Segoe UI", 12F);
+            BtnExportSummary.Font = new Font("Segoe UI", 10.2F);
             BtnExportSummary.ForeColor = Color.White;
-            BtnExportSummary.Location = new Point(1513, 210);
+            BtnExportSummary.Location = new Point(586, 146);
             BtnExportSummary.Name = "BtnExportSummary";
-            BtnExportSummary.Size = new Size(239, 48);
+            BtnExportSummary.Size = new Size(224, 36);
             BtnExportSummary.TabIndex = 14;
             BtnExportSummary.Text = "Export Summary";
             BtnExportSummary.TextColor = Color.White;
@@ -448,60 +412,64 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(dateTo);
-            panel1.Controls.Add(label1);
-            panel1.Controls.Add(dateFrom);
-            panel1.Controls.Add(label2);
-            panel1.Controls.Add(comboProductFilter);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(BtnRefreshStock);
-            panel1.Controls.Add(BtnLoadMovements);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
+            panel1.AutoScroll = true;
+            panel1.AutoScrollMargin = new Size(10, 10);
+            panel1.Controls.Add(gridStock);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 581);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1783, 109);
+            panel1.Size = new Size(1121, 397);
             panel1.TabIndex = 15;
             // 
             // panel2
             // 
-            panel2.Controls.Add(BtnClose);
-            panel2.Controls.Add(BtnExportMovements);
-            panel2.Controls.Add(gridStock);
-            panel2.Controls.Add(BtnExportSummary);
-            panel2.Controls.Add(label4);
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 109);
+            panel2.AutoScroll = true;
+            panel2.AutoScrollMargin = new Size(10, 10);
+            panel2.Controls.Add(gridMovements);
+            panel2.Dock = DockStyle.Bottom;
+            panel2.Location = new Point(0, 224);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1783, 399);
+            panel2.Size = new Size(1121, 357);
             panel2.TabIndex = 16;
             // 
             // panel3
             // 
-            panel3.Controls.Add(gridMovements);
-            panel3.Controls.Add(label5);
-            panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(0, 508);
+            panel3.AutoScroll = true;
+            panel3.Controls.Add(BtnExportMovements);
+            panel3.Controls.Add(dateTo);
+            panel3.Controls.Add(label1);
+            panel3.Controls.Add(BtnLoadMovements);
+            panel3.Controls.Add(dateFrom);
+            panel3.Controls.Add(BtnRefreshStock);
+            panel3.Controls.Add(label2);
+            panel3.Controls.Add(BtnExportSummary);
+            panel3.Controls.Add(comboProductFilter);
+            panel3.Controls.Add(label3);
+            panel3.Dock = DockStyle.Bottom;
+            panel3.Location = new Point(0, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1783, 482);
+            panel3.Size = new Size(1121, 222);
             panel3.TabIndex = 17;
             // 
-            // panel4
+            // panelContainer
             // 
-            panel4.Dock = DockStyle.Bottom;
-            panel4.Location = new Point(0, 999);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(1783, 56);
-            panel4.TabIndex = 18;
+            panelContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelContainer.AutoScroll = true;
+            panelContainer.AutoScrollMargin = new Size(10, 10);
+            panelContainer.Controls.Add(panel3);
+            panelContainer.Controls.Add(panel2);
+            panelContainer.Controls.Add(panel1);
+            panelContainer.Location = new Point(0, 0);
+            panelContainer.Name = "panelContainer";
+            panelContainer.Size = new Size(1121, 978);
+            panelContainer.TabIndex = 15;
             // 
             // StockReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1783, 1055);
-            Controls.Add(panel4);
-            Controls.Add(panel3);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            ClientSize = new Size(1121, 978);
+            Controls.Add(panelContainer);
             Name = "StockReport";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Stock Report";
@@ -509,11 +477,10 @@
             ((System.ComponentModel.ISupportInitialize)gridStock).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridMovements).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            panelContainer.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -529,7 +496,23 @@
         private DataGridView gridMovements;
         private CustomButton BtnLoadMovements;
         private CustomButton BtnRefreshStock;
-        private CustomButton BtnClose;
+        private CustomButton BtnExportMovements;
+        private CustomButton BtnExportSummary;
+        private Panel panel1;
+        private Panel panel2;
+        private Panel panel3;
+        private DataGridViewTextBoxColumn smNo;
+        private DataGridViewTextBoxColumn smDate;
+        private DataGridViewTextBoxColumn smVoucher;
+        private DataGridViewTextBoxColumn smProduct;
+        private DataGridViewTextBoxColumn smQtyIn;
+        private DataGridViewTextBoxColumn smQtyOut;
+        private DataGridViewTextBoxColumn smWtIn;
+        private DataGridViewTextBoxColumn smWtOut;
+        private DataGridViewTextBoxColumn smRate;
+        private DataGridViewTextBoxColumn smAmount;
+        private DataGridViewTextBoxColumn smBalQty;
+        private DataGridViewTextBoxColumn smBalWt;
         private DataGridViewTextBoxColumn csNo;
         private DataGridViewTextBoxColumn csId;
         private DataGridViewTextBoxColumn csProduct;
@@ -541,26 +524,6 @@
         private DataGridViewTextBoxColumn csSaleRate;
         private DataGridViewTextBoxColumn csPurRate;
         private DataGridViewTextBoxColumn csValue;
-        private DataGridViewTextBoxColumn smNo;
-        private DataGridViewTextBoxColumn smDate;
-        private DataGridViewTextBoxColumn smType;
-        private DataGridViewTextBoxColumn smVoucher;
-        private DataGridViewTextBoxColumn smProduct;
-        private DataGridViewTextBoxColumn smQtyIn;
-        private DataGridViewTextBoxColumn smQtyOut;
-        private DataGridViewTextBoxColumn smWtIn;
-        private DataGridViewTextBoxColumn smWtOut;
-        private DataGridViewTextBoxColumn smRate;
-        private DataGridViewTextBoxColumn smAmount;
-        private DataGridViewTextBoxColumn smBalQty;
-        private DataGridViewTextBoxColumn smBalWt;
-        private Label label4;
-        private Label label5;
-        private CustomButton BtnExportMovements;
-        private CustomButton BtnExportSummary;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
-        private Panel panel4;
+        private Panel panelContainer;
     }
 }

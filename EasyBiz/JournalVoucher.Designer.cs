@@ -68,10 +68,10 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(52, 51);
+            label6.Font = new Font("Segoe UI", 10.2F);
+            label6.Location = new Point(60, 56);
             label6.Name = "label6";
-            label6.Size = new Size(69, 28);
+            label6.Size = new Size(61, 23);
             label6.TabIndex = 25;
             label6.Text = "A/C ID";
             // 
@@ -84,34 +84,35 @@
             comboAccountId.Location = new Point(127, 48);
             comboAccountId.Name = "comboAccountId";
             comboAccountId.Size = new Size(193, 36);
-            comboAccountId.TabIndex = 24;
+            comboAccountId.TabIndex = 2;
             comboAccountId.SelectedIndexChanged += comboAccountId_SelectedIndexChanged;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(326, 53);
+            label5.Font = new Font("Segoe UI", 10.2F);
+            label5.Location = new Point(420, 58);
             label5.Name = "label5";
-            label5.Size = new Size(66, 28);
+            label5.Size = new Size(58, 23);
             label5.TabIndex = 23;
             label5.Text = "PreBal";
             // 
             // txtPreBalance
             // 
             txtPreBalance.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            txtPreBalance.Location = new Point(398, 50);
+            txtPreBalance.Location = new Point(484, 50);
             txtPreBalance.Name = "txtPreBalance";
-            txtPreBalance.Size = new Size(296, 34);
+            txtPreBalance.Size = new Size(210, 34);
             txtPreBalance.TabIndex = 22;
+            txtPreBalance.TabStop = false;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(127, 186);
+            label4.Font = new Font("Segoe UI", 10.2F);
+            label4.Location = new Point(136, 191);
             label4.Name = "label4";
-            label4.Size = new Size(60, 28);
+            label4.Size = new Size(51, 23);
             label4.TabIndex = 21;
             label4.Text = "Debit";
             // 
@@ -122,17 +123,16 @@
             txtDebit.Location = new Point(193, 183);
             txtDebit.Name = "txtDebit";
             txtDebit.Size = new Size(210, 34);
-            txtDebit.TabIndex = 3;
+            txtDebit.TabIndex = 5;
             txtDebit.TextAlign = HorizontalAlignment.Center;
-            txtDebit.KeyPress += txtDebit_KeyPress;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(9, 137);
+            label3.Font = new Font("Segoe UI", 10.2F);
+            label3.Location = new Point(25, 145);
             label3.Name = "label3";
-            label3.Size = new Size(112, 28);
+            label3.Size = new Size(96, 23);
             label3.TabIndex = 19;
             label3.Text = "Description";
             // 
@@ -142,16 +142,16 @@
             txtDescription.Location = new Point(127, 137);
             txtDescription.Name = "txtDescription";
             txtDescription.Size = new Size(567, 34);
-            txtDescription.TabIndex = 2;
+            txtDescription.TabIndex = 4;
             txtDescription.KeyPress += txtDescription_KeyPress;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(19, 98);
+            label2.Font = new Font("Segoe UI", 10.2F);
+            label2.Location = new Point(31, 103);
             label2.Name = "label2";
-            label2.Size = new Size(102, 28);
+            label2.Size = new Size(90, 23);
             label2.TabIndex = 17;
             label2.Text = "A/C Name";
             // 
@@ -164,7 +164,7 @@
             comboAccountName.Location = new Point(127, 95);
             comboAccountName.Name = "comboAccountName";
             comboAccountName.Size = new Size(567, 36);
-            comboAccountName.TabIndex = 1;
+            comboAccountName.TabIndex = 3;
             comboAccountName.SelectedIndexChanged += comboAccountName_SelectedIndexChanged;
             comboAccountName.KeyPress += comboAccountName_KeyPress;
             // 
@@ -172,18 +172,18 @@
             // 
             dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(858, 45);
+            dateTimePicker1.Location = new Point(805, 88);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(192, 34);
-            dateTimePicker1.TabIndex = 5;
+            dateTimePicker1.TabIndex = 1;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(799, 45);
+            label1.Font = new Font("Segoe UI", 10.2F);
+            label1.Location = new Point(805, 57);
             label1.Name = "label1";
-            label1.Size = new Size(53, 28);
+            label1.Size = new Size(46, 23);
             label1.TabIndex = 14;
             label1.Text = "Date";
             // 
@@ -222,7 +222,7 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(3, 253);
+            dataGridView1.Location = new Point(3, 244);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
@@ -230,8 +230,9 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1088, 423);
+            dataGridView1.Size = new Size(1088, 268);
             dataGridView1.TabIndex = 26;
+            dataGridView1.TabStop = false;
             // 
             // sno
             // 
@@ -285,12 +286,12 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 12F);
+            BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(6, 3);
+            BtnClose.Location = new Point(16, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(150, 50);
-            BtnClose.TabIndex = 7;
+            BtnClose.Size = new Size(123, 50);
+            BtnClose.TabIndex = 8;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -305,12 +306,12 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 12F);
+            BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(162, 3);
+            BtnSave.Location = new Point(145, 3);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(188, 50);
-            BtnSave.TabIndex = 6;
+            BtnSave.Size = new Size(161, 50);
+            BtnSave.TabIndex = 7;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -319,10 +320,10 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(414, 186);
+            label7.Font = new Font("Segoe UI", 10.2F);
+            label7.Location = new Point(422, 191);
             label7.Name = "label7";
-            label7.Size = new Size(65, 28);
+            label7.Size = new Size(56, 23);
             label7.TabIndex = 30;
             label7.Text = "Credit";
             // 
@@ -333,17 +334,16 @@
             txtCredit.Location = new Point(484, 183);
             txtCredit.Name = "txtCredit";
             txtCredit.Size = new Size(210, 34);
-            txtCredit.TabIndex = 4;
+            txtCredit.TabIndex = 6;
             txtCredit.TextAlign = HorizontalAlignment.Center;
-            txtCredit.KeyPress += txtCredit_KeyPress;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(761, 101);
+            label8.Font = new Font("Segoe UI", 10.2F);
+            label8.Location = new Point(805, 149);
             label8.Name = "label8";
-            label8.Size = new Size(91, 28);
+            label8.Size = new Size(79, 23);
             label8.TabIndex = 32;
             label8.Text = "Invoice #";
             // 
@@ -351,10 +351,12 @@
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.LightSeaGreen;
-            txtInvoiceNumber.Location = new Point(858, 95);
+            txtInvoiceNumber.Location = new Point(805, 180);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
+            txtInvoiceNumber.ReadOnly = true;
             txtInvoiceNumber.Size = new Size(192, 34);
             txtInvoiceNumber.TabIndex = 31;
+            txtInvoiceNumber.TabStop = false;
             txtInvoiceNumber.TextAlign = HorizontalAlignment.Center;
             // 
             // flowLayoutPanel1
@@ -363,9 +365,9 @@
             flowLayoutPanel1.Controls.Add(BtnSave);
             flowLayoutPanel1.Controls.Add(BtnClose);
             flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
-            flowLayoutPanel1.Location = new Point(738, 682);
+            flowLayoutPanel1.Location = new Point(782, 518);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(353, 62);
+            flowLayoutPanel1.Size = new Size(309, 62);
             flowLayoutPanel1.TabIndex = 33;
             // 
             // panel1
@@ -389,7 +391,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1088, 244);
+            panel1.Size = new Size(1088, 235);
             panel1.TabIndex = 34;
             // 
             // tableLayoutPanel1
@@ -404,17 +406,17 @@
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 57.2F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.466666F));
-            tableLayoutPanel1.Size = new Size(1094, 750);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40.64081F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 46.2057343F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.8676472F));
+            tableLayoutPanel1.Size = new Size(1094, 593);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // JournalVoucher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1094, 750);
+            ClientSize = new Size(1094, 593);
             Controls.Add(tableLayoutPanel1);
             Name = "JournalVoucher";
             StartPosition = FormStartPosition.CenterParent;
