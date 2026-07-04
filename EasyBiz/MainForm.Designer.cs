@@ -70,6 +70,7 @@
             BtnBackupData = new CustomButton();
             toolTip1 = new ToolTip(components);
             tableLayoutPanel1 = new TableLayoutPanel();
+            pnlFavorites = new FlowLayoutPanel();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -84,7 +85,7 @@
             BtnAccountsSetup.BorderSize = 2;
             BtnAccountsSetup.FlatAppearance.BorderSize = 0;
             BtnAccountsSetup.FlatStyle = FlatStyle.Flat;
-            BtnAccountsSetup.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnAccountsSetup.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnAccountsSetup.ForeColor = Color.MidnightBlue;
             BtnAccountsSetup.Image = Properties.Resources.add_user;
             BtnAccountsSetup.ImageAlign = ContentAlignment.TopCenter;
@@ -92,7 +93,7 @@
             BtnAccountsSetup.Margin = new Padding(3, 4, 3, 4);
             BtnAccountsSetup.Name = "BtnAccountsSetup";
             BtnAccountsSetup.Padding = new Padding(6);
-            BtnAccountsSetup.Size = new Size(192, 118);
+            BtnAccountsSetup.Size = new Size(148, 118);
             BtnAccountsSetup.TabIndex = 0;
             BtnAccountsSetup.Text = "Accounts Setup";
             BtnAccountsSetup.TextColor = Color.MidnightBlue;
@@ -110,15 +111,15 @@
             BtnCashPayment.BorderSize = 2;
             BtnCashPayment.FlatAppearance.BorderSize = 0;
             BtnCashPayment.FlatStyle = FlatStyle.Flat;
-            BtnCashPayment.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnCashPayment.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnCashPayment.ForeColor = Color.Black;
             BtnCashPayment.Image = Properties.Resources.money_pay;
             BtnCashPayment.ImageAlign = ContentAlignment.TopCenter;
-            BtnCashPayment.Location = new Point(399, 4);
+            BtnCashPayment.Location = new Point(311, 4);
             BtnCashPayment.Margin = new Padding(3, 4, 3, 4);
             BtnCashPayment.Name = "BtnCashPayment";
             BtnCashPayment.Padding = new Padding(6);
-            BtnCashPayment.Size = new Size(192, 118);
+            BtnCashPayment.Size = new Size(148, 118);
             BtnCashPayment.TabIndex = 1;
             BtnCashPayment.Text = "Cash Payment ";
             BtnCashPayment.TextColor = Color.Black;
@@ -136,15 +137,15 @@
             BtnCashReceipt.BorderSize = 2;
             BtnCashReceipt.FlatAppearance.BorderSize = 0;
             BtnCashReceipt.FlatStyle = FlatStyle.Flat;
-            BtnCashReceipt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnCashReceipt.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnCashReceipt.ForeColor = Color.Black;
             BtnCashReceipt.Image = Properties.Resources.money_receive;
             BtnCashReceipt.ImageAlign = ContentAlignment.TopCenter;
-            BtnCashReceipt.Location = new Point(597, 4);
+            BtnCashReceipt.Location = new Point(465, 4);
             BtnCashReceipt.Margin = new Padding(3, 4, 3, 4);
             BtnCashReceipt.Name = "BtnCashReceipt";
             BtnCashReceipt.Padding = new Padding(6);
-            BtnCashReceipt.Size = new Size(192, 118);
+            BtnCashReceipt.Size = new Size(148, 118);
             BtnCashReceipt.TabIndex = 2;
             BtnCashReceipt.Text = "Cash Receipt\r\n";
             BtnCashReceipt.TextColor = Color.Black;
@@ -162,15 +163,15 @@
             BtnJournalVoucher.BorderSize = 2;
             BtnJournalVoucher.FlatAppearance.BorderSize = 0;
             BtnJournalVoucher.FlatStyle = FlatStyle.Flat;
-            BtnJournalVoucher.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnJournalVoucher.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnJournalVoucher.ForeColor = Color.Black;
             BtnJournalVoucher.Image = Properties.Resources.journal_voucher;
             BtnJournalVoucher.ImageAlign = ContentAlignment.TopCenter;
-            BtnJournalVoucher.Location = new Point(795, 4);
+            BtnJournalVoucher.Location = new Point(619, 4);
             BtnJournalVoucher.Margin = new Padding(3, 4, 3, 4);
             BtnJournalVoucher.Name = "BtnJournalVoucher";
             BtnJournalVoucher.Padding = new Padding(6);
-            BtnJournalVoucher.Size = new Size(192, 118);
+            BtnJournalVoucher.Size = new Size(148, 118);
             BtnJournalVoucher.TabIndex = 3;
             BtnJournalVoucher.Text = "Journal Voucher";
             BtnJournalVoucher.TextColor = Color.Black;
@@ -188,15 +189,15 @@
             BtnCashBook.BorderSize = 2;
             BtnCashBook.FlatAppearance.BorderSize = 0;
             BtnCashBook.FlatStyle = FlatStyle.Flat;
-            BtnCashBook.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnCashBook.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnCashBook.ForeColor = Color.Black;
             BtnCashBook.Image = Properties.Resources.cash_book;
             BtnCashBook.ImageAlign = ContentAlignment.TopCenter;
-            BtnCashBook.Location = new Point(3, 257);
+            BtnCashBook.Location = new Point(3, 270);
             BtnCashBook.Margin = new Padding(3, 4, 3, 4);
             BtnCashBook.Name = "BtnCashBook";
             BtnCashBook.Padding = new Padding(6);
-            BtnCashBook.Size = new Size(192, 120);
+            BtnCashBook.Size = new Size(148, 120);
             BtnCashBook.TabIndex = 4;
             BtnCashBook.Text = "Cash Book\r\n";
             BtnCashBook.TextColor = Color.Black;
@@ -214,15 +215,15 @@
             BtnLedgerReport.BorderSize = 2;
             BtnLedgerReport.FlatAppearance.BorderSize = 0;
             BtnLedgerReport.FlatStyle = FlatStyle.Flat;
-            BtnLedgerReport.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnLedgerReport.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnLedgerReport.ForeColor = Color.Black;
             BtnLedgerReport.Image = Properties.Resources.ledger;
             BtnLedgerReport.ImageAlign = ContentAlignment.TopCenter;
-            BtnLedgerReport.Location = new Point(201, 257);
+            BtnLedgerReport.Location = new Point(157, 270);
             BtnLedgerReport.Margin = new Padding(3, 4, 3, 4);
             BtnLedgerReport.Name = "BtnLedgerReport";
             BtnLedgerReport.Padding = new Padding(6);
-            BtnLedgerReport.Size = new Size(192, 120);
+            BtnLedgerReport.Size = new Size(148, 120);
             BtnLedgerReport.TabIndex = 5;
             BtnLedgerReport.Text = "Ledger Report\r\n";
             BtnLedgerReport.TextColor = Color.Black;
@@ -240,15 +241,15 @@
             BtnEditTransactions.BorderSize = 2;
             BtnEditTransactions.FlatAppearance.BorderSize = 0;
             BtnEditTransactions.FlatStyle = FlatStyle.Flat;
-            BtnEditTransactions.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnEditTransactions.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnEditTransactions.ForeColor = Color.Black;
             BtnEditTransactions.Image = Properties.Resources.Edit;
             BtnEditTransactions.ImageAlign = ContentAlignment.TopCenter;
-            BtnEditTransactions.Location = new Point(993, 4);
+            BtnEditTransactions.Location = new Point(773, 4);
             BtnEditTransactions.Margin = new Padding(3, 4, 3, 4);
             BtnEditTransactions.Name = "BtnEditTransactions";
             BtnEditTransactions.Padding = new Padding(6);
-            BtnEditTransactions.Size = new Size(196, 118);
+            BtnEditTransactions.Size = new Size(151, 118);
             BtnEditTransactions.TabIndex = 6;
             BtnEditTransactions.Text = "Edit Transactions";
             BtnEditTransactions.TextColor = Color.Black;
@@ -266,15 +267,15 @@
             BtnOpeningBalances.BorderSize = 2;
             BtnOpeningBalances.FlatAppearance.BorderSize = 0;
             BtnOpeningBalances.FlatStyle = FlatStyle.Flat;
-            BtnOpeningBalances.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnOpeningBalances.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnOpeningBalances.ForeColor = Color.Black;
             BtnOpeningBalances.Image = Properties.Resources.opening_balance;
             BtnOpeningBalances.ImageAlign = ContentAlignment.TopCenter;
-            BtnOpeningBalances.Location = new Point(993, 130);
+            BtnOpeningBalances.Location = new Point(773, 137);
             BtnOpeningBalances.Margin = new Padding(3, 4, 3, 4);
             BtnOpeningBalances.Name = "BtnOpeningBalances";
             BtnOpeningBalances.Padding = new Padding(6);
-            BtnOpeningBalances.Size = new Size(196, 119);
+            BtnOpeningBalances.Size = new Size(151, 119);
             BtnOpeningBalances.TabIndex = 9;
             BtnOpeningBalances.Text = "Opening Balances";
             BtnOpeningBalances.TextColor = Color.Black;
@@ -292,15 +293,15 @@
             BtnTrialBalance.BorderSize = 2;
             BtnTrialBalance.FlatAppearance.BorderSize = 0;
             BtnTrialBalance.FlatStyle = FlatStyle.Flat;
-            BtnTrialBalance.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnTrialBalance.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnTrialBalance.ForeColor = Color.Black;
             BtnTrialBalance.Image = Properties.Resources.trial_balance;
             BtnTrialBalance.ImageAlign = ContentAlignment.TopCenter;
-            BtnTrialBalance.Location = new Point(399, 257);
+            BtnTrialBalance.Location = new Point(311, 270);
             BtnTrialBalance.Margin = new Padding(3, 4, 3, 4);
             BtnTrialBalance.Name = "BtnTrialBalance";
             BtnTrialBalance.Padding = new Padding(6);
-            BtnTrialBalance.Size = new Size(192, 120);
+            BtnTrialBalance.Size = new Size(148, 120);
             BtnTrialBalance.TabIndex = 10;
             BtnTrialBalance.Text = "Trial Balance\r\n";
             BtnTrialBalance.TextColor = Color.Black;
@@ -318,15 +319,15 @@
             BtnSalesInvoice.BorderSize = 2;
             BtnSalesInvoice.FlatAppearance.BorderSize = 0;
             BtnSalesInvoice.FlatStyle = FlatStyle.Flat;
-            BtnSalesInvoice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnSalesInvoice.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnSalesInvoice.ForeColor = Color.Black;
             BtnSalesInvoice.Image = Properties.Resources.sale;
             BtnSalesInvoice.ImageAlign = ContentAlignment.TopCenter;
-            BtnSalesInvoice.Location = new Point(597, 130);
+            BtnSalesInvoice.Location = new Point(465, 137);
             BtnSalesInvoice.Margin = new Padding(3, 4, 3, 4);
             BtnSalesInvoice.Name = "BtnSalesInvoice";
             BtnSalesInvoice.Padding = new Padding(6);
-            BtnSalesInvoice.Size = new Size(192, 119);
+            BtnSalesInvoice.Size = new Size(148, 119);
             BtnSalesInvoice.TabIndex = 11;
             BtnSalesInvoice.Text = "Sales Invoice\r\n";
             BtnSalesInvoice.TextColor = Color.Black;
@@ -344,15 +345,15 @@
             BtnProductSetup.BorderSize = 2;
             BtnProductSetup.FlatAppearance.BorderSize = 0;
             BtnProductSetup.FlatStyle = FlatStyle.Flat;
-            BtnProductSetup.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnProductSetup.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnProductSetup.ForeColor = Color.Black;
             BtnProductSetup.Image = Properties.Resources.add_product;
             BtnProductSetup.ImageAlign = ContentAlignment.TopCenter;
-            BtnProductSetup.Location = new Point(201, 4);
+            BtnProductSetup.Location = new Point(157, 4);
             BtnProductSetup.Margin = new Padding(3, 4, 3, 4);
             BtnProductSetup.Name = "BtnProductSetup";
             BtnProductSetup.Padding = new Padding(6);
-            BtnProductSetup.Size = new Size(192, 118);
+            BtnProductSetup.Size = new Size(148, 118);
             BtnProductSetup.TabIndex = 12;
             BtnProductSetup.Text = "Product Setup\r\n";
             BtnProductSetup.TextColor = Color.Black;
@@ -370,15 +371,15 @@
             BtnPurchaseInvoice.BorderSize = 2;
             BtnPurchaseInvoice.FlatAppearance.BorderSize = 0;
             BtnPurchaseInvoice.FlatStyle = FlatStyle.Flat;
-            BtnPurchaseInvoice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnPurchaseInvoice.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnPurchaseInvoice.ForeColor = Color.Black;
             BtnPurchaseInvoice.Image = Properties.Resources.purchase;
             BtnPurchaseInvoice.ImageAlign = ContentAlignment.TopCenter;
-            BtnPurchaseInvoice.Location = new Point(795, 130);
+            BtnPurchaseInvoice.Location = new Point(619, 137);
             BtnPurchaseInvoice.Margin = new Padding(3, 4, 3, 4);
             BtnPurchaseInvoice.Name = "BtnPurchaseInvoice";
             BtnPurchaseInvoice.Padding = new Padding(6);
-            BtnPurchaseInvoice.Size = new Size(192, 119);
+            BtnPurchaseInvoice.Size = new Size(148, 119);
             BtnPurchaseInvoice.TabIndex = 13;
             BtnPurchaseInvoice.Text = "Purchase Invoice\r\n";
             BtnPurchaseInvoice.TextColor = Color.Black;
@@ -396,15 +397,15 @@
             BtnStockReport.BorderSize = 2;
             BtnStockReport.FlatAppearance.BorderSize = 0;
             BtnStockReport.FlatStyle = FlatStyle.Flat;
-            BtnStockReport.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnStockReport.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnStockReport.ForeColor = Color.Black;
             BtnStockReport.Image = Properties.Resources.stock_report;
             BtnStockReport.ImageAlign = ContentAlignment.TopCenter;
-            BtnStockReport.Location = new Point(597, 257);
+            BtnStockReport.Location = new Point(465, 270);
             BtnStockReport.Margin = new Padding(3, 4, 3, 4);
             BtnStockReport.Name = "BtnStockReport";
             BtnStockReport.Padding = new Padding(6);
-            BtnStockReport.Size = new Size(192, 120);
+            BtnStockReport.Size = new Size(148, 120);
             BtnStockReport.TabIndex = 14;
             BtnStockReport.Text = "Stock Report\r\n";
             BtnStockReport.TextColor = Color.Black;
@@ -414,12 +415,12 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            menuStrip1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
             menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, addNewToolStripMenuItem, itemMovementToolStripMenuItem, bankToolStripMenuItem, reportsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1192, 31);
+            menuStrip1.Size = new Size(1192, 28);
             menuStrip1.TabIndex = 15;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -427,14 +428,14 @@
             // 
             toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { cashPaymentToolStripMenuItem, cashReceiptToolStripMenuItem, journalVoucherToolStripMenuItem, editTransactionsToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(118, 27);
+            toolStripMenuItem1.Size = new Size(104, 24);
             toolStripMenuItem1.Text = "Transactions";
             // 
             // cashPaymentToolStripMenuItem
             // 
             cashPaymentToolStripMenuItem.Name = "cashPaymentToolStripMenuItem";
             cashPaymentToolStripMenuItem.ShortcutKeys = Keys.F1;
-            cashPaymentToolStripMenuItem.Size = new Size(249, 28);
+            cashPaymentToolStripMenuItem.Size = new Size(227, 26);
             cashPaymentToolStripMenuItem.Text = "Cash Payment";
             cashPaymentToolStripMenuItem.Click += BtnCashPayment_Click;
             // 
@@ -442,7 +443,7 @@
             // 
             cashReceiptToolStripMenuItem.Name = "cashReceiptToolStripMenuItem";
             cashReceiptToolStripMenuItem.ShortcutKeys = Keys.F2;
-            cashReceiptToolStripMenuItem.Size = new Size(249, 28);
+            cashReceiptToolStripMenuItem.Size = new Size(227, 26);
             cashReceiptToolStripMenuItem.Text = "Cash Receipt";
             cashReceiptToolStripMenuItem.Click += BtnCashReceipt_Click;
             // 
@@ -450,7 +451,7 @@
             // 
             journalVoucherToolStripMenuItem.Name = "journalVoucherToolStripMenuItem";
             journalVoucherToolStripMenuItem.ShortcutKeys = Keys.F3;
-            journalVoucherToolStripMenuItem.Size = new Size(249, 28);
+            journalVoucherToolStripMenuItem.Size = new Size(227, 26);
             journalVoucherToolStripMenuItem.Text = "Journal Voucher";
             journalVoucherToolStripMenuItem.Click += BtnJournalVoucher_Click;
             // 
@@ -458,7 +459,7 @@
             // 
             editTransactionsToolStripMenuItem.Name = "editTransactionsToolStripMenuItem";
             editTransactionsToolStripMenuItem.ShortcutKeys = Keys.F6;
-            editTransactionsToolStripMenuItem.Size = new Size(249, 28);
+            editTransactionsToolStripMenuItem.Size = new Size(227, 26);
             editTransactionsToolStripMenuItem.Text = "Edit Transactions";
             editTransactionsToolStripMenuItem.Click += BtnEditTransactions_Click;
             // 
@@ -466,14 +467,14 @@
             // 
             addNewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { accountToolStripMenuItem, productToolStripMenuItem });
             addNewToolStripMenuItem.Name = "addNewToolStripMenuItem";
-            addNewToolStripMenuItem.Size = new Size(74, 27);
+            addNewToolStripMenuItem.Size = new Size(66, 24);
             addNewToolStripMenuItem.Text = "Create";
             // 
             // accountToolStripMenuItem
             // 
             accountToolStripMenuItem.Name = "accountToolStripMenuItem";
             accountToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
-            accountToolStripMenuItem.Size = new Size(266, 28);
+            accountToolStripMenuItem.Size = new Size(240, 26);
             accountToolStripMenuItem.Text = "Account Setup";
             accountToolStripMenuItem.Click += BtnAccountsSetup_Click;
             // 
@@ -481,7 +482,7 @@
             // 
             productToolStripMenuItem.Name = "productToolStripMenuItem";
             productToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            productToolStripMenuItem.Size = new Size(266, 28);
+            productToolStripMenuItem.Size = new Size(240, 26);
             productToolStripMenuItem.Text = "Product Setup";
             productToolStripMenuItem.Click += BtnProductSetup_Click;
             // 
@@ -489,14 +490,14 @@
             // 
             itemMovementToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saleInvoiceToolStripMenuItem, purchaseInvoiceToolStripMenuItem });
             itemMovementToolStripMenuItem.Name = "itemMovementToolStripMenuItem";
-            itemMovementToolStripMenuItem.Size = new Size(84, 27);
+            itemMovementToolStripMenuItem.Size = new Size(74, 24);
             itemMovementToolStripMenuItem.Text = "Product";
             // 
             // saleInvoiceToolStripMenuItem
             // 
             saleInvoiceToolStripMenuItem.Name = "saleInvoiceToolStripMenuItem";
             saleInvoiceToolStripMenuItem.ShortcutKeys = Keys.F5;
-            saleInvoiceToolStripMenuItem.Size = new Size(249, 28);
+            saleInvoiceToolStripMenuItem.Size = new Size(225, 26);
             saleInvoiceToolStripMenuItem.Text = "Sale Invoice";
             saleInvoiceToolStripMenuItem.Click += BtnSalesInvoice_Click;
             // 
@@ -504,7 +505,7 @@
             // 
             purchaseInvoiceToolStripMenuItem.Name = "purchaseInvoiceToolStripMenuItem";
             purchaseInvoiceToolStripMenuItem.ShortcutKeys = Keys.F4;
-            purchaseInvoiceToolStripMenuItem.Size = new Size(249, 28);
+            purchaseInvoiceToolStripMenuItem.Size = new Size(225, 26);
             purchaseInvoiceToolStripMenuItem.Text = "Purchase Invoice";
             purchaseInvoiceToolStripMenuItem.Click += BtnPurchaseInvoice_Click;
             // 
@@ -512,14 +513,14 @@
             // 
             bankToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bankPaymentToolStripMenuItem, bankReceiptToolStripMenuItem, chequeBookToolStripMenuItem });
             bankToolStripMenuItem.Name = "bankToolStripMenuItem";
-            bankToolStripMenuItem.Size = new Size(61, 27);
+            bankToolStripMenuItem.Size = new Size(55, 24);
             bankToolStripMenuItem.Text = "Bank";
             // 
             // bankPaymentToolStripMenuItem
             // 
             bankPaymentToolStripMenuItem.Name = "bankPaymentToolStripMenuItem";
             bankPaymentToolStripMenuItem.ShortcutKeys = Keys.F9;
-            bankPaymentToolStripMenuItem.Size = new Size(256, 28);
+            bankPaymentToolStripMenuItem.Size = new Size(231, 26);
             bankPaymentToolStripMenuItem.Text = "Bank Payment";
             bankPaymentToolStripMenuItem.Click += BtnBankPayment_Click;
             // 
@@ -527,7 +528,7 @@
             // 
             bankReceiptToolStripMenuItem.Name = "bankReceiptToolStripMenuItem";
             bankReceiptToolStripMenuItem.ShortcutKeys = Keys.F10;
-            bankReceiptToolStripMenuItem.Size = new Size(256, 28);
+            bankReceiptToolStripMenuItem.Size = new Size(231, 26);
             bankReceiptToolStripMenuItem.Text = "Bank Receipt";
             bankReceiptToolStripMenuItem.Click += BtnBankReceipt_Click;
             // 
@@ -535,7 +536,7 @@
             // 
             chequeBookToolStripMenuItem.Name = "chequeBookToolStripMenuItem";
             chequeBookToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.C;
-            chequeBookToolStripMenuItem.Size = new Size(256, 28);
+            chequeBookToolStripMenuItem.Size = new Size(231, 26);
             chequeBookToolStripMenuItem.Text = "Cheque Book";
             chequeBookToolStripMenuItem.Click += BtnChequeBook_Click;
             // 
@@ -543,14 +544,14 @@
             // 
             reportsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { viewLedgerToolStripMenuItem, trialBalancesToolStripMenuItem, stockReportToolStripMenuItem, cashBookToolStripMenuItem });
             reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            reportsToolStripMenuItem.Size = new Size(82, 27);
+            reportsToolStripMenuItem.Size = new Size(74, 24);
             reportsToolStripMenuItem.Text = "Reports";
             // 
             // viewLedgerToolStripMenuItem
             // 
             viewLedgerToolStripMenuItem.Name = "viewLedgerToolStripMenuItem";
             viewLedgerToolStripMenuItem.ShortcutKeys = Keys.F7;
-            viewLedgerToolStripMenuItem.Size = new Size(232, 28);
+            viewLedgerToolStripMenuItem.Size = new Size(214, 26);
             viewLedgerToolStripMenuItem.Text = "View Ledger";
             viewLedgerToolStripMenuItem.Click += BtnLedgerReport_Click;
             // 
@@ -558,7 +559,7 @@
             // 
             trialBalancesToolStripMenuItem.Name = "trialBalancesToolStripMenuItem";
             trialBalancesToolStripMenuItem.ShortcutKeys = Keys.F12;
-            trialBalancesToolStripMenuItem.Size = new Size(232, 28);
+            trialBalancesToolStripMenuItem.Size = new Size(214, 26);
             trialBalancesToolStripMenuItem.Text = "Trial Balances";
             trialBalancesToolStripMenuItem.Click += BtnTrialBalance_Click;
             // 
@@ -566,7 +567,7 @@
             // 
             stockReportToolStripMenuItem.Name = "stockReportToolStripMenuItem";
             stockReportToolStripMenuItem.ShortcutKeys = Keys.F11;
-            stockReportToolStripMenuItem.Size = new Size(232, 28);
+            stockReportToolStripMenuItem.Size = new Size(214, 26);
             stockReportToolStripMenuItem.Text = "Stock Report";
             stockReportToolStripMenuItem.Click += BtnStockReport_Click;
             // 
@@ -574,7 +575,7 @@
             // 
             cashBookToolStripMenuItem.Name = "cashBookToolStripMenuItem";
             cashBookToolStripMenuItem.ShortcutKeys = Keys.F8;
-            cashBookToolStripMenuItem.Size = new Size(232, 28);
+            cashBookToolStripMenuItem.Size = new Size(214, 26);
             cashBookToolStripMenuItem.Text = "Cash Book ";
             cashBookToolStripMenuItem.Click += BtnCashBook_Click;
             // 
@@ -588,15 +589,15 @@
             BtnBankReceipt.BorderSize = 2;
             BtnBankReceipt.FlatAppearance.BorderSize = 0;
             BtnBankReceipt.FlatStyle = FlatStyle.Flat;
-            BtnBankReceipt.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnBankReceipt.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnBankReceipt.ForeColor = Color.Black;
             BtnBankReceipt.Image = Properties.Resources.bank_received;
             BtnBankReceipt.ImageAlign = ContentAlignment.TopCenter;
-            BtnBankReceipt.Location = new Point(201, 130);
+            BtnBankReceipt.Location = new Point(157, 137);
             BtnBankReceipt.Margin = new Padding(3, 4, 3, 4);
             BtnBankReceipt.Name = "BtnBankReceipt";
             BtnBankReceipt.Padding = new Padding(6);
-            BtnBankReceipt.Size = new Size(192, 119);
+            BtnBankReceipt.Size = new Size(148, 119);
             BtnBankReceipt.TabIndex = 17;
             BtnBankReceipt.Text = "Bank Receipt\r\n";
             BtnBankReceipt.TextColor = Color.Black;
@@ -614,15 +615,15 @@
             BtnBankPayment.BorderSize = 2;
             BtnBankPayment.FlatAppearance.BorderSize = 0;
             BtnBankPayment.FlatStyle = FlatStyle.Flat;
-            BtnBankPayment.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnBankPayment.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnBankPayment.ForeColor = Color.Black;
             BtnBankPayment.Image = Properties.Resources.bank_payment;
             BtnBankPayment.ImageAlign = ContentAlignment.TopCenter;
-            BtnBankPayment.Location = new Point(3, 130);
+            BtnBankPayment.Location = new Point(3, 137);
             BtnBankPayment.Margin = new Padding(3, 4, 3, 4);
             BtnBankPayment.Name = "BtnBankPayment";
             BtnBankPayment.Padding = new Padding(6);
-            BtnBankPayment.Size = new Size(192, 119);
+            BtnBankPayment.Size = new Size(148, 119);
             BtnBankPayment.TabIndex = 16;
             BtnBankPayment.Text = "Bank Payment";
             BtnBankPayment.TextColor = Color.Black;
@@ -640,15 +641,15 @@
             BtnChequeBook.BorderSize = 2;
             BtnChequeBook.FlatAppearance.BorderSize = 0;
             BtnChequeBook.FlatStyle = FlatStyle.Flat;
-            BtnChequeBook.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnChequeBook.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnChequeBook.ForeColor = Color.Black;
             BtnChequeBook.Image = Properties.Resources.cheque_book;
             BtnChequeBook.ImageAlign = ContentAlignment.TopCenter;
-            BtnChequeBook.Location = new Point(399, 130);
+            BtnChequeBook.Location = new Point(311, 137);
             BtnChequeBook.Margin = new Padding(3, 4, 3, 4);
             BtnChequeBook.Name = "BtnChequeBook";
             BtnChequeBook.Padding = new Padding(6);
-            BtnChequeBook.Size = new Size(192, 119);
+            BtnChequeBook.Size = new Size(148, 119);
             BtnChequeBook.TabIndex = 18;
             BtnChequeBook.Text = "Cheque Book\r\n";
             BtnChequeBook.TextColor = Color.Black;
@@ -666,20 +667,21 @@
             BtnSettings.BorderSize = 2;
             BtnSettings.FlatAppearance.BorderSize = 0;
             BtnSettings.FlatStyle = FlatStyle.Flat;
-            BtnSettings.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnSettings.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnSettings.ForeColor = Color.Black;
             BtnSettings.Image = Properties.Resources.settings;
             BtnSettings.ImageAlign = ContentAlignment.TopCenter;
-            BtnSettings.Location = new Point(795, 257);
+            BtnSettings.Location = new Point(619, 270);
             BtnSettings.Margin = new Padding(3, 4, 3, 4);
             BtnSettings.Name = "BtnSettings";
             BtnSettings.Padding = new Padding(6);
-            BtnSettings.Size = new Size(192, 120);
+            BtnSettings.Size = new Size(148, 120);
             BtnSettings.TabIndex = 19;
             BtnSettings.Text = "Settings";
             BtnSettings.TextColor = Color.Black;
             BtnSettings.TextImageRelation = TextImageRelation.ImageAboveText;
             BtnSettings.UseVisualStyleBackColor = false;
+            BtnSettings.Click += BtnSettings_Click;
             // 
             // BtnBackupData
             // 
@@ -691,15 +693,15 @@
             BtnBackupData.BorderSize = 2;
             BtnBackupData.FlatAppearance.BorderSize = 0;
             BtnBackupData.FlatStyle = FlatStyle.Flat;
-            BtnBackupData.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnBackupData.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnBackupData.ForeColor = Color.Black;
             BtnBackupData.Image = Properties.Resources.data_backup;
             BtnBackupData.ImageAlign = ContentAlignment.TopCenter;
-            BtnBackupData.Location = new Point(993, 257);
+            BtnBackupData.Location = new Point(773, 270);
             BtnBackupData.Margin = new Padding(3, 4, 3, 4);
             BtnBackupData.Name = "BtnBackupData";
             BtnBackupData.Padding = new Padding(6);
-            BtnBackupData.Size = new Size(196, 120);
+            BtnBackupData.Size = new Size(151, 120);
             BtnBackupData.TabIndex = 20;
             BtnBackupData.Text = "Backup Data";
             BtnBackupData.TextColor = Color.Black;
@@ -708,13 +710,14 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             tableLayoutPanel1.ColumnCount = 6;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666718F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
             tableLayoutPanel1.Controls.Add(BtnAccountsSetup, 0, 0);
             tableLayoutPanel1.Controls.Add(BtnBackupData, 5, 2);
             tableLayoutPanel1.Controls.Add(BtnProductSetup, 1, 0);
@@ -733,15 +736,24 @@
             tableLayoutPanel1.Controls.Add(BtnJournalVoucher, 4, 0);
             tableLayoutPanel1.Controls.Add(BtnBankPayment, 0, 1);
             tableLayoutPanel1.Controls.Add(BtnEditTransactions, 5, 0);
-            tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(0, 31);
+            tableLayoutPanel1.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tableLayoutPanel1.Location = new Point(265, 31);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.33333F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333359F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333359F));
-            tableLayoutPanel1.Size = new Size(1192, 381);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3328667F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3328667F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3342628F));
+            tableLayoutPanel1.Size = new Size(927, 401);
             tableLayoutPanel1.TabIndex = 21;
+            // 
+            // pnlFavorites
+            // 
+            pnlFavorites.AutoScroll = true;
+            pnlFavorites.Dock = DockStyle.Left;
+            pnlFavorites.Location = new Point(0, 28);
+            pnlFavorites.Name = "pnlFavorites";
+            pnlFavorites.Size = new Size(259, 645);
+            pnlFavorites.TabIndex = 22;
             // 
             // MainForm
             // 
@@ -749,6 +761,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(1192, 673);
+            Controls.Add(pnlFavorites);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -809,5 +822,6 @@
         private CustomButton BtnBackupData;
         private ToolTip toolTip1;
         private TableLayoutPanel tableLayoutPanel1;
+        private FlowLayoutPanel pnlFavorites;
     }
 }

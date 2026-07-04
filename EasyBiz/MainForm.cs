@@ -13,7 +13,7 @@ namespace EasyBiz
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
-            ShowCashDetails();            
+            ShowCashDetails();
         }
 
 
@@ -37,18 +37,18 @@ namespace EasyBiz
                             decimal cashBalance = reader.GetDecimal(0);
                             decimal bankBalance = reader.GetDecimal(1);
 
-                           /* 
-                            BtnCashDetails.Text =
-                                $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";
-                            if (cashBalance < 0 || bankBalance < 0)
-                            {
-                                BtnCashDetails.ForeColor = System.Drawing.Color.Red;
-                            }
-                            else
-                            {
-                                BtnCashDetails.ForeColor = System.Drawing.Color.Green;
-                            }
-                           */
+                            /* 
+                             BtnCashDetails.Text =
+                                 $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";
+                             if (cashBalance < 0 || bankBalance < 0)
+                             {
+                                 BtnCashDetails.ForeColor = System.Drawing.Color.Red;
+                             }
+                             else
+                             {
+                                 BtnCashDetails.ForeColor = System.Drawing.Color.Green;
+                             }
+                            */
                         }
                     }
                 }
@@ -384,6 +384,7 @@ namespace EasyBiz
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            LoadFavoritesPanel();
             Button[] buttons =
             {
         BtnCashPayment,
@@ -424,9 +425,50 @@ namespace EasyBiz
             }
         }
 
+        private void LoadFavoritesPanel()
+        {
+            pnlFavorites.Controls.Clear();
+
+            var favoriteKeys = FavoritesService.GetFavoriteKeys();
+
+            foreach (var key in favoriteKeys)
+            {
+                var module = ModuleRegistry.GetByKey(key);
+                if (module == null) continue; // module might've been removed from registry
+
+                var btn = new Button
+                {
+                    Text = module.DisplayName,
+                    Width = 140,
+                    Height = 60,
+                    Tag = module.FormType,
+                    Margin = new Padding(6)
+                };
+                btn.Click += FavoriteButton_Click;
+                pnlFavorites.Controls.Add(btn);
+            }
+        }
+
+        private void FavoriteButton_Click(object sender, EventArgs e)
+        {
+            var formType = (System.Type)((Button)sender).Tag;
+            var form = (Form)System.Activator.CreateInstance(formType);
+            //form.MdiParent = this;   // remove this line if you're not using MDI
+            form.Show();
+        }
+
         private void BtnCashDetails_Click(object sender, EventArgs e)
         {
             ShowCashDetails();
+        }
+
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            using (var settingsForm = new Settings())
+            {
+                settingsForm.FavoritesUpdated += (s, e) => LoadFavoritesPanel();
+                settingsForm.ShowDialog();                
+            }
         }
     }
 }

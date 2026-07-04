@@ -180,7 +180,12 @@ namespace EasyBiz
                     amount          REAL DEFAULT 0,
                     FOREIGN KEY (purchase_id) REFERENCES purchase_invoices(purchase_id),
                     FOREIGN KEY (product_id)  REFERENCES products(product_id)
-                );                
+                );
+
+                CREATE TABLE IF NOT EXISTS UserFavorites (
+                    ModuleKey TEXT PRIMARY KEY,
+                    SortOrder INTEGER NOT NULL
+                );
                 ";
 
                     command.ExecuteNonQuery();
