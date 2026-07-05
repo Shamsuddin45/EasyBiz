@@ -42,6 +42,14 @@
             lblStockQty = new Label();
             label8 = new Label();
             gridItems = new DataGridView();
+            colProductId = new DataGridViewTextBoxColumn();
+            colProductName = new DataGridViewTextBoxColumn();
+            colUnit = new DataGridViewTextBoxColumn();
+            colQty = new DataGridViewTextBoxColumn();
+            colWeight = new DataGridViewTextBoxColumn();
+            colWeightUnit = new DataGridViewTextBoxColumn();
+            colRate = new DataGridViewTextBoxColumn();
+            colAmount = new DataGridViewTextBoxColumn();
             label11 = new Label();
             label10 = new Label();
             label9 = new Label();
@@ -64,14 +72,6 @@
             txtDiscount = new TextBox();
             txtTotal = new TextBox();
             txtNetAmount = new TextBox();
-            colProductId = new DataGridViewTextBoxColumn();
-            colProductName = new DataGridViewTextBoxColumn();
-            colUnit = new DataGridViewTextBoxColumn();
-            colQty = new DataGridViewTextBoxColumn();
-            colWeight = new DataGridViewTextBoxColumn();
-            colWeightUnit = new DataGridViewTextBoxColumn();
-            colRate = new DataGridViewTextBoxColumn();
-            colAmount = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)gridItems).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -86,6 +86,7 @@
             txtVoucherNo.Size = new Size(156, 34);
             txtVoucherNo.TabIndex = 5;
             txtVoucherNo.TextAlign = HorizontalAlignment.Center;
+            txtVoucherNo.Visible = false;
             // 
             // label2
             // 
@@ -96,9 +97,12 @@
             label2.Size = new Size(83, 23);
             label2.TabIndex = 4;
             label2.Text = "Voucher#";
+            label2.Visible = false;
             // 
             // comboPartyName
             // 
+            comboPartyName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyName.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyName.Font = new Font("Segoe UI", 12F);
             comboPartyName.FormattingEnabled = true;
             comboPartyName.Location = new Point(356, 123);
@@ -109,6 +113,8 @@
             // 
             // comboPartyId
             // 
+            comboPartyId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyId.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboPartyId.Font = new Font("Segoe UI", 12F);
             comboPartyId.FormattingEnabled = true;
             comboPartyId.Location = new Point(204, 123);
@@ -149,6 +155,8 @@
             // 
             // comboProduct
             // 
+            comboProduct.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboProduct.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboProduct.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProduct.FormattingEnabled = true;
             comboProduct.Location = new Point(14, 317);
@@ -217,6 +225,66 @@
             gridItems.Size = new Size(935, 188);
             gridItems.TabIndex = 22;
             gridItems.TabStop = false;
+            // 
+            // colProductId
+            // 
+            colProductId.HeaderText = "Product Id";
+            colProductId.MinimumWidth = 6;
+            colProductId.Name = "colProductId";
+            colProductId.ReadOnly = true;
+            colProductId.Width = 125;
+            // 
+            // colProductName
+            // 
+            colProductName.HeaderText = "Product Name";
+            colProductName.MinimumWidth = 6;
+            colProductName.Name = "colProductName";
+            colProductName.ReadOnly = true;
+            colProductName.Width = 125;
+            // 
+            // colUnit
+            // 
+            colUnit.HeaderText = "Unit";
+            colUnit.MinimumWidth = 6;
+            colUnit.Name = "colUnit";
+            colUnit.ReadOnly = true;
+            colUnit.Width = 125;
+            // 
+            // colQty
+            // 
+            colQty.HeaderText = "Qty";
+            colQty.MinimumWidth = 6;
+            colQty.Name = "colQty";
+            colQty.Width = 125;
+            // 
+            // colWeight
+            // 
+            colWeight.HeaderText = "Weight";
+            colWeight.MinimumWidth = 6;
+            colWeight.Name = "colWeight";
+            colWeight.Width = 125;
+            // 
+            // colWeightUnit
+            // 
+            colWeightUnit.HeaderText = "Wt-Unit";
+            colWeightUnit.MinimumWidth = 6;
+            colWeightUnit.Name = "colWeightUnit";
+            colWeightUnit.ReadOnly = true;
+            colWeightUnit.Width = 125;
+            // 
+            // colRate
+            // 
+            colRate.HeaderText = "Rate";
+            colRate.MinimumWidth = 6;
+            colRate.Name = "colRate";
+            colRate.Width = 125;
+            // 
+            // colAmount
+            // 
+            colAmount.HeaderText = "Amount";
+            colAmount.MinimumWidth = 6;
+            colAmount.Name = "colAmount";
+            colAmount.Width = 125;
             // 
             // label11
             // 
@@ -472,66 +540,6 @@
             txtNetAmount.ReadOnly = true;
             txtNetAmount.Size = new Size(160, 38);
             txtNetAmount.TabIndex = 56;
-            // 
-            // colProductId
-            // 
-            colProductId.HeaderText = "Product Id";
-            colProductId.MinimumWidth = 6;
-            colProductId.Name = "colProductId";
-            colProductId.ReadOnly = true;
-            colProductId.Width = 125;
-            // 
-            // colProductName
-            // 
-            colProductName.HeaderText = "Product Name";
-            colProductName.MinimumWidth = 6;
-            colProductName.Name = "colProductName";
-            colProductName.ReadOnly = true;
-            colProductName.Width = 125;
-            // 
-            // colUnit
-            // 
-            colUnit.HeaderText = "Unit";
-            colUnit.MinimumWidth = 6;
-            colUnit.Name = "colUnit";
-            colUnit.ReadOnly = true;
-            colUnit.Width = 125;
-            // 
-            // colQty
-            // 
-            colQty.HeaderText = "Qty";
-            colQty.MinimumWidth = 6;
-            colQty.Name = "colQty";
-            colQty.Width = 125;
-            // 
-            // colWeight
-            // 
-            colWeight.HeaderText = "Weight";
-            colWeight.MinimumWidth = 6;
-            colWeight.Name = "colWeight";
-            colWeight.Width = 125;
-            // 
-            // colWeightUnit
-            // 
-            colWeightUnit.HeaderText = "Wt-Unit";
-            colWeightUnit.MinimumWidth = 6;
-            colWeightUnit.Name = "colWeightUnit";
-            colWeightUnit.ReadOnly = true;
-            colWeightUnit.Width = 125;
-            // 
-            // colRate
-            // 
-            colRate.HeaderText = "Rate";
-            colRate.MinimumWidth = 6;
-            colRate.Name = "colRate";
-            colRate.Width = 125;
-            // 
-            // colAmount
-            // 
-            colAmount.HeaderText = "Amount";
-            colAmount.MinimumWidth = 6;
-            colAmount.Name = "colAmount";
-            colAmount.Width = 125;
             // 
             // PurchaseInvoice
             // 

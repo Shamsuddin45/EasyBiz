@@ -17,8 +17,8 @@ namespace EasyBiz
             LoadProducts();
             ShowVoucherNo();
             BeautifyGrid();
-            comboPartyName.SelectedItem = "Cash In Hand";            
-            txtDescription.Select();
+            comboPartyName.SelectedItem = "Cash In Hand";
+            comboPartyName.Select();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -850,7 +850,7 @@ namespace EasyBiz
 
         private void SaleInvoice_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (comboProduct.Text != "" || comboPartyName.Text != "" || gridItems.Rows.Count != 0)
+            if (comboProduct.Text != "" || gridItems.Rows.Count != 0)
             {
                 var result = MessageBox.Show("Are you sure you want to close the Sale Invoice?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)

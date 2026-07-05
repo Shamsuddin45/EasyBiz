@@ -16,6 +16,8 @@ namespace EasyBiz
             LoadProducts();
             ShowVoucherNo();
             BeautifyGrid();
+            comboPartyName.SelectedItem = "Cash In Hand"; // default selection
+            comboPartyName.Select();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

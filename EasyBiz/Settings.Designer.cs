@@ -79,14 +79,19 @@
             BtnSaveFavorites.UseVisualStyleBackColor = false;
             BtnSaveFavorites.Click += btnSave_Click;
             // 
-            // clbFavorites
-            // 
             clbFavorites.CheckOnClick = true;
             clbFavorites.FormattingEnabled = true;
             clbFavorites.Location = new Point(6, 33);
-            clbFavorites.Name = "clbFavorites";
             clbFavorites.Size = new Size(348, 290);
+            clbFavorites.Name = "clbFavorites";
             clbFavorites.TabIndex = 0;
+
+            // Modern look
+            clbFavorites.BorderStyle = BorderStyle.None;
+            clbFavorites.Font = new Font("Segoe UI", 10, FontStyle.Regular);
+            clbFavorites.BackColor = Color.WhiteSmoke;
+            clbFavorites.ForeColor = Color.DimGray;
+
             // 
             // tabPage2
             // 
