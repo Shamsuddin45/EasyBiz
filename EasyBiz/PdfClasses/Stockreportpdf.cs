@@ -39,6 +39,10 @@ namespace EasyBiz
         public decimal Amount { get; set; }
         public decimal BalanceQty { get; set; }
         public decimal BalanceWeight { get; set; }
+        // FEATURE: party/account name resolved via COALESCE(si.account_name, pi.account_name)
+        // in StockReport.BuildMovementRows(). Empty string for movements with no linked
+        // sale/purchase invoice.
+        public string PartyName { get; set; } = "";
     }
 
     // ── PDF generator ────────────────────────────────────────────────────────
@@ -106,12 +110,14 @@ namespace EasyBiz
         /// <summary>
         /// Generates a Stock Movement Ledger PDF for a date range,
         /// optionally filtered to a single product, party, and/or movement type.
+        /// Note: a Cash payment-type filter is represented by passing "Cash" as partyFilter
+        /// (see StockReport.BtnExportMovements_Click), so there's no separate payment parameter.
         /// </summary>
         public static void GenerateMovements(
             string outputPath,
             string companyName,
             string productFilter,       // "" = all products, else product name
-            string partyFilter,         // "" = all parties, else party/account name
+            string partyFilter,         // "" = all parties, else party/account name, or "Cash"
             string movementTypeFilter,  // FEATURE: "" = Both, else "Sale" or "Purchase"
             DateTime fromDate,
             DateTime toDate,
@@ -318,9 +324,9 @@ namespace EasyBiz
         // ════════════════════════════════════════════════════════════════════
 
         private static void ComposeMovementHeader(IContainer container,
-            string companyName, string productFilter, string partyFilter,
-            string movementTypeFilter, // FEATURE: "" = Both, else "Sale"/"Purchase"
-            DateTime fromDate, DateTime toDate)
+    string companyName, string productFilter, string partyFilter,
+    string movementTypeFilter, // FEATURE: "" = Both, else "Sale"/"Purchase"
+    DateTime fromDate, DateTime toDate)
         {
             container.Column(col =>
             {
@@ -348,9 +354,9 @@ namespace EasyBiz
                         });
                     });
 
-                // Sub-header band
-                // FEATURE: added a fourth RelativeItem for the Sale/Purchase/Both movement-type
-                // filter, next to Product and Party, ahead of the colour-key legend.
+                // Sub-header band — back to 4 items (Product, Party, Type, legend). "Payment"
+                // field removed: Cash is now folded into the Party value itself (see
+                // StockReport.BtnExportMovements_Click).
                 col.Item()
                     .Background(SubHeaderBg)
                     .PaddingHorizontal(12).PaddingVertical(6)
@@ -403,30 +409,32 @@ namespace EasyBiz
             {
                 table.ColumnsDefinition(cols =>
                 {
-                    cols.ConstantColumn(28);    // #
-                    cols.ConstantColumn(65);    // Date
-                    cols.ConstantColumn(62);    // Type
-                    cols.ConstantColumn(72);    // Voucher
-                    cols.RelativeColumn(2.4f);  // Product
-                    cols.ConstantColumn(58);    // Qty In
-                    cols.ConstantColumn(58);    // Qty Out
-                    cols.ConstantColumn(58);    // Wt In
-                    cols.ConstantColumn(58);    // Wt Out
-                    cols.ConstantColumn(60);    // Rate
-                    cols.ConstantColumn(72);    // Amount
-                    cols.ConstantColumn(62);    // Bal Qty
-                    cols.ConstantColumn(62);    // Bal Wt
+                    cols.ConstantColumn(24);    // #
+                    cols.ConstantColumn(58);    // Date
+                    cols.ConstantColumn(55);    // Type
+                    cols.ConstantColumn(62);    // Voucher
+                    cols.RelativeColumn(1.7f);  // Party — FEATURE: new column
+                    cols.RelativeColumn(2.1f);  // Product
+                    cols.ConstantColumn(54);    // Qty In
+                    cols.ConstantColumn(54);    // Qty Out
+                    cols.ConstantColumn(54);    // Wt In
+                    cols.ConstantColumn(54);    // Wt Out
+                    cols.ConstantColumn(56);    // Rate
+                    cols.ConstantColumn(68);    // Amount
+                    cols.ConstantColumn(58);    // Bal Qty
+                    cols.ConstantColumn(58);    // Bal Wt
                 });
 
+                // FEATURE: "Party" title inserted after "Voucher"; rightAlign kept in sync
                 string[] titles =
                 {
-                    "#", "Date", "Type", "Voucher", "Product",
+                    "#", "Date", "Type", "Voucher", "Party", "Product",
                     "Qty In", "Qty Out", "Wt In", "Wt Out",
                     "Rate", "Amount", "Bal Qty", "Bal Wt"
                 };
                 bool[] rightAlign =
                 {
-                    false, false, false, false, false,
+                    false, false, false, false, false, false,
                     true, true, true, true,
                     true, true, true, true
                 };
@@ -489,6 +497,9 @@ namespace EasyBiz
                     Cell(c => c.Text(r.Date).FontSize(8));
                     Cell(c => c.Text(r.MovementType).FontSize(8).FontColor(typeColor).Bold());
                     Cell(c => c.Text(r.VoucherRef).FontSize(8));
+                    // FEATURE: Party cell — shows "-" when no linked account was found
+                    Cell(c => c.Text(string.IsNullOrWhiteSpace(r.PartyName) ? "-" : r.PartyName)
+                               .FontSize(8));
                     Cell(c => c.Text(r.ProductName).FontSize(8));
                     Cell(c => c.AlignRight()
                                .Text(r.QtyIn > 0 ? r.QtyIn.ToString("N3") : "-")
@@ -531,10 +542,10 @@ namespace EasyBiz
                     .Element(c => content(c));
             }
 
-            // Label spanning first 5 columns
+            // Label spans 6 columns (#, Date, Type, Voucher, Party, Product)
             Cell(c => c.AlignRight()
                        .Text("TOTALS")
-                       .FontColor(White).Bold().FontSize(9), 5);
+                       .FontColor(White).Bold().FontSize(9), 6);
 
             Cell(c => c.AlignRight()
                        .Text(qtyIn.ToString("N3"))

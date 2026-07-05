@@ -12,13 +12,34 @@ namespace EasyBiz
         public StockReport()
         {
             InitializeComponent();
+            EnsurePartyColumn(); // FEATURE: adds "Party" column to gridMovements at runtime
             LoadStockSummary();
             LoadProducts();
             LoadParties(); // FEATURE: populate party/customer filter dropdown
             LoadMovementTypes(); // FEATURE: populate Sale/Purchase/Both filter dropdown
+            LoadPaymentTypes(); // FEATURE: populate Cash/Credit/Both filter dropdown
             BeautifyGrid(gridStock, Color.FromArgb(52, 152, 219));
             BeautifyGrid(gridMovements, Color.FromArgb(39, 174, 96));
             setupDates();
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData) 
+            {
+                case Keys.Enter:
+                    SelectNextControl(ActiveControl, true, true, true, true);
+                    return true;
+
+                case Keys.F1:
+                    BtnExportMovements_Click(null, null);
+                    return true;
+
+                case Keys.F2:
+                    BtnExportSummary_Click(null, null);
+                    return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void setupDates()
@@ -35,10 +56,20 @@ namespace EasyBiz
             }
         }
 
-        // BUG FIX: Microsoft.Data.Sqlite's GetDouble() throws InvalidCastException when a
-        // REAL-affinity column happens to be stored with INTEGER storage class (e.g. a value
-        // of exactly 0, which is extremely common for qty/weight/rate columns). GetValue() +
-        // Convert.ToDouble() reads the value regardless of underlying storage class.
+        private void EnsurePartyColumn()
+        {
+            if (gridMovements.Columns.Contains("smParty")) return;
+
+            var col = new DataGridViewTextBoxColumn
+            {
+                Name = "smParty",
+                HeaderText = "Party",
+                DataPropertyName = "",
+                FillWeight = 100
+            };
+            gridMovements.Columns.Add(col);
+        }
+
         private static decimal SafeDecimal(SqliteDataReader r, int i)
         {
             if (r.IsDBNull(i)) return 0m;
@@ -51,7 +82,6 @@ namespace EasyBiz
             return Convert.ToDouble(r.GetValue(i));
         }
 
-        // BUG FIX: guard against NULL text columns (e.g. weight_unit) throwing on GetString()
         private static string SafeString(SqliteDataReader r, int i)
         {
             return r.IsDBNull(i) ? string.Empty : r.GetString(i);
@@ -59,7 +89,6 @@ namespace EasyBiz
 
         private void BeautifyGrid(DataGridView grid, Color headerColor)
         {
-            // Base grid setup
             grid.BorderStyle = BorderStyle.Fixed3D;
             grid.BackgroundColor = Color.White;
             grid.EnableHeadersVisualStyles = false;
@@ -77,13 +106,11 @@ namespace EasyBiz
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-            // Modern flat grid lines — thin, single-direction, low-contrast
             grid.GridColor = Color.FromArgb(230, 232, 235);
             grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             grid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             grid.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
 
-            // Header style — flat, bold, generous height
             grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             grid.ColumnHeadersHeight = 44;
             grid.ColumnHeadersDefaultCellStyle.BackColor = headerColor;
@@ -93,7 +120,6 @@ namespace EasyBiz
             grid.ColumnHeadersDefaultCellStyle.Padding = new Padding(8, 0, 8, 0);
             grid.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
-            // Row / cell style
             grid.DefaultCellStyle.Font = new Font("Segoe UI", 9.5F);
             grid.DefaultCellStyle.BackColor = Color.White;
             grid.DefaultCellStyle.ForeColor = Color.FromArgb(45, 45, 48);
@@ -102,12 +128,10 @@ namespace EasyBiz
             grid.DefaultCellStyle.SelectionForeColor = Color.FromArgb(20, 20, 20);
             grid.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
 
-            // Zebra striping — subtle
             grid.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 249, 251);
 
             grid.RowTemplate.Height = 38;
 
-            // Remove focus rectangle on selected cell for a cleaner look
             grid.CellPainting += (s, e) =>
             {
                 if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -133,8 +157,6 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                // BUG FIX: use SafeDecimal instead of (decimal)r.GetDouble(...) to avoid
-                // InvalidCastException when a value is stored with INTEGER storage class (e.g. 0)
                 decimal qty = SafeDecimal(r, 4);
                 decimal minQty = SafeDecimal(r, 6);
                 decimal weight = SafeDecimal(r, 5);
@@ -178,12 +200,6 @@ namespace EasyBiz
             comboProductFilter.SelectedIndex = 0;
         }
 
-        // FEATURE: populate the party/customer filter dropdown from the accounts table.
-        // NOTE: stock_movements has no account_id column of its own — a movement's party is
-        // only reachable by joining back to sale_invoices / purchase_invoices on voucher_no
-        // (see LoadMovements/BuildMovementRows below). This just lists every account; narrow
-        // the WHERE clause here if you want to restrict to specific account_type values
-        // (e.g. 'Personal Ledgers', 'Receivables', 'Payables').
         private void LoadParties()
         {
             comboPartyFilter.Items.Clear();
@@ -197,10 +213,6 @@ namespace EasyBiz
             comboPartyFilter.SelectedIndex = 0;
         }
 
-        // FEATURE: populate the Sale / Purchase / Both movement-type filter dropdown.
-        // NOTE: requires a ComboBox named "comboMovementType" added to the form in the
-        // designer (drop it next to comboPartyFilter). Items are set here in code so the
-        // designer control can start empty.
         private void LoadMovementTypes()
         {
             comboMovementType.Items.Clear();
@@ -210,20 +222,50 @@ namespace EasyBiz
             comboMovementType.SelectedIndex = 0;
         }
 
-        // FEATURE: parses the movement-type combo selection into the exact string stored in
-        // stock_movements.movement_type ("Sale" / "Purchase"), or "" for "Both" (no filter).
+        // FEATURE: populate the Cash / Credit / Both payment-type filter dropdown.
+        // NOTE: requires a ComboBox named "comboPaymentFilter" added to the form in the
+        // designer (drop it next to comboMovementType). "Cash" means the linked account's
+        // accounts.account_type = 'Cash'; "Credit" means every other account_type (or no
+        // linked account at all). See LoadMovements()/BuildMovementRows() for the join.
+        private void LoadPaymentTypes()
+        {
+            comboPaymentFilter.Items.Clear();
+            comboPaymentFilter.Items.Add("-- Cash/Credit --");
+            comboPaymentFilter.Items.Add("Cash");
+            comboPaymentFilter.Items.Add("Credit");
+            comboPaymentFilter.SelectedIndex = 0;
+        }
+
         private string GetSelectedMovementType()
         {
             if (comboMovementType.SelectedIndex <= 0) return "";
             return comboMovementType.SelectedItem!.ToString()!;
         }
 
-        // FEATURE: parses "{id} - {name}" combo selection into the account_id, or 0 for "All".
+        // FEATURE: parses the payment-type combo selection into "Cash" / "Credit",
+        // or "" for "-- Cash/Credit --" (no filter).
+        private string GetSelectedPaymentType()
+        {
+            if (comboPaymentFilter.SelectedIndex <= 0) return "";
+            return comboPaymentFilter.SelectedItem!.ToString()!;
+        }
+
         private int GetSelectedPartyId()
         {
             if (comboPartyFilter.SelectedIndex <= 0) return 0;
             string sel = comboPartyFilter.SelectedItem!.ToString()!;
             return int.Parse(sel.Split('-')[0].Trim());
+        }
+
+        // FEATURE: builds the SQL fragment for the Cash/Credit filter based on
+        // accounts.account_type of the linked account ("acc" alias — see JOIN in the
+        // callers). Cash = account_type = 'Cash'. Credit = anything else, INCLUDING
+        // movements with no linked account at all (acc.account_type IS NULL).
+        private static string BuildPaymentTypeFilter(string paymentType)
+        {
+            if (paymentType == "Cash") return " AND acc.account_type = 'Cash'";
+            if (paymentType == "Credit") return " AND COALESCE(acc.account_type, '') <> 'Cash'";
+            return "";
         }
 
         private void LoadMovements()
@@ -239,13 +281,15 @@ namespace EasyBiz
                 productFilter = " AND sm.product_id = @pid";
             }
 
-            // FEATURE: resolve party filter (0 = all parties)
             int partyId = GetSelectedPartyId();
             string partyFilter = partyId > 0 ? " AND COALESCE(si.account_id, pi.account_id) = @partyId" : "";
 
-            // FEATURE: resolve Sale/Purchase/Both movement-type filter ("" = both)
             string moveType = GetSelectedMovementType();
             string moveTypeFilter = moveType != "" ? " AND sm.movement_type = @moveType" : "";
+
+            // FEATURE: Cash/Credit filter, resolved via accounts.account_type (see acc JOIN below)
+            string paymentType = GetSelectedPaymentType();
+            string paymentTypeFilter = BuildPaymentTypeFilter(paymentType);
 
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
@@ -260,10 +304,13 @@ namespace EasyBiz
                     ON sm.voucher_type = 'Sale Invoice' AND sm.voucher_no = si.voucher_no
                 LEFT JOIN purchase_invoices pi
                     ON sm.voucher_type = 'Purchase Invoice' AND sm.voucher_no = pi.voucher_no
+                LEFT JOIN accounts acc
+                    ON acc.account_id = COALESCE(si.account_id, pi.account_id)
                 WHERE date(sm.movement_date) BETWEEN date(@from) AND date(@to)
                 {productFilter}
                 {partyFilter}
                 {moveTypeFilter}
+                {paymentTypeFilter}
                 ORDER BY sm.movement_date, sm.movement_id";
 
             cmd.Parameters.AddWithValue("@from", dateFrom.Value.ToString("yyyy-MM-dd"));
@@ -276,8 +323,6 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                // BUG FIX: replaced r.GetDouble(...) calls with SafeDouble to prevent
-                // InvalidCastException on zero-valued qty/weight columns
                 double qtyIn = SafeDouble(r, 5);
                 double qtyOut = SafeDouble(r, 6);
                 double wtIn = SafeDouble(r, 7);
@@ -301,27 +346,13 @@ namespace EasyBiz
                 row.Cells["smAmount"].Value = amount.ToString("N2");
                 row.Cells["smBalQty"].Value = balQty.ToString("N3");
                 row.Cells["smBalWt"].Value = balWt.ToString("N3");
-                // NOTE: party_name is column index 13 (last). Only wire this into the grid
-                // if you add an "smParty" column to gridMovements in the designer.
-                // row.Cells["smParty"].Value = SafeString(r, 13);
-
-                string mType = SafeString(r, 1);
-                if (mType == "Sale")
-                {
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 235, 235);
-                    row.DefaultCellStyle.ForeColor = Color.DarkRed;
-                }
-                else if (mType == "Purchase")
-                {
-                    row.DefaultCellStyle.BackColor = Color.FromArgb(235, 255, 235);
-                    row.DefaultCellStyle.ForeColor = Color.DarkGreen;
-                }
+                string party = SafeString(r, 13);
+                row.Cells["smParty"].Value = string.IsNullOrEmpty(party) ? "-" : party;
             }
         }
 
         // ── PDF export helpers ────────────────────────────────────────────────
 
-        /// <summary>Reads the products table and returns StockSummaryRow list.</summary>
         private List<StockSummaryRow> BuildSummaryRows()
         {
             var rows = new List<StockSummaryRow>();
@@ -338,7 +369,6 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                // BUG FIX: SafeDecimal instead of (decimal)r.GetDouble(...)
                 decimal qty = SafeDecimal(r, 4);
                 decimal sale = SafeDecimal(r, 7);
                 rows.Add(new StockSummaryRow
@@ -359,7 +389,7 @@ namespace EasyBiz
             return rows;
         }
 
-        /// <summary>Reads stock_movements for the selected period/product/party/type.</summary>
+        /// <summary>Reads stock_movements for the selected period/product/party/type/payment.</summary>
         private List<StockMovementRow> BuildMovementRows()
         {
             var rows = new List<StockMovementRow>();
@@ -373,13 +403,15 @@ namespace EasyBiz
                 productFilter = " AND sm.product_id = @pid";
             }
 
-            // FEATURE: resolve party filter (0 = all parties) — mirrors LoadMovements()
             int partyId = GetSelectedPartyId();
             string partyFilter = partyId > 0 ? " AND COALESCE(si.account_id, pi.account_id) = @partyId" : "";
 
-            // FEATURE: resolve Sale/Purchase/Both movement-type filter ("" = both) — mirrors LoadMovements()
             string moveType = GetSelectedMovementType();
             string moveTypeFilter = moveType != "" ? " AND sm.movement_type = @moveType" : "";
+
+            // FEATURE: Cash/Credit filter, resolved via accounts.account_type (see acc JOIN below) — mirrors LoadMovements()
+            string paymentType = GetSelectedPaymentType();
+            string paymentTypeFilter = BuildPaymentTypeFilter(paymentType);
 
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
@@ -394,10 +426,13 @@ namespace EasyBiz
                     ON sm.voucher_type = 'Sale Invoice' AND sm.voucher_no = si.voucher_no
                 LEFT JOIN purchase_invoices pi
                     ON sm.voucher_type = 'Purchase Invoice' AND sm.voucher_no = pi.voucher_no
+                LEFT JOIN accounts acc
+                    ON acc.account_id = COALESCE(si.account_id, pi.account_id)
                 WHERE date(sm.movement_date) BETWEEN date(@from) AND date(@to)
                 {productFilter}
                 {partyFilter}
                 {moveTypeFilter}
+                {paymentTypeFilter}
                 ORDER BY sm.movement_date, sm.movement_id";
 
             cmd.Parameters.AddWithValue("@from", dateFrom.Value.ToString("yyyy-MM-dd"));
@@ -410,7 +445,6 @@ namespace EasyBiz
             int sno = 1;
             while (r.Read())
             {
-                // BUG FIX: SafeDecimal instead of (decimal)r.GetDouble(...)
                 rows.Add(new StockMovementRow
                 {
                     SrNo = sno++,
@@ -425,10 +459,8 @@ namespace EasyBiz
                     Rate = SafeDecimal(r, 9),
                     Amount = SafeDecimal(r, 10),
                     BalanceQty = SafeDecimal(r, 11),
-                    BalanceWeight = SafeDecimal(r, 12)
-                    // NOTE: party_name is column index 13 — add a PartyName property to
-                    // StockMovementRow (and to StockReportPDF's rendering) if you want it
-                    // printed in the exported PDF.
+                    BalanceWeight = SafeDecimal(r, 12),
+                    PartyName = SafeString(r, 13)
                 });
             }
             return rows;
@@ -442,9 +474,6 @@ namespace EasyBiz
             LoadMovements();
         }
 
-
-
-        /// <summary>Export Current Stock Summary to PDF.</summary>
         private void BtnExportSummary_Click(object sender, EventArgs e)
         {
             using var dlg = new SaveFileDialog
@@ -480,21 +509,31 @@ namespace EasyBiz
             }
         }
 
-        /// <summary>Export Stock Movements for the selected period/product/party/type to PDF.</summary>
         private void BtnExportMovements_Click(object sender, EventArgs e)
         {
-            // Determine product label for the header
             string productLabel = comboProductFilter.SelectedIndex > 0
                 ? comboProductFilter.SelectedItem!.ToString()!.Split('-', 2)[1].Trim()
                 : "";
 
-            // FEATURE: party label for the header
-            string partyLabel = comboPartyFilter.SelectedIndex > 0
-                ? comboPartyFilter.SelectedItem!.ToString()!.Split('-', 2)[1].Trim()
-                : "";
-
-            // FEATURE: movement-type label for the header ("" = Both)
             string moveTypeLabel = GetSelectedMovementType();
+
+            // FEATURE: resolve payment type first, since it can override the Party label below
+            string paymentTypeLabel = GetSelectedPaymentType();
+
+            // FEATURE: when filtering to Cash movements, show "Party: Cash" in the PDF header
+            // instead of the actual party dropdown selection — "Cash" here describes who the
+            // movement is against, so it belongs in the Party slot, not a separate Payment field.
+            string partyLabel;
+            if (paymentTypeLabel == "Cash")
+            {
+                partyLabel = "Cash";
+            }
+            else
+            {
+                partyLabel = comboPartyFilter.SelectedIndex > 0
+                    ? comboPartyFilter.SelectedItem!.ToString()!.Split('-', 2)[1].Trim()
+                    : "";
+            }
 
             using var dlg = new SaveFileDialog
             {
@@ -512,7 +551,7 @@ namespace EasyBiz
                     companyName: "EasyBiz",
                     productFilter: productLabel,
                     partyFilter: partyLabel,
-                    movementTypeFilter: moveTypeLabel, // FEATURE: Sale / Purchase / "" (Both)
+                    movementTypeFilter: moveTypeLabel,                    
                     fromDate: dateFrom.Value.Date,
                     toDate: dateTo.Value.Date,
                     rows: rows);
@@ -533,9 +572,11 @@ namespace EasyBiz
             }
         }
 
-        private void checkAllDates_CheckedChanged(object sender, EventArgs e)
-        {
-            setupDates();
-        }
+        private void checkAllDates_CheckedChanged(object sender, EventArgs e) => setupDates();        
+        private void comboPaymentFilter_SelectedIndexChanged(object sender, EventArgs e) => LoadMovements();        
+        private void comboMovementType_SelectedIndexChanged(object sender, EventArgs e) => LoadMovements();        
+        private void comboProductFilter_SelectedIndexChanged(object sender, EventArgs e) => LoadMovements();
+        private void comboPartyFilter_SelectedIndexChanged(object sender, EventArgs e) => LoadMovements();
+        
     }
 }
