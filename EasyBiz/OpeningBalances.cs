@@ -164,12 +164,8 @@ namespace EasyBiz
         private void BtnRefresh_Click(object sender, EventArgs e) => LoadAccounts();
 
         // ── Close button ──────────────────────────────────────────────────────
-        private void BtnClose_Click(object sender, EventArgs e)
-        {
-            var r = MessageBox.Show("Close Opening Balances?", "Confirm",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (r == DialogResult.Yes) Close();
-        }
+        private void BtnClose_Click(object sender, EventArgs e) => Close();
+
 
         // ── Colour-code Dr/Cr cells while editing ─────────────────────────────
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

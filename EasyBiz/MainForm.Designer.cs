@@ -50,7 +50,6 @@
             editTransactionsToolStripMenuItem = new ToolStripMenuItem();
             addNewToolStripMenuItem = new ToolStripMenuItem();
             accountToolStripMenuItem = new ToolStripMenuItem();
-            productToolStripMenuItem = new ToolStripMenuItem();
             itemMovementToolStripMenuItem = new ToolStripMenuItem();
             saleInvoiceToolStripMenuItem = new ToolStripMenuItem();
             purchaseInvoiceToolStripMenuItem = new ToolStripMenuItem();
@@ -59,9 +58,6 @@
             bankReceiptToolStripMenuItem = new ToolStripMenuItem();
             chequeBookToolStripMenuItem = new ToolStripMenuItem();
             reportsToolStripMenuItem = new ToolStripMenuItem();
-            viewLedgerToolStripMenuItem = new ToolStripMenuItem();
-            trialBalancesToolStripMenuItem = new ToolStripMenuItem();
-            stockReportToolStripMenuItem = new ToolStripMenuItem();
             cashBookToolStripMenuItem = new ToolStripMenuItem();
             BtnBankReceipt = new CustomButton();
             BtnBankPayment = new CustomButton();
@@ -71,6 +67,11 @@
             toolTip1 = new ToolTip(components);
             tableLayoutPanel1 = new TableLayoutPanel();
             pnlFavorites = new FlowLayoutPanel();
+            viewLedgerToolStripMenuItem = new ToolStripMenuItem();
+            trialBalancesToolStripMenuItem = new ToolStripMenuItem();
+            stockReportToolStripMenuItem = new ToolStripMenuItem();
+            productToolStripMenuItem = new ToolStripMenuItem();
+            stocToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
@@ -405,7 +406,7 @@
             // 
             menuStrip1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, addNewToolStripMenuItem, itemMovementToolStripMenuItem, bankToolStripMenuItem, reportsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, bankToolStripMenuItem, addNewToolStripMenuItem, itemMovementToolStripMenuItem, reportsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1192, 28);
@@ -416,8 +417,8 @@
             // 
             toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { cashPaymentToolStripMenuItem, cashReceiptToolStripMenuItem, journalVoucherToolStripMenuItem, editTransactionsToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(104, 24);
-            toolStripMenuItem1.Text = "Transactions";
+            toolStripMenuItem1.Size = new Size(98, 24);
+            toolStripMenuItem1.Text = "Transaction";
             // 
             // cashPaymentToolStripMenuItem
             // 
@@ -453,10 +454,10 @@
             // 
             // addNewToolStripMenuItem
             // 
-            addNewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { accountToolStripMenuItem, productToolStripMenuItem });
+            addNewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { accountToolStripMenuItem, viewLedgerToolStripMenuItem, trialBalancesToolStripMenuItem });
             addNewToolStripMenuItem.Name = "addNewToolStripMenuItem";
-            addNewToolStripMenuItem.Size = new Size(66, 24);
-            addNewToolStripMenuItem.Text = "Create";
+            addNewToolStripMenuItem.Size = new Size(83, 24);
+            addNewToolStripMenuItem.Text = "Accounts";
             // 
             // accountToolStripMenuItem
             // 
@@ -466,17 +467,9 @@
             accountToolStripMenuItem.Text = "Account Setup";
             accountToolStripMenuItem.Click += BtnAccountsSetup_Click;
             // 
-            // productToolStripMenuItem
-            // 
-            productToolStripMenuItem.Name = "productToolStripMenuItem";
-            productToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            productToolStripMenuItem.Size = new Size(240, 26);
-            productToolStripMenuItem.Text = "Product Setup";
-            productToolStripMenuItem.Click += BtnProductSetup_Click;
-            // 
             // itemMovementToolStripMenuItem
             // 
-            itemMovementToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saleInvoiceToolStripMenuItem, purchaseInvoiceToolStripMenuItem });
+            itemMovementToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { productToolStripMenuItem, saleInvoiceToolStripMenuItem, purchaseInvoiceToolStripMenuItem, stocToolStripMenuItem });
             itemMovementToolStripMenuItem.Name = "itemMovementToolStripMenuItem";
             itemMovementToolStripMenuItem.Size = new Size(74, 24);
             itemMovementToolStripMenuItem.Text = "Product";
@@ -485,7 +478,7 @@
             // 
             saleInvoiceToolStripMenuItem.Name = "saleInvoiceToolStripMenuItem";
             saleInvoiceToolStripMenuItem.ShortcutKeys = Keys.F5;
-            saleInvoiceToolStripMenuItem.Size = new Size(225, 26);
+            saleInvoiceToolStripMenuItem.Size = new Size(235, 26);
             saleInvoiceToolStripMenuItem.Text = "Sale Invoice";
             saleInvoiceToolStripMenuItem.Click += BtnSalesInvoice_Click;
             // 
@@ -493,7 +486,7 @@
             // 
             purchaseInvoiceToolStripMenuItem.Name = "purchaseInvoiceToolStripMenuItem";
             purchaseInvoiceToolStripMenuItem.ShortcutKeys = Keys.F4;
-            purchaseInvoiceToolStripMenuItem.Size = new Size(225, 26);
+            purchaseInvoiceToolStripMenuItem.Size = new Size(235, 26);
             purchaseInvoiceToolStripMenuItem.Text = "Purchase Invoice";
             purchaseInvoiceToolStripMenuItem.Click += BtnPurchaseInvoice_Click;
             // 
@@ -530,40 +523,16 @@
             // 
             // reportsToolStripMenuItem
             // 
-            reportsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { viewLedgerToolStripMenuItem, trialBalancesToolStripMenuItem, stockReportToolStripMenuItem, cashBookToolStripMenuItem });
+            reportsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cashBookToolStripMenuItem });
             reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
             reportsToolStripMenuItem.Size = new Size(74, 24);
             reportsToolStripMenuItem.Text = "Reports";
-            // 
-            // viewLedgerToolStripMenuItem
-            // 
-            viewLedgerToolStripMenuItem.Name = "viewLedgerToolStripMenuItem";
-            viewLedgerToolStripMenuItem.ShortcutKeys = Keys.F7;
-            viewLedgerToolStripMenuItem.Size = new Size(214, 26);
-            viewLedgerToolStripMenuItem.Text = "View Ledger";
-            viewLedgerToolStripMenuItem.Click += BtnLedgerReport_Click;
-            // 
-            // trialBalancesToolStripMenuItem
-            // 
-            trialBalancesToolStripMenuItem.Name = "trialBalancesToolStripMenuItem";
-            trialBalancesToolStripMenuItem.ShortcutKeys = Keys.F12;
-            trialBalancesToolStripMenuItem.Size = new Size(214, 26);
-            trialBalancesToolStripMenuItem.Text = "Trial Balances";
-            trialBalancesToolStripMenuItem.Click += BtnTrialBalance_Click;
-            // 
-            // stockReportToolStripMenuItem
-            // 
-            stockReportToolStripMenuItem.Name = "stockReportToolStripMenuItem";
-            stockReportToolStripMenuItem.ShortcutKeys = Keys.F11;
-            stockReportToolStripMenuItem.Size = new Size(214, 26);
-            stockReportToolStripMenuItem.Text = "Stock Report";
-            stockReportToolStripMenuItem.Click += BtnStockReport_Click;
             // 
             // cashBookToolStripMenuItem
             // 
             cashBookToolStripMenuItem.Name = "cashBookToolStripMenuItem";
             cashBookToolStripMenuItem.ShortcutKeys = Keys.F8;
-            cashBookToolStripMenuItem.Size = new Size(214, 26);
+            cashBookToolStripMenuItem.Size = new Size(224, 26);
             cashBookToolStripMenuItem.Text = "Cash Book ";
             cashBookToolStripMenuItem.Click += BtnCashBook_Click;
             // 
@@ -738,6 +707,42 @@
             pnlFavorites.Size = new Size(259, 645);
             pnlFavorites.TabIndex = 22;
             // 
+            // viewLedgerToolStripMenuItem
+            // 
+            viewLedgerToolStripMenuItem.Name = "viewLedgerToolStripMenuItem";
+            viewLedgerToolStripMenuItem.ShortcutKeys = Keys.F7;
+            viewLedgerToolStripMenuItem.Size = new Size(240, 26);
+            viewLedgerToolStripMenuItem.Text = "View Ledger";
+            // 
+            // trialBalancesToolStripMenuItem
+            // 
+            trialBalancesToolStripMenuItem.Name = "trialBalancesToolStripMenuItem";
+            trialBalancesToolStripMenuItem.ShortcutKeys = Keys.F12;
+            trialBalancesToolStripMenuItem.Size = new Size(240, 26);
+            trialBalancesToolStripMenuItem.Text = "Trial Balances";
+            // 
+            // stockReportToolStripMenuItem
+            // 
+            stockReportToolStripMenuItem.Name = "stockReportToolStripMenuItem";
+            stockReportToolStripMenuItem.ShortcutKeys = Keys.F11;
+            stockReportToolStripMenuItem.Size = new Size(235, 26);
+            stockReportToolStripMenuItem.Text = "Stock Report";
+            // 
+            // productToolStripMenuItem
+            // 
+            productToolStripMenuItem.Name = "productToolStripMenuItem";
+            productToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
+            productToolStripMenuItem.Size = new Size(235, 26);
+            productToolStripMenuItem.Text = "Product Setup";
+            // 
+            // stocToolStripMenuItem
+            // 
+            stocToolStripMenuItem.Name = "stocToolStripMenuItem";
+            stocToolStripMenuItem.ShortcutKeys = Keys.F11;
+            stocToolStripMenuItem.Size = new Size(235, 26);
+            stocToolStripMenuItem.Text = "Stock Report";
+            stocToolStripMenuItem.Click += BtnStockReport_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -785,14 +790,10 @@
         private ToolStripMenuItem editTransactionsToolStripMenuItem;
         private ToolStripMenuItem addNewToolStripMenuItem;
         private ToolStripMenuItem accountToolStripMenuItem;
-        private ToolStripMenuItem productToolStripMenuItem;
         private ToolStripMenuItem itemMovementToolStripMenuItem;
         private ToolStripMenuItem saleInvoiceToolStripMenuItem;
         private ToolStripMenuItem purchaseInvoiceToolStripMenuItem;
         private ToolStripMenuItem reportsToolStripMenuItem;
-        private ToolStripMenuItem viewLedgerToolStripMenuItem;
-        private ToolStripMenuItem trialBalancesToolStripMenuItem;
-        private ToolStripMenuItem stockReportToolStripMenuItem;
         private ToolStripMenuItem cashBookToolStripMenuItem;
         private CustomButton BtnBankReceipt;
         private CustomButton BtnBankPayment;
@@ -806,5 +807,10 @@
         private ToolTip toolTip1;
         private TableLayoutPanel tableLayoutPanel1;
         private FlowLayoutPanel pnlFavorites;
+        private ToolStripMenuItem viewLedgerToolStripMenuItem;
+        private ToolStripMenuItem trialBalancesToolStripMenuItem;
+        private ToolStripMenuItem stockReportToolStripMenuItem;
+        private ToolStripMenuItem productToolStripMenuItem;
+        private ToolStripMenuItem stocToolStripMenuItem;
     }
 }

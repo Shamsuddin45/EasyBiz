@@ -33,8 +33,10 @@
             BtnSaveFavorites = new CustomButton();
             clbFavorites = new CheckedListBox();
             tabPage2 = new TabPage();
+            btnUsersManagement = new CustomButton();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -79,29 +81,48 @@
             BtnSaveFavorites.UseVisualStyleBackColor = false;
             BtnSaveFavorites.Click += btnSave_Click;
             // 
+            // clbFavorites
+            // 
+            clbFavorites.BackColor = Color.WhiteSmoke;
+            clbFavorites.BorderStyle = BorderStyle.None;
             clbFavorites.CheckOnClick = true;
+            clbFavorites.Font = new Font("Segoe UI", 10F);
+            clbFavorites.ForeColor = Color.DimGray;
             clbFavorites.FormattingEnabled = true;
             clbFavorites.Location = new Point(6, 33);
-            clbFavorites.Size = new Size(348, 290);
             clbFavorites.Name = "clbFavorites";
+            clbFavorites.Size = new Size(348, 275);
             clbFavorites.TabIndex = 0;
-
-            // Modern look
-            clbFavorites.BorderStyle = BorderStyle.None;
-            clbFavorites.Font = new Font("Segoe UI", 10, FontStyle.Regular);
-            clbFavorites.BackColor = Color.WhiteSmoke;
-            clbFavorites.ForeColor = Color.DimGray;
-
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(btnUsersManagement);
             tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(792, 417);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
+            tabPage2.Text = "Users Management";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // btnUsersManagement
+            // 
+            btnUsersManagement.BackColor = Color.FromArgb(52, 152, 219);
+            btnUsersManagement.BackgroundColor = Color.FromArgb(52, 152, 219);
+            btnUsersManagement.BorderColor = Color.Transparent;
+            btnUsersManagement.BorderRadius = 15;
+            btnUsersManagement.BorderSize = 0;
+            btnUsersManagement.FlatAppearance.BorderSize = 0;
+            btnUsersManagement.FlatStyle = FlatStyle.Flat;
+            btnUsersManagement.ForeColor = Color.White;
+            btnUsersManagement.Location = new Point(313, 191);
+            btnUsersManagement.Name = "btnUsersManagement";
+            btnUsersManagement.Size = new Size(147, 50);
+            btnUsersManagement.TabIndex = 1;
+            btnUsersManagement.Text = "Users";
+            btnUsersManagement.TextColor = Color.White;
+            btnUsersManagement.UseVisualStyleBackColor = false;
+            btnUsersManagement.Click += btnUsersManagement_Click;
             // 
             // Settings
             // 
@@ -113,6 +134,7 @@
             Text = "Settings";
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -123,5 +145,6 @@
         private TabPage tabPage2;
         private CheckedListBox clbFavorites;
         private CustomButton BtnSaveFavorites;
+        private CustomButton btnUsersManagement;
     }
 }

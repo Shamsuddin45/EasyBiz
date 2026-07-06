@@ -407,8 +407,8 @@ namespace EasyBiz
         BtnBackupData
     };
 
-            const double imageWidthRatio = 0.25;
-            const double imageHeightRatio = 0.35;
+            const double imageWidthRatio = 0.32;
+            const double imageHeightRatio = 0.32;
 
             foreach (Button btn in buttons)
             {

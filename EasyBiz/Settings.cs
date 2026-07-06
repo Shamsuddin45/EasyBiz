@@ -14,15 +14,14 @@ namespace EasyBiz
         public Settings()
         {
             InitializeComponent();
-            InitFavoritesTab();            
+            InitFavoritesTab();
         }
 
         private void InitFavoritesTab()
         {
             foreach (var module in ModuleRegistry.AllModules)
-                clbFavorites.Items.Add(module.DisplayName);
-            BtnSaveFavorites.Click += btnSave_Click;
-            LoadFavoriteSelections();
+                clbFavorites.Items.Add(module.DisplayName);            
+                LoadFavoriteSelections();
         }
 
         private void LoadFavoriteSelections()
@@ -44,9 +43,15 @@ namespace EasyBiz
                     selectedKeys.Add(ModuleRegistry.AllModules[i].Key);
             }
 
-            FavoritesService.SaveFavorites(selectedKeys);            
+            FavoritesService.SaveFavorites(selectedKeys);
             MessageBox.Show("Favourites saved.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             FavoritesUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void btnUsersManagement_Click(object sender, EventArgs e)
+        {
+            /*UsersManagement usersManagementForm = new UsersManagement();
+            usersManagementForm.ShowDialog();*/
         }
     }
 }
