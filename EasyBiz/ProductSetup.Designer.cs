@@ -348,11 +348,11 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Microsoft Sans Serif", 10.2F);
-            label10.Location = new Point(381, 56);
+            label10.Location = new Point(392, 56);
             label10.Name = "label10";
-            label10.Size = new Size(91, 20);
+            label10.Size = new Size(80, 20);
             label10.TabIndex = 22;
-            label10.Text = "Select Unit";
+            label10.Text = "Unit type:";
             // 
             // label11
             // 

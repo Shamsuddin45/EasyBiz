@@ -48,15 +48,19 @@
             cashReceiptToolStripMenuItem = new ToolStripMenuItem();
             journalVoucherToolStripMenuItem = new ToolStripMenuItem();
             editTransactionsToolStripMenuItem = new ToolStripMenuItem();
-            addNewToolStripMenuItem = new ToolStripMenuItem();
-            accountToolStripMenuItem = new ToolStripMenuItem();
-            itemMovementToolStripMenuItem = new ToolStripMenuItem();
-            saleInvoiceToolStripMenuItem = new ToolStripMenuItem();
-            purchaseInvoiceToolStripMenuItem = new ToolStripMenuItem();
             bankToolStripMenuItem = new ToolStripMenuItem();
             bankPaymentToolStripMenuItem = new ToolStripMenuItem();
             bankReceiptToolStripMenuItem = new ToolStripMenuItem();
             chequeBookToolStripMenuItem = new ToolStripMenuItem();
+            addNewToolStripMenuItem = new ToolStripMenuItem();
+            accountToolStripMenuItem = new ToolStripMenuItem();
+            viewLedgerToolStripMenuItem = new ToolStripMenuItem();
+            trialBalancesToolStripMenuItem = new ToolStripMenuItem();
+            itemMovementToolStripMenuItem = new ToolStripMenuItem();
+            productToolStripMenuItem = new ToolStripMenuItem();
+            saleInvoiceToolStripMenuItem = new ToolStripMenuItem();
+            purchaseInvoiceToolStripMenuItem = new ToolStripMenuItem();
+            stocToolStripMenuItem = new ToolStripMenuItem();
             reportsToolStripMenuItem = new ToolStripMenuItem();
             cashBookToolStripMenuItem = new ToolStripMenuItem();
             BtnBankReceipt = new CustomButton();
@@ -67,13 +71,13 @@
             toolTip1 = new ToolTip(components);
             tableLayoutPanel1 = new TableLayoutPanel();
             pnlFavorites = new FlowLayoutPanel();
-            viewLedgerToolStripMenuItem = new ToolStripMenuItem();
-            trialBalancesToolStripMenuItem = new ToolStripMenuItem();
             stockReportToolStripMenuItem = new ToolStripMenuItem();
-            productToolStripMenuItem = new ToolStripMenuItem();
-            stocToolStripMenuItem = new ToolStripMenuItem();
+            panel1 = new Panel();
+            btnLogout = new CustomButton();
+            lblUsername = new Label();
             menuStrip1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // BtnAccountsSetup
@@ -81,7 +85,7 @@
             BtnAccountsSetup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             BtnAccountsSetup.BackColor = Color.Transparent;
             BtnAccountsSetup.BackgroundColor = Color.Transparent;
-            BtnAccountsSetup.BorderColor = Color.Black;
+            BtnAccountsSetup.BorderColor = Color.Transparent;
             BtnAccountsSetup.BorderRadius = 15;
             BtnAccountsSetup.BorderSize = 2;
             BtnAccountsSetup.FlatAppearance.BorderSize = 0;
@@ -107,7 +111,7 @@
             BtnCashPayment.Anchor = AnchorStyles.Top;
             BtnCashPayment.BackColor = Color.Transparent;
             BtnCashPayment.BackgroundColor = Color.Transparent;
-            BtnCashPayment.BorderColor = Color.Black;
+            BtnCashPayment.BorderColor = Color.Transparent;
             BtnCashPayment.BorderRadius = 15;
             BtnCashPayment.BorderSize = 2;
             BtnCashPayment.FlatAppearance.BorderSize = 0;
@@ -132,7 +136,7 @@
             BtnCashReceipt.Anchor = AnchorStyles.Top;
             BtnCashReceipt.BackColor = Color.Transparent;
             BtnCashReceipt.BackgroundColor = Color.Transparent;
-            BtnCashReceipt.BorderColor = Color.Black;
+            BtnCashReceipt.BorderColor = Color.Transparent;
             BtnCashReceipt.BorderRadius = 15;
             BtnCashReceipt.BorderSize = 2;
             BtnCashReceipt.FlatAppearance.BorderSize = 0;
@@ -157,7 +161,7 @@
             BtnJournalVoucher.Anchor = AnchorStyles.Top;
             BtnJournalVoucher.BackColor = Color.Transparent;
             BtnJournalVoucher.BackgroundColor = Color.Transparent;
-            BtnJournalVoucher.BorderColor = Color.Black;
+            BtnJournalVoucher.BorderColor = Color.Transparent;
             BtnJournalVoucher.BorderRadius = 15;
             BtnJournalVoucher.BorderSize = 2;
             BtnJournalVoucher.FlatAppearance.BorderSize = 0;
@@ -182,7 +186,7 @@
             BtnCashBook.Anchor = AnchorStyles.Top;
             BtnCashBook.BackColor = Color.Transparent;
             BtnCashBook.BackgroundColor = Color.Transparent;
-            BtnCashBook.BorderColor = Color.Black;
+            BtnCashBook.BorderColor = Color.Transparent;
             BtnCashBook.BorderRadius = 15;
             BtnCashBook.BorderSize = 2;
             BtnCashBook.FlatAppearance.BorderSize = 0;
@@ -207,7 +211,7 @@
             BtnLedgerReport.Anchor = AnchorStyles.Top;
             BtnLedgerReport.BackColor = Color.Transparent;
             BtnLedgerReport.BackgroundColor = Color.Transparent;
-            BtnLedgerReport.BorderColor = Color.Black;
+            BtnLedgerReport.BorderColor = Color.Transparent;
             BtnLedgerReport.BorderRadius = 15;
             BtnLedgerReport.BorderSize = 2;
             BtnLedgerReport.FlatAppearance.BorderSize = 0;
@@ -232,7 +236,7 @@
             BtnEditTransactions.Anchor = AnchorStyles.Top;
             BtnEditTransactions.BackColor = Color.Transparent;
             BtnEditTransactions.BackgroundColor = Color.Transparent;
-            BtnEditTransactions.BorderColor = Color.Black;
+            BtnEditTransactions.BorderColor = Color.Transparent;
             BtnEditTransactions.BorderRadius = 15;
             BtnEditTransactions.BorderSize = 2;
             BtnEditTransactions.FlatAppearance.BorderSize = 0;
@@ -257,7 +261,7 @@
             BtnOpeningBalances.Anchor = AnchorStyles.Top;
             BtnOpeningBalances.BackColor = Color.Transparent;
             BtnOpeningBalances.BackgroundColor = Color.Transparent;
-            BtnOpeningBalances.BorderColor = Color.Black;
+            BtnOpeningBalances.BorderColor = Color.Transparent;
             BtnOpeningBalances.BorderRadius = 15;
             BtnOpeningBalances.BorderSize = 2;
             BtnOpeningBalances.FlatAppearance.BorderSize = 0;
@@ -282,7 +286,7 @@
             BtnTrialBalance.Anchor = AnchorStyles.Top;
             BtnTrialBalance.BackColor = Color.Transparent;
             BtnTrialBalance.BackgroundColor = Color.Transparent;
-            BtnTrialBalance.BorderColor = Color.Black;
+            BtnTrialBalance.BorderColor = Color.Transparent;
             BtnTrialBalance.BorderRadius = 15;
             BtnTrialBalance.BorderSize = 2;
             BtnTrialBalance.FlatAppearance.BorderSize = 0;
@@ -307,7 +311,7 @@
             BtnSalesInvoice.Anchor = AnchorStyles.Top;
             BtnSalesInvoice.BackColor = Color.Transparent;
             BtnSalesInvoice.BackgroundColor = Color.Transparent;
-            BtnSalesInvoice.BorderColor = Color.Black;
+            BtnSalesInvoice.BorderColor = Color.Transparent;
             BtnSalesInvoice.BorderRadius = 15;
             BtnSalesInvoice.BorderSize = 2;
             BtnSalesInvoice.FlatAppearance.BorderSize = 0;
@@ -332,7 +336,7 @@
             BtnProductSetup.Anchor = AnchorStyles.Top;
             BtnProductSetup.BackColor = Color.Transparent;
             BtnProductSetup.BackgroundColor = Color.Transparent;
-            BtnProductSetup.BorderColor = Color.Black;
+            BtnProductSetup.BorderColor = Color.Transparent;
             BtnProductSetup.BorderRadius = 15;
             BtnProductSetup.BorderSize = 2;
             BtnProductSetup.FlatAppearance.BorderSize = 0;
@@ -357,7 +361,7 @@
             BtnPurchaseInvoice.Anchor = AnchorStyles.Top;
             BtnPurchaseInvoice.BackColor = Color.Transparent;
             BtnPurchaseInvoice.BackgroundColor = Color.Transparent;
-            BtnPurchaseInvoice.BorderColor = Color.Black;
+            BtnPurchaseInvoice.BorderColor = Color.Transparent;
             BtnPurchaseInvoice.BorderRadius = 15;
             BtnPurchaseInvoice.BorderSize = 2;
             BtnPurchaseInvoice.FlatAppearance.BorderSize = 0;
@@ -382,7 +386,7 @@
             BtnStockReport.Anchor = AnchorStyles.Top;
             BtnStockReport.BackColor = Color.Transparent;
             BtnStockReport.BackgroundColor = Color.Transparent;
-            BtnStockReport.BorderColor = Color.Black;
+            BtnStockReport.BorderColor = Color.Transparent;
             BtnStockReport.BorderRadius = 15;
             BtnStockReport.BorderSize = 2;
             BtnStockReport.FlatAppearance.BorderSize = 0;
@@ -452,44 +456,6 @@
             editTransactionsToolStripMenuItem.Text = "Edit Transactions";
             editTransactionsToolStripMenuItem.Click += BtnEditTransactions_Click;
             // 
-            // addNewToolStripMenuItem
-            // 
-            addNewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { accountToolStripMenuItem, viewLedgerToolStripMenuItem, trialBalancesToolStripMenuItem });
-            addNewToolStripMenuItem.Name = "addNewToolStripMenuItem";
-            addNewToolStripMenuItem.Size = new Size(83, 24);
-            addNewToolStripMenuItem.Text = "Accounts";
-            // 
-            // accountToolStripMenuItem
-            // 
-            accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            accountToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
-            accountToolStripMenuItem.Size = new Size(240, 26);
-            accountToolStripMenuItem.Text = "Account Setup";
-            accountToolStripMenuItem.Click += BtnAccountsSetup_Click;
-            // 
-            // itemMovementToolStripMenuItem
-            // 
-            itemMovementToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { productToolStripMenuItem, saleInvoiceToolStripMenuItem, purchaseInvoiceToolStripMenuItem, stocToolStripMenuItem });
-            itemMovementToolStripMenuItem.Name = "itemMovementToolStripMenuItem";
-            itemMovementToolStripMenuItem.Size = new Size(74, 24);
-            itemMovementToolStripMenuItem.Text = "Product";
-            // 
-            // saleInvoiceToolStripMenuItem
-            // 
-            saleInvoiceToolStripMenuItem.Name = "saleInvoiceToolStripMenuItem";
-            saleInvoiceToolStripMenuItem.ShortcutKeys = Keys.F5;
-            saleInvoiceToolStripMenuItem.Size = new Size(235, 26);
-            saleInvoiceToolStripMenuItem.Text = "Sale Invoice";
-            saleInvoiceToolStripMenuItem.Click += BtnSalesInvoice_Click;
-            // 
-            // purchaseInvoiceToolStripMenuItem
-            // 
-            purchaseInvoiceToolStripMenuItem.Name = "purchaseInvoiceToolStripMenuItem";
-            purchaseInvoiceToolStripMenuItem.ShortcutKeys = Keys.F4;
-            purchaseInvoiceToolStripMenuItem.Size = new Size(235, 26);
-            purchaseInvoiceToolStripMenuItem.Text = "Purchase Invoice";
-            purchaseInvoiceToolStripMenuItem.Click += BtnPurchaseInvoice_Click;
-            // 
             // bankToolStripMenuItem
             // 
             bankToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { bankPaymentToolStripMenuItem, bankReceiptToolStripMenuItem, chequeBookToolStripMenuItem });
@@ -521,6 +487,73 @@
             chequeBookToolStripMenuItem.Text = "Cheque Book";
             chequeBookToolStripMenuItem.Click += BtnChequeBook_Click;
             // 
+            // addNewToolStripMenuItem
+            // 
+            addNewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { accountToolStripMenuItem, viewLedgerToolStripMenuItem, trialBalancesToolStripMenuItem });
+            addNewToolStripMenuItem.Name = "addNewToolStripMenuItem";
+            addNewToolStripMenuItem.Size = new Size(83, 24);
+            addNewToolStripMenuItem.Text = "Accounts";
+            // 
+            // accountToolStripMenuItem
+            // 
+            accountToolStripMenuItem.Name = "accountToolStripMenuItem";
+            accountToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.A;
+            accountToolStripMenuItem.Size = new Size(240, 26);
+            accountToolStripMenuItem.Text = "Account Setup";
+            accountToolStripMenuItem.Click += BtnAccountsSetup_Click;
+            // 
+            // viewLedgerToolStripMenuItem
+            // 
+            viewLedgerToolStripMenuItem.Name = "viewLedgerToolStripMenuItem";
+            viewLedgerToolStripMenuItem.ShortcutKeys = Keys.F7;
+            viewLedgerToolStripMenuItem.Size = new Size(240, 26);
+            viewLedgerToolStripMenuItem.Text = "View Ledger";
+            // 
+            // trialBalancesToolStripMenuItem
+            // 
+            trialBalancesToolStripMenuItem.Name = "trialBalancesToolStripMenuItem";
+            trialBalancesToolStripMenuItem.ShortcutKeys = Keys.F12;
+            trialBalancesToolStripMenuItem.Size = new Size(240, 26);
+            trialBalancesToolStripMenuItem.Text = "Trial Balances";
+            // 
+            // itemMovementToolStripMenuItem
+            // 
+            itemMovementToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { productToolStripMenuItem, saleInvoiceToolStripMenuItem, purchaseInvoiceToolStripMenuItem, stocToolStripMenuItem });
+            itemMovementToolStripMenuItem.Name = "itemMovementToolStripMenuItem";
+            itemMovementToolStripMenuItem.Size = new Size(74, 24);
+            itemMovementToolStripMenuItem.Text = "Product";
+            // 
+            // productToolStripMenuItem
+            // 
+            productToolStripMenuItem.Name = "productToolStripMenuItem";
+            productToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
+            productToolStripMenuItem.Size = new Size(235, 26);
+            productToolStripMenuItem.Text = "Product Setup";
+            // 
+            // saleInvoiceToolStripMenuItem
+            // 
+            saleInvoiceToolStripMenuItem.Name = "saleInvoiceToolStripMenuItem";
+            saleInvoiceToolStripMenuItem.ShortcutKeys = Keys.F5;
+            saleInvoiceToolStripMenuItem.Size = new Size(235, 26);
+            saleInvoiceToolStripMenuItem.Text = "Sale Invoice";
+            saleInvoiceToolStripMenuItem.Click += BtnSalesInvoice_Click;
+            // 
+            // purchaseInvoiceToolStripMenuItem
+            // 
+            purchaseInvoiceToolStripMenuItem.Name = "purchaseInvoiceToolStripMenuItem";
+            purchaseInvoiceToolStripMenuItem.ShortcutKeys = Keys.F4;
+            purchaseInvoiceToolStripMenuItem.Size = new Size(235, 26);
+            purchaseInvoiceToolStripMenuItem.Text = "Purchase Invoice";
+            purchaseInvoiceToolStripMenuItem.Click += BtnPurchaseInvoice_Click;
+            // 
+            // stocToolStripMenuItem
+            // 
+            stocToolStripMenuItem.Name = "stocToolStripMenuItem";
+            stocToolStripMenuItem.ShortcutKeys = Keys.F11;
+            stocToolStripMenuItem.Size = new Size(235, 26);
+            stocToolStripMenuItem.Text = "Stock Report";
+            stocToolStripMenuItem.Click += BtnStockReport_Click;
+            // 
             // reportsToolStripMenuItem
             // 
             reportsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { cashBookToolStripMenuItem });
@@ -532,7 +565,7 @@
             // 
             cashBookToolStripMenuItem.Name = "cashBookToolStripMenuItem";
             cashBookToolStripMenuItem.ShortcutKeys = Keys.F8;
-            cashBookToolStripMenuItem.Size = new Size(224, 26);
+            cashBookToolStripMenuItem.Size = new Size(189, 26);
             cashBookToolStripMenuItem.Text = "Cash Book ";
             cashBookToolStripMenuItem.Click += BtnCashBook_Click;
             // 
@@ -541,7 +574,7 @@
             BtnBankReceipt.Anchor = AnchorStyles.Top;
             BtnBankReceipt.BackColor = Color.Transparent;
             BtnBankReceipt.BackgroundColor = Color.Transparent;
-            BtnBankReceipt.BorderColor = Color.Black;
+            BtnBankReceipt.BorderColor = Color.Transparent;
             BtnBankReceipt.BorderRadius = 15;
             BtnBankReceipt.BorderSize = 2;
             BtnBankReceipt.FlatAppearance.BorderSize = 0;
@@ -566,7 +599,7 @@
             BtnBankPayment.Anchor = AnchorStyles.Top;
             BtnBankPayment.BackColor = Color.Transparent;
             BtnBankPayment.BackgroundColor = Color.Transparent;
-            BtnBankPayment.BorderColor = Color.Black;
+            BtnBankPayment.BorderColor = Color.Transparent;
             BtnBankPayment.BorderRadius = 15;
             BtnBankPayment.BorderSize = 2;
             BtnBankPayment.FlatAppearance.BorderSize = 0;
@@ -591,7 +624,7 @@
             BtnChequeBook.Anchor = AnchorStyles.Top;
             BtnChequeBook.BackColor = Color.Transparent;
             BtnChequeBook.BackgroundColor = Color.Transparent;
-            BtnChequeBook.BorderColor = Color.Black;
+            BtnChequeBook.BorderColor = Color.Transparent;
             BtnChequeBook.BorderRadius = 15;
             BtnChequeBook.BorderSize = 2;
             BtnChequeBook.FlatAppearance.BorderSize = 0;
@@ -616,7 +649,7 @@
             BtnSettings.Anchor = AnchorStyles.Top;
             BtnSettings.BackColor = Color.Transparent;
             BtnSettings.BackgroundColor = Color.Transparent;
-            BtnSettings.BorderColor = Color.Black;
+            BtnSettings.BorderColor = Color.Transparent;
             BtnSettings.BorderRadius = 15;
             BtnSettings.BorderSize = 2;
             BtnSettings.FlatAppearance.BorderSize = 0;
@@ -641,7 +674,7 @@
             BtnBackupData.Anchor = AnchorStyles.Top;
             BtnBackupData.BackColor = Color.Transparent;
             BtnBackupData.BackgroundColor = Color.Transparent;
-            BtnBackupData.BorderColor = Color.Black;
+            BtnBackupData.BorderColor = Color.Transparent;
             BtnBackupData.BorderRadius = 15;
             BtnBackupData.BorderSize = 2;
             BtnBackupData.FlatAppearance.BorderSize = 0;
@@ -707,20 +740,6 @@
             pnlFavorites.Size = new Size(259, 645);
             pnlFavorites.TabIndex = 22;
             // 
-            // viewLedgerToolStripMenuItem
-            // 
-            viewLedgerToolStripMenuItem.Name = "viewLedgerToolStripMenuItem";
-            viewLedgerToolStripMenuItem.ShortcutKeys = Keys.F7;
-            viewLedgerToolStripMenuItem.Size = new Size(240, 26);
-            viewLedgerToolStripMenuItem.Text = "View Ledger";
-            // 
-            // trialBalancesToolStripMenuItem
-            // 
-            trialBalancesToolStripMenuItem.Name = "trialBalancesToolStripMenuItem";
-            trialBalancesToolStripMenuItem.ShortcutKeys = Keys.F12;
-            trialBalancesToolStripMenuItem.Size = new Size(240, 26);
-            trialBalancesToolStripMenuItem.Text = "Trial Balances";
-            // 
             // stockReportToolStripMenuItem
             // 
             stockReportToolStripMenuItem.Name = "stockReportToolStripMenuItem";
@@ -728,20 +747,45 @@
             stockReportToolStripMenuItem.Size = new Size(235, 26);
             stockReportToolStripMenuItem.Text = "Stock Report";
             // 
-            // productToolStripMenuItem
+            // panel1
             // 
-            productToolStripMenuItem.Name = "productToolStripMenuItem";
-            productToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.P;
-            productToolStripMenuItem.Size = new Size(235, 26);
-            productToolStripMenuItem.Text = "Product Setup";
+            panel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            panel1.Controls.Add(btnLogout);
+            panel1.Controls.Add(lblUsername);
+            panel1.Location = new Point(897, 613);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(295, 60);
+            panel1.TabIndex = 23;
             // 
-            // stocToolStripMenuItem
+            // btnLogout
             // 
-            stocToolStripMenuItem.Name = "stocToolStripMenuItem";
-            stocToolStripMenuItem.ShortcutKeys = Keys.F11;
-            stocToolStripMenuItem.Size = new Size(235, 26);
-            stocToolStripMenuItem.Text = "Stock Report";
-            stocToolStripMenuItem.Click += BtnStockReport_Click;
+            btnLogout.BackColor = Color.Transparent;
+            btnLogout.BackgroundColor = Color.Transparent;
+            btnLogout.BorderColor = Color.Transparent;
+            btnLogout.BorderRadius = 2;
+            btnLogout.BorderSize = 0;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.ForeColor = Color.Red;
+            btnLogout.Location = new Point(206, 7);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(66, 50);
+            btnLogout.TabIndex = 1;
+            btnLogout.Text = "\u23fb";
+            btnLogout.TextColor = Color.Red;
+            btnLogout.UseVisualStyleBackColor = false;
+            // 
+            // lblUsername
+            // 
+            lblUsername.AutoSize = true;
+            lblUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUsername.ForeColor = SystemColors.GrayText;
+            lblUsername.Location = new Point(33, 21);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(167, 28);
+            lblUsername.TabIndex = 0;
+            lblUsername.Text = "Logged In: Admin";
             // 
             // MainForm
             // 
@@ -749,6 +793,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(1192, 673);
+            Controls.Add(panel1);
             Controls.Add(pnlFavorites);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
@@ -763,6 +808,8 @@
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -812,5 +859,8 @@
         private ToolStripMenuItem stockReportToolStripMenuItem;
         private ToolStripMenuItem productToolStripMenuItem;
         private ToolStripMenuItem stocToolStripMenuItem;
+        private Panel panel1;
+        private CustomButton btnLogout;
+        private Label lblUsername;
     }
 }

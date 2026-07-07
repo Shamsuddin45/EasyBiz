@@ -15,13 +15,20 @@ namespace EasyBiz
         {
             InitializeComponent();
             InitFavoritesTab();
+
+            // Only Admins get to manage user accounts.
+            btnUsersManagement.Enabled = CurrentSession.IsAdmin;
+            if (!CurrentSession.IsAdmin)
+            {
+                btnUsersManagement.Text = "Users (Admins Only)";
+            }
         }
 
         private void InitFavoritesTab()
         {
             foreach (var module in ModuleRegistry.AllModules)
-                clbFavorites.Items.Add(module.DisplayName);            
-                LoadFavoriteSelections();
+                clbFavorites.Items.Add(module.DisplayName);
+            LoadFavoriteSelections();
         }
 
         private void LoadFavoriteSelections()
@@ -50,8 +57,17 @@ namespace EasyBiz
 
         private void btnUsersManagement_Click(object sender, EventArgs e)
         {
-            /*UsersManagement usersManagementForm = new UsersManagement();
-            usersManagementForm.ShowDialog();*/
+            if (!CurrentSession.IsAdmin)
+            {
+                MessageBox.Show("Only Administrators can manage user accounts.",
+                    "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (var usersManagementForm = new UsersManagement())
+            {
+                usersManagementForm.ShowDialog();
+            }
         }
     }
 }
