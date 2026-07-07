@@ -380,10 +380,11 @@ namespace EasyBiz
             }
 
             return resized;
-        }
+        }        
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            lblUsername.Text = $"Logged in as: {CurrentSession.Username}";
             LoadFavoritesPanel();
             Button[] buttons =
             {
@@ -467,7 +468,22 @@ namespace EasyBiz
             using (var settingsForm = new Settings())
             {
                 settingsForm.FavoritesUpdated += (s, e) => LoadFavoritesPanel();
-                settingsForm.ShowDialog();                
+                settingsForm.ShowDialog();
+            }
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {                
+                LoginForm loginForm = new LoginForm();
+                loginForm.ShowDialog();
+                this.Close();
+            }
+            else
+            {
+                return;
             }
         }
     }

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            BtnAccountsSetup = new CustomButton();
             BtnCashPayment = new CustomButton();
             BtnCashReceipt = new CustomButton();
             BtnJournalVoucher = new CustomButton();
@@ -69,42 +68,17 @@
             BtnSettings = new CustomButton();
             BtnBackupData = new CustomButton();
             toolTip1 = new ToolTip(components);
-            tableLayoutPanel1 = new TableLayoutPanel();
+            btnLogout = new CustomButton();
             pnlFavorites = new FlowLayoutPanel();
             stockReportToolStripMenuItem = new ToolStripMenuItem();
-            panel1 = new Panel();
-            btnLogout = new CustomButton();
             lblUsername = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            BtnAccountsSetup = new CustomButton();
             menuStrip1.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
-            panel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
             SuspendLayout();
-            // 
-            // BtnAccountsSetup
-            // 
-            BtnAccountsSetup.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            BtnAccountsSetup.BackColor = Color.Transparent;
-            BtnAccountsSetup.BackgroundColor = Color.Transparent;
-            BtnAccountsSetup.BorderColor = Color.Transparent;
-            BtnAccountsSetup.BorderRadius = 15;
-            BtnAccountsSetup.BorderSize = 2;
-            BtnAccountsSetup.FlatAppearance.BorderSize = 0;
-            BtnAccountsSetup.FlatStyle = FlatStyle.Flat;
-            BtnAccountsSetup.Font = new Font("Microsoft Sans Serif", 10.2F);
-            BtnAccountsSetup.ForeColor = Color.MidnightBlue;
-            BtnAccountsSetup.Image = Properties.Resources.add_user;
-            BtnAccountsSetup.Location = new Point(3, 4);
-            BtnAccountsSetup.Margin = new Padding(3, 4, 3, 4);
-            BtnAccountsSetup.Name = "BtnAccountsSetup";
-            BtnAccountsSetup.Padding = new Padding(6);
-            BtnAccountsSetup.Size = new Size(148, 125);
-            BtnAccountsSetup.TabIndex = 0;
-            BtnAccountsSetup.Text = "Accounts Setup";
-            BtnAccountsSetup.TextAlign = ContentAlignment.BottomCenter;
-            BtnAccountsSetup.TextColor = Color.MidnightBlue;
-            BtnAccountsSetup.TextImageRelation = TextImageRelation.ImageAboveText;
-            BtnAccountsSetup.UseVisualStyleBackColor = false;
-            BtnAccountsSetup.Click += BtnAccountsSetup_Click;
             // 
             // BtnCashPayment
             // 
@@ -344,7 +318,7 @@
             BtnProductSetup.Font = new Font("Microsoft Sans Serif", 10.2F);
             BtnProductSetup.ForeColor = Color.Black;
             BtnProductSetup.Image = Properties.Resources.add_product;
-            BtnProductSetup.Location = new Point(157, 4);
+            BtnProductSetup.Location = new Point(3, 4);
             BtnProductSetup.Margin = new Padding(3, 4, 3, 4);
             BtnProductSetup.Name = "BtnProductSetup";
             BtnProductSetup.Padding = new Padding(6);
@@ -650,7 +624,7 @@
             BtnSettings.BackColor = Color.Transparent;
             BtnSettings.BackgroundColor = Color.Transparent;
             BtnSettings.BorderColor = Color.Transparent;
-            BtnSettings.BorderRadius = 15;
+            BtnSettings.BorderRadius = 9;
             BtnSettings.BorderSize = 2;
             BtnSettings.FlatAppearance.BorderSize = 0;
             BtnSettings.FlatStyle = FlatStyle.Flat;
@@ -675,7 +649,7 @@
             BtnBackupData.BackColor = Color.Transparent;
             BtnBackupData.BackgroundColor = Color.Transparent;
             BtnBackupData.BorderColor = Color.Transparent;
-            BtnBackupData.BorderRadius = 15;
+            BtnBackupData.BorderRadius = 9;
             BtnBackupData.BorderSize = 2;
             BtnBackupData.FlatAppearance.BorderSize = 0;
             BtnBackupData.FlatStyle = FlatStyle.Flat;
@@ -693,47 +667,32 @@
             BtnBackupData.TextImageRelation = TextImageRelation.ImageAboveText;
             BtnBackupData.UseVisualStyleBackColor = false;
             // 
-            // tableLayoutPanel1
+            // btnLogout
             // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            tableLayoutPanel1.ColumnCount = 6;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666679F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.6666641F));
-            tableLayoutPanel1.Controls.Add(BtnAccountsSetup, 0, 0);
-            tableLayoutPanel1.Controls.Add(BtnBackupData, 5, 2);
-            tableLayoutPanel1.Controls.Add(BtnProductSetup, 1, 0);
-            tableLayoutPanel1.Controls.Add(BtnSettings, 4, 2);
-            tableLayoutPanel1.Controls.Add(BtnCashPayment, 2, 0);
-            tableLayoutPanel1.Controls.Add(BtnStockReport, 3, 2);
-            tableLayoutPanel1.Controls.Add(BtnChequeBook, 2, 1);
-            tableLayoutPanel1.Controls.Add(BtnTrialBalance, 2, 2);
-            tableLayoutPanel1.Controls.Add(BtnPurchaseInvoice, 4, 1);
-            tableLayoutPanel1.Controls.Add(BtnLedgerReport, 1, 2);
-            tableLayoutPanel1.Controls.Add(BtnOpeningBalances, 5, 1);
-            tableLayoutPanel1.Controls.Add(BtnCashBook, 0, 2);
-            tableLayoutPanel1.Controls.Add(BtnCashReceipt, 3, 0);
-            tableLayoutPanel1.Controls.Add(BtnSalesInvoice, 3, 1);
-            tableLayoutPanel1.Controls.Add(BtnBankReceipt, 1, 1);
-            tableLayoutPanel1.Controls.Add(BtnJournalVoucher, 4, 0);
-            tableLayoutPanel1.Controls.Add(BtnBankPayment, 0, 1);
-            tableLayoutPanel1.Controls.Add(BtnEditTransactions, 5, 0);
-            tableLayoutPanel1.Font = new Font("Tahoma", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tableLayoutPanel1.Location = new Point(265, 31);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3328667F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3328667F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3342628F));
-            tableLayoutPanel1.Size = new Size(927, 401);
-            tableLayoutPanel1.TabIndex = 21;
+            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLogout.BackColor = Color.Transparent;
+            btnLogout.BackgroundColor = Color.Transparent;
+            btnLogout.BorderColor = Color.Transparent;
+            btnLogout.BorderRadius = 2;
+            btnLogout.BorderSize = 0;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnLogout.ForeColor = Color.Red;
+            btnLogout.Location = new Point(691, 3);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(66, 54);
+            btnLogout.TabIndex = 1;
+            btnLogout.Text = "\u23fb";
+            btnLogout.TextColor = Color.Red;
+            toolTip1.SetToolTip(btnLogout, "Logout");
+            btnLogout.UseVisualStyleBackColor = false;
+            btnLogout.Click += btnLogout_Click;
             // 
             // pnlFavorites
             // 
             pnlFavorites.AutoScroll = true;
+            pnlFavorites.BackColor = Color.LightSkyBlue;
             pnlFavorites.Dock = DockStyle.Left;
             pnlFavorites.Location = new Point(0, 28);
             pnlFavorites.Name = "pnlFavorites";
@@ -747,45 +706,81 @@
             stockReportToolStripMenuItem.Size = new Size(235, 26);
             stockReportToolStripMenuItem.Text = "Stock Report";
             // 
-            // panel1
-            // 
-            panel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            panel1.Controls.Add(btnLogout);
-            panel1.Controls.Add(lblUsername);
-            panel1.Location = new Point(897, 613);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(295, 60);
-            panel1.TabIndex = 23;
-            // 
-            // btnLogout
-            // 
-            btnLogout.BackColor = Color.Transparent;
-            btnLogout.BackgroundColor = Color.Transparent;
-            btnLogout.BorderColor = Color.Transparent;
-            btnLogout.BorderRadius = 2;
-            btnLogout.BorderSize = 0;
-            btnLogout.FlatAppearance.BorderSize = 0;
-            btnLogout.FlatStyle = FlatStyle.Flat;
-            btnLogout.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnLogout.ForeColor = Color.Red;
-            btnLogout.Location = new Point(206, 7);
-            btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(66, 50);
-            btnLogout.TabIndex = 1;
-            btnLogout.Text = "\u23fb";
-            btnLogout.TextColor = Color.Red;
-            btnLogout.UseVisualStyleBackColor = false;
-            // 
             // lblUsername
             // 
+            lblUsername.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsername.ForeColor = SystemColors.GrayText;
-            lblUsername.Location = new Point(33, 21);
+            lblUsername.Location = new Point(763, 0);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(167, 28);
+            lblUsername.Size = new Size(167, 60);
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Logged In: Admin";
+            lblUsername.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Controls.Add(lblUsername);
+            flowLayoutPanel1.Controls.Add(btnLogout);
+            flowLayoutPanel1.Dock = DockStyle.Bottom;
+            flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
+            flowLayoutPanel1.Location = new Point(259, 610);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(933, 63);
+            flowLayoutPanel1.TabIndex = 23;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.AutoScroll = true;
+            flowLayoutPanel2.Controls.Add(BtnProductSetup);
+            flowLayoutPanel2.Controls.Add(BtnAccountsSetup);
+            flowLayoutPanel2.Controls.Add(BtnCashPayment);
+            flowLayoutPanel2.Controls.Add(BtnCashReceipt);
+            flowLayoutPanel2.Controls.Add(BtnJournalVoucher);
+            flowLayoutPanel2.Controls.Add(BtnEditTransactions);
+            flowLayoutPanel2.Controls.Add(BtnBankPayment);
+            flowLayoutPanel2.Controls.Add(BtnBankReceipt);
+            flowLayoutPanel2.Controls.Add(BtnChequeBook);
+            flowLayoutPanel2.Controls.Add(BtnSalesInvoice);
+            flowLayoutPanel2.Controls.Add(BtnPurchaseInvoice);
+            flowLayoutPanel2.Controls.Add(BtnOpeningBalances);
+            flowLayoutPanel2.Controls.Add(BtnCashBook);
+            flowLayoutPanel2.Controls.Add(BtnLedgerReport);
+            flowLayoutPanel2.Controls.Add(BtnTrialBalance);
+            flowLayoutPanel2.Controls.Add(BtnStockReport);
+            flowLayoutPanel2.Controls.Add(BtnSettings);
+            flowLayoutPanel2.Controls.Add(BtnBackupData);
+            flowLayoutPanel2.Dock = DockStyle.Top;
+            flowLayoutPanel2.Location = new Point(259, 28);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(933, 587);
+            flowLayoutPanel2.TabIndex = 24;
+            // 
+            // BtnAccountsSetup
+            // 
+            BtnAccountsSetup.Anchor = AnchorStyles.Top;
+            BtnAccountsSetup.BackColor = Color.Transparent;
+            BtnAccountsSetup.BackgroundColor = Color.Transparent;
+            BtnAccountsSetup.BorderColor = Color.Transparent;
+            BtnAccountsSetup.BorderRadius = 15;
+            BtnAccountsSetup.BorderSize = 2;
+            BtnAccountsSetup.FlatAppearance.BorderSize = 0;
+            BtnAccountsSetup.FlatStyle = FlatStyle.Flat;
+            BtnAccountsSetup.Font = new Font("Microsoft Sans Serif", 10.2F);
+            BtnAccountsSetup.ForeColor = Color.Black;
+            BtnAccountsSetup.Image = Properties.Resources.add_user;
+            BtnAccountsSetup.Location = new Point(157, 4);
+            BtnAccountsSetup.Margin = new Padding(3, 4, 3, 4);
+            BtnAccountsSetup.Name = "BtnAccountsSetup";
+            BtnAccountsSetup.Padding = new Padding(6);
+            BtnAccountsSetup.Size = new Size(148, 125);
+            BtnAccountsSetup.TabIndex = 13;
+            BtnAccountsSetup.Text = "Accounts Setup";
+            BtnAccountsSetup.TextColor = Color.Black;
+            BtnAccountsSetup.TextImageRelation = TextImageRelation.ImageAboveText;
+            BtnAccountsSetup.UseVisualStyleBackColor = false;
+            BtnAccountsSetup.Click += BtnAccountsSetup_Click;
             // 
             // MainForm
             // 
@@ -793,9 +788,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLightLight;
             ClientSize = new Size(1192, 673);
-            Controls.Add(panel1);
+            Controls.Add(flowLayoutPanel2);
+            Controls.Add(flowLayoutPanel1);
             Controls.Add(pnlFavorites);
-            Controls.Add(tableLayoutPanel1);
             Controls.Add(menuStrip1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MainMenuStrip = menuStrip1;
@@ -807,16 +802,14 @@
             Load += MainForm_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            flowLayoutPanel2.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private CustomButton BtnAccountsSetup;
         private CustomButton BtnCashPayment;
         private CustomButton BtnCashReceipt;
         private CustomButton BtnJournalVoucher;
@@ -852,15 +845,16 @@
         private CustomButton BtnSettings;
         private CustomButton BtnBackupData;
         private ToolTip toolTip1;
-        private TableLayoutPanel tableLayoutPanel1;
         private FlowLayoutPanel pnlFavorites;
         private ToolStripMenuItem viewLedgerToolStripMenuItem;
         private ToolStripMenuItem trialBalancesToolStripMenuItem;
         private ToolStripMenuItem stockReportToolStripMenuItem;
         private ToolStripMenuItem productToolStripMenuItem;
         private ToolStripMenuItem stocToolStripMenuItem;
-        private Panel panel1;
         private CustomButton btnLogout;
         private Label lblUsername;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private CustomButton BtnAccountsSetup;
     }
 }

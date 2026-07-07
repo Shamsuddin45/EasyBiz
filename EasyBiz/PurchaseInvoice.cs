@@ -695,7 +695,7 @@ namespace EasyBiz
 
         private void PurchaseInvoice_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (comboPartyName.Text != "" || comboProduct.Text != "" || txtDescription.Text != "" || gridItems.Rows.Count != 0)
+            if (comboProduct.Text != "" || txtDescription.Text != "" || gridItems.Rows.Count != 0)
             {
                 var result = MessageBox.Show("Are you sure you want to close the Purchase Invoice?", "Confirm Close", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
