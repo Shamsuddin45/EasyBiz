@@ -52,6 +52,7 @@ namespace EasyBiz
             {
                 case LoginResult.Success:
                     CurrentSession.SetUser(user!);
+                    lastlogin(username);
                     DialogResult = DialogResult.OK;
                     Close();
                     break;
@@ -71,8 +72,23 @@ namespace EasyBiz
                     break;
 
                 case LoginResult.AccountInactive:
-                    lblError.Text = "This account has been deactivated. Contact your administrator.";
+                    lblError.Text = "This account has been deactivated. Contact your Admin";
                     break;
+            }
+        }
+
+        public void lastlogin(string username)
+        {
+            using (var connection = DatabaseHelper.GetConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = "UPDATE users SET last_login = @LastLogin WHERE Username = @Username";
+                    command.Parameters.AddWithValue("@LastLogin", DateTime.Now);
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 

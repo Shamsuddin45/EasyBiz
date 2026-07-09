@@ -477,9 +477,7 @@ namespace EasyBiz
             var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {                
-                LoginForm loginForm = new LoginForm();
-                loginForm.ShowDialog();
-                this.Close();
+                Application.Restart(); // Restart the application to go back to the login form
             }
             else
             {
