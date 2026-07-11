@@ -310,17 +310,7 @@ namespace EasyBiz
 
             txtQty.Enabled = isUnit;
             txtWeight.Enabled = !isUnit;
-
-            if (isUnit)
-            {
-                txtWeight.Text = "0";
-                txtQty.Focus();
-            }
-            else
-            {
-                txtQty.Text = "0";
-                txtWeight.Focus();
-            }
+            
         }
 
         // ── Add Item Row ─────────────────────────────────────────────────────

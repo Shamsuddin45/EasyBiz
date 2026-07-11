@@ -10,6 +10,7 @@ namespace EasyBiz
         public MainForm()
         {
             InitializeComponent();
+            BtnBackupData.Click += BtnBackupData_Click;   // <-- ADD THIS LINE
 
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
@@ -384,6 +385,21 @@ namespace EasyBiz
             }
 
             return resized;
+        }
+
+        private void BtnBackupData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (var form = new BackupRestoreForm())
+                {
+                    form.ShowDialog();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
