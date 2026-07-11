@@ -1,316 +1,103 @@
 using Microsoft.Data.Sqlite;
-using System;
-using System.Security.Cryptography;
 
 namespace EasyBiz
 {
     /// <summary>
-    /// Result of an authentication attempt.
+    /// Schema additions for the login / user-rights / per-user-favorites feature.
+    /// Call UserRightsDatabaseHelper.InitializeUserTables() once at startup
+    /// (wired into LoginForm's constructor and safe to call repeatedly).
     /// </summary>
-    public enum LoginResult
+    internal static class UserRightsDatabaseHelper
     {
-        Success,
-        UserNotFound,
-        WrongPassword,
-        AccountInactive
-    }
-
-    /// <summary>
-    /// Lightweight DTO for displaying/editing a user row (never carries the password).
-    /// </summary>
-    public class UserAccount
-    {
-        public int UserId { get; set; }
-        public string Username { get; set; } = "";
-        public string FullName { get; set; } = "";
-        public string Role { get; set; } = "User";      // "Admin" or "User"
-        public bool IsActive { get; set; } = true;
-        public string LastLogin { get; set; } = "";
-        public string CreatedAt { get; set; } = "";
-    }
-
-    /// <summary>
-    /// Handles the "users" table: schema creation, CRUD, and password
-    /// hashing/verification. Passwords are never stored or compared in
-    /// plain text — PBKDF2-HMACSHA256 with a random per-user salt is used.
-    /// </summary>
-    internal static class UserAccountsDatabaseHelper
-    {
-        private const int SaltSize = 16;   // 128-bit salt
-        private const int KeySize = 32;    // 256-bit derived key
-        private const int Iterations = 100_000;
-
-        public const string RoleAdmin = "Admin";
-        public const string RoleUser = "User";
-
-        /// <summary>
-        /// Creates the users table if it doesn't exist yet, and seeds a
-        /// default administrator account (username: admin / password: admin123)
-        /// the very first time the table is created so the app is never
-        /// left with no way to log in.
-        /// </summary>
-        public static void InitializeUserTable()
+        public static void InitializeUserTables()
         {
-            using var connection = DatabaseHelper.GetConnection();
-
-            MigrateIncompatibleUsersTableIfAny(connection);
-
-            using (var cmd = connection.CreateCommand())
-            {
-                cmd.CommandText = @"
-                    CREATE TABLE IF NOT EXISTS users (
-                        user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
-                        username      TEXT NOT NULL UNIQUE COLLATE NOCASE,
-                        password_hash TEXT NOT NULL,
-                        password_salt TEXT NOT NULL,
-                        full_name     TEXT,
-                        role          TEXT NOT NULL DEFAULT 'User',
-                        is_active     INTEGER NOT NULL DEFAULT 1,
-                        last_login    DATETIME,
-                        created_at    DATETIME DEFAULT CURRENT_TIMESTAMP
-                    );";
-                cmd.ExecuteNonQuery();
-            }
-
-            // Seed a default admin only if the table is completely empty —
-            // guarantees there's always at least one way into the app.
-            using (var check = connection.CreateCommand())
-            {
-                check.CommandText = "SELECT COUNT(*) FROM users";
-                long count = Convert.ToInt64(check.ExecuteScalar());
-                if (count == 0)
-                {
-                    var (hash, salt) = HashPassword("admin123");
-                    using var insert = connection.CreateCommand();
-                    insert.CommandText = @"
-                        INSERT INTO users (username, password_hash, password_salt, full_name, role, is_active)
-                        VALUES ('admin', @hash, @salt, 'Administrator', 'Admin', 1)";
-                    insert.Parameters.AddWithValue("@hash", hash);
-                    insert.Parameters.AddWithValue("@salt", salt);
-                    insert.ExecuteNonQuery();
-                }
-            }
-        }
-
-        /// <summary>
-        /// If a table named "users" already exists in the .db file (e.g. left
-        /// over from an earlier experiment, or a differently-shaped table that
-        /// happened to share the name) but is missing the columns this system
-        /// expects, "CREATE TABLE IF NOT EXISTS" would silently do nothing and
-        /// every query against it would fail with errors like
-        /// "no such column: user_id". Instead of losing whatever is in that
-        /// table, rename it out of the way so a fresh, correct "users" table
-        /// can be created right after this runs.
-        /// </summary>
-        private static void MigrateIncompatibleUsersTableIfAny(SqliteConnection connection)
-        {
-            using var checkExists = connection.CreateCommand();
-            checkExists.CommandText =
-                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='users'";
-            bool tableExists = Convert.ToInt64(checkExists.ExecuteScalar()) > 0;
-            if (!tableExists) return;
-
-            var existingColumns = new System.Collections.Generic.HashSet<string>(
-                StringComparer.OrdinalIgnoreCase);
-            using (var pragma = connection.CreateCommand())
-            {
-                pragma.CommandText = "PRAGMA table_info(users)";
-                using var reader = pragma.ExecuteReader();
-                while (reader.Read())
-                    existingColumns.Add(reader.GetString(reader.GetOrdinal("name")));
-            }
-
-            string[] requiredColumns =
-            {
-                "user_id", "username", "password_hash", "password_salt",
-                "role", "is_active"
-            };
-
-            bool isCompatible = true;
-            foreach (var col in requiredColumns)
-            {
-                if (!existingColumns.Contains(col))
-                {
-                    isCompatible = false;
-                    break;
-                }
-            }
-
-            if (isCompatible) return;
-
-            string backupName = $"users_backup_{DateTime.Now:yyyyMMdd_HHmmss}";
-            using var rename = connection.CreateCommand();
-            rename.CommandText = $"ALTER TABLE users RENAME TO {backupName}";
-            rename.ExecuteNonQuery();
-        }
-
-        // ── Password hashing ──────────────────────────────────────────────
-        public static (string hash, string salt) HashPassword(string password)
-        {
-            byte[] saltBytes = RandomNumberGenerator.GetBytes(SaltSize);
-            byte[] hashBytes = Rfc2898DeriveBytes.Pbkdf2(
-                password, saltBytes, Iterations, HashAlgorithmName.SHA256, KeySize);
-            return (Convert.ToBase64String(hashBytes), Convert.ToBase64String(saltBytes));
-        }
-
-        private static bool VerifyPassword(string password, string storedHash, string storedSalt)
-        {
-            byte[] saltBytes = Convert.FromBase64String(storedSalt);
-            byte[] attemptHash = Rfc2898DeriveBytes.Pbkdf2(
-                password, saltBytes, Iterations, HashAlgorithmName.SHA256, KeySize);
-            byte[] storedHashBytes = Convert.FromBase64String(storedHash);
-            return CryptographicOperations.FixedTimeEquals(attemptHash, storedHashBytes);
-        }
-
-        // ── Authentication ────────────────────────────────────────────────
-        public static LoginResult TryLogin(string username, string password, out UserAccount? user)
-        {
-            user = null;
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
+            using var conn = DatabaseHelper.GetConnection();
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                SELECT user_id, username, password_hash, password_salt,
-                       full_name, role, is_active
-                FROM users
-                WHERE username = @u COLLATE NOCASE";
-            cmd.Parameters.AddWithValue("@u", username.Trim());
+                CREATE TABLE IF NOT EXISTS users (
+                    user_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username     TEXT NOT NULL UNIQUE,
+                    password     TEXT NOT NULL,
+                    full_name    TEXT,
+                    is_admin     INTEGER NOT NULL DEFAULT 0,
+                    is_active    INTEGER NOT NULL DEFAULT 1,
+                    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP
+                );
 
-            using var reader = cmd.ExecuteReader();
-            if (!reader.Read())
-                return LoginResult.UserNotFound;
+                -- Per-user, per-module access flags. Absence of a row for a
+                -- (user_id, module_key) pair means 'no access' for non-admins.
+                -- Admin users bypass this table entirely (see UserRightsService).
+                CREATE TABLE IF NOT EXISTS user_rights (
+                    user_id      INTEGER NOT NULL,
+                    module_key   TEXT    NOT NULL,
+                    can_access   INTEGER NOT NULL DEFAULT 1,
+                    PRIMARY KEY (user_id, module_key),
+                    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+                );
 
-            int userId = reader.GetInt32(0);
-            string dbUsername = reader.GetString(1);
-            string hash = reader.GetString(2);
-            string salt = reader.GetString(3);
-            string fullName = reader.IsDBNull(4) ? "" : reader.GetString(4);
-            string role = reader.GetString(5);
-            bool isActive = reader.GetInt32(6) == 1;
-            reader.Close();
+                -- Per-user favorites list (replaces the old global UserFavorites table).
+                CREATE TABLE IF NOT EXISTS user_favorites (
+                    user_id      INTEGER NOT NULL,
+                    module_key   TEXT    NOT NULL,
+                    sort_order   INTEGER NOT NULL,
+                    PRIMARY KEY (user_id, module_key),
+                    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+                );
 
-            if (!isActive)
-                return LoginResult.AccountInactive;
+                -- Seed a default admin account (admin / admin123) the very first
+                -- time this runs, so there is always a way to log in initially.
+                INSERT INTO users (username, password, full_name, is_admin, is_active)
+                SELECT 'admin', @adminPassword, 'Administrator', 1, 1
+                WHERE NOT EXISTS (SELECT 1 FROM users);
+            ";
 
-            if (!VerifyPassword(password, hash, salt))
-                return LoginResult.WrongPassword;
+            // Hash the default admin password
+            string hashedAdminPassword = BCrypt.Net.BCrypt.HashPassword("admin123", workFactor: 12);
+            cmd.Parameters.AddWithValue("@adminPassword", hashedAdminPassword);
 
-            // Record last login time
-            using (var upd = connection.CreateCommand())
-            {
-                upd.CommandText = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE user_id = @id";
-                upd.Parameters.AddWithValue("@id", userId);
-                upd.ExecuteNonQuery();
-            }
+            cmd.ExecuteNonQuery();
 
-            user = new UserAccount
-            {
-                UserId = userId,
-                Username = dbUsername,
-                FullName = fullName,
-                Role = role,
-                IsActive = isActive
-            };
-            return LoginResult.Success;
+            // One-time migration: carry any existing global favorites over to the
+            // default admin user so nobody's saved favorites just disappear.
+            MigrateLegacyFavoritesIfAny(conn);
         }
 
-        // ── CRUD for User Management screen ───────────────────────────────
-        public static System.Collections.Generic.List<UserAccount> GetAllUsers()
+        private static void MigrateLegacyFavoritesIfAny(SqliteConnection conn)
         {
-            var list = new System.Collections.Generic.List<UserAccount>();
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = @"
-                SELECT user_id, username, full_name, role, is_active,
-                       IFNULL(last_login,''), IFNULL(created_at,'')
-                FROM users
-                ORDER BY username COLLATE NOCASE";
+            bool legacyTableExists;
+            using (var check = conn.CreateCommand())
+            {
+                check.CommandText = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='UserFavorites'";
+                legacyTableExists = System.Convert.ToInt64(check.ExecuteScalar()) > 0;
+            }
+            if (!legacyTableExists) return;
 
-            using var reader = cmd.ExecuteReader();
+            using var already = conn.CreateCommand();
+            already.CommandText = "SELECT COUNT(*) FROM user_favorites";
+            long alreadyMigrated = System.Convert.ToInt64(already.ExecuteScalar());
+            if (alreadyMigrated > 0) return; // only migrate once, into a fresh table
+
+            using var adminId = conn.CreateCommand();
+            adminId.CommandText = "SELECT user_id FROM users WHERE is_admin = 1 ORDER BY user_id LIMIT 1";
+            var idResult = adminId.ExecuteScalar();
+            if (idResult == null) return;
+            int targetUserId = System.Convert.ToInt32(idResult);
+
+            using var legacy = conn.CreateCommand();
+            legacy.CommandText = "SELECT ModuleKey, SortOrder FROM UserFavorites ORDER BY SortOrder";
+            using var reader = legacy.ExecuteReader();
+            using var tx = conn.BeginTransaction();
             while (reader.Read())
             {
-                list.Add(new UserAccount
-                {
-                    UserId = reader.GetInt32(0),
-                    Username = reader.GetString(1),
-                    FullName = reader.IsDBNull(2) ? "" : reader.GetString(2),
-                    Role = reader.GetString(3),
-                    IsActive = reader.GetInt32(4) == 1,
-                    LastLogin = reader.GetString(5),
-                    CreatedAt = reader.GetString(6)
-                });
+                using var ins = conn.CreateCommand();
+                ins.Transaction = tx;
+                ins.CommandText = "INSERT OR IGNORE INTO user_favorites (user_id, module_key, sort_order) VALUES (@u, @k, @o)";
+                ins.Parameters.AddWithValue("@u", targetUserId);
+                ins.Parameters.AddWithValue("@k", reader.GetString(0));
+                ins.Parameters.AddWithValue("@o", reader.GetInt32(1));
+                ins.ExecuteNonQuery();
             }
-            return list;
-        }
-
-        public static bool UsernameExists(string username, int excludeUserId = 0)
-        {
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = "SELECT COUNT(*) FROM users WHERE username = @u COLLATE NOCASE AND user_id != @id";
-            cmd.Parameters.AddWithValue("@u", username.Trim());
-            cmd.Parameters.AddWithValue("@id", excludeUserId);
-            return Convert.ToInt64(cmd.ExecuteScalar()) > 0;
-        }
-
-        public static void CreateUser(string username, string password, string fullName, string role)
-        {
-            var (hash, salt) = HashPassword(password);
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = @"
-                INSERT INTO users (username, password_hash, password_salt, full_name, role, is_active)
-                VALUES (@u, @h, @s, @f, @r, 1)";
-            cmd.Parameters.AddWithValue("@u", username.Trim());
-            cmd.Parameters.AddWithValue("@h", hash);
-            cmd.Parameters.AddWithValue("@s", salt);
-            cmd.Parameters.AddWithValue("@f", fullName.Trim());
-            cmd.Parameters.AddWithValue("@r", role);
-            cmd.ExecuteNonQuery();
-        }
-
-        public static void UpdateUser(int userId, string fullName, string role)
-        {
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE users SET full_name = @f, role = @r WHERE user_id = @id";
-            cmd.Parameters.AddWithValue("@f", fullName.Trim());
-            cmd.Parameters.AddWithValue("@r", role);
-            cmd.Parameters.AddWithValue("@id", userId);
-            cmd.ExecuteNonQuery();
-        }
-
-        public static void ResetPassword(int userId, string newPassword)
-        {
-            var (hash, salt) = HashPassword(newPassword);
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE users SET password_hash = @h, password_salt = @s WHERE user_id = @id";
-            cmd.Parameters.AddWithValue("@h", hash);
-            cmd.Parameters.AddWithValue("@s", salt);
-            cmd.Parameters.AddWithValue("@id", userId);
-            cmd.ExecuteNonQuery();
-        }
-
-        public static void SetActive(int userId, bool isActive)
-        {
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = "UPDATE users SET is_active = @a WHERE user_id = @id";
-            cmd.Parameters.AddWithValue("@a", isActive ? 1 : 0);
-            cmd.Parameters.AddWithValue("@id", userId);
-            cmd.ExecuteNonQuery();
-        }
-
-        /// <summary>Number of active Admin accounts — used to stop the last admin being locked out.</summary>
-        public static int CountActiveAdmins(int excludeUserId = 0)
-        {
-            using var connection = DatabaseHelper.GetConnection();
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = @"
-                SELECT COUNT(*) FROM users
-                WHERE role = 'Admin' AND is_active = 1 AND user_id != @id";
-            cmd.Parameters.AddWithValue("@id", excludeUserId);
-            return Convert.ToInt32(cmd.ExecuteScalar());
+            tx.Commit();
         }
     }
 }

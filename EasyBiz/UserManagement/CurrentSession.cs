@@ -1,27 +1,22 @@
 namespace EasyBiz
 {
     /// <summary>
-    /// Holds who is currently logged in, for the lifetime of the running
-    /// application. Set once by LoginForm right after a successful login,
-    /// read anywhere (e.g. to gate Users Management to Admins, or to show
-    /// the user's name in the main window title).
+    /// Simple static session holder for whoever is currently logged in.
+    /// Set once by Program.cs right after LoginForm succeeds.
     /// </summary>
-    public static class CurrentSession
+    public static class CurrentUser
     {
         public static int UserId { get; private set; }
         public static string Username { get; private set; } = "";
         public static string FullName { get; private set; } = "";
-        public static string Role { get; private set; } = "";
+        public static bool IsAdmin { get; private set; }
 
-        public static bool IsLoggedIn => UserId != 0;
-        public static bool IsAdmin => Role == UserAccountsDatabaseHelper.RoleAdmin;
-
-        public static void SetUser(UserAccount user)
+        public static void Set(int userId, string username, string fullName, bool isAdmin)
         {
-            UserId = user.UserId;
-            Username = user.Username;
-            FullName = string.IsNullOrWhiteSpace(user.FullName) ? user.Username : user.FullName;
-            Role = user.Role;
+            UserId = userId;
+            Username = username;
+            FullName = fullName;
+            IsAdmin = isAdmin;
         }
 
         public static void Clear()
@@ -29,7 +24,7 @@ namespace EasyBiz
             UserId = 0;
             Username = "";
             FullName = "";
-            Role = "";
+            IsAdmin = false;
         }
     }
 }

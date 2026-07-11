@@ -174,13 +174,7 @@ namespace EasyBiz
         public bool LoadTransactionForEditing(int voucherNo)
         {
             if (!CheckIfPurchaseVoucherExists(voucherNo))
-            {
-                MessageBox.Show(
-                   $"Voucher number {voucherNo} does not exist for Purchase Invoice.",
-                   "Not Found",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
-
+            {                
                 return false;
             }
 

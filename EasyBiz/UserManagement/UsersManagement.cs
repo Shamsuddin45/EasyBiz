@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace EasyBiz
@@ -25,8 +26,8 @@ namespace EasyBiz
         private void UsersManagement_Load(object sender, EventArgs e)
         {
             comboRole.Items.Clear();
-            comboRole.Items.Add(UserAccountsDatabaseHelper.RoleAdmin);
-            comboRole.Items.Add(UserAccountsDatabaseHelper.RoleUser);
+            comboRole.Items.Add("Administrator");
+            comboRole.Items.Add("User");
             comboRole.SelectedIndex = 1;
 
             LoadUsers();
@@ -36,17 +37,17 @@ namespace EasyBiz
         private void LoadUsers()
         {
             dataGridView1.Rows.Clear();
-            foreach (var u in UserAccountsDatabaseHelper.GetAllUsers())
+            foreach (var u in UserRightsService.GetAllUsers())
             {
                 int r = dataGridView1.Rows.Add();
                 var row = dataGridView1.Rows[r];
                 row.Cells["colUserId"].Value = u.UserId;
                 row.Cells["colUsername"].Value = u.Username;
                 row.Cells["colFullName"].Value = u.FullName;
-                row.Cells["colRole"].Value = u.Role;
+                row.Cells["colRole"].Value = u.IsAdmin ? "Administrator" : "User";
                 row.Cells["colActive"].Value = u.IsActive ? "Active" : "Deactivated";
-                row.Cells["colLastLogin"].Value = string.IsNullOrEmpty(u.LastLogin) ? "Never" : u.LastLogin;
-                row.Cells["colCreated"].Value = u.CreatedAt;
+                row.Cells["colLastLogin"].Value = "Never"; // Not tracked in current schema
+                row.Cells["colCreated"].Value = "N/A"; // Not tracked in current schema
 
                 if (!u.IsActive)
                 {
@@ -85,7 +86,7 @@ namespace EasyBiz
             txtUsername.Text = row.Cells["colUsername"].Value?.ToString() ?? "";
             txtUsername.ReadOnly = true; // username is not editable once created
             txtFullName.Text = row.Cells["colFullName"].Value?.ToString() ?? "";
-            string role = row.Cells["colRole"].Value?.ToString() ?? UserAccountsDatabaseHelper.RoleUser;
+            string role = row.Cells["colRole"].Value?.ToString() ?? "User";
             comboRole.SelectedItem = role;
             txtPassword.Clear();
             txtConfirmPassword.Clear();
@@ -105,7 +106,7 @@ namespace EasyBiz
             string fullName = txtFullName.Text.Trim();
             string password = txtPassword.Text;
             string confirm = txtConfirmPassword.Text;
-            string role = comboRole.SelectedItem?.ToString() ?? UserAccountsDatabaseHelper.RoleUser;
+            bool isAdmin = (comboRole.SelectedItem?.ToString() ?? "User") == "Administrator";
 
             if (string.IsNullOrWhiteSpace(username))
             { MessageBox.Show("Username is required."); return; }
@@ -113,8 +114,16 @@ namespace EasyBiz
             if (username.Length < 3)
             { MessageBox.Show("Username must be at least 3 characters."); return; }
 
-            if (UserAccountsDatabaseHelper.UsernameExists(username))
-            { MessageBox.Show("That username is already taken."); return; }
+            // Check if username exists
+            var allUsers = UserRightsService.GetAllUsers();
+            foreach (var u in allUsers)
+            {
+                if (string.Equals(u.Username, username, StringComparison.OrdinalIgnoreCase))
+                {
+                    MessageBox.Show("That username is already taken.");
+                    return;
+                }
+            }
 
             if (string.IsNullOrEmpty(password) || password.Length < 6)
             { MessageBox.Show("Password must be at least 6 characters."); return; }
@@ -124,7 +133,7 @@ namespace EasyBiz
 
             try
             {
-                UserAccountsDatabaseHelper.CreateUser(username, password, fullName, role);
+                UserRightsService.CreateUser(username, password, fullName, isAdmin);
                 MessageBox.Show("User created successfully.", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadUsers();
@@ -141,11 +150,24 @@ namespace EasyBiz
             if (_selectedUserId == null) return;
 
             string fullName = txtFullName.Text.Trim();
-            string role = comboRole.SelectedItem?.ToString() ?? UserAccountsDatabaseHelper.RoleUser;
+            bool isAdmin = (comboRole.SelectedItem?.ToString() ?? "User") == "Administrator";
+
+            // Get current user data
+            var allUsers = UserRightsService.GetAllUsers();
+            UserAccount? currentUser = null;
+            foreach (var u in allUsers)
+            {
+                if (u.UserId == _selectedUserId.Value)
+                {
+                    currentUser = u;
+                    break;
+                }
+            }
+
+            if (currentUser == null) return;
 
             // Guard: don't allow demoting/deactivating the last remaining admin.
-            if (role != UserAccountsDatabaseHelper.RoleAdmin &&
-                UserAccountsDatabaseHelper.CountActiveAdmins(_selectedUserId.Value) == 0)
+            if (!isAdmin && currentUser.IsAdmin && UserRightsService.IsLastAdmin(_selectedUserId.Value))
             {
                 MessageBox.Show(
                     "At least one active Administrator must remain. You cannot change this user's role.",
@@ -153,7 +175,9 @@ namespace EasyBiz
                 return;
             }
 
-            UserAccountsDatabaseHelper.UpdateUser(_selectedUserId.Value, fullName, role);
+            // We need to preserve the current active status
+            bool isActive = currentUser.IsActive;
+            UserRightsService.UpdateUser(_selectedUserId.Value, fullName, isAdmin, isActive);
             MessageBox.Show("User details updated.", "Success",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadUsers();
@@ -178,7 +202,7 @@ namespace EasyBiz
                 "Confirm Reset", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result != DialogResult.Yes) return;
 
-            UserAccountsDatabaseHelper.ResetPassword(_selectedUserId.Value, password);
+            UserRightsService.ResetPassword(_selectedUserId.Value, password);
             MessageBox.Show("Password has been reset.", "Success",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
             ClearForm();
@@ -193,10 +217,18 @@ namespace EasyBiz
             if (currentlyActive)
             {
                 // Guard: don't allow deactivating the last remaining admin.
-                var row = dataGridView1.SelectedRows[0];
-                string role = row.Cells["colRole"].Value?.ToString() ?? "";
-                if (role == UserAccountsDatabaseHelper.RoleAdmin &&
-                    UserAccountsDatabaseHelper.CountActiveAdmins(_selectedUserId.Value) == 0)
+                var allUsers = UserRightsService.GetAllUsers();
+                UserAccount? selectedUser = null;
+                foreach (var u in allUsers)
+                {
+                    if (u.UserId == _selectedUserId.Value)
+                    {
+                        selectedUser = u;
+                        break;
+                    }
+                }
+
+                if (selectedUser != null && selectedUser.IsAdmin && UserRightsService.IsLastAdmin(_selectedUserId.Value))
                 {
                     MessageBox.Show(
                         "At least one active Administrator must remain. You cannot deactivate this user.",
@@ -204,16 +236,35 @@ namespace EasyBiz
                     return;
                 }
 
-                if (_selectedUserId == CurrentSession.UserId)
+                if (_selectedUserId == CurrentUser.UserId)
                 {
                     MessageBox.Show("You cannot deactivate the account you're currently logged in with.");
                     return;
                 }
             }
 
-            UserAccountsDatabaseHelper.SetActive(_selectedUserId.Value, !currentlyActive);
-            LoadUsers();
-            ClearForm();
+            // Get current user data to preserve other fields
+            var allUsersList = UserRightsService.GetAllUsers();
+            UserAccount? targetUser = null;
+            foreach (var u in allUsersList)
+            {
+                if (u.UserId == _selectedUserId.Value)
+                {
+                    targetUser = u;
+                    break;
+                }
+            }
+
+            if (targetUser != null)
+            {
+                UserRightsService.UpdateUser(
+                    _selectedUserId.Value,
+                    targetUser.FullName,
+                    targetUser.IsAdmin,
+                    !currentlyActive);
+                LoadUsers();
+                ClearForm();
+            }
         }
 
         private void BtnClear_Click(object sender, EventArgs e) => ClearForm();

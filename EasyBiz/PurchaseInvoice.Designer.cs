@@ -458,7 +458,7 @@
             // 
             lblHeader.AutoSize = true;
             lblHeader.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblHeader.Location = new Point(348, 9);
+            lblHeader.Location = new Point(379, 9);
             lblHeader.Name = "lblHeader";
             lblHeader.Size = new Size(236, 38);
             lblHeader.TabIndex = 0;

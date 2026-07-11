@@ -12,14 +12,14 @@ namespace EasyBiz
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
+            // Require login before the app is usable at all.
             using (var login = new LoginForm())
             {
-                if (login.ShowDialog() != DialogResult.OK)
-                {
-                    // User cancelled / closed the login window — exit quietly,
-                    // never fall through to MainForm without a valid session.
-                    return;
-                }
+                if (login.ShowDialog() != DialogResult.OK || login.LoggedInUser == null)
+                    return; // user cancelled / clicked Exit
+
+                var user = login.LoggedInUser;
+                CurrentUser.Set(user.UserId, user.Username, user.FullName, user.IsAdmin);
             }
 
             Application.Run(new MainForm());

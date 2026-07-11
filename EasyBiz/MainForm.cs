@@ -1,6 +1,7 @@
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using System.Runtime.CompilerServices;
+using System.Drawing;
 
 namespace EasyBiz
 {
@@ -14,6 +15,9 @@ namespace EasyBiz
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
             ShowCashDetails();
+
+            Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName} ({CurrentUser.Username})" +
+                   (CurrentUser.IsAdmin ? " [Admin]" : "");
         }
 
 
@@ -68,69 +72,69 @@ namespace EasyBiz
             {
                 // ── Transactions ──────────────────────────────────────────────
                 case Keys.F1:
-                    BtnCashPayment_Click(this, EventArgs.Empty);
+                    if (BtnCashPayment.Enabled) BtnCashPayment_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F2:
-                    BtnCashReceipt_Click(this, EventArgs.Empty);
+                    if (BtnCashReceipt.Enabled) BtnCashReceipt_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F3:
-                    BtnJournalVoucher_Click(this, EventArgs.Empty);
+                    if (BtnJournalVoucher.Enabled) BtnJournalVoucher_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F4:
-                    BtnPurchaseInvoice_Click(this, EventArgs.Empty);
+                    if (BtnPurchaseInvoice.Enabled) BtnPurchaseInvoice_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F5:
-                    BtnSalesInvoice_Click(this, EventArgs.Empty);
+                    if (BtnSalesInvoice.Enabled) BtnSalesInvoice_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F6:
-                    BtnEditTransactions_Click(this, EventArgs.Empty);
+                    if (BtnEditTransactions.Enabled) BtnEditTransactions_Click(this, EventArgs.Empty);
                     return true;
 
                 // ── Reports ───────────────────────────────────────────────────
                 case Keys.F7:
-                    BtnLedgerReport_Click(this, EventArgs.Empty);
+                    if (BtnLedgerReport.Enabled) BtnLedgerReport_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F8:
-                    BtnCashBook_Click(this, EventArgs.Empty);
+                    if (BtnCashBook.Enabled) BtnCashBook_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F9:
-                    BtnBankPayment_Click(this, EventArgs.Empty);
+                    if (BtnBankPayment.Enabled) BtnBankPayment_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F10:
-                    BtnBankReceipt_Click(this, EventArgs.Empty);
+                    if (BtnBankReceipt.Enabled) BtnBankReceipt_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F11:
-                    BtnStockReport_Click(this, EventArgs.Empty);
+                    if (BtnStockReport.Enabled) BtnStockReport_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.F12:
-                    BtnTrialBalance_Click(this, EventArgs.Empty);
+                    if (BtnTrialBalance.Enabled) BtnTrialBalance_Click(this, EventArgs.Empty);
                     return true;
 
                 // ── Setup / master data ───────────────────────────────────────
                 case Keys.Control | Keys.A:
-                    BtnAccountsSetup_Click(this, EventArgs.Empty);
+                    if (BtnAccountsSetup.Enabled) BtnAccountsSetup_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.Control | Keys.P:
-                    BtnProductSetup_Click(this, EventArgs.Empty);
+                    if (BtnProductSetup.Enabled) BtnProductSetup_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.Control | Keys.O:
-                    BtnOpeningBalances_Click(this, EventArgs.Empty);
+                    if (BtnOpeningBalances.Enabled) BtnOpeningBalances_Click(this, EventArgs.Empty);
                     return true;
 
                 case Keys.Control | Keys.C:
-                    BtnChequeBook_Click(this, EventArgs.Empty);
+                    if (BtnChequeBook.Enabled) BtnChequeBook_Click(this, EventArgs.Empty);
                     return true;
             }
 
@@ -380,11 +384,11 @@ namespace EasyBiz
             }
 
             return resized;
-        }        
+        }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            lblUsername.Text = $"Logged in as: {CurrentSession.Username}";
+            lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
             LoadFavoritesPanel();
             Button[] buttons =
             {
@@ -424,6 +428,9 @@ namespace EasyBiz
 
                 original.Dispose();
             }
+
+            // Enforce per-user module rights (no-op for admins — they always see everything).
+            ApplyUserRights();
         }
 
         private void LoadFavoritesPanel()
@@ -453,9 +460,85 @@ namespace EasyBiz
         private void FavoriteButton_Click(object sender, EventArgs e)
         {
             var formType = (System.Type)((Button)sender).Tag;
+
+            // Guard against a favorited module the user no longer has rights to
+            // (e.g. an admin revoked access after the favorite was saved).
+            if (!CurrentUser.IsAdmin)
+            {
+                var module = ModuleRegistry.AllModules.Find(m => m.FormType == formType);
+                if (module != null)
+                {
+                    var allowed = UserRightsService.GetAllowedModuleKeys(CurrentUser.UserId, CurrentUser.IsAdmin);
+                    if (!allowed.Contains(module.Key))
+                    {
+                        MessageBox.Show(
+                            "You do not have permission to open this module. Please contact an administrator.",
+                            "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+            }
+
             var form = (Form)System.Activator.CreateInstance(formType);
             //form.MdiParent = this;   // remove this line if you're not using MDI
             form.Show();
+        }
+
+        /// <summary>
+        /// Disables buttons and menu items on MainForm that the current
+        /// non-admin user does not have rights to. Admins are never restricted.
+        /// </summary>
+        private void ApplyUserRights()
+        {
+            if (CurrentUser.IsAdmin)
+                return;
+
+            var allowed = UserRightsService.GetAllowedModuleKeys(CurrentUser.UserId, CurrentUser.IsAdmin);
+
+            void Restrict(CustomButton button, string rightKey)
+            {
+                bool hasAccess = allowed.Contains(rightKey);
+                button.Enabled = hasAccess;
+                if (!hasAccess)
+                {
+                    button.BackgroundColor = System.Drawing.Color.Gainsboro;
+                    button.TextColor = System.Drawing.Color.Gray;
+                }
+            }
+
+            Restrict(BtnAccountsSetup, "accountssetup");
+            Restrict(BtnCashPayment, "cashpayment");
+            Restrict(BtnCashReceipt, "cashreceipt");
+            Restrict(BtnJournalVoucher, "journalvoucher");
+            Restrict(BtnCashBook, "cashbook");
+            Restrict(BtnLedgerReport, "viewledger");
+            Restrict(BtnEditTransactions, "edittransactions");
+            Restrict(BtnOpeningBalances, "openingbalances");
+            Restrict(BtnTrialBalance, "trialbalance");
+            Restrict(BtnSalesInvoice, "saleinvoice");
+            Restrict(BtnProductSetup, "productsetup");
+            Restrict(BtnPurchaseInvoice, "purchaseinvoice");
+            Restrict(BtnStockReport, "stockreport");
+            Restrict(BtnBankPayment, "bankpayment");
+            Restrict(BtnBankReceipt, "bankreceipt");
+            Restrict(BtnChequeBook, "chequebook");
+            Restrict(BtnSettings, "settings");
+            Restrict(BtnBackupData, "backupdata");
+
+            // Menu items bypass button.Enabled entirely, so gate them too.
+            cashPaymentToolStripMenuItem.Enabled = allowed.Contains("cashpayment");
+            cashReceiptToolStripMenuItem.Enabled = allowed.Contains("cashreceipt");
+            journalVoucherToolStripMenuItem.Enabled = allowed.Contains("journalvoucher");
+            editTransactionsToolStripMenuItem.Enabled = allowed.Contains("edittransactions");
+            accountToolStripMenuItem.Enabled = allowed.Contains("accountssetup");
+            productToolStripMenuItem.Enabled = allowed.Contains("productsetup");
+            saleInvoiceToolStripMenuItem.Enabled = allowed.Contains("saleinvoice");
+            purchaseInvoiceToolStripMenuItem.Enabled = allowed.Contains("purchaseinvoice");
+            stocToolStripMenuItem.Enabled = allowed.Contains("stockreport");
+            bankPaymentToolStripMenuItem.Enabled = allowed.Contains("bankpayment");
+            bankReceiptToolStripMenuItem.Enabled = allowed.Contains("bankreceipt");
+            chequeBookToolStripMenuItem.Enabled = allowed.Contains("chequebook");
+            cashBookToolStripMenuItem.Enabled = allowed.Contains("cashbook");
         }
 
         private void BtnCashDetails_Click(object sender, EventArgs e)
@@ -467,21 +550,25 @@ namespace EasyBiz
         {
             using (var settingsForm = new Settings())
             {
-                settingsForm.FavoritesUpdated += (s, e) => LoadFavoritesPanel();
+                settingsForm.FavoritesUpdated += (s, e) =>
+                {
+                    LoadFavoritesPanel();
+                    ApplyUserRights();
+                };
                 settingsForm.ShowDialog();
             }
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Are you sure you want to logout?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {                
-                Application.Restart(); // Restart the application to go back to the login form
-            }
-            else
+            var msg = MessageBox.Show(
+                "Are you sure you want to log out?",
+                "Confirm Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (msg == DialogResult.Yes)
             {
-                return;
+                Application.Restart();
             }
         }
     }

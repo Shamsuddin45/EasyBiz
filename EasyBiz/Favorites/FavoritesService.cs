@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Data.Sqlite;
 
 namespace EasyBiz
 {
     public static class FavoritesService
     {
-        // Returns favourite module keys in saved order.
-        public static List<string> GetFavoriteKeys()
+        // Convenience overloads default to the currently logged-in user,
+        // so existing call sites (MainForm, Settings) don't need to change.
+        public static List<string> GetFavoriteKeys() => GetFavoriteKeys(CurrentUser.UserId);
+
+        public static List<string> GetFavoriteKeys(int userId)
         {
             var keys = new List<string>();
             using (var conn = DatabaseHelper.GetConnection())
             {
-                conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT ModuleKey FROM UserFavorites ORDER BY SortOrder";
+                    cmd.CommandText = "SELECT module_key FROM user_favorites WHERE user_id = @u ORDER BY sort_order";
+                    cmd.Parameters.AddWithValue("@u", userId);
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -25,18 +27,20 @@ namespace EasyBiz
             return keys;
         }
 
-        // Replaces the whole favourites list with the given keys, in order.
-        public static void SaveFavorites(List<string> orderedKeys)
+        // Replaces the current user's whole favourites list with the given keys, in order.
+        public static void SaveFavorites(List<string> orderedKeys) => SaveFavorites(CurrentUser.UserId, orderedKeys);
+
+        public static void SaveFavorites(int userId, List<string> orderedKeys)
         {
             using (var conn = DatabaseHelper.GetConnection())
             {
-                conn.Open();
                 using (var tx = conn.BeginTransaction())
                 {
                     using (var del = conn.CreateCommand())
                     {
                         del.Transaction = tx;
-                        del.CommandText = "DELETE FROM UserFavorites";
+                        del.CommandText = "DELETE FROM user_favorites WHERE user_id = @u";
+                        del.Parameters.AddWithValue("@u", userId);
                         del.ExecuteNonQuery();
                     }
 
@@ -45,7 +49,8 @@ namespace EasyBiz
                         using (var ins = conn.CreateCommand())
                         {
                             ins.Transaction = tx;
-                            ins.CommandText = "INSERT INTO UserFavorites (ModuleKey, SortOrder) VALUES ($key, $order)";
+                            ins.CommandText = "INSERT INTO user_favorites (user_id, module_key, sort_order) VALUES ($u, $key, $order)";
+                            ins.Parameters.AddWithValue("$u", userId);
                             ins.Parameters.AddWithValue("$key", orderedKeys[i]);
                             ins.Parameters.AddWithValue("$order", i);
                             ins.ExecuteNonQuery();

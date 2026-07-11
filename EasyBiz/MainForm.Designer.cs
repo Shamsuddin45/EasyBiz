@@ -672,6 +672,8 @@
             btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnLogout.BackColor = Color.Transparent;
             btnLogout.BackgroundColor = Color.Transparent;
+            btnLogout.BackgroundImage = Properties.Resources.user_logout;
+            btnLogout.BackgroundImageLayout = ImageLayout.Zoom;
             btnLogout.BorderColor = Color.Transparent;
             btnLogout.BorderRadius = 2;
             btnLogout.BorderSize = 0;
@@ -679,11 +681,10 @@
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogout.ForeColor = Color.Red;
-            btnLogout.Location = new Point(691, 3);
+            btnLogout.Location = new Point(714, 3);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(66, 54);
             btnLogout.TabIndex = 1;
-            btnLogout.Text = "\u23fb";
             btnLogout.TextColor = Color.Red;
             toolTip1.SetToolTip(btnLogout, "Logout");
             btnLogout.UseVisualStyleBackColor = false;
@@ -692,8 +693,9 @@
             // pnlFavorites
             // 
             pnlFavorites.AutoScroll = true;
-            pnlFavorites.BackColor = Color.LightSkyBlue;
+            pnlFavorites.BackColor = Color.FromArgb(34, 34, 34);
             pnlFavorites.Dock = DockStyle.Left;
+            pnlFavorites.ForeColor = SystemColors.ButtonHighlight;
             pnlFavorites.Location = new Point(0, 28);
             pnlFavorites.Name = "pnlFavorites";
             pnlFavorites.Size = new Size(259, 645);
@@ -712,11 +714,12 @@
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsername.ForeColor = SystemColors.GrayText;
-            lblUsername.Location = new Point(763, 0);
+            lblUsername.Location = new Point(786, 0);
+            lblUsername.Margin = new Padding(3, 0, 8, 0);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(167, 60);
+            lblUsername.Size = new Size(139, 60);
             lblUsername.TabIndex = 0;
-            lblUsername.Text = "Logged In: Admin";
+            lblUsername.Text = "Unknown User";
             lblUsername.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel1
@@ -725,9 +728,9 @@
             flowLayoutPanel1.Controls.Add(btnLogout);
             flowLayoutPanel1.Dock = DockStyle.Bottom;
             flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
-            flowLayoutPanel1.Location = new Point(259, 610);
+            flowLayoutPanel1.Location = new Point(259, 612);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(933, 63);
+            flowLayoutPanel1.Size = new Size(933, 61);
             flowLayoutPanel1.TabIndex = 23;
             // 
             // flowLayoutPanel2
@@ -754,7 +757,7 @@
             flowLayoutPanel2.Dock = DockStyle.Top;
             flowLayoutPanel2.Location = new Point(259, 28);
             flowLayoutPanel2.Name = "flowLayoutPanel2";
-            flowLayoutPanel2.Size = new Size(933, 587);
+            flowLayoutPanel2.Size = new Size(933, 471);
             flowLayoutPanel2.TabIndex = 24;
             // 
             // BtnAccountsSetup

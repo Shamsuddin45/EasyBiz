@@ -178,13 +178,7 @@ namespace EasyBiz
         public bool LoadTransactionForEditing(int voucherNo)
         {
             if (!CheckIfSaleVoucherExists(voucherNo))
-            {
-                MessageBox.Show(
-                   $"Voucher number {voucherNo} does not exist for Sale Invoice.",
-                   "Not Found",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Information);
-
+            {                
                 return false;
             }
 

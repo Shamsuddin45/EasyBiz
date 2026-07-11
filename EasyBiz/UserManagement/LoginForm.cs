@@ -1,98 +1,87 @@
 using System;
+using System.Threading.Tasks; // Added for Task.Delay
 using System.Windows.Forms;
 
 namespace EasyBiz
 {
     public partial class LoginForm : Form
     {
+        public UserAccount? LoggedInUser { get; private set; }
         private int _failedAttempts = 0;
-        private const int MaxAttemptsBeforeSlowdown = 3;
 
         public LoginForm()
         {
             InitializeComponent();
+            DatabaseHelper.InitializeDatabase();
+            UserRightsDatabaseHelper.InitializeUserTables();
         }
 
-        private void LoginForm_Load(object sender, EventArgs e)
+        protected override void OnShown(EventArgs e)
         {
-            DatabaseHelper.InitializeDatabase();
-            UserAccountsDatabaseHelper.InitializeUserTable();
+            base.OnShown(e);
             txtUsername.Focus();
         }
 
-        private void AttemptLogin()
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            lblError.Text = "";
+            if (keyData == Keys.Escape)
+            {
+                BtnExit_Click(this, EventArgs.Empty);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
+        // 1. Changed method signature to 'async void' for event handler
+        private async void BtnLogin_Click(object sender, EventArgs e)
+        {
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username))
             {
-                lblError.Text = "Please enter both username and password.";
+                ShowError("Please enter a username.");
                 return;
             }
 
-            BtnLogin.Enabled = false;
-            Cursor = Cursors.WaitCursor;
+            // 2. Non-blocking rate limit
+            if (_failedAttempts >= 3)
+            {
+                ShowError("Too many failed attempts. Please wait 5 seconds...");
+                BtnLogin.Enabled = false; // Disable button to prevent double-clicks
 
-            LoginResult result;
-            UserAccount? user;
-            try
-            {
-                result = UserAccountsDatabaseHelper.TryLogin(username, password, out user);
-            }
-            finally
-            {
-                Cursor = Cursors.Default;
+                await Task.Delay(5000);   // Non-blocking wait (allows UI to repaint)
+
                 BtnLogin.Enabled = true;
+                _failedAttempts = 0; // Reset after waiting
             }
 
-            switch (result)
+            // Clear previous errors before attempting authentication
+            lblError.Visible = false;
+
+            // 3. Authenticate (If this DB call is slow, consider making Authenticate async too)
+            var user = UserRightsService.Authenticate(username, password);
+            if (user == null)
             {
-                case LoginResult.Success:
-                    CurrentSession.SetUser(user!);
-                    lastlogin(username);
-                    DialogResult = DialogResult.OK;
-                    Close();
-                    break;
-
-                case LoginResult.UserNotFound:
-                case LoginResult.WrongPassword:
-                    _failedAttempts++;
-                    lblError.Text = "Invalid username or password.";
-                    txtPassword.Clear();
-                    txtPassword.Focus();
-                    if (_failedAttempts >= MaxAttemptsBeforeSlowdown)
-                    {
-                        // Small friction after repeated failures — not a hard
-                        // lockout, just discourages rapid-fire guessing.
-                        System.Threading.Thread.Sleep(1000);
-                    }
-                    break;
-
-                case LoginResult.AccountInactive:
-                    lblError.Text = "This account has been deactivated. Contact your Admin";
-                    break;
+                _failedAttempts++;
+                ShowError("Invalid username or password, or the account is disabled.");
+                txtPassword.Clear();
+                txtPassword.Focus();
+                return;
             }
+
+            _failedAttempts = 0;
+            LoggedInUser = user;
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
-        public void lastlogin(string username)
+        private void ShowError(string message)
         {
-            using (var connection = DatabaseHelper.GetConnection())
-            {
-                connection.Open();
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "UPDATE users SET last_login = @LastLogin WHERE Username = @Username";
-                    command.Parameters.AddWithValue("@LastLogin", DateTime.Now);
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.ExecuteNonQuery();
-                }
-            }
+            lblError.Text = message;
+            lblError.Visible = true;
+            lblError.Refresh(); // Forces UI to paint immediately
         }
-
-        private void BtnLogin_Click(object sender, EventArgs e) => AttemptLogin();
 
         private void BtnExit_Click(object sender, EventArgs e)
         {
@@ -114,21 +103,14 @@ namespace EasyBiz
             if (e.KeyCode == Keys.Enter)
             {
                 e.SuppressKeyPress = true;
-                AttemptLogin();
+                // Simply call the click event directly
+                BtnLogin_Click(this, EventArgs.Empty);
             }
         }
 
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            txtPassword.PasswordChar = chkShowPassword.Checked ? '\0' : '●';
-        }
-
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // If the window is closed (X button) without a successful login,
-            // treat it the same as pressing Exit.
-            if (DialogResult != DialogResult.OK)
-                DialogResult = DialogResult.Cancel;
+            txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
     }
 }
