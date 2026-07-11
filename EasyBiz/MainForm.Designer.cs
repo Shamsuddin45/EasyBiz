@@ -669,7 +669,7 @@
             // 
             // btnLogout
             // 
-            btnLogout.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnLogout.Anchor = AnchorStyles.Top;
             btnLogout.BackColor = Color.Transparent;
             btnLogout.BackgroundColor = Color.Transparent;
             btnLogout.BackgroundImage = Properties.Resources.user_logout;
@@ -677,13 +677,16 @@
             btnLogout.BorderColor = Color.Transparent;
             btnLogout.BorderRadius = 2;
             btnLogout.BorderSize = 0;
+            btnLogout.Cursor = Cursors.Hand;
             btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.FlatAppearance.MouseDownBackColor = Color.Transparent;
+            btnLogout.FlatAppearance.MouseOverBackColor = Color.Transparent;
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogout.ForeColor = Color.Red;
-            btnLogout.Location = new Point(714, 3);
+            btnLogout.Location = new Point(737, 3);
             btnLogout.Name = "btnLogout";
-            btnLogout.Size = new Size(66, 54);
+            btnLogout.Size = new Size(42, 35);
             btnLogout.TabIndex = 1;
             btnLogout.TextColor = Color.Red;
             toolTip1.SetToolTip(btnLogout, "Logout");
@@ -712,12 +715,12 @@
             // 
             lblUsername.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
             lblUsername.AutoSize = true;
-            lblUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUsername.Font = new Font("Trebuchet MS", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblUsername.ForeColor = SystemColors.GrayText;
-            lblUsername.Location = new Point(786, 0);
+            lblUsername.Location = new Point(785, 0);
             lblUsername.Margin = new Padding(3, 0, 8, 0);
             lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(139, 60);
+            lblUsername.Size = new Size(140, 41);
             lblUsername.TabIndex = 0;
             lblUsername.Text = "Unknown User";
             lblUsername.TextAlign = ContentAlignment.MiddleCenter;
@@ -848,7 +851,6 @@
         private CustomButton BtnSettings;
         private CustomButton BtnBackupData;
         private ToolTip toolTip1;
-        private FlowLayoutPanel pnlFavorites;
         private ToolStripMenuItem viewLedgerToolStripMenuItem;
         private ToolStripMenuItem trialBalancesToolStripMenuItem;
         private ToolStripMenuItem stockReportToolStripMenuItem;
@@ -859,5 +861,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel flowLayoutPanel2;
         private CustomButton BtnAccountsSetup;
+        public FlowLayoutPanel pnlFavorites;
     }
 }

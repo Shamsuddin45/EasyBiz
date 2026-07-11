@@ -40,14 +40,25 @@ namespace EasyBiz
         private void btnSave_Click(object sender, EventArgs e)
         {
             var selectedKeys = new List<string>();
+
+            // 1. Correctly map the checked display names back to their registry keys
             for (int i = 0; i < clbFavorites.Items.Count; i++)
             {
                 if (clbFavorites.GetItemChecked(i))
+                {
                     selectedKeys.Add(ModuleRegistry.AllModules[i].Key);
+                }
             }
 
+            // 2. Save the mapped keys to the database
             FavoritesService.SaveFavorites(selectedKeys);
+
+            // 3. Keep the settings checkbox list visible (or change its visibility if desired)
+            clbFavorites.Visible = true;
+
             MessageBox.Show("Favourites Updated.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            // 4. This fires the event that tells the ALREADY open MainForm to redraw itself!
             FavoritesUpdated?.Invoke(this, EventArgs.Empty);
         }
 

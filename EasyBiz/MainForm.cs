@@ -16,7 +16,7 @@ namespace EasyBiz
             BankDatabaseHelper.InitializeBankTables();
             ShowCashDetails();
 
-            Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName} ({CurrentUser.Username})" +
+            Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName}" +
                    (CurrentUser.IsAdmin ? " [Admin]" : "");
         }
 
@@ -389,7 +389,12 @@ namespace EasyBiz
         private void MainForm_Load(object sender, EventArgs e)
         {
             lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
-            LoadFavoritesPanel();
+            
+            // If HasFavorites is true, Visible becomes true. If 0 favorites, it becomes false.
+            pnlFavorites.Visible = FavoritesService.HasFavorites();
+            if (pnlFavorites.Visible)
+            { LoadFavoritesPanel(); }
+
             Button[] buttons =
             {
         BtnCashPayment,
@@ -435,7 +440,12 @@ namespace EasyBiz
 
         private void LoadFavoritesPanel()
         {
+            // Check if any favorites exist and toggle the panel visibility immediately
+            pnlFavorites.Visible = FavoritesService.HasFavorites();
+
             pnlFavorites.Controls.Clear();
+
+            if (!pnlFavorites.Visible) return;
 
             var favoriteKeys = FavoritesService.GetFavoriteKeys();
 
