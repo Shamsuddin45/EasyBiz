@@ -66,6 +66,10 @@
         private void InitializeComponent()
         {
             tabControl1 = new TabControl();
+            tabPage3 = new TabPage();
+            label1 = new Label();
+            comboBox1 = new ComboBox();
+            btnUpdate = new CustomButton();
             tabPage1 = new TabPage();
             BtnSaveFavorites = new CustomButton();
             clbFavorites = new CheckedListBox();
@@ -98,6 +102,7 @@
             BtnSaveRights = new CustomButton();
             btnUsersManagement = new CustomButton();
             tabControl1.SuspendLayout();
+            tabPage3.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gridUsers).BeginInit();
@@ -108,6 +113,7 @@
             // 
             // tabControl1
             // 
+            tabControl1.Controls.Add(tabPage3);
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Dock = DockStyle.Fill;
@@ -116,6 +122,58 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(980, 640);
             tabControl1.TabIndex = 0;
+            // 
+            // tabPage3
+            // 
+            tabPage3.BackColor = Color.Transparent;
+            tabPage3.Controls.Add(label1);
+            tabPage3.Controls.Add(comboBox1);
+            tabPage3.Controls.Add(btnUpdate);
+            tabPage3.Location = new Point(4, 29);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(3);
+            tabPage3.Size = new Size(972, 607);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "General";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(58, 116);
+            label1.Name = "label1";
+            label1.Size = new Size(122, 20);
+            label1.TabIndex = 4;
+            label1.Text = "Sale receipt print";
+            // 
+            // comboBox1
+            // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Always ask", "Auto print", "Don't print" });
+            comboBox1.Location = new Point(58, 139);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(238, 31);
+            comboBox1.TabIndex = 3;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.BackColor = Color.FromArgb(192, 0, 0);
+            btnUpdate.BackgroundColor = Color.FromArgb(192, 0, 0);
+            btnUpdate.BorderColor = Color.Transparent;
+            btnUpdate.BorderRadius = 2;
+            btnUpdate.BorderSize = 0;
+            btnUpdate.FlatAppearance.BorderSize = 0;
+            btnUpdate.FlatStyle = FlatStyle.Flat;
+            btnUpdate.ForeColor = Color.White;
+            btnUpdate.Location = new Point(58, 226);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(153, 34);
+            btnUpdate.TabIndex = 2;
+            btnUpdate.Text = "Update";
+            btnUpdate.TextColor = Color.White;
+            btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // tabPage1
             // 
@@ -131,14 +189,14 @@
             // 
             // BtnSaveFavorites
             // 
-            BtnSaveFavorites.BackColor = Color.SpringGreen;
-            BtnSaveFavorites.BackgroundColor = Color.SpringGreen;
+            BtnSaveFavorites.BackColor = Color.LimeGreen;
+            BtnSaveFavorites.BackgroundColor = Color.LimeGreen;
             BtnSaveFavorites.BorderColor = Color.Transparent;
             BtnSaveFavorites.BorderRadius = 10;
             BtnSaveFavorites.BorderSize = 0;
             BtnSaveFavorites.FlatAppearance.BorderSize = 0;
             BtnSaveFavorites.FlatStyle = FlatStyle.Flat;
-            BtnSaveFavorites.ForeColor = Color.Black;
+            BtnSaveFavorites.ForeColor = Color.White;
             BtnSaveFavorites.Location = new Point(287, 486);
             BtnSaveFavorites.Name = "BtnSaveFavorites";
             BtnSaveFavorites.Size = new Size(133, 41);
@@ -514,6 +572,8 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Settings";
             tabControl1.ResumeLayout(false);
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
             tabPage1.ResumeLayout(false);
             tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)gridUsers).EndInit();
@@ -526,5 +586,10 @@
         }
 
         #endregion
+
+        private TabPage tabPage3;
+        private CustomButton btnUpdate;
+        private Label label1;
+        private ComboBox comboBox1;
     }
 }

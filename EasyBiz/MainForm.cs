@@ -10,19 +10,26 @@ namespace EasyBiz
         public MainForm()
         {
             InitializeComponent();
-            BtnBackupData.Click += BtnBackupData_Click;   // <-- ADD THIS LINE
+            BtnBackupData.Click += BtnBackupData_Click;
 
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
-            ShowCashDetails();
-
+            //ShowCashDetails();
+            ThemeManager.LoadSavedTheme();
+            ThemeManager.ApplyTheme(this);
+            ThemeManager.ThemeChanged += (s, e) =>
+            {
+                if (!IsDisposed) 
+                    ThemeManager.ApplyTheme(this); 
+                    setupButtons(); LoadFavoritesPanel();
+            };
+            
             Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName}" +
-                   (CurrentUser.IsAdmin ? " [Admin]" : "");
-        }
+                   (CurrentUser.IsAdmin ? " [Admin]" : "");            
+        }        
 
-
-        public void ShowCashDetails()
+        /*public void ShowCashDetails()
         {
             try
             {
@@ -41,19 +48,9 @@ namespace EasyBiz
                         {
                             decimal cashBalance = reader.GetDecimal(0);
                             decimal bankBalance = reader.GetDecimal(1);
-
-                            /* 
-                             BtnCashDetails.Text =
-                                 $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";
-                             if (cashBalance < 0 || bankBalance < 0)
-                             {
-                                 BtnCashDetails.ForeColor = System.Drawing.Color.Red;
-                             }
-                             else
-                             {
-                                 BtnCashDetails.ForeColor = System.Drawing.Color.Green;
-                             }
-                            */
+                                                            
+                                lblShowBalanceDetail.Text =
+                                    $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";                                                  
                         }
                     }
                 }
@@ -66,7 +63,7 @@ namespace EasyBiz
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-        }
+        }*/
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
@@ -137,6 +134,14 @@ namespace EasyBiz
                 case Keys.Control | Keys.C:
                     if (BtnChequeBook.Enabled) BtnChequeBook_Click(this, EventArgs.Empty);
                     return true;
+
+                case Keys.Control | Keys.G:
+                    btnAiAssistant_Click(this, EventArgs.Empty);
+                    return true;
+
+                case Keys.Control | Keys.S:
+                    BtnSettings_Click(this, EventArgs.Empty);
+                    return true;
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -147,6 +152,7 @@ namespace EasyBiz
             try
             {
                 CashPayments cash_payments = new CashPayments();
+                ThemeManager.ApplyTheme(cash_payments);
                 cash_payments.ShowDialog();
             }
             catch (Exception ex)
@@ -160,6 +166,7 @@ namespace EasyBiz
             try
             {
                 CashReceipts cash_receipts = new CashReceipts();
+                ThemeManager.ApplyTheme(cash_receipts);
                 cash_receipts.ShowDialog();
             }
             catch (Exception ex)
@@ -173,6 +180,7 @@ namespace EasyBiz
             try
             {
                 JournalVoucher journal_voucher = new JournalVoucher();
+                ThemeManager.ApplyTheme(journal_voucher);
                 journal_voucher.ShowDialog();
             }
             catch (Exception ex)
@@ -186,6 +194,7 @@ namespace EasyBiz
             try
             {
                 AccountsSetup accountsSetup = new AccountsSetup();
+                ThemeManager.ApplyTheme(accountsSetup);
                 accountsSetup.ShowDialog();
             }
             catch (Exception ex)
@@ -199,6 +208,7 @@ namespace EasyBiz
             try
             {
                 ViewLedger viewLedger = new ViewLedger();
+                ThemeManager.ApplyTheme(viewLedger);
                 viewLedger.ShowDialog();
             }
             catch (Exception ex)
@@ -212,6 +222,7 @@ namespace EasyBiz
             try
             {
                 CashBook cashBook = new CashBook();
+                ThemeManager.ApplyTheme(cashBook);
                 cashBook.ShowDialog();
             }
             catch (Exception ex)
@@ -235,6 +246,7 @@ namespace EasyBiz
             try
             {
                 EditTransactions editTransactions = new EditTransactions();
+                ThemeManager.ApplyTheme(editTransactions);
                 editTransactions.ShowDialog();
             }
             catch (Exception ex)
@@ -277,7 +289,9 @@ namespace EasyBiz
         {
             try
             {
-                new SaleInvoice().ShowDialog();
+                SaleInvoice saleInvoice = new SaleInvoice();
+                ThemeManager.ApplyTheme(saleInvoice);
+                saleInvoice.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -289,7 +303,9 @@ namespace EasyBiz
         {
             try
             {
-                new ProductSetup().ShowDialog();
+                ProductSetup productSetup = new ProductSetup();
+                ThemeManager.ApplyTheme(productSetup);
+                productSetup.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -301,7 +317,9 @@ namespace EasyBiz
         {
             try
             {
-                new PurchaseInvoice().ShowDialog();
+                PurchaseInvoice purchaseInvoice = new PurchaseInvoice();
+                ThemeManager.ApplyTheme(purchaseInvoice);
+                purchaseInvoice.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -313,7 +331,9 @@ namespace EasyBiz
         {
             try
             {
-                new StockReport().ShowDialog();
+                StockReport stockReport = new StockReport();
+                ThemeManager.ApplyTheme(stockReport);
+                stockReport.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -325,7 +345,9 @@ namespace EasyBiz
         {
             try
             {
-                new OpeningBalances().ShowDialog();
+                OpeningBalances openingBalances = new OpeningBalances();
+                ThemeManager.ApplyTheme(openingBalances);
+                openingBalances.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -339,7 +361,9 @@ namespace EasyBiz
         {
             try
             {
-                new BankPayment().ShowDialog();
+                BankPayment bankPayment = new BankPayment();
+                ThemeManager.ApplyTheme(bankPayment);
+                bankPayment.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -351,7 +375,9 @@ namespace EasyBiz
         {
             try
             {
-                new BankReceipt().ShowDialog();
+                BankReceipt bankReceipt = new BankReceipt();
+                ThemeManager.ApplyTheme(bankReceipt);
+                bankReceipt.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -363,7 +389,9 @@ namespace EasyBiz
         {
             try
             {
-                new ChequeBook().ShowDialog();
+                ChequeBook chequeBook = new ChequeBook();
+                ThemeManager.ApplyTheme(chequeBook);
+                chequeBook.ShowDialog();
             }
             catch (Exception ex)
             {
@@ -393,6 +421,7 @@ namespace EasyBiz
             {
                 using (var form = new BackupRestoreForm())
                 {
+                    ThemeManager.ApplyTheme(form);
                     form.ShowDialog();
                 }
             }
@@ -402,15 +431,8 @@ namespace EasyBiz
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void setupButtons()
         {
-            lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
-            
-            // If HasFavorites is true, Visible becomes true. If 0 favorites, it becomes false.
-            pnlFavorites.Visible = FavoritesService.HasFavorites();
-            if (pnlFavorites.Visible)
-            { LoadFavoritesPanel(); }
-
             Button[] buttons =
             {
         BtnCashPayment,
@@ -446,9 +468,20 @@ namespace EasyBiz
 
                 System.Drawing.Image original = btn.Image;
                 btn.Image = ResizeImage(original, width, height);
+                btn.ForeColor = ThemeManager.Current.ForeColor;
 
                 original.Dispose();
             }
+        }
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            setupButtons();
+            lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
+
+            // If HasFavorites is true, Visible becomes true. If 0 favorites, it becomes false.
+            pnlFavorites.Visible = FavoritesService.HasFavorites();
+            if (pnlFavorites.Visible)
+            { LoadFavoritesPanel(); }
 
             // Enforce per-user module rights (no-op for admins — they always see everything).
             ApplyUserRights();
@@ -457,29 +490,37 @@ namespace EasyBiz
         private void LoadFavoritesPanel()
         {
             // Check if any favorites exist and toggle the panel visibility immediately
-            pnlFavorites.Visible = FavoritesService.HasFavorites();
+            pnlFavorites.Visible = FavoritesService.HasFavorites();            
 
             pnlFavorites.Controls.Clear();
 
-            if (!pnlFavorites.Visible) return;
-
+            if (!pnlFavorites.Visible) 
+                enableFavoritesPanelToolStripMenuItem.Checked = false;
+            //return;
+            pnlFavorites.Controls.Add(lblFavHeader);
             var favoriteKeys = FavoritesService.GetFavoriteKeys();
 
             foreach (var key in favoriteKeys)
             {
+                
                 var module = ModuleRegistry.GetByKey(key);
                 if (module == null) continue; // module might've been removed from registry
 
-                var btn = new Button
+                var btn = new CustomButton
                 {
                     Text = module.DisplayName,
                     Width = 220,
-                    Height = 60,
+                    Height = 70,
                     Tag = module.FormType,
-                    Margin = new Padding(6)
+                    Margin = new Padding(2),
+                    BackgroundColor = ThemeManager.Current.MenuBackColor,
+                    TextColor = ThemeManager.Current.MenuForeColor,
+                    BorderSize = 2,
+                    BorderColor = ThemeManager.Current.MenuForeColor
                 };
-                btn.Click += FavoriteButton_Click;
+                btn.Click += FavoriteButton_Click;                
                 pnlFavorites.Controls.Add(btn);
+                
             }
         }
 
@@ -565,12 +606,7 @@ namespace EasyBiz
             bankReceiptToolStripMenuItem.Enabled = allowed.Contains("bankreceipt");
             chequeBookToolStripMenuItem.Enabled = allowed.Contains("chequebook");
             cashBookToolStripMenuItem.Enabled = allowed.Contains("cashbook");
-        }
-
-        private void BtnCashDetails_Click(object sender, EventArgs e)
-        {
-            ShowCashDetails();
-        }
+        }        
 
         private void BtnSettings_Click(object sender, EventArgs e)
         {
@@ -595,6 +631,37 @@ namespace EasyBiz
             if (msg == DialogResult.Yes)
             {
                 Application.Restart();
+            }
+        }
+
+        private void btnAiAssistant_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new GeminiChatForm().Show(); // non-modal, so you can keep it open while you work
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void enableFavoritesPanelToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (enableFavoritesPanelToolStripMenuItem.Checked)
+            {
+                if (!FavoritesService.HasFavorites())
+                {
+                    MessageBox.Show(
+                        "You have no favorites set up. Please go to Settings > Favorites to add some.",
+                        "No Favorites", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    enableFavoritesPanelToolStripMenuItem.Checked = false;
+                }
+                else { pnlFavorites.Visible = true; }
+            }
+            else
+            {
+                pnlFavorites.Visible = false;
             }
         }
     }

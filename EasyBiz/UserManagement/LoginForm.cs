@@ -13,7 +13,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
-            UserRightsDatabaseHelper.InitializeUserTables();
+            UserRightsDatabaseHelper.InitializeUserTables();                        
         }
 
         protected override void OnShown(EventArgs e)

@@ -370,9 +370,9 @@
             BtnExportMovements.FlatStyle = FlatStyle.Flat;
             BtnExportMovements.Font = new Font("Segoe UI", 10.2F);
             BtnExportMovements.ForeColor = Color.White;
-            BtnExportMovements.Location = new Point(1164, 76);
+            BtnExportMovements.Location = new Point(1123, 76);
             BtnExportMovements.Name = "BtnExportMovements";
-            BtnExportMovements.Size = new Size(245, 52);
+            BtnExportMovements.Size = new Size(286, 52);
             BtnExportMovements.TabIndex = 13;
             BtnExportMovements.TabStop = false;
             BtnExportMovements.Text = "Export Movements [F1]";
@@ -392,12 +392,12 @@
             BtnExportSummary.FlatStyle = FlatStyle.Flat;
             BtnExportSummary.Font = new Font("Segoe UI", 10.2F);
             BtnExportSummary.ForeColor = Color.White;
-            BtnExportSummary.Location = new Point(1164, 134);
+            BtnExportSummary.Location = new Point(1123, 134);
             BtnExportSummary.Name = "BtnExportSummary";
-            BtnExportSummary.Size = new Size(245, 52);
+            BtnExportSummary.Size = new Size(286, 52);
             BtnExportSummary.TabIndex = 14;
             BtnExportSummary.TabStop = false;
-            BtnExportSummary.Text = "Export Summary [F2]";
+            BtnExportSummary.Text = "Export Stock Summary [F2]";
             BtnExportSummary.TextColor = Color.White;
             BtnExportSummary.UseVisualStyleBackColor = false;
             BtnExportSummary.Click += BtnExportSummary_Click;

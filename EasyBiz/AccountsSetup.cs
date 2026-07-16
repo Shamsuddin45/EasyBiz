@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Forms;
 
+
 namespace EasyBiz
 {
     public partial class AccountsSetup : Form
@@ -11,7 +12,7 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             comboCategory.SelectedItem = "Receivables";
-            LoadAccounts();
+            LoadAccounts();            
         }
 
         protected override void OnShown(EventArgs e)

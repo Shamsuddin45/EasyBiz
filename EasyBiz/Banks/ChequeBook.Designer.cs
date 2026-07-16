@@ -82,7 +82,7 @@
             lblHeader.AutoSize = true;
             lblHeader.Font = new Font("Segoe UI", 17F, FontStyle.Bold);
             lblHeader.ForeColor = Color.White;
-            lblHeader.Location = new Point(560, 10);
+            lblHeader.Location = new Point(535, 10);
             lblHeader.Name = "lblHeader";
             lblHeader.Size = new Size(331, 40);
             lblHeader.TabIndex = 0;
@@ -339,7 +339,7 @@
             // txtSearchCheque
             // 
             txtSearchCheque.Font = new Font("Segoe UI", 10F);
-            txtSearchCheque.Location = new Point(75, 12);
+            txtSearchCheque.Location = new Point(86, 12);
             txtSearchCheque.Name = "txtSearchCheque";
             txtSearchCheque.Size = new Size(280, 30);
             txtSearchCheque.TabIndex = 1;
@@ -349,7 +349,7 @@
             // 
             label_statusFilter.AutoSize = true;
             label_statusFilter.Font = new Font("Segoe UI", 10F);
-            label_statusFilter.Location = new Point(380, 15);
+            label_statusFilter.Location = new Point(382, 15);
             label_statusFilter.Name = "label_statusFilter";
             label_statusFilter.Size = new Size(60, 23);
             label_statusFilter.TabIndex = 2;
@@ -359,7 +359,7 @@
             // 
             comboStatus.DropDownStyle = ComboBoxStyle.DropDownList;
             comboStatus.Font = new Font("Segoe UI", 10F);
-            comboStatus.Location = new Point(435, 12);
+            comboStatus.Location = new Point(448, 12);
             comboStatus.Name = "comboStatus";
             comboStatus.Size = new Size(140, 31);
             comboStatus.TabIndex = 3;
@@ -375,7 +375,7 @@
             BtnRefresh.FlatAppearance.BorderSize = 0;
             BtnRefresh.FlatStyle = FlatStyle.Flat;
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(590, 10);
+            BtnRefresh.Location = new Point(630, 10);
             BtnRefresh.Name = "BtnRefresh";
             BtnRefresh.Size = new Size(110, 34);
             BtnRefresh.TabIndex = 4;

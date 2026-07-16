@@ -14,6 +14,66 @@ namespace EasyBiz
             InitializeComponent();
             InitFavoritesTab();
             InitUsersTab();
+            InitThemeTab();
+        }        
+
+        private FlowLayoutPanel _themeSwatchPanel;
+
+        private void InitThemeTab()
+        {
+            var tabPage = new TabPage("Theme");
+
+            var lbl = new Label
+            {
+                Text = "Choose a color theme for EasyBiz:",
+                Font = new Font("Segoe UI", 11F),
+                AutoSize = true,
+                Location = new Point(12, 12)
+            };
+            tabPage.Controls.Add(lbl);
+
+            _themeSwatchPanel = new FlowLayoutPanel
+            {
+                Location = new Point(12, 45),
+                Size = new Size(760, 340),
+                AutoScroll = true
+            };
+            tabPage.Controls.Add(_themeSwatchPanel);
+
+            RefreshThemeSwatches();
+
+            tabControl1.TabPages.Add(tabPage);
+        }
+
+        private void RefreshThemeSwatches()
+        {
+            _themeSwatchPanel.Controls.Clear();
+
+            foreach (AppTheme theme in Enum.GetValues(typeof(AppTheme)))
+            {
+                var palette = ThemeManager.PaletteFor(theme);
+                bool isCurrent = theme == ThemeManager.CurrentTheme;
+
+                var btn = new CustomButton
+                {
+                    Text = ThemeManager.FriendlyName(theme) + (isCurrent ? "  ✓ Active" : ""),
+                    Size = new Size(160, 70),
+                    Margin = new Padding(8),
+                    BorderRadius = 10,
+                    BackgroundColor = palette.AccentColor,
+                    TextColor = Color.White,
+                    Font = new Font("Segoe UI", 9.5F)
+                };
+
+                btn.Click += (s, e) =>
+                {
+                    ThemeManager.SaveTheme(theme);
+                    ThemeManager.ApplyTheme(this);   // repaint the Settings form itself
+                    RefreshThemeSwatches();          // move the ✓ to the new active swatch
+                };
+
+                _themeSwatchPanel.Controls.Add(btn);
+            }
         }
 
         // ── Favourites tab (unchanged behaviour, now scoped to CurrentUser) ──
@@ -33,6 +93,7 @@ namespace EasyBiz
                 if (favoriteKeys.Contains(ModuleRegistry.AllModules[i].Key))
                     clbFavorites.SetItemChecked(i, true);
             }
+
         }
 
         public event EventHandler FavoritesUpdated;
@@ -55,7 +116,6 @@ namespace EasyBiz
 
             // 3. Keep the settings checkbox list visible (or change its visibility if desired)
             clbFavorites.Visible = true;
-
             MessageBox.Show("Favourites Updated.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             // 4. This fires the event that tells the ALREADY open MainForm to redraw itself!
@@ -279,8 +339,11 @@ namespace EasyBiz
         // Legacy handler kept only so the hidden compatibility button (see
         // Designer) still compiles; the real Users Management UI above
         // replaces what this button used to open.
-        private void btnUsersManagement_Click(object sender, EventArgs e)
+        private void btnUsersManagement_Click(object sender, EventArgs e) { }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
         {
+            
         }
     }
 }

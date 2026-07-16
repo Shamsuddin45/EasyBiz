@@ -62,17 +62,17 @@
             comboSearchName.FormattingEnabled = true;
             comboSearchName.Location = new Point(399, 121);
             comboSearchName.Name = "comboSearchName";
-            comboSearchName.Size = new Size(567, 36);
+            comboSearchName.Size = new Size(479, 36);
             comboSearchName.TabIndex = 5;
             comboSearchName.SelectedIndexChanged += comboSearchName_SelectedIndexChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(291, 124);
+            label2.Font = new Font("Segoe UI", 10.2F);
+            label2.Location = new Point(303, 129);
             label2.Name = "label2";
-            label2.Size = new Size(102, 28);
+            label2.Size = new Size(90, 23);
             label2.TabIndex = 15;
             label2.Text = "A/C Name";
             // 
@@ -84,17 +84,17 @@
             comboSearchId.FormattingEnabled = true;
             comboSearchId.Location = new Point(83, 121);
             comboSearchId.Name = "comboSearchId";
-            comboSearchId.Size = new Size(193, 36);
+            comboSearchId.Size = new Size(192, 36);
             comboSearchId.TabIndex = 4;
             comboSearchId.SelectedIndexChanged += comboSearchId_SelectedIndexChanged;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(8, 124);
+            label6.Font = new Font("Segoe UI", 10.2F);
+            label6.Location = new Point(16, 129);
             label6.Name = "label6";
-            label6.Size = new Size(69, 28);
+            label6.Size = new Size(61, 23);
             label6.TabIndex = 19;
             label6.Text = "A/C ID";
             // 
@@ -130,7 +130,7 @@
             BtnExportPdf.ForeColor = Color.White;
             BtnExportPdf.Location = new Point(649, 57);
             BtnExportPdf.Name = "BtnExportPdf";
-            BtnExportPdf.Size = new Size(160, 34);
+            BtnExportPdf.Size = new Size(229, 34);
             BtnExportPdf.TabIndex = 7;
             BtnExportPdf.Text = "Export PDF";
             BtnExportPdf.TextColor = Color.White;
@@ -150,10 +150,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(19, 57);
+            label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(28, 64);
             label1.Name = "label1";
-            label1.Size = new Size(58, 28);
+            label1.Size = new Size(49, 23);
             label1.TabIndex = 32;
             label1.Text = "From";
             // 
@@ -169,10 +169,10 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(282, 57);
+            label3.Font = new Font("Segoe UI", 10.2F);
+            label3.Location = new Point(287, 64);
             label3.Name = "label3";
-            label3.Size = new Size(32, 28);
+            label3.Size = new Size(27, 23);
             label3.TabIndex = 34;
             label3.Text = "To";
             // 
@@ -224,7 +224,7 @@
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(2, 221);
+            dataGridView1.Location = new Point(2, 186);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
@@ -232,7 +232,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1185, 673);
+            dataGridView1.Size = new Size(1185, 708);
             dataGridView1.TabIndex = 36;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
@@ -296,7 +296,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1190, 893);
+            ClientSize = new Size(1190, 636);
             Controls.Add(dataGridView1);
             Controls.Add(checkAllDates);
             Controls.Add(dateTimePicker2);

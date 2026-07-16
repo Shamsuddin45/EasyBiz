@@ -149,7 +149,7 @@ namespace EasyBiz
             cmd.CommandText = @"
                 SELECT product_id, product_name, unit, weight_unit,
                        current_qty, current_weight, min_stock_qty,
-                       sale_rate, purchase_rate
+                       sale_rate, purchase_rate, isUnit
                 FROM products
                 ORDER BY product_name";
 
@@ -163,16 +163,32 @@ namespace EasyBiz
                 decimal saleRate = SafeDecimal(r, 7);
                 decimal purRate = SafeDecimal(r, 8);
                 bool lowStock = qty <= minQty && minQty > 0;
+                int isUnit = r.GetInt16(9);
 
                 int rowIdx = gridStock.Rows.Add();
                 var row = gridStock.Rows[rowIdx];
                 row.Cells["csNo"].Value = sno++;
                 row.Cells["csId"].Value = r.GetInt32(0);
                 row.Cells["csProduct"].Value = SafeString(r, 1);
-                row.Cells["csUnit"].Value = SafeString(r, 2);
-                row.Cells["csQty"].Value = qty.ToString("N3");
-                row.Cells["csWeight"].Value = weight.ToString("N3");
-                row.Cells["csWeightUnit"].Value = SafeString(r, 3);
+                if (isUnit == 1)
+                {
+                    row.Cells["csUnit"].Value = SafeString(r, 2);
+                } else { row.Cells["csUnit"].Value = "-"; }
+                if (isUnit == 1)
+                {
+                    row.Cells["csQty"].Value = qty.ToString("N3");
+                } else { row.Cells["csQty"].Value = "-"; }
+                if (isUnit == 1)
+                {
+                    row.Cells["csWeight"].Value = "-";
+                } else { row.Cells["csWeight"].Value = weight.ToString("N3"); }
+                
+                if (isUnit == 1)
+                {
+                    row.Cells["csWeightUnit"].Value = "-";
+                }
+                else { row.Cells["csWeightUnit"].Value = SafeString(r, 3); }
+                
                 row.Cells["csMinQty"].Value = minQty.ToString("N3");
                 row.Cells["csSaleRate"].Value = saleRate.ToString("N2");
                 row.Cells["csPurRate"].Value = purRate.ToString("N2");

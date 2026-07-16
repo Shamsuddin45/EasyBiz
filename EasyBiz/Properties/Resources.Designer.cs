@@ -83,6 +83,16 @@ namespace EasyBiz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ai_chip_icon_png {
+            get {
+                object obj = ResourceManager.GetObject("ai-chip-icon-png", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bank_payment {
             get {
                 object obj = ResourceManager.GetObject("bank-payment", resourceCulture);
