@@ -515,7 +515,7 @@ namespace EasyBiz
                     Margin = new Padding(2),
                     BackgroundColor = ThemeManager.Current.MenuBackColor,
                     TextColor = ThemeManager.Current.MenuForeColor,
-                    BorderSize = 2,
+                    BorderSize = 1,
                     BorderColor = ThemeManager.Current.MenuForeColor
                 };
                 btn.Click += FavoriteButton_Click;                
@@ -638,7 +638,7 @@ namespace EasyBiz
         {
             try
             {
-                new GeminiChatForm().Show(); // non-modal, so you can keep it open while you work
+                new AIChatForm().Show(); // non-modal, so you can keep it open while you work
             }
             catch (Exception ex)
             {

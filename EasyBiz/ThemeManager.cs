@@ -309,7 +309,17 @@ namespace EasyBiz
                 case CheckedListBox checkListBox:
                     checkListBox.BackColor = p.ControlBackColor;
                     checkListBox.ForeColor = p.ControlForeColor;
-                    break;                
+                    break;  
+                  
+                case CheckBox checkBox:
+                    checkBox.BackColor = p.PanelBackColor;
+                    checkBox.ForeColor = p.ForeColor;
+                    break;
+
+                case DateTimePicker dateTimePicker:
+                    dateTimePicker.BackColor = p.ControlBackColor;
+                    dateTimePicker.ForeColor = p.ControlForeColor;
+                    break;
 
                 case CustomButton:
                     // Save/Update/Delete/Close buttons carry deliberate semantic

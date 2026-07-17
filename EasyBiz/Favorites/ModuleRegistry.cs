@@ -17,7 +17,7 @@ namespace EasyBiz
         // Add new modules here only — nothing else needs to change.
         public static readonly List<ModuleInfo> AllModules = new List<ModuleInfo>
         {
-            new ModuleInfo { Key = "aiassistant",     DisplayName = "AI Assistant", FormType = typeof(GeminiChatForm) },
+            new ModuleInfo { Key = "aiassistant",     DisplayName = "AI Assistant", FormType = typeof(AIChatForm) },
             new ModuleInfo { Key = "cashpayment",     DisplayName = "Cash Payment",      FormType = typeof(CashPayments) },
             new ModuleInfo { Key = "cashreceipt",     DisplayName = "Cash Receipt",      FormType = typeof(CashReceipts) },
             new ModuleInfo { Key = "journalvoucher",  DisplayName = "Journal Voucher",   FormType = typeof(JournalVoucher) },

@@ -1,12 +1,17 @@
 using System;
 using System.Drawing;
-using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EasyBiz
 {
-    public class GeminiChatForm : Form
+    /// <summary>
+    /// AI reporting assistant chat window. Replaces GeminiChatForm — instead
+    /// of talking to Gemini directly, it asks AIProviderFactory for whichever
+    /// provider the user has selected in Settings (Gemini / OpenAI / Groq /
+    /// Ollama) and talks to that through the common IAIChatProvider interface.
+    /// </summary>
+    public class AIChatForm : Form
     {
         private RichTextBox chatLog;
         private TextBox txtInput;
@@ -14,20 +19,20 @@ namespace EasyBiz
         private CustomButton btnClear;
         private CustomButton btnSettings;
         private Label lblStatus;
-        private FlowLayoutPanel suggestionPanel; // Container for dynamic suggestions
+        private Label lblProviderBadge;
+        private FlowLayoutPanel suggestionPanel;
 
-        private JsonArray _conversation = new JsonArray();
+        private IAIChatProvider _provider;
         private bool _busy;
 
         // Modern Color Palette
-        private readonly Color ColorPrimary = Color.FromArgb(79, 70, 229);    // Indigo accent
-        private readonly Color ColorBackground = Color.FromArgb(248, 249, 250); // Off-white/Light gray
-        private readonly Color ColorTextDark = Color.FromArgb(33, 37, 41);     // Deep charcoal
-        private readonly Color ColorTextMuted = Color.FromArgb(108, 117, 125); // Slate gray
-        private readonly Color ColorDanger = Color.FromArgb(239, 68, 68);      // Modern soft red
-        private readonly Color ColorSuggestionBg = Color.FromArgb(238, 242, 255); // Soft indigo tint
+        private readonly Color ColorPrimary = Color.FromArgb(79, 70, 229);
+        private readonly Color ColorBackground = Color.FromArgb(248, 249, 250);
+        private readonly Color ColorTextDark = Color.FromArgb(33, 37, 41);
+        private readonly Color ColorTextMuted = Color.FromArgb(108, 117, 125);
+        private readonly Color ColorDanger = Color.FromArgb(239, 68, 68);
+        private readonly Color ColorSuggestionBg = Color.FromArgb(238, 242, 255);
 
-        // Pool of random business questions
         private readonly string[] _suggestionPool = new string[]
         {
             "What is the most selling item today?",
@@ -46,17 +51,18 @@ namespace EasyBiz
             "List all payments received today"
         };
 
-        public GeminiChatForm()
+        public AIChatForm()
         {
-            Text = "AI Assistant (Gemini)";
+            Text = "AI Assistant";
             StartPosition = FormStartPosition.CenterParent;
-            ClientSize = new Size(840, 720); // Slightly adjusted height for suggestion chips.
+            ClientSize = new Size(840, 720);
             MinimumSize = new Size(600, 520);
             BackColor = ColorBackground;
 
             BuildUi();
             ResetConversation();
             txtInput.Select();
+            ThemeManager.ApplyTheme(this);
         }
 
         private void BuildUi()
@@ -66,10 +72,12 @@ namespace EasyBiz
             var headerBorder = new Panel { Dock = DockStyle.Bottom, Height = 1, BackColor = Color.FromArgb(233, 236, 239) };
             topPanel.Controls.Add(headerBorder);
 
-            var lblTitle = new Label { Text = "EasyBiz AI Assistant", ForeColor = ColorTextDark, Font = new Font("Segoe UI", 13F, FontStyle.Bold), AutoSize = true, Location = new Point(16, 18) };
+            var lblTitle = new Label { Text = "EasyBiz AI Assistant", ForeColor = ColorTextDark, Font = new Font("Segoe UI", 13F, FontStyle.Bold), AutoSize = true, Location = new Point(16, 8) };
+            lblProviderBadge = new Label { Text = "", ForeColor = ColorTextMuted, Font = new Font("Segoe UI", 9F), AutoSize = true, Location = new Point(16, 33) };
             btnSettings = new CustomButton { Text = "⚙ Settings", Font = new Font("Segoe UI Semibold", 9.5F), BackColor = ColorBackground, ForeColor = ColorTextDark, BackgroundColor = ColorBackground, Size = new Size(110, 34), Cursor = Cursors.Hand };
-            btnSettings.Click += (s, e) => { using var f = new GeminiSettingsForm(); f.ShowDialog(this); };
+            btnSettings.Click += BtnSettings_Click;
             topPanel.Controls.Add(lblTitle);
+            topPanel.Controls.Add(lblProviderBadge);
             topPanel.Controls.Add(btnSettings);
 
             void LayoutTopPanel() => btnSettings.Location = new Point(topPanel.ClientSize.Width - btnSettings.Width - 16, 13);
@@ -77,15 +85,14 @@ namespace EasyBiz
             topPanel.HandleCreated += (s, e) => LayoutTopPanel();
 
             // ── CHAT LOG (Main Canvas) ───────────────────────────────────────
-            chatLog = new RichTextBox { Dock = DockStyle.Fill, ReadOnly = true, BackColor = Color.White, Font = new Font("Segoe UI", 10.5F), BorderStyle = BorderStyle.None, Margin = new Padding(0), BulletIndent = 10 };
-            var chatContainer = new Panel { Dock = DockStyle.Fill, BackColor = Color.White, Padding = new Padding(24, 20, 24, 10) };
+            chatLog = new RichTextBox { Dock = DockStyle.Fill, ReadOnly = true, BackColor = ThemeManager.Current.PanelBackColor, Font = new Font("MS Reference Sans Serif", 10.5F), BorderStyle = BorderStyle.None, Margin = new Padding(0), BulletIndent = 10 };
+            var chatContainer = new Panel { Dock = DockStyle.Fill, BackColor = ThemeManager.Current.PanelBackColor, Padding = new Padding(24, 20, 24, 10) };
             chatContainer.Controls.Add(chatLog);
 
             // ── BOTTOM PANEL (Input Controls & Suggestions) ──────────────────
             var bottomPanel = new Panel { Dock = DockStyle.Bottom, Height = 165, BackColor = ColorBackground, Padding = new Padding(20, 5, 20, 16) };
             lblStatus = new Label { Text = "", Dock = DockStyle.Top, Height = 22, ForeColor = ColorTextMuted, Font = new Font("Segoe UI Italic", 9F) };
 
-            // Dynamic Suggestion Chips Row
             suggestionPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Top,
@@ -97,15 +104,15 @@ namespace EasyBiz
             };
 
             var inputRow = new Panel { Dock = DockStyle.Fill };
-            var txtInputWrapper = new Panel { BackColor = Color.White, BorderStyle = BorderStyle.FixedSingle, Height = 42, Padding = new Padding(8, 9, 8, 4) };
-            txtInput = new TextBox { Dock = DockStyle.Fill, Font = new Font("Segoe UI", 11F), BorderStyle = BorderStyle.None, ForeColor = ColorTextDark, BackColor = Color.White };
+            var txtInputWrapper = new Panel { BackColor = ThemeManager.Current.ControlBackColor, BorderStyle = BorderStyle.FixedSingle, Height = 42, Padding = new Padding(8, 9, 8, 4) };
+            txtInput = new TextBox { Dock = DockStyle.Fill, Font = new Font("Segoe UI", 11F), BorderStyle = BorderStyle.None, ForeColor = ThemeManager.Current.ControlForeColor, BackColor = ThemeManager.Current.ControlBackColor };
             txtInput.KeyDown += TxtInput_KeyDown;
             txtInputWrapper.Controls.Add(txtInput);
 
-            btnSend = new CustomButton { Text = "Send Query", Font = new Font("Segoe UI Semibold", 10F), BackColor = ColorPrimary, BackgroundColor = ColorPrimary, ForeColor = Color.White, Size = new Size(110, 42), Cursor = Cursors.Hand };
+            btnSend = new CustomButton { Text = "Send Query", Font = new Font("Segoe UI Semibold", 10F), BackColor = ThemeManager.Current.AccentColor, BackgroundColor = ThemeManager.Current.AccentColor, ForeColor = Color.White, Size = new Size(110, 42), Cursor = Cursors.Hand };
             btnSend.Click += async (s, e) => await SendCurrentMessageAsync();
 
-            btnClear = new CustomButton { Text = "Clear Chat", Font = new Font("Segoe UI Semibold", 10F), BackColor = Color.White, BackgroundColor = Color.White, ForeColor = ColorDanger, Size = new Size(100, 42), Cursor = Cursors.Hand };
+            btnClear = new CustomButton { Text = "Clear Chat", Font = new Font("Segoe UI Semibold", 10F), BackColor = ThemeManager.Current.ControlBackColor, BackgroundColor = ThemeManager.Current.ControlBackColor, ForeColor = ThemeManager.Current.ControlForeColor, Size = new Size(100, 42), Cursor = Cursors.Hand };
             btnClear.Click += (s, e) => ResetConversation();
 
             void LayoutInputRow()
@@ -130,6 +137,18 @@ namespace EasyBiz
             Controls.Add(topPanel);
         }
 
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            using var f = new AISettingsForm();
+            if (f.ShowDialog(this) == DialogResult.OK)
+            {
+                // Provider / key / model may have changed — a fresh
+                // conversation against the newly selected provider avoids
+                // mixing message formats from two different providers.
+                ResetConversation();
+            }
+        }
+
         private void GenerateRandomSuggestions()
         {
             suggestionPanel.Controls.Clear();
@@ -146,26 +165,24 @@ namespace EasyBiz
             {
                 string text = _suggestionPool[index];
 
-                // Use a sleek CustomButton for modern rounded/flat looks
                 var chip = new CustomButton
                 {
                     Text = text,
                     Font = new Font("Segoe UI", 9F, FontStyle.Regular),
-                    BackColor = ColorSuggestionBg,
-                    ForeColor = ColorPrimary,
-                    BackgroundColor = ColorSuggestionBg,
+                    BackColor = ThemeManager.Current.ControlBackColor,
+                    ForeColor = ThemeManager.Current.ControlForeColor,
+                    BackgroundColor = ThemeManager.Current.FormBackColor,
                     AutoSize = true,
                     Height = 28,
                     Cursor = Cursors.Hand,
                     Margin = new Padding(0, 0, 8, 0)
                 };
 
-                // Click event: Inject into textbox and focus instantly
                 chip.Click += (s, e) =>
                 {
                     txtInput.Text = text;
                     txtInput.Focus();
-                    txtInput.SelectionStart = txtInput.Text.Length; // Put cursor at end
+                    txtInput.SelectionStart = txtInput.Text.Length;
                 };
 
                 suggestionPanel.Controls.Add(chip);
@@ -183,7 +200,9 @@ namespace EasyBiz
 
         private void ResetConversation()
         {
-            _conversation = new JsonArray();
+            _provider = AIProviderFactory.Create();
+            lblProviderBadge.Text = $"Powered by {_provider.ProviderName}";
+
             chatLog.Clear();
             AppendSystemLine($"Hi {CurrentUser.FullName}, How can I help you with your business metrics?");
             GenerateRandomSuggestions();
@@ -197,17 +216,6 @@ namespace EasyBiz
             string question = txtInput.Text.Trim();
             if (string.IsNullOrWhiteSpace(question)) return;
 
-            AISettingsHelper.InitializeAISettingsTable();
-            string apiKey = AISettingsHelper.GetSetting("GeminiApiKey", "");
-            if (string.IsNullOrWhiteSpace(apiKey))
-            {
-                MessageBox.Show("Please set up your Gemini API key first (Settings button, top-right).", "API Key Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                using var f = new GeminiSettingsForm();
-                f.ShowDialog(this);
-                return;
-            }
-            string model = AISettingsHelper.GetSetting("GeminiModel", "gemini-3.5-flash");
-
             AppendUserLine(question);
             txtInput.Clear();
 
@@ -217,8 +225,7 @@ namespace EasyBiz
 
             try
             {
-                var service = new GeminiService(apiKey, model);
-                string answer = await service.AskAsync(_conversation, question);
+                string answer = await _provider.AskAsync(question);
                 AppendAssistantLine(answer);
             }
             catch (Exception ex)
@@ -238,9 +245,9 @@ namespace EasyBiz
 
         // ── Render Helpers (Modern Stylings) ────────────────────────────────
 
-        private void AppendSystemLine(string text) => AppendLine("ℹ  " + text, ColorTextDark, boldHeader: true);
-        private void AppendUserLine(string text) => AppendLine("You\n" + text, ColorPrimary, boldHeader: true);
-        private void AppendAssistantLine(string text) => AppendLine("Assistant\n" + text, ColorTextDark, boldHeader: true);
+        private void AppendSystemLine(string text) => AppendLine("ℹ  " + text, ThemeManager.Current.ForeColor, boldHeader: true);
+        private void AppendUserLine(string text) => AppendLine("You\n" + text, ThemeManager.Current.AccentColor, boldHeader: true);
+        private void AppendAssistantLine(string text) => AppendLine($"{_provider.ProviderName}\n" + text, ThemeManager.Current.AccentColor, boldHeader: true);
         private void AppendErrorLine(string text) => AppendLine("⚠️ " + text, ColorDanger, boldHeader: true);
 
         private void AppendLine(string text, Color textColor, bool boldHeader = false, bool italic = false)
@@ -254,11 +261,11 @@ namespace EasyBiz
                 string header = text.Substring(0, splitIndex + 1);
                 string body = text.Substring(splitIndex + 1);
 
-                chatLog.SelectionColor = (textColor == ColorTextDark) ? ColorPrimary : textColor;
+                chatLog.SelectionColor = (textColor == ColorTextDark) ? ThemeManager.Current.AccentColor : textColor;
                 chatLog.SelectionFont = new Font("Segoe UI", 10.5F, FontStyle.Bold);
                 chatLog.AppendText(header);
 
-                chatLog.SelectionColor = textColor == ColorPrimary ? ColorTextDark : textColor;
+                chatLog.SelectionColor = textColor == ThemeManager.Current.AccentColor ? ThemeManager.Current.ForeColor : textColor;
                 chatLog.SelectionFont = new Font("Segoe UI", 10.5F, FontStyle.Regular);
                 chatLog.AppendText(body);
             }
