@@ -30,6 +30,7 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label6 = new Label();
             comboAccountId = new ComboBox();
@@ -59,6 +60,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel2 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            label8 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -171,7 +173,7 @@
             // 
             dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(836, 44);
+            dateTimePicker1.Location = new Point(734, 38);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(192, 34);
             dateTimePicker1.TabIndex = 1;
@@ -180,103 +182,100 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F);
-            label1.Location = new Point(836, 13);
+            label1.Location = new Point(734, 7);
             label1.Name = "label1";
             label1.Size = new Size(46, 23);
             label1.TabIndex = 14;
             label1.Text = "Date";
             // 
-            // // dataGridView1 //
+            // dataGridView1
+            // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-
-            // 1. Sleek Alternating Row Color (Very subtle off-white/gray)
             dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
             dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-
-            // 2. Modern Flat Header Style (Deep Charcoal / Navy Slate)
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.DarkGreen; // Modern dark charcoal
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.5F, FontStyle.Regular); // Semibold looks cleaner than Bold
+            dataGridViewCellStyle2.BackColor = Color.DarkGreen;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.5F);
             dataGridViewCellStyle2.ForeColor = Color.White;
             dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(33, 37, 41);
             dataGridViewCellStyle2.SelectionForeColor = Color.White;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-
-            dataGridView1.ColumnHeadersHeight = 48; // Slightly taller for better breathing room
+            dataGridView1.ColumnHeadersHeight = 48;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, accountId, accountname, desc, amount });
-
-            // 3. Clean Content Style with Soft Blue/Slate Selection
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(43, 43, 43); // Off-black is easier on the eyes
-            dataGridViewCellStyle3.Padding = new Padding(8, 4, 8, 4); // Added horizontal padding
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(225, 238, 254); // Soft, premium blue accent
-            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(15, 76, 129); // Dark blue text for contrast
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
-
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.White;
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(43, 43, 43);
+            dataGridViewCellStyle4.Padding = new Padding(8, 4, 8, 4);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(225, 238, 254);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(15, 76, 129);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.GridColor = Color.FromArgb(230, 234, 238); // Softer gridline color
-            dataGridView1.Location = new Point(3, 220);
+            dataGridView1.GridColor = Color.FromArgb(230, 234, 238);
+            dataGridView1.Location = new Point(3, 205);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 44; // Taller rows for a modern dashboard feel
+            dataGridView1.RowTemplate.Height = 44;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1091, 272);
+            dataGridView1.Size = new Size(1261, 275);
             dataGridView1.TabIndex = 14;
             dataGridView1.TabStop = false;
-
-            // // sno //
+            // 
+            // sno
+            // 
             sno.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             sno.HeaderText = "SNo";
             sno.MinimumWidth = 6;
             sno.Name = "sno";
             sno.ReadOnly = true;
-            sno.Width = 77;
-
-            // // accountId //
+            sno.Width = 90;
+            // 
+            // accountId
+            // 
             accountId.HeaderText = "Account ID";
             accountId.MinimumWidth = 6;
             accountId.Name = "accountId";
             accountId.Visible = false;
-
-            // // accountname //
+            // 
+            // accountname
+            // 
             accountname.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             accountname.HeaderText = "Account Name";
             accountname.MinimumWidth = 6;
             accountname.Name = "accountname";
             accountname.ReadOnly = true;
-            accountname.Width = 164;
-
-            // // desc //
+            accountname.Width = 177;
+            // 
+            // desc
+            // 
             desc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             desc.HeaderText = "Description";
             desc.MinimumWidth = 6;
             desc.Name = "desc";
-
-            // // amount //
+            // 
+            // amount
+            // 
             amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            // Optional UI polish: Right-align column header if it's numeric data
-            amount.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-            amount.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            amount.DefaultCellStyle = dataGridViewCellStyle3;
             amount.HeaderText = "Amount";
             amount.MinimumWidth = 6;
             amount.Name = "amount";
-            amount.Width = 112;
+            amount.Width = 123;
+            // 
             // BtnClose
             // 
             BtnClose.BackColor = Color.FromArgb(192, 64, 0);
@@ -288,9 +287,9 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(820, 3);
+            BtnClose.Location = new Point(975, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(113, 50);
+            BtnClose.Size = new Size(128, 41);
             BtnClose.TabIndex = 7;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -308,9 +307,9 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(939, 3);
+            BtnSave.Location = new Point(1109, 3);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(149, 50);
+            BtnSave.Size = new Size(149, 41);
             BtnSave.TabIndex = 6;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -321,7 +320,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.2F);
-            label7.Location = new Point(836, 86);
+            label7.Location = new Point(734, 80);
             label7.Name = "label7";
             label7.Size = new Size(79, 23);
             label7.TabIndex = 30;
@@ -331,7 +330,7 @@
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.ForestGreen;
-            txtInvoiceNumber.Location = new Point(836, 117);
+            txtInvoiceNumber.Location = new Point(734, 111);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
             txtInvoiceNumber.ReadOnly = true;
             txtInvoiceNumber.Size = new Size(192, 34);
@@ -376,9 +375,9 @@
             panel1.Controls.Add(txtTotal);
             panel1.Controls.Add(BtnDeleteRow);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 488);
+            panel1.Location = new Point(3, 486);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1091, 53);
+            panel1.Size = new Size(1261, 65);
             panel1.TabIndex = 33;
             // 
             // flowLayoutPanel1
@@ -386,14 +385,15 @@
             flowLayoutPanel1.Controls.Add(BtnSave);
             flowLayoutPanel1.Controls.Add(BtnClose);
             flowLayoutPanel1.Dock = DockStyle.Bottom;
-            flowLayoutPanel1.Location = new Point(3, 552);
+            flowLayoutPanel1.Location = new Point(3, 572);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.RightToLeft = RightToLeft.Yes;
-            flowLayoutPanel1.Size = new Size(1091, 68);
+            flowLayoutPanel1.Size = new Size(1261, 48);
             flowLayoutPanel1.TabIndex = 34;
             // 
             // panel2
             // 
+            panel2.Controls.Add(label8);
             panel2.Controls.Add(txtAmount);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(txtDescription);
@@ -411,7 +411,7 @@
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(3, 3);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1091, 197);
+            panel2.Size = new Size(1261, 196);
             panel2.TabIndex = 35;
             // 
             // tableLayoutPanel1
@@ -430,16 +430,27 @@
             tableLayoutPanel1.RowCount = 4;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 32.58427F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 45.2648468F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.470305F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.35955F));
-            tableLayoutPanel1.Size = new Size(1097, 623);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 11.556982F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 10.9149275F));
+            tableLayoutPanel1.Size = new Size(1267, 623);
             tableLayoutPanel1.TabIndex = 36;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(1036, 58);
+            label8.Name = "label8";
+            label8.Size = new Size(135, 76);
+            label8.TabIndex = 31;
+            label8.Text = "Cash \r\nReceipts";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // CashReceipts
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1097, 623);
+            ClientSize = new Size(1267, 623);
             Controls.Add(tableLayoutPanel1);
             Name = "CashReceipts";
             StartPosition = FormStartPosition.CenterParent;
@@ -485,5 +496,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel1;
+        private Label label8;
     }
 }

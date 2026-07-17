@@ -22,6 +22,7 @@ namespace EasyBiz
             comboWeightUnit.SelectedItem = "KG";
             comboSelectUnit.SelectedItem = "Quantity"; // Default selection            
             ClearForm();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

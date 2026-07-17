@@ -13,6 +13,7 @@ namespace EasyBiz
             InitializeComponent();
             LoadAccounts();
             setupDates();
+            ThemeManager.ApplyTheme(this);
         }
 
         private void setupDates()

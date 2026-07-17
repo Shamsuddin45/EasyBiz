@@ -14,6 +14,7 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             LoadAccounts();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

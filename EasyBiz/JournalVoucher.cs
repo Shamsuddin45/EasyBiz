@@ -19,6 +19,7 @@ namespace EasyBiz
             LoadAccounts();
             ShowVoucherNo();
             comboAccountName.Select();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

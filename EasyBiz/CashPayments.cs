@@ -20,6 +20,7 @@ namespace EasyBiz
             try { ShowVoucherNo(); }
             catch (Exception ex) { MessageBox.Show("Could not load voucher number: " + ex.Message); }
             comboAccountName.Select();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

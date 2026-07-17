@@ -12,7 +12,8 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             comboCategory.SelectedItem = "Receivables";
-            LoadAccounts();            
+            LoadAccounts();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override void OnShown(EventArgs e)

@@ -18,6 +18,7 @@ namespace EasyBiz
             BeautifyGrid();
             comboPartyName.SelectedItem = "Cash In Hand"; // default selection
             comboPartyName.Select();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

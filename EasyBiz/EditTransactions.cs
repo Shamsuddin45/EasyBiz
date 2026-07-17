@@ -10,6 +10,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             comboType.SelectedIndex = 0;
+            ThemeManager.ApplyTheme(this);
         }
 
         private void OpenTransaction<T>(int voucherNo)

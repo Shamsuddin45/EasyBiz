@@ -279,7 +279,10 @@ namespace EasyBiz
                     break;
 
                 case Label label:
-                    label.ForeColor = p.ForeColor;
+                    if (label.Font.Bold)
+                        label.ForeColor = p.AccentColor;                    
+                    else if (label.BackColor == Color.Transparent)
+                        label.ForeColor = p.ForeColor;
                     break;
 
                 case TextBox textBox:

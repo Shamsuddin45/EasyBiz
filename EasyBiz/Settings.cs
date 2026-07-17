@@ -15,6 +15,7 @@ namespace EasyBiz
             InitFavoritesTab();
             InitUsersTab();
             InitThemeTab();
+            ThemeManager.ApplyTheme(this);
         }        
 
         private FlowLayoutPanel _themeSwatchPanel;

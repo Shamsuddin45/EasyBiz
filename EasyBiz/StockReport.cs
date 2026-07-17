@@ -21,6 +21,7 @@ namespace EasyBiz
             BeautifyGrid(gridStock, Color.FromArgb(52, 152, 219));
             BeautifyGrid(gridMovements, Color.FromArgb(39, 174, 96));
             setupDates();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

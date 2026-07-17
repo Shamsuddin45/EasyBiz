@@ -59,6 +59,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel1 = new Panel();
             tableLayoutPanel1 = new TableLayoutPanel();
+            label9 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -172,7 +173,7 @@
             // 
             dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(805, 88);
+            dateTimePicker1.Location = new Point(745, 88);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(192, 34);
             dateTimePicker1.TabIndex = 1;
@@ -181,7 +182,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F);
-            label1.Location = new Point(805, 57);
+            label1.Location = new Point(745, 57);
             label1.Name = "label1";
             label1.Size = new Size(46, 23);
             label1.TabIndex = 14;
@@ -230,7 +231,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 40;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1088, 268);
+            dataGridView1.Size = new Size(1259, 287);
             dataGridView1.TabIndex = 26;
             dataGridView1.TabStop = false;
             // 
@@ -288,9 +289,9 @@
             BtnClose.FlatStyle = FlatStyle.Flat;
             BtnClose.Font = new Font("Segoe UI", 10.2F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(16, 3);
+            BtnClose.Location = new Point(966, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(123, 50);
+            BtnClose.Size = new Size(123, 38);
             BtnClose.TabIndex = 8;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
@@ -308,9 +309,9 @@
             BtnSave.FlatStyle = FlatStyle.Flat;
             BtnSave.Font = new Font("Segoe UI", 10.2F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(145, 3);
+            BtnSave.Location = new Point(1095, 3);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(161, 50);
+            BtnSave.Size = new Size(161, 38);
             BtnSave.TabIndex = 7;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
@@ -341,7 +342,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10.2F);
-            label8.Location = new Point(805, 149);
+            label8.Location = new Point(745, 149);
             label8.Name = "label8";
             label8.Size = new Size(79, 23);
             label8.TabIndex = 32;
@@ -351,7 +352,7 @@
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.LightSeaGreen;
-            txtInvoiceNumber.Location = new Point(805, 180);
+            txtInvoiceNumber.Location = new Point(745, 180);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
             txtInvoiceNumber.ReadOnly = true;
             txtInvoiceNumber.Size = new Size(192, 34);
@@ -361,17 +362,18 @@
             // 
             // flowLayoutPanel1
             // 
-            flowLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             flowLayoutPanel1.Controls.Add(BtnSave);
             flowLayoutPanel1.Controls.Add(BtnClose);
+            flowLayoutPanel1.Dock = DockStyle.Bottom;
             flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
-            flowLayoutPanel1.Location = new Point(782, 518);
+            flowLayoutPanel1.Location = new Point(3, 542);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(309, 62);
+            flowLayoutPanel1.Size = new Size(1259, 48);
             flowLayoutPanel1.TabIndex = 33;
             // 
             // panel1
             // 
+            panel1.Controls.Add(label9);
             panel1.Controls.Add(txtCredit);
             panel1.Controls.Add(txtDebit);
             panel1.Controls.Add(label8);
@@ -391,7 +393,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1088, 235);
+            panel1.Size = new Size(1259, 235);
             panel1.TabIndex = 34;
             // 
             // tableLayoutPanel1
@@ -407,16 +409,27 @@
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40.64081F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 46.2057343F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 12.8676472F));
-            tableLayoutPanel1.Size = new Size(1094, 593);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 49.4097824F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 9.94940948F));
+            tableLayoutPanel1.Size = new Size(1265, 593);
             tableLayoutPanel1.TabIndex = 35;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(1028, 88);
+            label9.Name = "label9";
+            label9.Size = new Size(133, 76);
+            label9.TabIndex = 33;
+            label9.Text = "Journal \r\nVoucher";
+            label9.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // JournalVoucher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1094, 593);
+            ClientSize = new Size(1265, 593);
             Controls.Add(tableLayoutPanel1);
             Name = "JournalVoucher";
             StartPosition = FormStartPosition.CenterParent;
@@ -460,5 +473,6 @@
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel1;
         private TableLayoutPanel tableLayoutPanel1;
+        private Label label9;
     }
 }

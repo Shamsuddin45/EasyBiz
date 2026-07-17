@@ -151,8 +151,7 @@ namespace EasyBiz
         {
             try
             {
-                CashPayments cash_payments = new CashPayments();
-                ThemeManager.ApplyTheme(cash_payments);
+                CashPayments cash_payments = new CashPayments();                
                 cash_payments.ShowDialog();
             }
             catch (Exception ex)
@@ -165,8 +164,7 @@ namespace EasyBiz
         {
             try
             {
-                CashReceipts cash_receipts = new CashReceipts();
-                ThemeManager.ApplyTheme(cash_receipts);
+                CashReceipts cash_receipts = new CashReceipts();                
                 cash_receipts.ShowDialog();
             }
             catch (Exception ex)
@@ -179,8 +177,7 @@ namespace EasyBiz
         {
             try
             {
-                JournalVoucher journal_voucher = new JournalVoucher();
-                ThemeManager.ApplyTheme(journal_voucher);
+                JournalVoucher journal_voucher = new JournalVoucher();                
                 journal_voucher.ShowDialog();
             }
             catch (Exception ex)
@@ -193,8 +190,7 @@ namespace EasyBiz
         {
             try
             {
-                AccountsSetup accountsSetup = new AccountsSetup();
-                ThemeManager.ApplyTheme(accountsSetup);
+                AccountsSetup accountsSetup = new AccountsSetup();                
                 accountsSetup.ShowDialog();
             }
             catch (Exception ex)
@@ -207,8 +203,7 @@ namespace EasyBiz
         {
             try
             {
-                ViewLedger viewLedger = new ViewLedger();
-                ThemeManager.ApplyTheme(viewLedger);
+                ViewLedger viewLedger = new ViewLedger();                
                 viewLedger.ShowDialog();
             }
             catch (Exception ex)
@@ -221,8 +216,7 @@ namespace EasyBiz
         {
             try
             {
-                CashBook cashBook = new CashBook();
-                ThemeManager.ApplyTheme(cashBook);
+                CashBook cashBook = new CashBook();                
                 cashBook.ShowDialog();
             }
             catch (Exception ex)
@@ -245,8 +239,7 @@ namespace EasyBiz
         {
             try
             {
-                EditTransactions editTransactions = new EditTransactions();
-                ThemeManager.ApplyTheme(editTransactions);
+                EditTransactions editTransactions = new EditTransactions();                
                 editTransactions.ShowDialog();
             }
             catch (Exception ex)
@@ -289,8 +282,7 @@ namespace EasyBiz
         {
             try
             {
-                SaleInvoice saleInvoice = new SaleInvoice();
-                ThemeManager.ApplyTheme(saleInvoice);
+                SaleInvoice saleInvoice = new SaleInvoice();                
                 saleInvoice.ShowDialog();
             }
             catch (Exception ex)
@@ -303,8 +295,7 @@ namespace EasyBiz
         {
             try
             {
-                ProductSetup productSetup = new ProductSetup();
-                ThemeManager.ApplyTheme(productSetup);
+                ProductSetup productSetup = new ProductSetup();                
                 productSetup.ShowDialog();
             }
             catch (Exception ex)
@@ -317,8 +308,7 @@ namespace EasyBiz
         {
             try
             {
-                PurchaseInvoice purchaseInvoice = new PurchaseInvoice();
-                ThemeManager.ApplyTheme(purchaseInvoice);
+                PurchaseInvoice purchaseInvoice = new PurchaseInvoice();                
                 purchaseInvoice.ShowDialog();
             }
             catch (Exception ex)
@@ -331,8 +321,7 @@ namespace EasyBiz
         {
             try
             {
-                StockReport stockReport = new StockReport();
-                ThemeManager.ApplyTheme(stockReport);
+                StockReport stockReport = new StockReport();                
                 stockReport.ShowDialog();
             }
             catch (Exception ex)
@@ -345,8 +334,7 @@ namespace EasyBiz
         {
             try
             {
-                OpeningBalances openingBalances = new OpeningBalances();
-                ThemeManager.ApplyTheme(openingBalances);
+                OpeningBalances openingBalances = new OpeningBalances();                
                 openingBalances.ShowDialog();
             }
             catch (Exception ex)
@@ -361,8 +349,7 @@ namespace EasyBiz
         {
             try
             {
-                BankPayment bankPayment = new BankPayment();
-                ThemeManager.ApplyTheme(bankPayment);
+                BankPayment bankPayment = new BankPayment();                
                 bankPayment.ShowDialog();
             }
             catch (Exception ex)
@@ -375,8 +362,7 @@ namespace EasyBiz
         {
             try
             {
-                BankReceipt bankReceipt = new BankReceipt();
-                ThemeManager.ApplyTheme(bankReceipt);
+                BankReceipt bankReceipt = new BankReceipt();                
                 bankReceipt.ShowDialog();
             }
             catch (Exception ex)
@@ -389,8 +375,7 @@ namespace EasyBiz
         {
             try
             {
-                ChequeBook chequeBook = new ChequeBook();
-                ThemeManager.ApplyTheme(chequeBook);
+                ChequeBook chequeBook = new ChequeBook();                
                 chequeBook.ShowDialog();
             }
             catch (Exception ex)
@@ -420,8 +405,7 @@ namespace EasyBiz
             try
             {
                 using (var form = new BackupRestoreForm())
-                {
-                    ThemeManager.ApplyTheme(form);
+                {                    
                     form.ShowDialog();
                 }
             }
