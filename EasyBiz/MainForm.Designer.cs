@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             BtnCashPayment = new CustomButton();
             BtnCashReceipt = new CustomButton();
             BtnJournalVoucher = new CustomButton();
@@ -66,6 +67,8 @@
             settingsToolStripMenuItem = new ToolStripMenuItem();
             settingsToolStripMenuItem1 = new ToolStripMenuItem();
             enableFavoritesPanelToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            abountMeToolStripMenuItem = new ToolStripMenuItem();
             BtnBankReceipt = new CustomButton();
             BtnBankPayment = new CustomButton();
             BtnChequeBook = new CustomButton();
@@ -403,7 +406,7 @@
             // 
             menuStrip1.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, bankToolStripMenuItem, addNewToolStripMenuItem, itemMovementToolStripMenuItem, reportsToolStripMenuItem, settingsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, bankToolStripMenuItem, addNewToolStripMenuItem, itemMovementToolStripMenuItem, reportsToolStripMenuItem, settingsToolStripMenuItem, aboutToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1192, 28);
@@ -594,6 +597,20 @@
             enableFavoritesPanelToolStripMenuItem.Size = new Size(239, 26);
             enableFavoritesPanelToolStripMenuItem.Text = "Enable favorites panel";
             enableFavoritesPanelToolStripMenuItem.CheckStateChanged += enableFavoritesPanelToolStripMenuItem_CheckStateChanged;
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abountMeToolStripMenuItem });
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(64, 24);
+            aboutToolStripMenuItem.Text = "About";
+            // 
+            // abountMeToolStripMenuItem
+            // 
+            abountMeToolStripMenuItem.Name = "abountMeToolStripMenuItem";
+            abountMeToolStripMenuItem.Size = new Size(166, 26);
+            abountMeToolStripMenuItem.Text = "Abount Me";
+            abountMeToolStripMenuItem.Click += abountMeToolStripMenuItem_Click;
             // 
             // BtnBankReceipt
             // 
@@ -898,6 +915,7 @@
             Controls.Add(pnlFavorites);
             Controls.Add(menuStrip1);
             Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             Margin = new Padding(3, 4, 3, 4);
             Name = "MainForm";
@@ -969,5 +987,7 @@
         private ToolStripMenuItem settingsToolStripMenuItem1;
         private Label lblFavHeader;
         public ToolStripMenuItem enableFavoritesPanelToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem abountMeToolStripMenuItem;
     }
 }

@@ -2,6 +2,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using System.Runtime.CompilerServices;
 using System.Drawing;
+using EasyBiz.Forms;
 
 namespace EasyBiz
 {
@@ -20,14 +21,14 @@ namespace EasyBiz
             ThemeManager.ApplyTheme(this);
             ThemeManager.ThemeChanged += (s, e) =>
             {
-                if (!IsDisposed) 
-                    ThemeManager.ApplyTheme(this); 
-                    setupButtons(); LoadFavoritesPanel();
+                if (!IsDisposed)
+                    ThemeManager.ApplyTheme(this);
+                setupButtons(); LoadFavoritesPanel();
             };
-            
+
             Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName}" +
-                   (CurrentUser.IsAdmin ? " [Admin]" : "");            
-        }        
+                   (CurrentUser.IsAdmin ? " [Admin]" : "");
+        }
 
         /*public void ShowCashDetails()
         {
@@ -151,7 +152,7 @@ namespace EasyBiz
         {
             try
             {
-                CashPayments cash_payments = new CashPayments();                
+                CashPayments cash_payments = new CashPayments();
                 cash_payments.ShowDialog();
             }
             catch (Exception ex)
@@ -164,7 +165,7 @@ namespace EasyBiz
         {
             try
             {
-                CashReceipts cash_receipts = new CashReceipts();                
+                CashReceipts cash_receipts = new CashReceipts();
                 cash_receipts.ShowDialog();
             }
             catch (Exception ex)
@@ -177,7 +178,7 @@ namespace EasyBiz
         {
             try
             {
-                JournalVoucher journal_voucher = new JournalVoucher();                
+                JournalVoucher journal_voucher = new JournalVoucher();
                 journal_voucher.ShowDialog();
             }
             catch (Exception ex)
@@ -190,7 +191,7 @@ namespace EasyBiz
         {
             try
             {
-                AccountsSetup accountsSetup = new AccountsSetup();                
+                AccountsSetup accountsSetup = new AccountsSetup();
                 accountsSetup.ShowDialog();
             }
             catch (Exception ex)
@@ -203,7 +204,7 @@ namespace EasyBiz
         {
             try
             {
-                ViewLedger viewLedger = new ViewLedger();                
+                ViewLedger viewLedger = new ViewLedger();
                 viewLedger.ShowDialog();
             }
             catch (Exception ex)
@@ -216,7 +217,7 @@ namespace EasyBiz
         {
             try
             {
-                CashBook cashBook = new CashBook();                
+                CashBook cashBook = new CashBook();
                 cashBook.ShowDialog();
             }
             catch (Exception ex)
@@ -239,7 +240,7 @@ namespace EasyBiz
         {
             try
             {
-                EditTransactions editTransactions = new EditTransactions();                
+                EditTransactions editTransactions = new EditTransactions();
                 editTransactions.ShowDialog();
             }
             catch (Exception ex)
@@ -282,7 +283,7 @@ namespace EasyBiz
         {
             try
             {
-                SaleInvoice saleInvoice = new SaleInvoice();                
+                SaleInvoice saleInvoice = new SaleInvoice();
                 saleInvoice.ShowDialog();
             }
             catch (Exception ex)
@@ -295,7 +296,7 @@ namespace EasyBiz
         {
             try
             {
-                ProductSetup productSetup = new ProductSetup();                
+                ProductSetup productSetup = new ProductSetup();
                 productSetup.ShowDialog();
             }
             catch (Exception ex)
@@ -308,7 +309,7 @@ namespace EasyBiz
         {
             try
             {
-                PurchaseInvoice purchaseInvoice = new PurchaseInvoice();                
+                PurchaseInvoice purchaseInvoice = new PurchaseInvoice();
                 purchaseInvoice.ShowDialog();
             }
             catch (Exception ex)
@@ -321,7 +322,7 @@ namespace EasyBiz
         {
             try
             {
-                StockReport stockReport = new StockReport();                
+                StockReport stockReport = new StockReport();
                 stockReport.ShowDialog();
             }
             catch (Exception ex)
@@ -334,7 +335,7 @@ namespace EasyBiz
         {
             try
             {
-                OpeningBalances openingBalances = new OpeningBalances();                
+                OpeningBalances openingBalances = new OpeningBalances();
                 openingBalances.ShowDialog();
             }
             catch (Exception ex)
@@ -349,7 +350,7 @@ namespace EasyBiz
         {
             try
             {
-                BankPayment bankPayment = new BankPayment();                
+                BankPayment bankPayment = new BankPayment();
                 bankPayment.ShowDialog();
             }
             catch (Exception ex)
@@ -362,7 +363,7 @@ namespace EasyBiz
         {
             try
             {
-                BankReceipt bankReceipt = new BankReceipt();                
+                BankReceipt bankReceipt = new BankReceipt();
                 bankReceipt.ShowDialog();
             }
             catch (Exception ex)
@@ -375,7 +376,7 @@ namespace EasyBiz
         {
             try
             {
-                ChequeBook chequeBook = new ChequeBook();                
+                ChequeBook chequeBook = new ChequeBook();
                 chequeBook.ShowDialog();
             }
             catch (Exception ex)
@@ -405,7 +406,7 @@ namespace EasyBiz
             try
             {
                 using (var form = new BackupRestoreForm())
-                {                    
+                {
                     form.ShowDialog();
                 }
             }
@@ -468,17 +469,17 @@ namespace EasyBiz
             { LoadFavoritesPanel(); }
 
             // Enforce per-user module rights (no-op for admins — they always see everything).
-            ApplyUserRights();            
+            ApplyUserRights();
         }
 
         private void LoadFavoritesPanel()
         {
             // Check if any favorites exist and toggle the panel visibility immediately
-            pnlFavorites.Visible = FavoritesService.HasFavorites();            
+            pnlFavorites.Visible = FavoritesService.HasFavorites();
 
             pnlFavorites.Controls.Clear();
 
-            if (!pnlFavorites.Visible) 
+            if (!pnlFavorites.Visible)
                 enableFavoritesPanelToolStripMenuItem.Checked = false;
             //return;
             pnlFavorites.Controls.Add(lblFavHeader);
@@ -486,7 +487,7 @@ namespace EasyBiz
 
             foreach (var key in favoriteKeys)
             {
-                
+
                 var module = ModuleRegistry.GetByKey(key);
                 if (module == null) continue; // module might've been removed from registry
 
@@ -502,9 +503,9 @@ namespace EasyBiz
                     BorderSize = 1,
                     BorderColor = ThemeManager.Current.MenuForeColor
                 };
-                btn.Click += FavoriteButton_Click;                
+                btn.Click += FavoriteButton_Click;
                 pnlFavorites.Controls.Add(btn);
-                
+
             }
         }
 
@@ -590,7 +591,7 @@ namespace EasyBiz
             bankReceiptToolStripMenuItem.Enabled = allowed.Contains("bankreceipt");
             chequeBookToolStripMenuItem.Enabled = allowed.Contains("chequebook");
             cashBookToolStripMenuItem.Enabled = allowed.Contains("cashbook");
-        }        
+        }
 
         private void BtnSettings_Click(object sender, EventArgs e)
         {
@@ -647,6 +648,12 @@ namespace EasyBiz
             {
                 pnlFavorites.Visible = false;
             }
+        }
+
+        private void abountMeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.Show();
         }
     }
 }

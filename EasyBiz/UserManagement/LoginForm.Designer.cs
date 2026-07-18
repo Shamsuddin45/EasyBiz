@@ -27,6 +27,7 @@ namespace EasyBiz
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             lblTitle = new Label();
             lblSubtitle = new Label();
             label1 = new Label();
@@ -211,6 +212,7 @@ namespace EasyBiz
             Controls.Add(lblSubtitle);
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
