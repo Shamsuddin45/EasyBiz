@@ -1,18 +1,34 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Data.Sqlite;
 
 namespace EasyBiz
 {
     internal class DatabaseHelper
     {
-        private static readonly string _connectionString = "Data Source=easybiz.db";
+        private static readonly string _dbFolder = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "EasyBiz");
+
+        private static readonly string _dbPath = Path.Combine(_dbFolder, "easybiz.db");
+
+        private static readonly string _connectionString = $"Data Source={_dbPath}";
+
+        // NEW: expose the resolved path so Program.cs (migration) and
+        // GoogleDriveBackupService (backup source file) can reference it
+        // instead of hardcoding "easybiz.db" again.
+        public static string DatabasePath => _dbPath;
+
+        static DatabaseHelper()
+        {
+            Directory.CreateDirectory(_dbFolder);
+        }
 
         public static SqliteConnection GetConnection()
         {
             var connection = new SqliteConnection(_connectionString);
             connection.Open();
 
-            // Enable Foreign Key enforcement
             using (var command = connection.CreateCommand())
             {
                 command.CommandText = "PRAGMA foreign_keys = ON;";

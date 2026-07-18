@@ -469,6 +469,7 @@ namespace EasyBiz
 
             // Enforce per-user module rights (no-op for admins — they always see everything).
             ApplyUserRights();
+            _ = UpdateChecker.CheckForUpdateAsync(this); // don't await — don't block UI
         }
 
         private void LoadFavoritesPanel()

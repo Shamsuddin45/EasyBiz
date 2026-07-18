@@ -8,6 +8,14 @@ namespace EasyBiz
         [STAThread]
         static void Main()
         {
+            string oldDbPath = Path.Combine(AppContext.BaseDirectory, "easybiz.db");
+            string newDbPath = DatabaseHelper.DatabasePath;
+
+            if (File.Exists(oldDbPath) && !File.Exists(newDbPath))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(newDbPath)!);
+                File.Copy(oldDbPath, newDbPath);
+            }
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

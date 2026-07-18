@@ -78,11 +78,11 @@ namespace EasyBiz
             // 
             txtUsername.BackColor = Color.FromArgb(250, 250, 250);
             txtUsername.BorderStyle = BorderStyle.None;
-            txtUsername.Font = new Font("Segoe UI", 11F);
+            txtUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtUsername.ForeColor = Color.FromArgb(33, 33, 33);
             txtUsername.Location = new Point(49, 172);
             txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(310, 25);
+            txtUsername.Size = new Size(310, 27);
             txtUsername.TabIndex = 0;
             txtUsername.KeyDown += txtUsername_KeyDown;
             // 
@@ -196,7 +196,7 @@ namespace EasyBiz
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(250, 250, 250);
+            BackColor = Color.White;
             ClientSize = new Size(400, 490);
             Controls.Add(BtnExit);
             Controls.Add(pndPasswordLine);
