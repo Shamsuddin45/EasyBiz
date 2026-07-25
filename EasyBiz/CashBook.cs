@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Composition;
+using System.Data;
 
 namespace EasyBiz
 {
@@ -117,42 +118,43 @@ namespace EasyBiz
                 }
             }
 
-            // 3. Save-file dialog
-            using var saveDialog = new SaveFileDialog
-            {
-                Filter = "PDF files (*.pdf)|*.pdf",
-                Title = "Save Cashbook Report",
-                FileName = $"Cashbook_{dateFrom.Value:ddMMMyyyy}_to_{dateTo.Value:ddMMMyyyy}.pdf"
-            };
 
-            if (saveDialog.ShowDialog() != DialogResult.OK) return;
+            // Define your target directory (e.g., the system's Application Data folder)
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            folderPath = Path.Combine(folderPath, "CashbookAIReports");
+
+
+            // Ensure the directory exists; create it if it doesn't
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // Combine folder path and file name to get the full file path
+            string filePath = Path.Combine(folderPath, "Cashbook.pdf");
+            
 
             // 4. Generate PDF
             try
             {
                 CashbookReportPDF.Generate(
-                    outputPath: saveDialog.FileName,
+                    outputPath: filePath,
                     cashAccountName: "Cash In Hand",
                     branchOrLocation: "",
                     fromDate: dateFrom.Value.Date,
                     toDate: dateTo.Value.Date,
                     openingBalance: openingBalance,
                     rows: rows);
-
-                var open = MessageBox.Show(
-                    $"Cashbook exported successfully!\n\n{saveDialog.FileName}\n\nOpen the file now?",
-                    "Success", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-                if (open == DialogResult.Yes)
-                    System.Diagnostics.Process.Start(
-                        new System.Diagnostics.ProcessStartInfo(saveDialog.FileName)
-                        { UseShellExecute = true });
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            // Pass the file path to the ViewReports form and show it
+            ViewReports viewReports = new ViewReports(filePath);
+            viewReports.ShowDialog();
         }
         public void LoadCashBookEntries()
         {

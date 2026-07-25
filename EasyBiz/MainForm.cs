@@ -3,6 +3,8 @@ using QuestPDF.Infrastructure;
 using System.Runtime.CompilerServices;
 using System.Drawing;
 using EasyBiz.Forms;
+using Syncfusion.Windows.Forms.PdfViewer;
+
 
 namespace EasyBiz
 {
@@ -12,7 +14,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             BtnBackupData.Click += BtnBackupData_Click;
-
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JAaF5cX2pCfFN0Q35Zd0NwdUVGYVZURHxdSlZhSXxVdkJhXH9fdXRXTmFfUE19XEY=");
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
@@ -257,26 +259,30 @@ namespace EasyBiz
                 companyName: "EasyBiz",
                 reportTitle: "Trial Balance",
                 periodEndDate: DateOnly.FromDateTime(DateTime.Now),
-                preparedBy: "Finance Dept",
+                preparedBy: CurrentUser.FullName,
                 currency: "PKR"
             );
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
-            saveFileDialog.Title = "Save Trial Balance Report";
-            saveFileDialog.FileName = "TrialBalanceReport.pdf";
+            // Define your target directory (e.g., the system's Application Data folder)
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            folderPath = Path.Combine(folderPath, "CashbookAIReports");
 
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+
+            // Ensure the directory exists; create it if it doesn't
+            if (!Directory.Exists(folderPath))
             {
-                new TrialBalanceDocument(report).GeneratePdf(saveFileDialog.FileName);
-                var open = MessageBox.Show(
-                    "Trial Balance report generated successfully. Do you want to open it?",
-                    "Report Generated", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (open == DialogResult.Yes)
-                    System.Diagnostics.Process.Start(
-                        new System.Diagnostics.ProcessStartInfo(saveFileDialog.FileName)
-                        { UseShellExecute = true });
+                Directory.CreateDirectory(folderPath);
             }
+
+            // Combine folder path and file name to get the full file path
+            string filePath = Path.Combine(folderPath, "TrialBalanceReport.pdf");
+            // Pass the file path to the ViewReports form and show it
+            ViewReports viewReports = new ViewReports(filePath);
+            viewReports.ShowDialog();
+
+            // Generate the PDF
+            new TrialBalanceDocument(report).GeneratePdf(filePath);
+            
         }
 
         private void BtnSalesInvoice_Click(object sender, EventArgs e)

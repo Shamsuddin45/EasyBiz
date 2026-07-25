@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Composition;
 using System.Data;
 using System.Windows.Forms;
 
@@ -125,21 +126,26 @@ namespace EasyBiz
                 }
             }
 
-            // 4. Save-file dialog
-            using var saveDialog = new SaveFileDialog
+            // Define your target directory (e.g., the system's Application Data folder)
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            folderPath = Path.Combine(folderPath, "CashbookAIReports");
+
+
+            // Ensure the directory exists; create it if it doesn't
+            if (!Directory.Exists(folderPath))
             {
-                Filter = "PDF files (*.pdf)|*.pdf",
-                Title = "Save Ledger Report",
-                FileName = $"{accountName}_Ledger_{fromDate:ddMMMyyyy}_to_{toDate:ddMMMyyyy}.pdf"
-            };
+                Directory.CreateDirectory(folderPath);
+            }
 
-            if (saveDialog.ShowDialog() != DialogResult.OK) return;
-
+            // Combine folder path and file name to get the full file path
+            string filePath = Path.Combine(folderPath, "AccountLedger.pdf");
+            
+            
             // 5. Generate PDF
             try
             {
                 LedgerReportPDF.Generate(
-                    outputPath: saveDialog.FileName,
+                    outputPath: filePath,
                     accountName: accountName,
                     accountId: accountId,
                     accountType: accountType,
@@ -147,21 +153,17 @@ namespace EasyBiz
                     toDate: toDate,
                     openingBalance: openingBalance,
                     rows: rows);
-
-                var open = MessageBox.Show(
-                    $"Ledger exported successfully!\n\n{saveDialog.FileName}\n\nOpen the file now?",
-                    "Success", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-
-                if (open == DialogResult.Yes)
-                    System.Diagnostics.Process.Start(
-                        new System.Diagnostics.ProcessStartInfo(saveDialog.FileName)
-                        { UseShellExecute = true });
-            }
+                
+                }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
+            // Pass the file path to the ViewReports form and show it
+            ViewReports viewReports = new ViewReports(filePath);
+            viewReports.ShowDialog();
         }
 
         // ── Load accounts into combos ─────────────────────────────────────────

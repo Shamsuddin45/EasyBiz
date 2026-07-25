@@ -132,7 +132,7 @@
             BtnExportPdf.Name = "BtnExportPdf";
             BtnExportPdf.Size = new Size(229, 34);
             BtnExportPdf.TabIndex = 7;
-            BtnExportPdf.Text = "Export PDF";
+            BtnExportPdf.Text = "View / Export PDF";
             BtnExportPdf.TextColor = Color.White;
             BtnExportPdf.UseVisualStyleBackColor = false;
             BtnExportPdf.Click += BtnExportPdf_Click;
