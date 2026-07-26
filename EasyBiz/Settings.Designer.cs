@@ -68,7 +68,7 @@
             tabControl1 = new TabControl();
             tabPage3 = new TabPage();
             label1 = new Label();
-            comboBox1 = new ComboBox();
+            comboInWordsSettings = new ComboBox();
             btnUpdate = new CustomButton();
             tabPage1 = new TabPage();
             BtnSaveFavorites = new CustomButton();
@@ -127,7 +127,7 @@
             // 
             tabPage3.BackColor = Color.Transparent;
             tabPage3.Controls.Add(label1);
-            tabPage3.Controls.Add(comboBox1);
+            tabPage3.Controls.Add(comboInWordsSettings);
             tabPage3.Controls.Add(btnUpdate);
             tabPage3.Location = new Point(4, 29);
             tabPage3.Name = "tabPage3";
@@ -141,20 +141,20 @@
             label1.AutoSize = true;
             label1.Location = new Point(58, 116);
             label1.Name = "label1";
-            label1.Size = new Size(122, 20);
+            label1.Size = new Size(206, 20);
             label1.TabIndex = 4;
-            label1.Text = "Sale receipt print";
+            label1.Text = "Show Numbers in words label";
             // 
-            // comboBox1
+            // comboInWordsSettings
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Always ask", "Auto print", "Don't print" });
-            comboBox1.Location = new Point(58, 139);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(238, 31);
-            comboBox1.TabIndex = 3;
+            comboInWordsSettings.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboInWordsSettings.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboInWordsSettings.FormattingEnabled = true;
+            comboInWordsSettings.Items.AddRange(new object[] { "Off", "English", "Sindhi" });
+            comboInWordsSettings.Location = new Point(58, 139);
+            comboInWordsSettings.Name = "comboInWordsSettings";
+            comboInWordsSettings.Size = new Size(238, 31);
+            comboInWordsSettings.TabIndex = 3;
             // 
             // btnUpdate
             // 
@@ -168,7 +168,7 @@
             btnUpdate.ForeColor = Color.White;
             btnUpdate.Location = new Point(58, 226);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(153, 34);
+            btnUpdate.Size = new Size(122, 34);
             btnUpdate.TabIndex = 2;
             btnUpdate.Text = "Update";
             btnUpdate.TextColor = Color.White;
@@ -590,6 +590,6 @@
         private TabPage tabPage3;
         private CustomButton btnUpdate;
         private Label label1;
-        private ComboBox comboBox1;
+        private ComboBox comboInWordsSettings;
     }
 }

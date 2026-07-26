@@ -77,6 +77,8 @@ namespace EasyBiz
             // 
             // txtUsername
             // 
+            txtUsername.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            txtUsername.AutoCompleteSource = AutoCompleteSource.CustomSource;
             txtUsername.BackColor = Color.FromArgb(250, 250, 250);
             txtUsername.BorderStyle = BorderStyle.None;
             txtUsername.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -218,6 +220,7 @@ namespace EasyBiz
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
+            Load += LoginForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

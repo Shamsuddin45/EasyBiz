@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace EasyBiz
-{
+{    
     public partial class Settings : Form
     {
         private List<UserAccount> _users = new();
@@ -16,8 +16,9 @@ namespace EasyBiz
             InitUsersTab();
             InitThemeTab();
             ThemeManager.ApplyTheme(this);
+            comboInWordsSettings.SelectedItem = GlobalConfig.AppSettings.InWords.ToString();
         }        
-
+        
         private FlowLayoutPanel _themeSwatchPanel;
 
         private void InitThemeTab()
@@ -344,7 +345,14 @@ namespace EasyBiz
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            
+            if (comboInWordsSettings.SelectedItem != null)
+            {
+                // 4. UPDATE THIS TO USE THE NEW NAME
+                GlobalConfig.AppSettings.InWords = comboInWordsSettings.SelectedItem.ToString();
+                comboInWordsSettings.SelectedItem = comboInWordsSettings.SelectedItem.ToString();
+            }
+            GlobalConfig.SaveSettings();
+            MessageBox.Show("Settings updated successfully!","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
         }
     }
 }

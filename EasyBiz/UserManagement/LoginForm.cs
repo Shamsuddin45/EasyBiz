@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks; // Added for Task.Delay
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace EasyBiz
 {
@@ -13,7 +14,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
-            UserRightsDatabaseHelper.InitializeUserTables();    
+            UserRightsDatabaseHelper.InitializeUserTables();
             ThemeManager.ApplyTheme(this);
         }
 
@@ -112,6 +113,47 @@ namespace EasyBiz
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
+        }
+
+     
+
+        public List<string> GetUsers()
+        {
+        // 1. Create a list to hold the usernames
+        List<string> usersList = new List<string>();
+
+        using var conn = DatabaseHelper.GetConnection();
+
+        // Note: If GetConnection() doesn't open the connection automatically, 
+        // you will need to call conn.Open(); here before executing the command.
+
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "SELECT username FROM users";
+
+        using var reader = cmd.ExecuteReader();
+        while (reader.Read())
+        {
+            string username = reader.GetString(0);
+
+            // 2. Add each username to the list
+            usersList.Add(username);
+        }
+
+        // 3. Return the populated list
+        return usersList;
+    }
+
+    private void LoginForm_Load(object sender, EventArgs e)
+        {
+            // 1. Create the specific collection WinForms expects
+            var autoComplete = new AutoCompleteStringCollection();
+
+            // 2. Convert your List<string> to an array and add it to the collection
+            autoComplete.AddRange(GetUsers().ToArray());
+
+            // 3. Assign the collection to the textbox
+            txtUsername.AutoCompleteCustomSource = autoComplete;
+
         }
     }
 }

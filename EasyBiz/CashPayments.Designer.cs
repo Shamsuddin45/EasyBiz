@@ -59,8 +59,9 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel1 = new Panel();
             panel2 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            lblInWords = new Label();
             label8 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -131,17 +132,18 @@
             // 
             txtAmount.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtAmount.ForeColor = Color.Red;
-            txtAmount.Location = new Point(474, 157);
+            txtAmount.Location = new Point(117, 165);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(210, 34);
             txtAmount.TabIndex = 5;
             txtAmount.TextAlign = HorizontalAlignment.Center;
+            txtAmount.TextChanged += txtAmount_TextChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.2F);
-            label4.Location = new Point(396, 165);
+            label4.Location = new Point(39, 173);
             label4.Name = "label4";
             label4.Size = new Size(72, 23);
             label4.TabIndex = 7;
@@ -394,6 +396,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(lblInWords);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(dateTimePicker1);
             panel2.Controls.Add(txtAmount);
@@ -414,6 +417,27 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1230, 210);
             panel2.TabIndex = 21;
+            // 
+            // lblInWords
+            // 
+            lblInWords.AutoSize = true;
+            lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInWords.Location = new Point(352, 167);
+            lblInWords.Name = "lblInWords";
+            lblInWords.Size = new Size(41, 28);
+            lblInWords.TabIndex = 18;
+            lblInWords.Text = "n/a";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(1020, 59);
+            label8.Name = "label8";
+            label8.Size = new Size(152, 76);
+            label8.TabIndex = 17;
+            label8.Text = "Cash \r\nPayments";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
             // 
@@ -436,17 +460,6 @@
             tableLayoutPanel1.Size = new Size(1236, 623);
             tableLayoutPanel1.TabIndex = 22;
             // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(1020, 59);
-            label8.Name = "label8";
-            label8.Size = new Size(152, 76);
-            label8.TabIndex = 17;
-            label8.Text = "Cash \r\nPayments";
-            label8.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // CashPayments
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -457,6 +470,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cash Payment Voucher";
             FormClosing += CashPayments_FormClosing;
+            Load += CashPayments_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -498,5 +512,6 @@
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label8;
+        private Label lblInWords;
     }
 }

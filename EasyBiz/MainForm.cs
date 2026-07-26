@@ -467,6 +467,7 @@ namespace EasyBiz
         private void MainForm_Load(object sender, EventArgs e)
         {
             setupButtons();
+            GlobalConfig.LoadSettings();
             lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
 
             // If HasFavorites is true, Visible becomes true. If 0 favorites, it becomes false.
