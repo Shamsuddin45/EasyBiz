@@ -175,7 +175,7 @@ namespace EasyBiz
         public bool LoadTransactionForEditing(int voucherNo)
         {
             if (!CheckIfPurchaseVoucherExists(voucherNo))
-            {                
+            {
                 return false;
             }
 
@@ -283,12 +283,12 @@ namespace EasyBiz
                 }
             }
         }
-        
+
         private void comboProduct_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             if (comboProduct.SelectedIndex < 0) return;
-            if (comboProduct.Tag is not List<object[]> list) return;            
+            if (comboProduct.Tag is not List<object[]> list) return;
             if (comboProduct.SelectedIndex >= list.Count) return;
             var prod = list[comboProduct.SelectedIndex];
             txtRate.Text = Convert.ToDecimal(prod[2]).ToString("N2");
@@ -298,7 +298,7 @@ namespace EasyBiz
 
             txtQty.Enabled = isUnit;
             txtWeight.Enabled = !isUnit;
-            
+
         }
 
         private void BtnAddItem_Click(object sender, EventArgs e)
@@ -695,6 +695,7 @@ namespace EasyBiz
             else { e.Cancel = false; }
         }
 
+        public bool numberstowords = true;
         private void txtAmount_TextChanged(object sender, EventArgs e)
         {
             if (!txtAmount.Focused)
@@ -708,6 +709,17 @@ namespace EasyBiz
                 txtRate.Text = (amount / qty).ToString("N2");
             else if (weight > 0)
                 txtRate.Text = (amount / weight).ToString("N2");
+
+            if (long.TryParse(txtAmount.Text, out long amount1))
+            {
+                string amountInWords = numberstowords ? NumberConverter.ToWords(amount1) : NumberConverter.ToWordsSindhi(amount1);
+                lblInWords.Text = amountInWords;
+            }
+            else
+            {
+                lblInWords.Text = "-";
+            }
+
         }
 
         private void txtQty_TextChanged(object sender, EventArgs e)
@@ -743,6 +755,24 @@ namespace EasyBiz
         private void BtnAddItem_Enter(object sender, EventArgs e)
         {
             BtnAddItem_Click(sender, e);
+        }
+
+        private void PurchaseInvoice_Load(object sender, EventArgs e)
+        {
+            if (GlobalConfig.AppSettings.InWords == "Off")
+            {
+                lblInWords.Visible = false;
+            }
+            if (GlobalConfig.AppSettings.InWords == "English")
+            {
+                lblInWords.Visible = true;
+                numberstowords = true;
+            }
+            if (GlobalConfig.AppSettings.InWords == "Sindhi")
+            {
+                lblInWords.Visible = true;
+                numberstowords = false;
+            }
         }
     }
 

@@ -33,7 +33,7 @@ namespace EasyBiz
                         return true;
                     }
                     SelectNextControl(this.ActiveControl, true, true, true, true);
-                    return true;            
+                    return true;
 
                 case Keys.Control | Keys.S:
                     BtnSave_Click(this, EventArgs.Empty);
@@ -435,8 +435,8 @@ namespace EasyBiz
             }
         }
         private void BtnClose_Click(object sender, EventArgs e)
-        {            
-              Close();            
+        {
+            Close();
         }
 
         private void comboAccountId_SelectedIndexChanged(object sender, EventArgs e)
@@ -454,9 +454,9 @@ namespace EasyBiz
             if (comboAccountName.SelectedIndex != -1)
             {
                 // Sync account ID with selected name
-                comboAccountId.SelectedIndex = comboAccountName.SelectedIndex;             
+                comboAccountId.SelectedIndex = comboAccountName.SelectedIndex;
                 UpdateBalance(comboAccountName.SelectedIndex);
-            }            
+            }
         }
 
         public void AddDataToGrid()
@@ -491,7 +491,7 @@ namespace EasyBiz
             {
                 MessageBox.Show("Enter a valid Debit or Credit amount.");
             }
-        }        
+        }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -518,7 +518,7 @@ namespace EasyBiz
             {
                 txtDebit.Focus();
             }
-        }        
+        }
 
         private void JournalVoucher_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -535,6 +535,61 @@ namespace EasyBiz
                 }
             }
             else { e.Cancel = false; }
+        }
+
+        public bool numberstowords = true;
+        private void txtDebit_TextChanged(object sender, EventArgs e)
+        {
+            // 1. Check if the text can be successfully parsed into a long integer
+            if (long.TryParse(txtDebit.Text, out long amount))
+            {
+                // 2. If successful, pass the parsed number to your converter
+                string amountInWords = numberstowords ? NumberConverter.ToWords(amount) : NumberConverter.ToWordsSindhi(amount);
+
+                // 3. Display the result (for example, in a Label)
+                lblInWords.Text = amountInWords;
+            }
+            else
+            {
+                // 4. Handle invalid input gracefully
+                lblInWords.Text = "-";
+            }
+        }
+
+        private void txtCredit_TextChanged(object sender, EventArgs e)
+        {
+            // 1. Check if the text can be successfully parsed into a long integer
+            if (long.TryParse(txtCredit.Text, out long amount))
+            {
+                // 2. If successful, pass the parsed number to your converter
+                string amountInWords = numberstowords ? NumberConverter.ToWords(amount) : NumberConverter.ToWordsSindhi(amount);
+
+                // 3. Display the result (for example, in a Label)
+                lblInWords.Text = amountInWords;
+            }
+            else
+            {
+                // 4. Handle invalid input gracefully
+                lblInWords.Text = "-";
+            }
+        }
+
+        private void JournalVoucher_Load(object sender, EventArgs e)
+        {
+            if (GlobalConfig.AppSettings.InWords == "Off")
+            {
+                lblInWords.Visible = false;
+            }
+            if (GlobalConfig.AppSettings.InWords == "English")
+            {
+                lblInWords.Visible = true;
+                numberstowords = true;
+            }
+            if (GlobalConfig.AppSettings.InWords == "Sindhi")
+            {
+                lblInWords.Visible = true;
+                numberstowords = false;
+            }
         }
     }
 }

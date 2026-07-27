@@ -424,9 +424,9 @@
             lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblInWords.Location = new Point(352, 167);
             lblInWords.Name = "lblInWords";
-            lblInWords.Size = new Size(41, 28);
+            lblInWords.Size = new Size(20, 28);
             lblInWords.TabIndex = 18;
-            lblInWords.Text = "n/a";
+            lblInWords.Text = "-";
             // 
             // label8
             // 

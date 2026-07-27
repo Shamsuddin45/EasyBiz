@@ -59,8 +59,9 @@
             panel1 = new Panel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel2 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            lblInWords = new Label();
             label8 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -113,7 +114,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.2F);
-            label4.Location = new Point(400, 151);
+            label4.Location = new Point(43, 161);
             label4.Name = "label4";
             label4.Size = new Size(72, 23);
             label4.TabIndex = 21;
@@ -123,11 +124,12 @@
             // 
             txtAmount.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtAmount.ForeColor = Color.ForestGreen;
-            txtAmount.Location = new Point(478, 143);
+            txtAmount.Location = new Point(121, 153);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(210, 34);
             txtAmount.TabIndex = 5;
             txtAmount.TextAlign = HorizontalAlignment.Center;
+            txtAmount.TextChanged += txtAmount_TextChanged;
             // 
             // label3
             // 
@@ -278,34 +280,34 @@
             // 
             // BtnClose
             // 
-            BtnClose.BackColor = Color.FromArgb(192, 64, 0);
-            BtnClose.BackgroundColor = Color.FromArgb(192, 64, 0);
+            BtnClose.BackColor = Color.White;
+            BtnClose.BackgroundColor = Color.White;
             BtnClose.BorderColor = Color.Transparent;
             BtnClose.BorderRadius = 8;
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 10.2F);
-            BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(975, 3);
+            BtnClose.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnClose.ForeColor = Color.Red;
+            BtnClose.Location = new Point(992, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(128, 41);
+            BtnClose.Size = new Size(111, 41);
             BtnClose.TabIndex = 7;
             BtnClose.Text = "Close (Esc)";
-            BtnClose.TextColor = Color.White;
+            BtnClose.TextColor = Color.Red;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
             // BtnSave
             // 
-            BtnSave.BackColor = Color.FromArgb(52, 152, 219);
-            BtnSave.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnSave.BackColor = Color.ForestGreen;
+            BtnSave.BackgroundColor = Color.ForestGreen;
             BtnSave.BorderColor = Color.Transparent;
             BtnSave.BorderRadius = 8;
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 10.2F);
+            BtnSave.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             BtnSave.ForeColor = Color.White;
             BtnSave.Location = new Point(1109, 3);
             BtnSave.Name = "BtnSave";
@@ -393,6 +395,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(lblInWords);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(txtAmount);
             panel2.Controls.Add(label4);
@@ -413,6 +416,27 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1261, 196);
             panel2.TabIndex = 35;
+            // 
+            // lblInWords
+            // 
+            lblInWords.AutoSize = true;
+            lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInWords.Location = new Point(358, 156);
+            lblInWords.Name = "lblInWords";
+            lblInWords.Size = new Size(20, 28);
+            lblInWords.TabIndex = 32;
+            lblInWords.Text = "-";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label8.Location = new Point(1036, 58);
+            label8.Name = "label8";
+            label8.Size = new Size(135, 76);
+            label8.TabIndex = 31;
+            label8.Text = "Cash \r\nReceipts";
+            label8.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel1
             // 
@@ -435,17 +459,6 @@
             tableLayoutPanel1.Size = new Size(1267, 623);
             tableLayoutPanel1.TabIndex = 36;
             // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(1036, 58);
-            label8.Name = "label8";
-            label8.Size = new Size(135, 76);
-            label8.TabIndex = 31;
-            label8.Text = "Cash \r\nReceipts";
-            label8.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // CashReceipts
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -456,6 +469,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cash Receipt Voucher";
             FormClosing += CashReceipts_FormClosing;
+            Load += CashReceipts_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
@@ -497,5 +511,6 @@
         private Panel panel2;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label8;
+        private Label lblInWords;
     }
 }

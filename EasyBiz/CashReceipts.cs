@@ -23,6 +23,7 @@ namespace EasyBiz
             comboAccountName.Select();
             ThemeManager.ApplyTheme(this);
         }
+        public bool numberstowords = true;
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
@@ -492,8 +493,8 @@ namespace EasyBiz
 
                 // Update balance
                 UpdateBalance(comboAccountName.SelectedIndex);
-            }            
-        }        
+            }
+        }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
@@ -502,7 +503,7 @@ namespace EasyBiz
             {
                 PostEntry();
             }
-        }        
+        }
 
         private void BtnDeleteRow_Click(object sender, EventArgs e)
         {
@@ -532,6 +533,42 @@ namespace EasyBiz
                 }
             }
             else { e.Cancel = false; }
+        }
+
+        private void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            // 1. Check if the text can be successfully parsed into a long integer
+            if (long.TryParse(txtAmount.Text, out long amount))
+            {
+                // 2. If successful, pass the parsed number to your converter
+                string amountInWords = numberstowords ? NumberConverter.ToWords(amount) : NumberConverter.ToWordsSindhi(amount);
+
+                // 3. Display the result (for example, in a Label)
+                lblInWords.Text = amountInWords;
+            }
+            else
+            {
+                // 4. Handle invalid input gracefully
+                lblInWords.Text = "-";
+            }
+        }
+
+        private void CashReceipts_Load(object sender, EventArgs e)
+        {
+            if (GlobalConfig.AppSettings.InWords == "Off")
+            {
+                lblInWords.Visible = false;
+            }
+            if (GlobalConfig.AppSettings.InWords == "English")
+            {
+                lblInWords.Visible = true;
+                numberstowords = true;
+            }
+            if (GlobalConfig.AppSettings.InWords == "Sindhi")
+            {
+                lblInWords.Visible = true;
+                numberstowords = false;
+            }
         }
     }
 }

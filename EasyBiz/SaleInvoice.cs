@@ -74,7 +74,7 @@ namespace EasyBiz
             gridItems.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
             gridItems.DefaultCellStyle.SelectionForeColor = Color.Black;
             gridItems.DefaultCellStyle.BackColor = Color.White;
-            gridItems.DefaultCellStyle.ForeColor = Color.Black;            
+            gridItems.DefaultCellStyle.ForeColor = Color.Black;
 
             // Alternate Row Color
             gridItems.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
@@ -179,7 +179,7 @@ namespace EasyBiz
         public bool LoadTransactionForEditing(int voucherNo)
         {
             if (!CheckIfSaleVoucherExists(voucherNo))
-            {                
+            {
                 return false;
             }
 
@@ -215,7 +215,7 @@ namespace EasyBiz
 
                     // Discount
                     txtDiscount.Text = r.IsDBNull(4) ? "0" : r.GetDecimal(4).ToString("N2");
-                    
+
                 }
             }
 
@@ -311,7 +311,7 @@ namespace EasyBiz
 
             txtQty.Enabled = isUnit;
             txtWeight.Enabled = !isUnit;
-            
+
         }
 
         // ── Add Item Row ─────────────────────────────────────────────────────
@@ -699,7 +699,7 @@ namespace EasyBiz
                 ShopName = "EasyBiz",   // hardcode your shop name here, or pull from a settings row
                 VoucherNo = voucherNo,
                 InvoiceDate = dateInvoice.Value,
-                CustomerName = customerName,                
+                CustomerName = customerName,
                 Total = total,
                 Discount = discount,
                 NetAmount = net
@@ -729,7 +729,7 @@ namespace EasyBiz
             txtTotal.Text = "0";
             txtNetAmount.Text = "0";
             comboPartyName.SelectedIndex = -1;
-            comboPartyId.SelectedIndex = -1;            
+            comboPartyId.SelectedIndex = -1;
             ShowVoucherNo();
             LoadProducts(); // refresh stock
             comboPartyName.Focus();
@@ -738,7 +738,7 @@ namespace EasyBiz
         private void comboPartyName_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboPartyName.SelectedIndex >= 0)
-                comboPartyId.SelectedIndex = comboPartyName.SelectedIndex;            
+                comboPartyId.SelectedIndex = comboPartyName.SelectedIndex;
         }
 
         private void comboPartyId_SelectedIndexChanged(object sender, EventArgs e)
@@ -810,6 +810,7 @@ namespace EasyBiz
             }
         }
 
+        public bool numberstowords = true;
         private void txtAmount_TextChanged(object sender, EventArgs e)
         {
             if (!txtAmount.Focused)
@@ -823,6 +824,18 @@ namespace EasyBiz
                 txtRate.Text = (amount / qty).ToString("N2");
             else if (weight > 0)
                 txtRate.Text = (amount / weight).ToString("N2");
+
+
+            if (long.TryParse(txtAmount.Text, out long amount1))
+            {
+                string amountInWords = numberstowords ? NumberConverter.ToWords(amount1) : NumberConverter.ToWordsSindhi(amount1);
+                lblInWords.Text = amountInWords;
+            }
+            else
+            {
+                lblInWords.Text = "-";
+            }
+
         }
 
         private void txtDiscount_TextChanged(object sender, EventArgs e)
@@ -849,6 +862,23 @@ namespace EasyBiz
             }
             else { e.Cancel = false; }
         }
-        
+
+        private void SaleInvoice_Load(object sender, EventArgs e)
+        {
+            if (GlobalConfig.AppSettings.InWords == "Off")
+            {
+                lblInWords.Visible = false;
+            }
+            if (GlobalConfig.AppSettings.InWords == "English")
+            {
+                lblInWords.Visible = true;
+                numberstowords = true;
+            }
+            if (GlobalConfig.AppSettings.InWords == "Sindhi")
+            {
+                lblInWords.Visible = true;
+                numberstowords = false;
+            }
+        }
     }
 }

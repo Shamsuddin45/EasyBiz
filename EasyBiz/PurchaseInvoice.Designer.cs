@@ -72,6 +72,7 @@
             txtDiscount = new TextBox();
             txtTotal = new TextBox();
             txtNetAmount = new TextBox();
+            lblInWords = new Label();
             ((System.ComponentModel.ISupportInitialize)gridItems).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -80,7 +81,7 @@
             // txtVoucherNo
             // 
             txtVoucherNo.Font = new Font("Segoe UI", 12F);
-            txtVoucherNo.Location = new Point(353, 606);
+            txtVoucherNo.Location = new Point(459, 557);
             txtVoucherNo.Name = "txtVoucherNo";
             txtVoucherNo.ReadOnly = true;
             txtVoucherNo.Size = new Size(156, 34);
@@ -92,7 +93,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(353, 575);
+            label2.Location = new Point(370, 565);
             label2.Name = "label2";
             label2.Size = new Size(83, 23);
             label2.TabIndex = 4;
@@ -147,7 +148,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(14, 286);
+            label5.Location = new Point(13, 247);
             label5.Name = "label5";
             label5.Size = new Size(81, 28);
             label5.TabIndex = 13;
@@ -159,7 +160,7 @@
             comboProduct.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboProduct.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboProduct.FormattingEnabled = true;
-            comboProduct.Location = new Point(14, 317);
+            comboProduct.Location = new Point(13, 278);
             comboProduct.Name = "comboProduct";
             comboProduct.Size = new Size(328, 39);
             comboProduct.TabIndex = 5;
@@ -169,7 +170,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.2F);
-            label7.Location = new Point(347, 292);
+            label7.Location = new Point(346, 253);
             label7.Name = "label7";
             label7.Size = new Size(37, 23);
             label7.TabIndex = 16;
@@ -179,7 +180,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10.2F);
-            label6.Location = new Point(577, 292);
+            label6.Location = new Point(613, 254);
             label6.Name = "label6";
             label6.Size = new Size(44, 23);
             label6.TabIndex = 14;
@@ -209,7 +210,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10.2F);
-            label8.Location = new Point(458, 292);
+            label8.Location = new Point(479, 254);
             label8.Name = "label8";
             label8.Size = new Size(64, 23);
             label8.TabIndex = 21;
@@ -219,10 +220,10 @@
             // 
             gridItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridItems.Columns.AddRange(new DataGridViewColumn[] { colProductId, colProductName, colUnit, colQty, colWeight, colWeightUnit, colRate, colAmount });
-            gridItems.Location = new Point(14, 360);
+            gridItems.Location = new Point(14, 323);
             gridItems.Name = "gridItems";
             gridItems.RowHeadersWidth = 51;
-            gridItems.Size = new Size(935, 188);
+            gridItems.Size = new Size(935, 225);
             gridItems.TabIndex = 22;
             gridItems.TabStop = false;
             // 
@@ -290,7 +291,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10.2F);
-            label11.Location = new Point(642, 613);
+            label11.Location = new Point(706, 612);
             label11.Name = "label11";
             label11.Size = new Size(77, 23);
             label11.TabIndex = 34;
@@ -300,7 +301,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 10.2F);
-            label10.Location = new Point(614, 658);
+            label10.Location = new Point(678, 657);
             label10.Name = "label10";
             label10.Size = new Size(105, 23);
             label10.TabIndex = 33;
@@ -310,7 +311,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 10.2F);
-            label9.Location = new Point(673, 568);
+            label9.Location = new Point(737, 567);
             label9.Name = "label9";
             label9.Size = new Size(46, 23);
             label9.TabIndex = 32;
@@ -371,6 +372,7 @@
             BtnDeleteRow.Text = "Delete Row";
             BtnDeleteRow.TextColor = Color.White;
             BtnDeleteRow.UseVisualStyleBackColor = false;
+            BtnDeleteRow.Visible = false;
             BtnDeleteRow.Click += BtnDeleteRow_Click;
             // 
             // BtnAddItem
@@ -390,46 +392,47 @@
             BtnAddItem.Text = "Add Item";
             BtnAddItem.TextColor = Color.White;
             BtnAddItem.UseVisualStyleBackColor = false;
+            BtnAddItem.Visible = false;
             BtnAddItem.Click += BtnAddItem_Click;
             BtnAddItem.Enter += BtnAddItem_Enter;
             // 
             // BtnClose
             // 
-            BtnClose.BackColor = Color.OrangeRed;
-            BtnClose.BackgroundColor = Color.OrangeRed;
+            BtnClose.BackColor = Color.Snow;
+            BtnClose.BackgroundColor = Color.Snow;
             BtnClose.BorderColor = Color.Transparent;
             BtnClose.BorderRadius = 15;
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 10.2F);
-            BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(259, 689);
+            BtnClose.Font = new Font("Segoe UI", 9F);
+            BtnClose.ForeColor = Color.Red;
+            BtnClose.Location = new Point(696, 700);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(122, 50);
+            BtnClose.Size = new Size(106, 39);
             BtnClose.TabIndex = 13;
             BtnClose.Text = "Close (Esc)";
-            BtnClose.TextColor = Color.White;
+            BtnClose.TextColor = Color.Red;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
             // BtnSave
             // 
-            BtnSave.BackColor = Color.FromArgb(52, 152, 219);
-            BtnSave.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnSave.BackColor = Color.Gold;
+            BtnSave.BackgroundColor = Color.Gold;
             BtnSave.BorderColor = Color.Transparent;
             BtnSave.BorderRadius = 15;
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 10.2F);
-            BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(387, 689);
+            BtnSave.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnSave.ForeColor = Color.Black;
+            BtnSave.Location = new Point(808, 700);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(157, 50);
+            BtnSave.Size = new Size(141, 39);
             BtnSave.TabIndex = 12;
             BtnSave.Text = "Save (Ctrl+S)";
-            BtnSave.TextColor = Color.White;
+            BtnSave.TextColor = Color.Black;
             BtnSave.UseVisualStyleBackColor = false;
             BtnSave.Click += BtnSave_Click;
             // 
@@ -468,7 +471,7 @@
             // 
             label14.AutoSize = true;
             label14.Font = new Font("Segoe UI", 10.2F);
-            label14.Location = new Point(686, 292);
+            label14.Location = new Point(749, 253);
             label14.Name = "label14";
             label14.Size = new Size(72, 23);
             label14.TabIndex = 49;
@@ -477,9 +480,9 @@
             // txtQty
             // 
             txtQty.Font = new Font("Segoe UI", 13.8F);
-            txtQty.Location = new Point(347, 317);
+            txtQty.Location = new Point(346, 278);
             txtQty.Name = "txtQty";
-            txtQty.Size = new Size(108, 38);
+            txtQty.Size = new Size(126, 38);
             txtQty.TabIndex = 6;
             txtQty.Text = "0";
             txtQty.TextChanged += txtQty_TextChanged;
@@ -487,9 +490,9 @@
             // txtWeight
             // 
             txtWeight.Font = new Font("Segoe UI", 13.8F);
-            txtWeight.Location = new Point(458, 316);
+            txtWeight.Location = new Point(478, 278);
             txtWeight.Name = "txtWeight";
-            txtWeight.Size = new Size(108, 38);
+            txtWeight.Size = new Size(122, 38);
             txtWeight.TabIndex = 7;
             txtWeight.Text = "0";
             txtWeight.TextChanged += txtWeight_TextChanged;
@@ -497,9 +500,9 @@
             // txtRate
             // 
             txtRate.Font = new Font("Segoe UI", 13.8F);
-            txtRate.Location = new Point(572, 317);
+            txtRate.Location = new Point(606, 279);
             txtRate.Name = "txtRate";
-            txtRate.Size = new Size(108, 38);
+            txtRate.Size = new Size(137, 38);
             txtRate.TabIndex = 8;
             txtRate.Text = "0";
             txtRate.TextChanged += txtRate_TextChanged;
@@ -507,7 +510,7 @@
             // txtAmount
             // 
             txtAmount.Font = new Font("Segoe UI", 13.8F);
-            txtAmount.Location = new Point(686, 317);
+            txtAmount.Location = new Point(749, 278);
             txtAmount.Name = "txtAmount";
             txtAmount.Size = new Size(199, 38);
             txtAmount.TabIndex = 9;
@@ -517,7 +520,7 @@
             // txtDiscount
             // 
             txtDiscount.Font = new Font("Segoe UI", 13.8F);
-            txtDiscount.Location = new Point(725, 603);
+            txtDiscount.Location = new Point(789, 602);
             txtDiscount.Name = "txtDiscount";
             txtDiscount.Size = new Size(160, 38);
             txtDiscount.TabIndex = 11;
@@ -526,7 +529,7 @@
             // txtTotal
             // 
             txtTotal.Font = new Font("Segoe UI", 13.8F);
-            txtTotal.Location = new Point(725, 558);
+            txtTotal.Location = new Point(789, 557);
             txtTotal.Name = "txtTotal";
             txtTotal.ReadOnly = true;
             txtTotal.Size = new Size(160, 38);
@@ -535,17 +538,28 @@
             // txtNetAmount
             // 
             txtNetAmount.Font = new Font("Segoe UI", 13.8F);
-            txtNetAmount.Location = new Point(725, 648);
+            txtNetAmount.Location = new Point(789, 647);
             txtNetAmount.Name = "txtNetAmount";
             txtNetAmount.ReadOnly = true;
             txtNetAmount.Size = new Size(160, 38);
             txtNetAmount.TabIndex = 56;
+            // 
+            // lblInWords
+            // 
+            lblInWords.AutoSize = true;
+            lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInWords.Location = new Point(21, 657);
+            lblInWords.Name = "lblInWords";
+            lblInWords.Size = new Size(20, 28);
+            lblInWords.TabIndex = 57;
+            lblInWords.Text = "-";
             // 
             // PurchaseInvoice
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(994, 751);
+            Controls.Add(lblInWords);
             Controls.Add(txtNetAmount);
             Controls.Add(txtTotal);
             Controls.Add(txtDiscount);
@@ -583,6 +597,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "PurchaseInvoice";
             FormClosing += PurchaseInvoice_FormClosing;
+            Load += PurchaseInvoice_Load;
             ((System.ComponentModel.ISupportInitialize)gridItems).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -638,5 +653,6 @@
         private DataGridViewTextBoxColumn colWeightUnit;
         private DataGridViewTextBoxColumn colRate;
         private DataGridViewTextBoxColumn colAmount;
+        private Label lblInWords;
     }
 }

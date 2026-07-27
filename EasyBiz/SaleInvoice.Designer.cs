@@ -73,6 +73,7 @@
             txtTotal = new TextBox();
             txtNetAmount = new TextBox();
             panel2 = new Panel();
+            lblInWords = new Label();
             ((System.ComponentModel.ISupportInitialize)gridItems).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -83,7 +84,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(385, 471);
+            label2.Location = new Point(316, 464);
             label2.Name = "label2";
             label2.Size = new Size(83, 23);
             label2.TabIndex = 2;
@@ -93,7 +94,7 @@
             // txtVoucherNo
             // 
             txtVoucherNo.Font = new Font("Segoe UI", 12F);
-            txtVoucherNo.Location = new Point(385, 497);
+            txtVoucherNo.Location = new Point(405, 454);
             txtVoucherNo.Name = "txtVoucherNo";
             txtVoucherNo.ReadOnly = true;
             txtVoucherNo.Size = new Size(161, 34);
@@ -373,6 +374,7 @@
             BtnAddItem.Text = "Add Item";
             BtnAddItem.TextColor = Color.White;
             BtnAddItem.UseVisualStyleBackColor = false;
+            BtnAddItem.Visible = false;
             BtnAddItem.Click += BtnAddItem_Click;
             // 
             // BtnDeleteRow
@@ -393,45 +395,46 @@
             BtnDeleteRow.Text = "Delete Row";
             BtnDeleteRow.TextColor = Color.White;
             BtnDeleteRow.UseVisualStyleBackColor = false;
+            BtnDeleteRow.Visible = false;
             BtnDeleteRow.Click += BtnDeleteRow_Click;
             // 
             // BtnSave
             // 
-            BtnSave.BackColor = Color.FromArgb(52, 152, 219);
-            BtnSave.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnSave.BackColor = Color.LawnGreen;
+            BtnSave.BackgroundColor = Color.LawnGreen;
             BtnSave.BorderColor = Color.Transparent;
             BtnSave.BorderRadius = 15;
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 10.2F);
-            BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(442, 583);
+            BtnSave.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnSave.ForeColor = Color.Black;
+            BtnSave.Location = new Point(797, 610);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(155, 50);
+            BtnSave.Size = new Size(155, 39);
             BtnSave.TabIndex = 13;
             BtnSave.Text = "Save (Ctrl+S)";
-            BtnSave.TextColor = Color.White;
+            BtnSave.TextColor = Color.Black;
             BtnSave.UseVisualStyleBackColor = false;
             BtnSave.Click += BtnSave_Click;
             // 
             // BtnClose
             // 
-            BtnClose.BackColor = Color.OrangeRed;
-            BtnClose.BackgroundColor = Color.OrangeRed;
+            BtnClose.BackColor = Color.Snow;
+            BtnClose.BackgroundColor = Color.Snow;
             BtnClose.BorderColor = Color.Transparent;
             BtnClose.BorderRadius = 15;
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 10.2F);
-            BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(317, 583);
+            BtnClose.Font = new Font("Segoe UI", 9F);
+            BtnClose.ForeColor = Color.Red;
+            BtnClose.Location = new Point(672, 610);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(113, 50);
+            BtnClose.Size = new Size(113, 39);
             BtnClose.TabIndex = 14;
             BtnClose.Text = "Close (Esc)";
-            BtnClose.TextColor = Color.White;
+            BtnClose.TextColor = Color.Red;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 
@@ -555,6 +558,7 @@
             // panel2
             // 
             panel2.AutoScroll = true;
+            panel2.Controls.Add(lblInWords);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(txtVoucherNo);
             panel2.Controls.Add(label3);
@@ -593,6 +597,16 @@
             panel2.Size = new Size(994, 661);
             panel2.TabIndex = 47;
             // 
+            // lblInWords
+            // 
+            lblInWords.AutoSize = true;
+            lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInWords.Location = new Point(32, 557);
+            lblInWords.Name = "lblInWords";
+            lblInWords.Size = new Size(20, 28);
+            lblInWords.TabIndex = 47;
+            lblInWords.Text = "-";
+            // 
             // SaleInvoice
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -604,6 +618,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Sale Invoice";
             FormClosing += SaleInvoice_FormClosing;
+            Load += SaleInvoice_Load;
             ((System.ComponentModel.ISupportInitialize)gridItems).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -660,5 +675,6 @@
         private DataGridViewTextBoxColumn colWeightUnit;
         private DataGridViewTextBoxColumn colRate;
         private DataGridViewTextBoxColumn colAmount;
+        private Label lblInWords;
     }
 }

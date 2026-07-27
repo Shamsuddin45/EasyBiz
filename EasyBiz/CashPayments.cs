@@ -553,7 +553,7 @@ namespace EasyBiz
             else
             {
                 // 4. Handle invalid input gracefully
-                lblInWords.Text = "n/a";
+                lblInWords.Text = "-";
             }
         }
 

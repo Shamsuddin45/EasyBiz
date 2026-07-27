@@ -58,8 +58,9 @@
             txtInvoiceNumber = new TextBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel1 = new Panel();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            lblInWords = new Label();
             label9 = new Label();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -126,6 +127,7 @@
             txtDebit.Size = new Size(210, 34);
             txtDebit.TabIndex = 5;
             txtDebit.TextAlign = HorizontalAlignment.Center;
+            txtDebit.TextChanged += txtDebit_TextChanged;
             // 
             // label3
             // 
@@ -173,7 +175,7 @@
             // 
             dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(745, 88);
+            dateTimePicker1.Location = new Point(752, 50);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(192, 34);
             dateTimePicker1.TabIndex = 1;
@@ -182,7 +184,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F);
-            label1.Location = new Point(745, 57);
+            label1.Location = new Point(700, 56);
             label1.Name = "label1";
             label1.Size = new Size(46, 23);
             label1.TabIndex = 14;
@@ -337,22 +339,23 @@
             txtCredit.Size = new Size(210, 34);
             txtCredit.TabIndex = 6;
             txtCredit.TextAlign = HorizontalAlignment.Center;
+            txtCredit.TextChanged += txtCredit_TextChanged;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10.2F);
-            label8.Location = new Point(745, 149);
+            label8.Location = new Point(700, 103);
             label8.Name = "label8";
-            label8.Size = new Size(79, 23);
+            label8.Size = new Size(43, 23);
             label8.TabIndex = 32;
-            label8.Text = "Invoice #";
+            label8.Text = "Inv#";
             // 
             // txtInvoiceNumber
             // 
             txtInvoiceNumber.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtInvoiceNumber.ForeColor = Color.LightSeaGreen;
-            txtInvoiceNumber.Location = new Point(745, 180);
+            txtInvoiceNumber.Location = new Point(752, 97);
             txtInvoiceNumber.Name = "txtInvoiceNumber";
             txtInvoiceNumber.ReadOnly = true;
             txtInvoiceNumber.Size = new Size(192, 34);
@@ -373,6 +376,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(lblInWords);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(txtCredit);
             panel1.Controls.Add(txtDebit);
@@ -396,6 +400,27 @@
             panel1.Size = new Size(1259, 235);
             panel1.TabIndex = 34;
             // 
+            // lblInWords
+            // 
+            lblInWords.AutoSize = true;
+            lblInWords.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInWords.Location = new Point(723, 186);
+            lblInWords.Name = "lblInWords";
+            lblInWords.Size = new Size(20, 28);
+            lblInWords.TabIndex = 34;
+            lblInWords.Text = "-";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(1029, 50);
+            label9.Name = "label9";
+            label9.Size = new Size(133, 76);
+            label9.TabIndex = 33;
+            label9.Text = "Journal \r\nVoucher";
+            label9.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
@@ -414,17 +439,6 @@
             tableLayoutPanel1.Size = new Size(1265, 593);
             tableLayoutPanel1.TabIndex = 35;
             // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font("Trebuchet MS", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label9.Location = new Point(1028, 88);
-            label9.Name = "label9";
-            label9.Size = new Size(133, 76);
-            label9.TabIndex = 33;
-            label9.Text = "Journal \r\nVoucher";
-            label9.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // JournalVoucher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -435,6 +449,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Journal Voucher";
             FormClosing += JournalVoucher_FormClosing;
+            Load += JournalVoucher_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             flowLayoutPanel1.ResumeLayout(false);
             panel1.ResumeLayout(false);
@@ -474,5 +489,6 @@
         private Panel panel1;
         private TableLayoutPanel tableLayoutPanel1;
         private Label label9;
+        private Label lblInWords;
     }
 }
