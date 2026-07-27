@@ -151,41 +151,41 @@
             // 
             // BtnSave
             // 
-            BtnSave.BackColor = Color.FromArgb(52, 152, 219);
-            BtnSave.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnSave.BackColor = Color.Tomato;
+            BtnSave.BackgroundColor = Color.Tomato;
             BtnSave.BorderColor = Color.Transparent;
             BtnSave.BorderRadius = 8;
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 10.2F);
-            BtnSave.ForeColor = Color.White;
+            BtnSave.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnSave.ForeColor = Color.Black;
             BtnSave.Location = new Point(1080, 3);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(147, 36);
             BtnSave.TabIndex = 6;
             BtnSave.Text = "Save (Ctrl+S)";
-            BtnSave.TextColor = Color.White;
+            BtnSave.TextColor = Color.Black;
             BtnSave.UseVisualStyleBackColor = false;
             BtnSave.Click += BtnSave_Click;
             // 
             // BtnClose
             // 
-            BtnClose.BackColor = Color.FromArgb(192, 64, 0);
-            BtnClose.BackgroundColor = Color.FromArgb(192, 64, 0);
+            BtnClose.BackColor = Color.White;
+            BtnClose.BackgroundColor = Color.White;
             BtnClose.BorderColor = Color.Transparent;
             BtnClose.BorderRadius = 8;
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 10.2F);
-            BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(941, 3);
+            BtnClose.Font = new Font("Segoe UI", 9F);
+            BtnClose.ForeColor = Color.Red;
+            BtnClose.Location = new Point(967, 3);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(133, 36);
+            BtnClose.Size = new Size(107, 36);
             BtnClose.TabIndex = 7;
             BtnClose.Text = "Close (Esc)";
-            BtnClose.TextColor = Color.White;
+            BtnClose.TextColor = Color.Red;
             BtnClose.UseVisualStyleBackColor = false;
             BtnClose.Click += BtnClose_Click;
             // 

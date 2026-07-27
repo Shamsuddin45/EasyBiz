@@ -1,16 +1,27 @@
 ﻿using System.Composition;
 using System.Data;
+using System.Data.Common;
 
 namespace EasyBiz
 {
     public partial class CashBook : Form
     {
+        // Guards against overlapping loads (e.g. rapid F5 presses) and lets
+        // Escape / form-close wait for an in-flight operation instead of
+        // tearing the form down mid-query.
+        private CancellationTokenSource? _cts;
+        private Task _pendingOperation = Task.CompletedTask;
+
         public CashBook()
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
-            LoadCashBookEntries();
             ThemeManager.ApplyTheme(this);
+
+            // Constructors can't be async, so kick off the initial load as a
+            // fire-and-forget task. Errors are still handled inside
+            // LoadCashBookEntriesAsync's own try/catch.
+            _ = LoadCashBookEntriesAsync();
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -18,11 +29,11 @@ namespace EasyBiz
             switch (keyData)
             {
                 case Keys.F5:
-                    BtnLoad_Click(this, EventArgs.Empty);
+                    _ = BtnLoad_ClickAsync();
                     return true;
 
                 case Keys.F1:
-                    BtnExport_Click(this, EventArgs.Empty);
+                    _ = BtnExport_ClickAsync();
                     return true;
 
                 case Keys.Escape:
@@ -31,18 +42,34 @@ namespace EasyBiz
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        private decimal GetOpeningBalance(System.Data.Common.DbConnection connection, DateTime beforeDate)
+
+        protected override async void OnFormClosing(FormClosingEventArgs e)
         {
-            // Stored opening balance of Cash In Hand (account_id = 10001)
+            // Give any in-flight DB/PDF work a chance to finish/cancel
+            // cleanly instead of disposing the form underneath it.
+            _cts?.Cancel();
+            try
+            {
+                await _pendingOperation;
+            }
+            catch
+            {
+                // Already surfaced to the user where it happened.
+            }
+            base.OnFormClosing(e);
+        }
+
+        private async Task<decimal> GetOpeningBalanceAsync(DbConnection connection, DateTime beforeDate, CancellationToken ct)
+        {
             decimal storedOB = 0;
-            using (var obCmd = connection.CreateCommand())
+            await using (var obCmd = connection.CreateCommand())
             {
                 obCmd.CommandText = "SELECT IFNULL(opening_balance, 0) FROM accounts WHERE account_id = 10001";
-                storedOB = Convert.ToDecimal(obCmd.ExecuteScalar());
+                var obResult = await obCmd.ExecuteScalarAsync(ct);
+                storedOB = Convert.ToDecimal(obResult);
             }
 
-            // Transaction movement before beforeDate (excluding Cash In Hand account rows)
-            using var cmd = connection.CreateCommand();
+            await using var cmd = connection.CreateCommand();
             cmd.CommandText = @"
         SELECT IFNULL(SUM(credit), 0) - IFNULL(SUM(debit), 0)
         FROM   transactions
@@ -51,31 +78,38 @@ namespace EasyBiz
 
             var p = cmd.CreateParameter();
             p.ParameterName = "@BeforeDate";
-            p.DbType = System.Data.DbType.Date;
-            p.Value = beforeDate.Date;
+            p.DbType = System.Data.DbType.String;              // <-- string, not Date
+            p.Value = beforeDate.Date.ToString("yyyy-MM-dd");   // <-- formatted string
             cmd.Parameters.Add(p);
 
-            var result = cmd.ExecuteScalar();
+            var result = await cmd.ExecuteScalarAsync(ct);
             decimal txMovement = result == null || result == DBNull.Value ? 0m : Convert.ToDecimal(result);
 
             return storedOB + txMovement;
         }
 
-        private void PrintCashbook()
+        private async Task PrintCashbookAsync()
         {
-            // 1. Opening balance
-            decimal openingBalance = 0;
-            using (var connection = DatabaseHelper.GetConnection())
-                openingBalance = GetOpeningBalance(connection, dateFrom.Value.Date);
+            var cts = new CancellationTokenSource();
+            _cts = cts;
+            var ct = cts.Token;
 
-            // 2. Load transactions for the period
-            var rows = new List<CashbookRow>();
-            decimal runningBalance = openingBalance;
-
-            using (var connection = DatabaseHelper.GetConnection())
-            using (var cmd = connection.CreateCommand())
+            BtnExport.Enabled = false;
+            try
             {
-                cmd.CommandText = @"
+                // 1. Opening balance
+                decimal openingBalance;
+                await using (var connection = DatabaseHelper.GetConnection())
+                    openingBalance = await GetOpeningBalanceAsync(connection, dateFrom.Value.Date, ct);
+
+                // 2. Load transactions for the period
+                var rows = new List<CashbookRow>();
+                decimal runningBalance = openingBalance;
+
+                await using (var connection = DatabaseHelper.GetConnection())
+                await using (var cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = @"
             SELECT
                 transaction_date,
                 transaction_type,
@@ -89,75 +123,90 @@ namespace EasyBiz
             AND   lower(account_name) != 'cash in hand'
             ORDER BY transaction_type ASC, transaction_date ASC";
 
-                cmd.Parameters.AddWithValue("@FromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("@ToDate", dateTo.Value.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@FromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
+                    cmd.Parameters.AddWithValue("@ToDate", dateTo.Value.ToString("yyyy-MM-dd"));
 
-                using (var reader = cmd.ExecuteReader())
-                {
-                    int srNo = 1;
-                    while (reader.Read())
+                    await using (var reader = await cmd.ExecuteReaderAsync(ct))
                     {
-                        decimal debit = reader.IsDBNull(5) ? 0 : Convert.ToDecimal(reader["debit"]);
-                        decimal credit = reader.IsDBNull(6) ? 0 : Convert.ToDecimal(reader["credit"]);
-
-                        runningBalance += credit - debit;
-
-                        rows.Add(new CashbookRow
+                        int srNo = 1;
+                        while (await reader.ReadAsync(ct))
                         {
-                            SrNo = srNo++,
-                            Date = Convert.ToDateTime(reader["transaction_date"]).ToString("dd-MMM-yyyy"),
-                            VoucherNo = reader["voucher_no"]?.ToString() ?? "",
-                            Type = reader["transaction_type"]?.ToString() ?? "",
-                            Description = reader["description"]?.ToString() ?? "",
-                            AccountName = reader["account_name"]?.ToString() ?? "",
-                            CashIn = credit,   // in your schema credit = money coming IN
-                            CashOut = debit,    // debit = money going OUT
-                            Balance = runningBalance
-                        });
+                            decimal debit = await reader.IsDBNullAsync(5, ct) ? 0 : Convert.ToDecimal(reader["debit"]);
+                            decimal credit = await reader.IsDBNullAsync(6, ct) ? 0 : Convert.ToDecimal(reader["credit"]);
+
+                            runningBalance += credit - debit;
+
+                            rows.Add(new CashbookRow
+                            {
+                                SrNo = srNo++,
+                                Date = Convert.ToDateTime(reader["transaction_date"]).ToString("dd-MMM-yyyy"),
+                                VoucherNo = reader["voucher_no"]?.ToString() ?? "",
+                                Type = reader["transaction_type"]?.ToString() ?? "",
+                                Description = reader["description"]?.ToString() ?? "",
+                                AccountName = reader["account_name"]?.ToString() ?? "",
+                                CashIn = credit,   // in your schema credit = money coming IN
+                                CashOut = debit,   // debit = money going OUT
+                                Balance = runningBalance
+                            });
+                        }
                     }
                 }
+
+                // Define your target directory (e.g., the system's Application Data folder)
+                string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                folderPath = Path.Combine(folderPath, "CashbookAIReports");
+
+                // Ensure the directory exists; create it if it doesn't
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                // Combine folder path and file name to get the full file path
+                string filePath = Path.Combine(folderPath, "Cashbook.pdf");
+
+                // 4. Generate PDF off the UI thread — QuestPDF generation is
+                // CPU/IO bound and synchronous, so Task.Run keeps the UI responsive.
+                try
+                {
+                    await Task.Run(() => CashbookReportPDF.Generate(
+                        outputPath: filePath,
+                        cashAccountName: "Cash In Hand",
+                        branchOrLocation: "",
+                        fromDate: dateFrom.Value.Date,
+                        toDate: dateTo.Value.Date,
+                        openingBalance: openingBalance,
+                        rows: rows), ct);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Pass the file path to the ViewReports form and show it
+                using ViewReports viewReports = new ViewReports(filePath);
+                viewReports.ShowDialog();
             }
-
-
-            // Define your target directory (e.g., the system's Application Data folder)
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            folderPath = Path.Combine(folderPath, "CashbookAIReports");
-
-
-            // Ensure the directory exists; create it if it doesn't
-            if (!Directory.Exists(folderPath))
+            catch (OperationCanceledException)
             {
-                Directory.CreateDirectory(folderPath);
+                // Form closed / superseded while exporting — nothing to report.
             }
-
-            // Combine folder path and file name to get the full file path
-            string filePath = Path.Combine(folderPath, "Cashbook.pdf");
-            
-
-            // 4. Generate PDF
-            try
+            finally
             {
-                CashbookReportPDF.Generate(
-                    outputPath: filePath,
-                    cashAccountName: "Cash In Hand",
-                    branchOrLocation: "",
-                    fromDate: dateFrom.Value.Date,
-                    toDate: dateTo.Value.Date,
-                    openingBalance: openingBalance,
-                    rows: rows);
-                
+                if (_cts == cts) _cts = null;
+                if (!IsDisposed) BtnExport.Enabled = true;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            // Pass the file path to the ViewReports form and show it
-            ViewReports viewReports = new ViewReports(filePath);
-            viewReports.ShowDialog();
         }
-        public void LoadCashBookEntries()
+
+        public async Task LoadCashBookEntriesAsync()
         {
+            var cts = new CancellationTokenSource();
+            _cts = cts;
+            var ct = cts.Token;
+
+            BtnLoad.Enabled = false;
             try
             {
                 dataGridView1.SuspendLayout();
@@ -168,14 +217,14 @@ namespace EasyBiz
                 decimal totalDebit = 0;
                 decimal totalCredit = 0;
                 decimal runningBalance = 0;
-                decimal openingBalance = 0;
+                decimal openingBalance;
 
-                using (var connection = DatabaseHelper.GetConnection())
+                await using (var connection = DatabaseHelper.GetConnection())
                 {
                     // =========================================
                     // GET OPENING BALANCE (Fixed to match PrintCashbook)
                     // =========================================
-                    openingBalance = GetOpeningBalance(connection, dateFrom.Value.Date);
+                    openingBalance = await GetOpeningBalanceAsync(connection, dateFrom.Value.Date, ct);
                     runningBalance = openingBalance;
 
                     int srNo = 1;
@@ -197,33 +246,34 @@ namespace EasyBiz
                     // =========================================
                     // LOAD CASH BOOK ENTRIES
                     // =========================================
-                    using (var command = connection.CreateCommand())
+                    await using (var command = connection.CreateCommand())
                     {
                         command.CommandText = @"
-                    SELECT 
-                        transaction_date,
-                        transaction_type,
-                        voucher_no,
-                        account_name,
-                        description,
-                        debit,
-                        credit
-                    FROM transactions
-                    WHERE date(transaction_date) BETWEEN date(@fromDate) AND date(@toDate)
-                    AND lower(account_name) != 'cash in hand'
-                    ORDER BY transaction_type ASC, transaction_date ASC";
+        SELECT 
+            transaction_date,
+            transaction_type,
+            voucher_no,
+            account_name,
+            description,
+            debit,
+            credit
+        FROM transactions
+        WHERE date(transaction_date) BETWEEN date(@fromDate) AND date(@toDate)
+        AND lower(account_name) != 'cash in hand'
+        ORDER BY transaction_type ASC, transaction_date ASC";
 
+                        // Bind as formatted strings, same as PrintCashbookAsync(), not DbType.Date
                         command.Parameters.AddWithValue("@fromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
                         command.Parameters.AddWithValue("@toDate", dateTo.Value.ToString("yyyy-MM-dd"));
 
-                        using (var reader = command.ExecuteReader())
+                        await using (var reader = await command.ExecuteReaderAsync(ct))
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync(ct))
                             {
                                 // =========================================
                                 // SAFE VALUE READING (Fixed Indexes)
                                 // =========================================
-                                DateTime transactionDate = reader.IsDBNull(0)
+                                DateTime transactionDate = await reader.IsDBNullAsync(0, ct)
                                     ? DateTime.Now
                                     : Convert.ToDateTime(reader["transaction_date"]);
 
@@ -233,8 +283,8 @@ namespace EasyBiz
                                 string description = reader["description"]?.ToString() ?? "";
 
                                 // Fixed: Debit is index 5, Credit is index 6
-                                decimal debit = reader.IsDBNull(5) ? 0 : Convert.ToDecimal(reader["debit"]);
-                                decimal credit = reader.IsDBNull(6) ? 0 : Convert.ToDecimal(reader["credit"]);
+                                decimal debit = await reader.IsDBNullAsync(5, ct) ? 0 : Convert.ToDecimal(reader["debit"]);
+                                decimal credit = await reader.IsDBNullAsync(6, ct) ? 0 : Convert.ToDecimal(reader["credit"]);
 
                                 // =========================================
                                 // TOTALS & BALANCE
@@ -274,6 +324,10 @@ namespace EasyBiz
 
                 lblRunningBalance.Text = $"Balance: {runningBalance:N2}";
             }
+            catch (OperationCanceledException)
+            {
+                // Form closed / superseded while loading — nothing to report.
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(
@@ -285,13 +339,33 @@ namespace EasyBiz
             }
             finally
             {
-                dataGridView1.ResumeLayout();
+                if (!IsDisposed)
+                {
+                    dataGridView1.ResumeLayout();
+                    BtnLoad.Enabled = true;
+                }
+                if (_cts == cts) _cts = null;
             }
         }
 
-        private void BtnLoad_Click(object sender, EventArgs e)
+        private async Task BtnLoad_ClickAsync()
         {
-            LoadCashBookEntries();
+            await LoadCashBookEntriesAsync();
+        }
+
+        private async void BtnLoad_Click(object sender, EventArgs e)
+        {
+            await BtnLoad_ClickAsync();
+        }
+
+        private async Task BtnExport_ClickAsync()
+        {
+            await PrintCashbookAsync();
+        }
+
+        private async void BtnExport_Click(object sender, EventArgs e)
+        {
+            await BtnExport_ClickAsync();
         }
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -348,7 +422,7 @@ namespace EasyBiz
                     {
                         row.DefaultCellStyle.BackColor = Color.FromArgb(235, 255, 255); // Soft cyan
                         row.DefaultCellStyle.ForeColor = Color.FromArgb(0, 153, 153);   // Dark cyan text
-                    }                    
+                    }
                     else
                     {
                         // 4. Default reset fallback to prevent scrolling display bugs
@@ -357,11 +431,6 @@ namespace EasyBiz
                     }
                 }
             }
-        }
-
-        private void BtnExport_Click(object sender, EventArgs e)
-        {
-            PrintCashbook();
         }
     }
 }
