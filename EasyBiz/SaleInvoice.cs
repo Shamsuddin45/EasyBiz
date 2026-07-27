@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Windows.Forms;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -13,8 +14,9 @@ namespace EasyBiz
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
+            GlobalConfig.LoadSettings();
             LoadAccounts();
-            LoadProducts();
+            LoadProducts();            
             ShowVoucherNo();
             BeautifyGrid();
             comboPartyName.SelectedItem = "Cash In Hand";
@@ -671,14 +673,20 @@ namespace EasyBiz
                 MessageBox.Show($"Sale Invoice #{voucherNo} {mode} successfully!",
                     "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // ── NEW: offer to print a thermal receipt ───────────────────────
-                if (MessageBox.Show("Print receipt now?", "Print Receipt",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (GlobalConfig.AppSettings.PrintSaleReceipt == "Always ask")
                 {
-                    // ── MODIFIED: Removed payMode parameter from BuildReceiptData ──
-                    ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount), preview: true);
+                    // ── NEW: offer to print a thermal receipt ───────────────────────
+                    if (MessageBox.Show("Print receipt now?", "Print Receipt",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {                        
+                        ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount));
+                    }
                 }
-
+                if (GlobalConfig.AppSettings.PrintSaleReceipt == "Auto print")
+                {
+                    ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount));
+                }
+                
                 // Reset to new-entry mode
                 _editingVoucherNo = null;
                 txtVoucherNo.ReadOnly = false;
@@ -879,6 +887,7 @@ namespace EasyBiz
                 lblInWords.Visible = true;
                 numberstowords = false;
             }
+
         }
     }
 }

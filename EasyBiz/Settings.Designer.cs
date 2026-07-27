@@ -67,6 +67,8 @@
         {
             tabControl1 = new TabControl();
             tabPage3 = new TabPage();
+            label2 = new Label();
+            comboPrintSaleReceipt = new ComboBox();
             label1 = new Label();
             comboInWordsSettings = new ComboBox();
             btnUpdate = new CustomButton();
@@ -126,6 +128,8 @@
             // tabPage3
             // 
             tabPage3.BackColor = Color.Transparent;
+            tabPage3.Controls.Add(label2);
+            tabPage3.Controls.Add(comboPrintSaleReceipt);
             tabPage3.Controls.Add(label1);
             tabPage3.Controls.Add(comboInWordsSettings);
             tabPage3.Controls.Add(btnUpdate);
@@ -136,14 +140,34 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "General";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(58, 220);
+            label2.Name = "label2";
+            label2.Size = new Size(119, 20);
+            label2.TabIndex = 6;
+            label2.Text = "Print sale receipt";
+            // 
+            // comboPrintSaleReceipt
+            // 
+            comboPrintSaleReceipt.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboPrintSaleReceipt.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboPrintSaleReceipt.FormattingEnabled = true;
+            comboPrintSaleReceipt.Items.AddRange(new object[] { "Auto print", "Do not print", "Always ask" });
+            comboPrintSaleReceipt.Location = new Point(58, 243);
+            comboPrintSaleReceipt.Name = "comboPrintSaleReceipt";
+            comboPrintSaleReceipt.Size = new Size(238, 31);
+            comboPrintSaleReceipt.TabIndex = 5;
+            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Location = new Point(58, 116);
             label1.Name = "label1";
-            label1.Size = new Size(206, 20);
+            label1.Size = new Size(160, 20);
             label1.TabIndex = 4;
-            label1.Text = "Show Numbers in words label";
+            label1.Text = "Show amount in words";
             // 
             // comboInWordsSettings
             // 
@@ -166,7 +190,7 @@
             btnUpdate.FlatAppearance.BorderSize = 0;
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(58, 226);
+            btnUpdate.Location = new Point(58, 364);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(122, 34);
             btnUpdate.TabIndex = 2;
@@ -591,5 +615,7 @@
         private CustomButton btnUpdate;
         private Label label1;
         private ComboBox comboInWordsSettings;
+        private Label label2;
+        private ComboBox comboPrintSaleReceipt;
     }
 }

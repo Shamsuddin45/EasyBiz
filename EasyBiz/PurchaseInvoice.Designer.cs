@@ -485,6 +485,7 @@
             txtQty.Size = new Size(126, 38);
             txtQty.TabIndex = 6;
             txtQty.Text = "0";
+            txtQty.TextAlign = HorizontalAlignment.Right;
             txtQty.TextChanged += txtQty_TextChanged;
             // 
             // txtWeight
@@ -495,6 +496,7 @@
             txtWeight.Size = new Size(122, 38);
             txtWeight.TabIndex = 7;
             txtWeight.Text = "0";
+            txtWeight.TextAlign = HorizontalAlignment.Right;
             txtWeight.TextChanged += txtWeight_TextChanged;
             // 
             // txtRate
@@ -505,6 +507,7 @@
             txtRate.Size = new Size(137, 38);
             txtRate.TabIndex = 8;
             txtRate.Text = "0";
+            txtRate.TextAlign = HorizontalAlignment.Right;
             txtRate.TextChanged += txtRate_TextChanged;
             // 
             // txtAmount
@@ -515,6 +518,7 @@
             txtAmount.Size = new Size(199, 38);
             txtAmount.TabIndex = 9;
             txtAmount.Text = "0";
+            txtAmount.TextAlign = HorizontalAlignment.Right;
             txtAmount.TextChanged += txtAmount_TextChanged;
             // 
             // txtDiscount
@@ -525,6 +529,7 @@
             txtDiscount.Size = new Size(160, 38);
             txtDiscount.TabIndex = 11;
             txtDiscount.Text = "0";
+            txtDiscount.TextAlign = HorizontalAlignment.Right;
             // 
             // txtTotal
             // 

@@ -8,7 +8,8 @@ namespace EasyBiz
 {    
     public class SetupSettings
     {
-        public string InWords { get; set; } = "";
+        public string InWords { get; set; } = "Off"; // numbers in words setting
+        public string PrintSaleReceipt { get; set; } = "Always ask";
     }
    
     public static class GlobalConfig

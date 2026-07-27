@@ -17,6 +17,7 @@ namespace EasyBiz
             InitThemeTab();
             ThemeManager.ApplyTheme(this);
             comboInWordsSettings.SelectedItem = GlobalConfig.AppSettings.InWords.ToString();
+            comboPrintSaleReceipt.SelectedItem = GlobalConfig.AppSettings.PrintSaleReceipt.ToString();
         }        
         
         private FlowLayoutPanel _themeSwatchPanel;
@@ -346,10 +347,14 @@ namespace EasyBiz
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (comboInWordsSettings.SelectedItem != null)
-            {
-                // 4. UPDATE THIS TO USE THE NEW NAME
+            {                
                 GlobalConfig.AppSettings.InWords = comboInWordsSettings.SelectedItem.ToString();
                 comboInWordsSettings.SelectedItem = comboInWordsSettings.SelectedItem.ToString();
+            }
+            if (comboPrintSaleReceipt.SelectedItem != null) 
+            { 
+                GlobalConfig.AppSettings.PrintSaleReceipt = comboPrintSaleReceipt.SelectedItem.ToString();
+                comboPrintSaleReceipt.SelectedItem = comboPrintSaleReceipt.SelectedItem.ToString();
             }
             GlobalConfig.SaveSettings();
             MessageBox.Show("Settings updated successfully!","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
