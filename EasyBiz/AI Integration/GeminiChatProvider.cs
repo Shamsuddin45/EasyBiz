@@ -108,6 +108,7 @@ namespace EasyBiz
             return "I wasn't able to finish answering that after several tool calls — please try a simpler or more specific question.";
         }
 
+
         private async Task<JsonObject> CallGenerateContentAsync()
         {
             var requestBody = new JsonObject
@@ -165,6 +166,33 @@ namespace EasyBiz
                     ["required"] = new JsonArray { "query" }
                 }
             };
+        }
+
+        // GeminiChatProvider.cs — add this method
+        public async Task<string> CompleteAsync(string prompt)
+        {
+            if (string.IsNullOrWhiteSpace(_apiKey)) return null;
+
+            var requestBody = new JsonObject
+            {
+                ["contents"] = new JsonArray
+        {
+            new JsonObject { ["role"] = "user", ["parts"] = new JsonArray { new JsonObject { ["text"] = prompt } } }
+        },
+                ["generationConfig"] = new JsonObject { ["temperature"] = 0.3, ["maxOutputTokens"] = 40 }
+            };
+
+            string url = $"https://generativelanguage.googleapis.com/v1beta/models/{_model}:generateContent";
+            using var request = new HttpRequestMessage(HttpMethod.Post, url);
+            request.Headers.Add("x-goog-api-key", _apiKey);
+            request.Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json");
+
+            using var response = await _http.SendAsync(request);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var doc = JsonNode.Parse(await response.Content.ReadAsStringAsync())!.AsObject();
+            var parts = doc["candidates"]?[0]?["content"]?["parts"]?.AsArray();
+            return parts?[0]?["text"]?.ToString()?.Trim();
         }
 
         private static JsonNode CloneNode(JsonNode node) => JsonNode.Parse(node.ToJsonString())!;

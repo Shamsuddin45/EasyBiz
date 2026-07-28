@@ -144,6 +144,30 @@ namespace EasyBiz
             };
         }
 
+        // OpenAICompatibleChatProvider.cs — add this method (covers OpenAI + Groq)
+        public async Task<string> CompleteAsync(string prompt)
+        {
+            if (string.IsNullOrWhiteSpace(_apiKey)) return null;
+
+            var requestBody = new JsonObject
+            {
+                ["model"] = _model,
+                ["messages"] = new JsonArray { new JsonObject { ["role"] = "user", ["content"] = prompt } },
+                ["temperature"] = 0.3,
+                ["max_tokens"] = 40
+            };
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/chat/completions");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _apiKey);
+            request.Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json");
+
+            using var response = await _http.SendAsync(request);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var doc = JsonNode.Parse(await response.Content.ReadAsStringAsync())!.AsObject();
+            return doc["choices"]?[0]?["message"]?["content"]?.ToString()?.Trim();
+        }
+
         private static JsonNode CloneNode(JsonNode node) => JsonNode.Parse(node.ToJsonString())!;
     }
 }

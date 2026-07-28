@@ -10,15 +10,14 @@ namespace EasyBiz
     /// </summary>
     public interface IAIChatProvider
     {
-        /// <summary>Display name shown in the chat header, e.g. "Gemini", "ChatGPT (OpenAI)".</summary>
         string ProviderName { get; }
+        Task<string> AskAsync(string userQuestion);
 
         /// <summary>
-        /// Sends the user's question (with prior conversation context already
-        /// held internally) to the provider, letting it call the
-        /// run_sql_query tool as needed, and returns the final
-        /// natural-language answer.
+        /// Single-turn, no-tools text completion. Used for small, focused
+        /// generation tasks (e.g. predicting a transaction narration) that
+        /// don't need the SQL-reporting system prompt or tool loop.
         /// </summary>
-        Task<string> AskAsync(string userQuestion);
+        Task<string> CompleteAsync(string prompt);
     }
 }

@@ -62,6 +62,7 @@
             lblInWords = new Label();
             label8 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            btnAiPredict = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -146,7 +147,7 @@
             txtDescription.Font = new Font("Segoe UI", 12F);
             txtDescription.Location = new Point(121, 103);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(567, 34);
+            txtDescription.Size = new Size(494, 34);
             txtDescription.TabIndex = 4;
             // 
             // label2
@@ -395,6 +396,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(btnAiPredict);
             panel2.Controls.Add(lblInWords);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(txtAmount);
@@ -459,6 +461,15 @@
             tableLayoutPanel1.Size = new Size(1267, 623);
             tableLayoutPanel1.TabIndex = 36;
             // 
+            // btnAiPredict
+            // 
+            btnAiPredict.Location = new Point(621, 103);
+            btnAiPredict.Name = "btnAiPredict";
+            btnAiPredict.Size = new Size(67, 34);
+            btnAiPredict.TabIndex = 33;
+            btnAiPredict.Text = "✨ AI";
+            btnAiPredict.UseVisualStyleBackColor = true;
+            // 
             // CashReceipts
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -512,5 +523,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Label label8;
         private Label lblInWords;
+        private Button btnAiPredict;
     }
 }

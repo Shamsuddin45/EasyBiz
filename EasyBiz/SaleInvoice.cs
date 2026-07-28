@@ -21,6 +21,13 @@ namespace EasyBiz
             BeautifyGrid();
             comboPartyName.SelectedItem = "Cash In Hand";
             comboPartyName.Select();
+            AiPredictionHelper.AttachToButton(btnAiPredict, txtDescription, () => new PredictionContext
+            {
+                TransactionType = "Sale Invoice",
+                AccountId = int.TryParse(comboPartyId.Text, out var accId) ? accId : (int?)null,
+                Amount = decimal.TryParse(txtAmount.Text, out var amt) ? amt : (decimal?)null,
+                Date = dateInvoice.Value
+            });
             ThemeManager.ApplyTheme(this);
         }
 

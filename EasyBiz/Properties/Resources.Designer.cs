@@ -153,6 +153,26 @@ namespace EasyBiz.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_ci6q3jci6q3jci6q {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_ci6q3jci6q3jci6q", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gemini_Generated_Image_ci6q3jci6q3jci6q1 {
+            get {
+                object obj = ResourceManager.GetObject("Gemini_Generated_Image_ci6q3jci6q3jci6q1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap info {
             get {
                 object obj = ResourceManager.GetObject("info", resourceCulture);

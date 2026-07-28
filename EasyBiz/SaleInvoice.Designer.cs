@@ -74,6 +74,7 @@
             txtNetAmount = new TextBox();
             panel2 = new Panel();
             lblInWords = new Label();
+            btnAiPredict = new Button();
             ((System.ComponentModel.ISupportInitialize)gridItems).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -84,7 +85,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(316, 464);
+            label2.Location = new Point(316, 454);
             label2.Name = "label2";
             label2.Size = new Size(83, 23);
             label2.TabIndex = 2;
@@ -94,7 +95,7 @@
             // txtVoucherNo
             // 
             txtVoucherNo.Font = new Font("Segoe UI", 12F);
-            txtVoucherNo.Location = new Point(405, 454);
+            txtVoucherNo.Location = new Point(405, 450);
             txtVoucherNo.Name = "txtVoucherNo";
             txtVoucherNo.ReadOnly = true;
             txtVoucherNo.Size = new Size(161, 34);
@@ -192,20 +193,20 @@
             // lblStockQty
             // 
             lblStockQty.AutoSize = true;
-            lblStockQty.Font = new Font("Segoe UI", 12F);
+            lblStockQty.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             lblStockQty.Location = new Point(6, 72);
             lblStockQty.Name = "lblStockQty";
-            lblStockQty.Size = new Size(79, 28);
+            lblStockQty.Size = new Size(62, 20);
             lblStockQty.TabIndex = 14;
             lblStockQty.Text = "Weight:";
             // 
             // lblStockWt
             // 
             lblStockWt.AutoSize = true;
-            lblStockWt.Font = new Font("Segoe UI", 12F);
+            lblStockWt.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             lblStockWt.Location = new Point(6, 35);
             lblStockWt.Name = "lblStockWt";
-            lblStockWt.Size = new Size(48, 28);
+            lblStockWt.Size = new Size(37, 20);
             lblStockWt.TabIndex = 15;
             lblStockWt.Text = "Qty:";
             // 
@@ -342,16 +343,16 @@
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 12F);
-            txtDescription.Location = new Point(372, 100);
+            txtDescription.Location = new Point(201, 100);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(344, 34);
+            txtDescription.Size = new Size(442, 34);
             txtDescription.TabIndex = 5;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 10.2F);
-            label13.Location = new Point(270, 108);
+            label13.Location = new Point(99, 105);
             label13.Name = "label13";
             label13.Size = new Size(96, 23);
             label13.TabIndex = 27;
@@ -444,7 +445,7 @@
             groupBox1.Controls.Add(lblStockQty);
             groupBox1.Location = new Point(737, 28);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(214, 125);
+            groupBox1.Size = new Size(245, 125);
             groupBox1.TabIndex = 36;
             groupBox1.TabStop = false;
             groupBox1.Text = "Stock Details";
@@ -558,6 +559,7 @@
             // panel2
             // 
             panel2.AutoScroll = true;
+            panel2.Controls.Add(btnAiPredict);
             panel2.Controls.Add(lblInWords);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(txtVoucherNo);
@@ -606,6 +608,15 @@
             lblInWords.Size = new Size(20, 28);
             lblInWords.TabIndex = 47;
             lblInWords.Text = "-";
+            // 
+            // btnAiPredict
+            // 
+            btnAiPredict.Location = new Point(649, 100);
+            btnAiPredict.Name = "btnAiPredict";
+            btnAiPredict.Size = new Size(67, 34);
+            btnAiPredict.TabIndex = 48;
+            btnAiPredict.Text = "✨ AI";
+            btnAiPredict.UseVisualStyleBackColor = true;
             // 
             // SaleInvoice
             // 
@@ -676,5 +687,6 @@
         private DataGridViewTextBoxColumn colRate;
         private DataGridViewTextBoxColumn colAmount;
         private Label lblInWords;
+        private Button btnAiPredict;
     }
 }

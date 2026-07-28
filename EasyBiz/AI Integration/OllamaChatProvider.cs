@@ -149,6 +149,28 @@ namespace EasyBiz
             };
         }
 
+        // OllamaChatProvider.cs — add this method
+        public async Task<string> CompleteAsync(string prompt)
+        {
+            var requestBody = new JsonObject
+            {
+                ["model"] = _model,
+                ["messages"] = new JsonArray { new JsonObject { ["role"] = "user", ["content"] = prompt } },
+                ["stream"] = false
+            };
+
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{_baseUrl}/api/chat");
+            request.Content = new StringContent(requestBody.ToJsonString(), Encoding.UTF8, "application/json");
+
+            try
+            {
+                using var response = await _http.SendAsync(request);
+                if (!response.IsSuccessStatusCode) return null;
+                var doc = JsonNode.Parse(await response.Content.ReadAsStringAsync())!.AsObject();
+                return doc["message"]?["content"]?.ToString()?.Trim();
+            }
+            catch { return null; }
+        }
         private static JsonNode CloneNode(JsonNode node) => JsonNode.Parse(node.ToJsonString())!;
     }
 }

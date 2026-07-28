@@ -61,6 +61,7 @@
             lblInWords = new Label();
             label9 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            btnAiPredict = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
@@ -144,7 +145,7 @@
             txtDescription.Font = new Font("Segoe UI", 12F);
             txtDescription.Location = new Point(127, 137);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(567, 34);
+            txtDescription.Size = new Size(494, 34);
             txtDescription.TabIndex = 4;
             txtDescription.KeyPress += txtDescription_KeyPress;
             // 
@@ -376,6 +377,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(btnAiPredict);
             panel1.Controls.Add(lblInWords);
             panel1.Controls.Add(label9);
             panel1.Controls.Add(txtCredit);
@@ -439,6 +441,15 @@
             tableLayoutPanel1.Size = new Size(1265, 593);
             tableLayoutPanel1.TabIndex = 35;
             // 
+            // btnAiPredict
+            // 
+            btnAiPredict.Location = new Point(627, 137);
+            btnAiPredict.Name = "btnAiPredict";
+            btnAiPredict.Size = new Size(67, 34);
+            btnAiPredict.TabIndex = 35;
+            btnAiPredict.Text = "✨ AI";
+            btnAiPredict.UseVisualStyleBackColor = true;
+            // 
             // JournalVoucher
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -490,5 +501,6 @@
         private TableLayoutPanel tableLayoutPanel1;
         private Label label9;
         private Label lblInWords;
+        private Button btnAiPredict;
     }
 }

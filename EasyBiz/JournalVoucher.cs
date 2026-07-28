@@ -19,6 +19,13 @@ namespace EasyBiz
             LoadAccounts();
             ShowVoucherNo();
             comboAccountName.Select();
+            AiPredictionHelper.AttachToButton(btnAiPredict, txtDescription, () => new PredictionContext
+            {
+                TransactionType = "Journal Voucher",
+                AccountId = int.TryParse(comboAccountId.Text, out var accId) ? accId : (int?)null,
+                Amount = decimal.TryParse(txtDebit.Text, out var amt) ? amt : (decimal?)null,
+                Date = dateTimePicker1.Value
+            });
             ThemeManager.ApplyTheme(this);
         }
 

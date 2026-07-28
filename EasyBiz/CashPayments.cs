@@ -20,6 +20,13 @@ namespace EasyBiz
             try { ShowVoucherNo(); }
             catch (Exception ex) { MessageBox.Show("Could not load voucher number: " + ex.Message); }
             comboAccountName.Select();
+            AiPredictionHelper.AttachToButton(btnAiPredict, txtDescription, () => new PredictionContext
+            {
+                TransactionType = "Cash Paid",
+                AccountId = int.TryParse(comboAccountId.Text, out var accId) ? accId : (int?)null,
+                Amount = decimal.TryParse(txtAmount.Text, out var amt) ? amt : (decimal?)null,
+                Date = dateTimePicker1.Value
+            });
             ThemeManager.ApplyTheme(this);
         }
         public bool numberstowords = true;

@@ -73,6 +73,7 @@
             txtTotal = new TextBox();
             txtNetAmount = new TextBox();
             lblInWords = new Label();
+            btnAiPredict = new Button();
             ((System.ComponentModel.ISupportInitialize)gridItems).BeginInit();
             groupBox1.SuspendLayout();
             panel1.SuspendLayout();
@@ -189,20 +190,20 @@
             // lblStockWt
             // 
             lblStockWt.AutoSize = true;
-            lblStockWt.Font = new Font("Segoe UI", 12F);
+            lblStockWt.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             lblStockWt.Location = new Point(6, 36);
             lblStockWt.Name = "lblStockWt";
-            lblStockWt.Size = new Size(48, 28);
+            lblStockWt.Size = new Size(37, 20);
             lblStockWt.TabIndex = 19;
             lblStockWt.Text = "Qty:";
             // 
             // lblStockQty
             // 
             lblStockQty.AutoSize = true;
-            lblStockQty.Font = new Font("Segoe UI", 12F);
+            lblStockQty.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             lblStockQty.Location = new Point(6, 73);
             lblStockQty.Name = "lblStockQty";
-            lblStockQty.Size = new Size(79, 28);
+            lblStockQty.Size = new Size(62, 20);
             lblStockQty.TabIndex = 18;
             lblStockQty.Text = "Weight:";
             // 
@@ -339,16 +340,16 @@
             // txtDescription
             // 
             txtDescription.Font = new Font("Segoe UI", 12F);
-            txtDescription.Location = new Point(356, 165);
+            txtDescription.Location = new Point(204, 165);
             txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(337, 34);
+            txtDescription.Size = new Size(416, 34);
             txtDescription.TabIndex = 4;
             // 
             // label13
             // 
             label13.AutoSize = true;
             label13.Font = new Font("Segoe UI", 10.2F);
-            label13.Location = new Point(254, 173);
+            label13.Location = new Point(102, 173);
             label13.Name = "label13";
             label13.Size = new Size(96, 23);
             label13.TabIndex = 40;
@@ -440,9 +441,9 @@
             // 
             groupBox1.Controls.Add(lblStockQty);
             groupBox1.Controls.Add(lblStockWt);
-            groupBox1.Location = new Point(699, 111);
+            groupBox1.Location = new Point(699, 99);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(214, 125);
+            groupBox1.Size = new Size(249, 125);
             groupBox1.TabIndex = 46;
             groupBox1.TabStop = false;
             groupBox1.Text = "Stock Details";
@@ -559,11 +560,21 @@
             lblInWords.TabIndex = 57;
             lblInWords.Text = "-";
             // 
+            // btnAiPredict
+            // 
+            btnAiPredict.Location = new Point(626, 165);
+            btnAiPredict.Name = "btnAiPredict";
+            btnAiPredict.Size = new Size(67, 34);
+            btnAiPredict.TabIndex = 58;
+            btnAiPredict.Text = "✨ AI";
+            btnAiPredict.UseVisualStyleBackColor = true;
+            // 
             // PurchaseInvoice
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(994, 751);
+            Controls.Add(btnAiPredict);
             Controls.Add(lblInWords);
             Controls.Add(txtNetAmount);
             Controls.Add(txtTotal);
@@ -659,5 +670,6 @@
         private DataGridViewTextBoxColumn colRate;
         private DataGridViewTextBoxColumn colAmount;
         private Label lblInWords;
+        private Button btnAiPredict;
     }
 }
