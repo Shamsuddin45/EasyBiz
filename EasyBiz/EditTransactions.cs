@@ -13,6 +13,15 @@ namespace EasyBiz
             ThemeManager.ApplyTheme(this);
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape) 
+            { 
+                this.Close();
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void OpenTransaction<T>(int voucherNo)
             where T : Form, new()
         {
