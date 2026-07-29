@@ -12,7 +12,11 @@ namespace EasyBiz
 
         private static readonly string _dbPath = Path.Combine(_dbFolder, "easybiz.db");
 
-        private static readonly string _connectionString = $"Data Source={_dbPath}";
+        // Foreign Keys=True is set at the connection-string level as a defense-in-depth
+        // measure — the PRAGMA below still runs on every connection open in case any
+        // future code path builds a raw connection without going through GetConnection().
+        private static readonly string _connectionString =
+            $"Data Source={_dbPath};Foreign Keys=True";
 
         // NEW: expose the resolved path so Program.cs (migration) and
         // GoogleDriveBackupService (backup source file) can reference it
@@ -31,7 +35,15 @@ namespace EasyBiz
 
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = "PRAGMA foreign_keys = ON;";
+                // WAL lets readers and a writer work concurrently instead of blocking
+                // on the whole-file lock that the default "delete" journal mode uses.
+                // busy_timeout makes SQLite retry internally for up to 5s instead of
+                // throwing "database is locked" immediately when a brief collision
+                // does happen (e.g. a grid refresh overlapping a save).
+                command.CommandText =
+                    "PRAGMA journal_mode = WAL;" +
+                    "PRAGMA busy_timeout = 5000;" +
+                    "PRAGMA foreign_keys = ON;";
                 command.ExecuteNonQuery();
             }
 
@@ -41,7 +53,7 @@ namespace EasyBiz
         public static void InitializeDatabase()
         {
             using (var connection = GetConnection())
-            {                
+            {
                 using (var transaction = connection.BeginTransaction())
                 {
                     var command = connection.CreateCommand();
@@ -202,6 +214,30 @@ namespace EasyBiz
                     ModuleKey TEXT PRIMARY KEY,
                     SortOrder INTEGER NOT NULL
                 );
+
+                -- ── Indexes on FK / date / voucher_no columns ──
+                -- Speeds up ledger lookups, stock reports, and voucher-based joins
+                -- as transaction history grows; without these, every filtered
+                -- report does a full table scan.
+                CREATE INDEX IF NOT EXISTS idx_transactions_account   ON transactions(account_id);
+                CREATE INDEX IF NOT EXISTS idx_transactions_date      ON transactions(transaction_date);
+                CREATE INDEX IF NOT EXISTS idx_transactions_voucher   ON transactions(voucher_no);
+
+                CREATE INDEX IF NOT EXISTS idx_stockmov_product       ON stock_movements(product_id);
+                CREATE INDEX IF NOT EXISTS idx_stockmov_voucher       ON stock_movements(voucher_no);
+                CREATE INDEX IF NOT EXISTS idx_stockmov_date          ON stock_movements(movement_date);
+
+                CREATE INDEX IF NOT EXISTS idx_saleinv_account        ON sale_invoices(account_id);
+                CREATE INDEX IF NOT EXISTS idx_saleinv_date           ON sale_invoices(invoice_date);
+                CREATE INDEX IF NOT EXISTS idx_saleitems_sale         ON sale_invoice_items(sale_id);
+                CREATE INDEX IF NOT EXISTS idx_saleitems_product      ON sale_invoice_items(product_id);
+                CREATE INDEX IF NOT EXISTS idx_saleitems_voucher      ON sale_invoice_items(voucher_no);
+
+                CREATE INDEX IF NOT EXISTS idx_purchinv_account       ON purchase_invoices(account_id);
+                CREATE INDEX IF NOT EXISTS idx_purchinv_date          ON purchase_invoices(invoice_date);
+                CREATE INDEX IF NOT EXISTS idx_purchitems_purchase    ON purchase_invoice_items(purchase_id);
+                CREATE INDEX IF NOT EXISTS idx_purchitems_product     ON purchase_invoice_items(product_id);
+                CREATE INDEX IF NOT EXISTS idx_purchitems_voucher     ON purchase_invoice_items(voucher_no);
                 ";
 
                     command.ExecuteNonQuery();
