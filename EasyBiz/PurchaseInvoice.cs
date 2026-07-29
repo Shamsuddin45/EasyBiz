@@ -315,6 +315,8 @@ namespace EasyBiz
             { MessageBox.Show("Enter quantity or weight."); return; }
             if (txtRate.Text == "0") { MessageBox.Show("Enter a valid rate."); return; }
             if (txtAmount.Text == "0") { MessageBox.Show("Enter amount properly!"); return; }
+            if (string.IsNullOrWhiteSpace(txtDiscount.Text))
+            { txtDiscount.Text = "0"; }
 
             var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
             var prod = list[comboProduct.SelectedIndex];

@@ -334,6 +334,8 @@ namespace EasyBiz
             { MessageBox.Show("Rate cannot be zero."); return; }
             if (txtAmount.Text == "0")
             { MessageBox.Show("Amount cannot be zero."); return; }
+            if (string.IsNullOrWhiteSpace(txtDiscount.Text))
+            { txtDiscount.Text = "0"; }
 
             var list = (System.Collections.Generic.List<object[]>)comboProduct.Tag;
             var prod = list[comboProduct.SelectedIndex];

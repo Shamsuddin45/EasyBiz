@@ -55,7 +55,7 @@ namespace EasyBiz
         {
             Text = "AI Assistant";
             StartPosition = FormStartPosition.CenterParent;
-            ClientSize = new Size(840, 720);
+            ClientSize = new Size(840, 650);
             MinimumSize = new Size(600, 520);
             BackColor = ColorBackground;
 

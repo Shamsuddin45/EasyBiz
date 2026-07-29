@@ -30,7 +30,7 @@ namespace EasyBiz
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
-            ClientSize = new Size(480, 320);
+            ClientSize = new Size(480, 380);
 
             var lblProvider = new Label
             {
@@ -107,7 +107,7 @@ namespace EasyBiz
                 Text = "Save",
                 BackColor = Color.FromArgb(52, 152, 219),
                 BackgroundColor = Color.FromArgb(52, 152, 219),
-                Location = new Point(264, 266),
+                Location = new Point(264, 320),
                 Size = new Size(90, 36)
             };
             btnSave.Click += BtnSave_Click;
@@ -117,7 +117,7 @@ namespace EasyBiz
                 Text = "Cancel",
                 BackColor = Color.Gray,
                 BackgroundColor = Color.Gray,
-                Location = new Point(364, 266),
+                Location = new Point(364, 320),
                 Size = new Size(96, 36)
             };
             btnCancel.Click += (s, e) => { DialogResult = DialogResult.Cancel; Close(); };
