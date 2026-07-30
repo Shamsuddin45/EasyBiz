@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
             label1 = new Label();
             dateTimePicker1 = new DateTimePicker();
             comboAccountName = new ComboBox();
@@ -251,33 +251,33 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle13.BackColor = Color.FromArgb(248, 249, 250);
-            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle14.BackColor = Color.FromArgb(41, 50, 65);
-            dataGridViewCellStyle14.Font = new Font("Segoe UI Semibold", 10.5F);
-            dataGridViewCellStyle14.ForeColor = Color.White;
-            dataGridViewCellStyle14.SelectionBackColor = Color.FromArgb(41, 50, 65);
-            dataGridViewCellStyle14.SelectionForeColor = Color.White;
-            dataGridViewCellStyle14.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(41, 50, 65);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI Semibold", 10.5F);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(41, 50, 65);
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.ColumnHeadersHeight = 48;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, accountId, accountname, desc, amount });
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = Color.White;
-            dataGridViewCellStyle16.Font = new Font("Segoe UI", 10.5F);
-            dataGridViewCellStyle16.ForeColor = Color.FromArgb(43, 43, 43);
-            dataGridViewCellStyle16.Padding = new Padding(8, 4, 8, 4);
-            dataGridViewCellStyle16.SelectionBackColor = Color.FromArgb(225, 238, 254);
-            dataGridViewCellStyle16.SelectionForeColor = Color.FromArgb(15, 76, 129);
-            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.White;
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 10.5F);
+            dataGridViewCellStyle8.ForeColor = Color.FromArgb(43, 43, 43);
+            dataGridViewCellStyle8.Padding = new Padding(8, 4, 8, 4);
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(225, 238, 254);
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(15, 76, 129);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle8;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(230, 234, 238);
@@ -328,8 +328,8 @@
             // amount
             // 
             amount.AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleRight;
-            amount.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleRight;
+            amount.DefaultCellStyle = dataGridViewCellStyle7;
             amount.HeaderText = "Amount";
             amount.MinimumWidth = 6;
             amount.Name = "amount";
@@ -340,7 +340,7 @@
             label7.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
-            label7.ForeColor = Color.FromArgb(100, 100, 100);
+            label7.ForeColor = Color.FromArgb(64, 64, 64);
             label7.Location = new Point(740, 34);
             label7.Name = "label7";
             label7.Size = new Size(80, 23);
@@ -457,7 +457,7 @@
             btnAiPredict.FlatStyle = FlatStyle.Flat;
             btnAiPredict.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             btnAiPredict.ForeColor = Color.White;
-            btnAiPredict.Location = new Point(601, 126);
+            btnAiPredict.Location = new Point(601, 125);
             btnAiPredict.Name = "btnAiPredict";
             btnAiPredict.Size = new Size(49, 34);
             btnAiPredict.TabIndex = 19;

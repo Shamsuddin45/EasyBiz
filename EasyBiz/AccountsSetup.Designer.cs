@@ -56,30 +56,31 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10.2F);
-            label6.Location = new Point(71, 45);
+            label6.Font = new Font("Segoe UI", 10F);
+            label6.Location = new Point(74, 43);
             label6.Name = "label6";
-            label6.Size = new Size(61, 23);
+            label6.Size = new Size(50, 23);
             label6.TabIndex = 19;
-            label6.Text = "A/C ID";
+            label6.Text = "By ID";
             // 
             // comboSearchId
             // 
             comboSearchId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboSearchId.AutoCompleteSource = AutoCompleteSource.ListItems;
-            comboSearchId.Font = new Font("Segoe UI", 12F);
+            comboSearchId.Font = new Font("Segoe UI", 11F);
             comboSearchId.FormattingEnabled = true;
-            comboSearchId.Location = new Point(138, 37);
+            comboSearchId.Location = new Point(130, 38);
             comboSearchId.Name = "comboSearchId";
-            comboSearchId.Size = new Size(178, 36);
+            comboSearchId.Size = new Size(200, 33);
             comboSearchId.TabIndex = 1;
             comboSearchId.SelectedIndexChanged += comboSearchId_SelectedIndexChanged;
             // 
             // label3
             // 
+            label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10.2F);
-            label3.Location = new Point(32, 295);
+            label3.Font = new Font("Segoe UI", 10F);
+            label3.Location = new Point(32, 265);
             label3.Name = "label3";
             label3.Size = new Size(112, 23);
             label3.TabIndex = 17;
@@ -87,40 +88,42 @@
             // 
             // txtNewAccount
             // 
-            txtNewAccount.Font = new Font("Segoe UI", 12F);
-            txtNewAccount.Location = new Point(150, 287);
+            txtNewAccount.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            txtNewAccount.Font = new Font("Segoe UI", 11F);
+            txtNewAccount.Location = new Point(150, 260);
             txtNewAccount.Name = "txtNewAccount";
-            txtNewAccount.Size = new Size(503, 34);
-            txtNewAccount.TabIndex = 4;
+            txtNewAccount.Size = new Size(520, 32);
+            txtNewAccount.TabIndex = 5;
             txtNewAccount.KeyDown += txtNewAccount_KeyDown;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(42, 87);
+            label2.Font = new Font("Segoe UI", 10F);
+            label2.Location = new Point(43, 93);
             label2.Name = "label2";
-            label2.Size = new Size(90, 23);
+            label2.Size = new Size(79, 23);
             label2.TabIndex = 15;
-            label2.Text = "A/C Name";
+            label2.Text = "By Name";
             // 
             // comboSearchName
             // 
             comboSearchName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboSearchName.AutoCompleteSource = AutoCompleteSource.ListItems;
-            comboSearchName.Font = new Font("Segoe UI", 12F);
+            comboSearchName.Font = new Font("Segoe UI", 11F);
             comboSearchName.FormattingEnabled = true;
-            comboSearchName.Location = new Point(138, 79);
+            comboSearchName.Location = new Point(130, 88);
             comboSearchName.Name = "comboSearchName";
-            comboSearchName.Size = new Size(497, 36);
+            comboSearchName.Size = new Size(490, 33);
             comboSearchName.TabIndex = 2;
             comboSearchName.SelectedIndexChanged += comboSearchName_SelectedIndexChanged;
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10.2F);
-            label1.Location = new Point(399, 347);
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.Location = new Point(384, 325);
             label1.Name = "label1";
             label1.Size = new Size(70, 23);
             label1.TabIndex = 21;
@@ -128,19 +131,21 @@
             // 
             // txtContact
             // 
-            txtContact.Font = new Font("Segoe UI", 12F);
-            txtContact.Location = new Point(475, 339);
+            txtContact.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            txtContact.Font = new Font("Segoe UI", 11F);
+            txtContact.Location = new Point(460, 320);
             txtContact.Name = "txtContact";
             txtContact.PlaceholderText = "03xxxxxxxxx";
-            txtContact.Size = new Size(178, 34);
-            txtContact.TabIndex = 6;
+            txtContact.Size = new Size(210, 32);
+            txtContact.TabIndex = 7;
             txtContact.KeyDown += txtContact_KeyDown;
             // 
             // label4
             // 
+            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10.2F);
-            label4.Location = new Point(74, 347);
+            label4.Font = new Font("Segoe UI", 10F);
+            label4.Location = new Point(74, 325);
             label4.Name = "label4";
             label4.Size = new Size(70, 23);
             label4.TabIndex = 23;
@@ -148,18 +153,20 @@
             // 
             // txtAddress
             // 
-            txtAddress.Font = new Font("Segoe UI", 12F);
-            txtAddress.Location = new Point(150, 339);
+            txtAddress.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            txtAddress.Font = new Font("Segoe UI", 11F);
+            txtAddress.Location = new Point(150, 320);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(245, 34);
-            txtAddress.TabIndex = 5;
+            txtAddress.Size = new Size(200, 32);
+            txtAddress.TabIndex = 6;
             txtAddress.KeyDown += txtAddress_KeyDown;
             // 
             // label5
             // 
+            label5.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI", 10.2F);
-            label5.Location = new Point(83, 244);
+            label5.Font = new Font("Segoe UI", 10F);
+            label5.Location = new Point(83, 204);
             label5.Name = "label5";
             label5.Size = new Size(61, 23);
             label5.TabIndex = 25;
@@ -167,9 +174,10 @@
             // 
             // label7
             // 
+            label7.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(345, 243);
+            label7.Font = new Font("Segoe UI", 10F);
+            label7.Location = new Point(375, 204);
             label7.Name = "label7";
             label7.Size = new Size(79, 23);
             label7.TabIndex = 27;
@@ -177,15 +185,16 @@
             // 
             // comboCategory
             // 
+            comboCategory.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             comboCategory.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboCategory.AutoCompleteSource = AutoCompleteSource.ListItems;
-            comboCategory.Font = new Font("Segoe UI", 12F);
+            comboCategory.Font = new Font("Segoe UI", 11F);
             comboCategory.FormattingEnabled = true;
             comboCategory.Items.AddRange(new object[] { "Cash", "Banks", "Assets", "Capital", "Brokers", "Personal Ledgers", "Payables", "Receivables", "Employees", "Expenses", "Others" });
-            comboCategory.Location = new Point(430, 236);
+            comboCategory.Location = new Point(460, 200);
             comboCategory.Name = "comboCategory";
-            comboCategory.Size = new Size(223, 36);
-            comboCategory.TabIndex = 3;
+            comboCategory.Size = new Size(210, 33);
+            comboCategory.TabIndex = 4;
             comboCategory.KeyDown += comboCategory_KeyDown;
             // 
             // groupBox1
@@ -194,15 +203,17 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(comboSearchId);
             groupBox1.Controls.Add(label6);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Font = new Font("Segoe UI", 9.5F);
+            groupBox1.Location = new Point(20, 20);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(641, 174);
+            groupBox1.Size = new Size(650, 150);
             groupBox1.TabIndex = 28;
             groupBox1.TabStop = false;
             groupBox1.Text = "Search Account";
             // 
             // BtnSave
             // 
+            BtnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnSave.BackColor = Color.LimeGreen;
             BtnSave.BackgroundColor = Color.LimeGreen;
             BtnSave.BorderColor = Color.Transparent;
@@ -210,12 +221,12 @@
             BtnSave.BorderSize = 0;
             BtnSave.FlatAppearance.BorderSize = 0;
             BtnSave.FlatStyle = FlatStyle.Flat;
-            BtnSave.Font = new Font("Segoe UI", 9F);
+            BtnSave.Font = new Font("Segoe UI Semibold", 9.5F);
             BtnSave.ForeColor = Color.White;
-            BtnSave.Location = new Point(524, 462);
+            BtnSave.Location = new Point(529, 427);
             BtnSave.Name = "BtnSave";
-            BtnSave.Size = new Size(123, 51);
-            BtnSave.TabIndex = 7;
+            BtnSave.Size = new Size(145, 45);
+            BtnSave.TabIndex = 8;
             BtnSave.Text = "Save (Ctrl+S)";
             BtnSave.TextColor = Color.White;
             BtnSave.UseVisualStyleBackColor = false;
@@ -223,6 +234,7 @@
             // 
             // BtnUpdate
             // 
+            BtnUpdate.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnUpdate.BackColor = Color.DarkOrange;
             BtnUpdate.BackgroundColor = Color.DarkOrange;
             BtnUpdate.BorderColor = Color.Transparent;
@@ -231,12 +243,12 @@
             BtnUpdate.Enabled = false;
             BtnUpdate.FlatAppearance.BorderSize = 0;
             BtnUpdate.FlatStyle = FlatStyle.Flat;
-            BtnUpdate.Font = new Font("Segoe UI", 9F);
+            BtnUpdate.Font = new Font("Segoe UI Semibold", 9.5F);
             BtnUpdate.ForeColor = Color.White;
-            BtnUpdate.Location = new Point(395, 462);
+            BtnUpdate.Location = new Point(341, 427);
             BtnUpdate.Name = "BtnUpdate";
-            BtnUpdate.Size = new Size(123, 51);
-            BtnUpdate.TabIndex = 8;
+            BtnUpdate.Size = new Size(182, 45);
+            BtnUpdate.TabIndex = 9;
             BtnUpdate.Text = "Update (Ctrl+U)";
             BtnUpdate.TextColor = Color.White;
             BtnUpdate.UseVisualStyleBackColor = false;
@@ -244,6 +256,7 @@
             // 
             // BtnRefresh
             // 
+            BtnRefresh.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnRefresh.BackColor = Color.FromArgb(52, 152, 219);
             BtnRefresh.BackgroundColor = Color.FromArgb(52, 152, 219);
             BtnRefresh.BorderColor = Color.Transparent;
@@ -251,12 +264,12 @@
             BtnRefresh.BorderSize = 0;
             BtnRefresh.FlatAppearance.BorderSize = 0;
             BtnRefresh.FlatStyle = FlatStyle.Flat;
-            BtnRefresh.Font = new Font("Segoe UI", 9F);
+            BtnRefresh.Font = new Font("Segoe UI Semibold", 9.5F);
             BtnRefresh.ForeColor = Color.White;
-            BtnRefresh.Location = new Point(266, 462);
+            BtnRefresh.Location = new Point(160, 427);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new Size(123, 51);
-            BtnRefresh.TabIndex = 9;
+            BtnRefresh.Size = new Size(175, 45);
+            BtnRefresh.TabIndex = 10;
             BtnRefresh.Text = "Refresh (Ctrl+R)";
             BtnRefresh.TextColor = Color.White;
             BtnRefresh.UseVisualStyleBackColor = false;
@@ -264,6 +277,7 @@
             // 
             // BtnClose
             // 
+            BtnClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnClose.BackColor = Color.Tomato;
             BtnClose.BackgroundColor = Color.Tomato;
             BtnClose.BorderColor = Color.Transparent;
@@ -271,12 +285,12 @@
             BtnClose.BorderSize = 0;
             BtnClose.FlatAppearance.BorderSize = 0;
             BtnClose.FlatStyle = FlatStyle.Flat;
-            BtnClose.Font = new Font("Segoe UI", 9F);
+            BtnClose.Font = new Font("Segoe UI Semibold", 9.5F);
             BtnClose.ForeColor = Color.White;
-            BtnClose.Location = new Point(137, 462);
+            BtnClose.Location = new Point(34, 427);
             BtnClose.Name = "BtnClose";
-            BtnClose.Size = new Size(123, 51);
-            BtnClose.TabIndex = 10;
+            BtnClose.Size = new Size(120, 45);
+            BtnClose.TabIndex = 11;
             BtnClose.Text = "Close (Esc)";
             BtnClose.TextColor = Color.White;
             BtnClose.UseVisualStyleBackColor = false;
@@ -284,18 +298,20 @@
             // 
             // numAccountId
             // 
-            numAccountId.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numAccountId.Location = new Point(150, 236);
+            numAccountId.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            numAccountId.Font = new Font("Segoe UI", 11F);
+            numAccountId.Location = new Point(150, 200);
             numAccountId.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numAccountId.Name = "numAccountId";
             numAccountId.ReadOnly = true;
-            numAccountId.Size = new Size(178, 34);
-            numAccountId.TabIndex = 33;
+            numAccountId.Size = new Size(200, 32);
+            numAccountId.TabIndex = 3;
             // 
             // panel1
             // 
             panel1.AutoScroll = true;
             panel1.AutoScrollMargin = new Size(10, 10);
+            panel1.BackColor = Color.WhiteSmoke;
             panel1.Controls.Add(comboCategory);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label7);
@@ -314,15 +330,15 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(708, 554);
+            panel1.Size = new Size(708, 500);
             panel1.TabIndex = 34;
             // 
             // AccountsSetup
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.Control;
-            ClientSize = new Size(708, 554);
+            BackColor = Color.White;
+            ClientSize = new Size(708, 500);
             Controls.Add(panel1);
             MaximizeBox = false;
             Name = "AccountsSetup";
