@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using QuestPDF.Infrastructure;
 using System;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -56,7 +57,7 @@ namespace EasyBiz
         {
             // General
             gridItems.BorderStyle = BorderStyle.None;
-            gridItems.BackgroundColor = Color.White;
+            gridItems.BackgroundColor = System.Drawing.Color.White;
             gridItems.AllowUserToAddRows = false;
             gridItems.AllowUserToDeleteRows = true;
             gridItems.AllowUserToResizeRows = false;
@@ -70,24 +71,24 @@ namespace EasyBiz
             gridItems.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             gridItems.ColumnHeadersHeight = 40;
 
-            gridItems.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(41, 128, 185);
-            gridItems.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            gridItems.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
+            gridItems.ColumnHeadersDefaultCellStyle.ForeColor = System.Drawing.Color.White;
             gridItems.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             gridItems.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             // Rows
             gridItems.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
-            gridItems.DefaultCellStyle.SelectionBackColor = Color.LightBlue;
-            gridItems.DefaultCellStyle.SelectionForeColor = Color.Black;
-            gridItems.DefaultCellStyle.BackColor = Color.White;
-            gridItems.DefaultCellStyle.ForeColor = Color.Black;
+            gridItems.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.LightBlue;
+            gridItems.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            gridItems.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            gridItems.DefaultCellStyle.ForeColor = System.Drawing.Color.Black;
 
             // Alternate Row Color
-            gridItems.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            gridItems.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
 
             // Grid Lines
             gridItems.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            gridItems.GridColor = Color.Gainsboro;
+            gridItems.GridColor = System.Drawing.Color.Gainsboro;
 
             // Row Height
             gridItems.RowTemplate.Height = 32;
@@ -325,15 +326,48 @@ namespace EasyBiz
             decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
             decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
             decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0; ;
+            bool isUnit = Convert.ToInt32(prod[7]) == 1;
 
             int rowIndex = gridItems.Rows.Add();
             var row = gridItems.Rows[rowIndex];
             row.Cells["colProductId"].Value = prod[0].ToString();
             row.Cells["colProductName"].Value = prod[1].ToString();
-            row.Cells["colUnit"].Value = prod[5].ToString();
-            row.Cells["colQty"].Value = qty;
-            row.Cells["colWeight"].Value = weight;
-            row.Cells["colWeightUnit"].Value = prod[6].ToString();
+
+            if (isUnit)
+            {
+                // Enable Unit/Qty
+                row.Cells["colUnit"].ReadOnly = false;
+                row.Cells["colQty"].ReadOnly = false;
+
+                // Set Unit/Qty Values
+                row.Cells["colUnit"].Value = prod[5].ToString();
+                row.Cells["colQty"].Value = qty;
+
+                // Disable Weight
+                row.Cells["colWeight"].ReadOnly = true;
+
+                // Clear Weight Values
+                row.Cells["colWeightUnit"].Value = "-";
+                row.Cells["colWeight"].Value = "-";
+            }
+            else
+            {
+                // Disable Unit/Qty
+                row.Cells["colUnit"].ReadOnly = true;
+                row.Cells["colQty"].ReadOnly = true;
+
+                // Clear Unit/Qty Values
+                row.Cells["colUnit"].Value = "-";
+                row.Cells["colQty"].Value = "-";
+
+                // Enable Weight
+                row.Cells["colWeight"].ReadOnly = false;
+
+                // Set Weight Values
+                row.Cells["colWeightUnit"].Value = prod[6].ToString();
+                row.Cells["colWeight"].Value = weight;
+            }
+
             row.Cells["colRate"].Value = rate;
             row.Cells["colAmount"].Value = amount;
 
