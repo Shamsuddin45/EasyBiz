@@ -18,6 +18,7 @@ namespace EasyBiz
             LoadBankAccounts();
             LoadPartyAccounts();
             ShowVoucherNo();
+            ThemeManager.ApplyTheme(this);
         }
 
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

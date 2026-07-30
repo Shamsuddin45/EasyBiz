@@ -94,7 +94,7 @@ namespace EasyBiz
         public class ProductItem
         {
             public int Id { get; set; }
-            public string Name { get; set; }
+            public string Name { get; set; } = string.Empty;
             public override string ToString() => Name; // ensures combo shows only the name
         }
 
@@ -161,7 +161,7 @@ namespace EasyBiz
             cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@unit", comboUnit.Text);
             cmd.Parameters.AddWithValue("@wu", comboWeightUnit.Text);
-            if (comboSelectUnit.SelectedItem == "Quantity")
+            if (comboSelectUnit.SelectedIndex == 1)
             {
                 cmd.Parameters.AddWithValue("@isUnit", 1);
             }
@@ -243,7 +243,7 @@ namespace EasyBiz
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboSelectUnit.SelectedItem == "Weight")
+            if (comboSelectUnit.SelectedIndex == 0)
             {
                 comboUnit.Enabled = false;
                 comboWeightUnit.Enabled = true;

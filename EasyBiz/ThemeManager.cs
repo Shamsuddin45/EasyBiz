@@ -66,19 +66,19 @@ namespace EasyBiz
             },
             [AppTheme.Dark] = new ThemePalette
             {
-                FormBackColor = Color.FromArgb(32, 34, 37),
-                PanelBackColor = Color.FromArgb(40, 42, 46),                
-                ForeColor = Color.Gainsboro,
-                ControlBackColor = Color.FromArgb(54, 57, 62),
-                ControlForeColor = Color.Gainsboro,
-                MenuBackColor = Color.FromArgb(40, 42, 46),
-                MenuForeColor = Color.Gainsboro,
-                GridHeaderBackColor = Color.FromArgb(20, 21, 23),
+                FormBackColor = Color.FromArgb(217, 220, 222),
+                PanelBackColor = Color.FromArgb(217, 220, 222),
+                ForeColor = Color.FromArgb(15, 40, 65),
+                ControlBackColor = Color.White,
+                ControlForeColor = Color.FromArgb(15, 40, 65),
+                MenuBackColor = Color.FromArgb(9, 19, 31),
+                MenuForeColor = Color.White,
+                GridHeaderBackColor = Color.FromArgb(9, 19, 31),
                 GridHeaderForeColor = Color.White,
-                GridAltRowBackColor = Color.FromArgb(48, 50, 54),
-                GridBackColor = Color.FromArgb(40, 42, 46),
-                GridForeColor = Color.Gainsboro,
-                AccentColor = Color.FromArgb(90, 130, 200)
+                GridAltRowBackColor = Color.FromArgb(212, 215, 217),
+                GridBackColor = Color.White,
+                GridForeColor = Color.FromArgb(15, 40, 65),
+                AccentColor = Color.FromArgb(9, 19, 31)
             },
             [AppTheme.OceanBlue] = new ThemePalette
             {

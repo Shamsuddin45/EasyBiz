@@ -22,9 +22,11 @@ namespace EasyBiz
         private readonly Label lblHint;
         private readonly CustomButton btnSave;
         private readonly CustomButton btnCancel;
+       
 
         public AISettingsForm()
         {
+            ThemeManager.ApplyTheme(this);
             Text = "AI Assistant — Settings";
             StartPosition = FormStartPosition.CenterParent;
             FormBorderStyle = FormBorderStyle.FixedDialog;

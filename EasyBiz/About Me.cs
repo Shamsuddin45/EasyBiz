@@ -11,6 +11,7 @@ namespace EasyBiz.Forms
         {
             InitializeComponent();
             Load += AboutBox_Load;
+            ThemeManager.ApplyTheme(this);
         }
 
         private void AboutBox_Load(object sender, EventArgs e)

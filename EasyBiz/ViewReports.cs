@@ -13,6 +13,7 @@ namespace EasyBiz
         public ViewReports()
         {
             InitializeComponent();
+            ThemeManager.ApplyTheme(this);
         }
 
         public ViewReports(string pdfFilePath)

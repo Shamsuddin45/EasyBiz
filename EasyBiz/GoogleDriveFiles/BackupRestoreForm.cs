@@ -24,6 +24,7 @@ namespace EasyBiz
 
         public BackupRestoreForm()
         {
+            ThemeManager.ApplyTheme(this);
             Text = "Backup & Restore (Google Drive)";
             StartPosition = FormStartPosition.CenterParent;
             ClientSize = new Size(560, 470);

@@ -22,6 +22,7 @@ namespace EasyBiz
             comboDirection.SelectedIndex = 0;
             comboStatus.Items.AddRange(new[] { "All", "Issued", "Cleared", "Returned", "Cancelled" });
             comboStatus.SelectedIndex = 0;
+            ThemeManager.ApplyTheme(this);
         }
 
         // ── Populate combos ───────────────────────────────────────────────────
