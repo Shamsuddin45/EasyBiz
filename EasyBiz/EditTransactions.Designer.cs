@@ -80,7 +80,7 @@
             BtnGo.Name = "BtnGo";
             BtnGo.Size = new Size(171, 45);
             BtnGo.TabIndex = 4;
-            BtnGo.Text = "Go Edit";
+            BtnGo.Text = "✏️ Edit";
             BtnGo.TextColor = Color.White;
             BtnGo.UseVisualStyleBackColor = false;
             BtnGo.Click += BtnGo_Click;
