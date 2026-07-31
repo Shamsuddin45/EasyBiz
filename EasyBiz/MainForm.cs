@@ -25,7 +25,11 @@ namespace EasyBiz
             {
                 if (!IsDisposed)
                     ThemeManager.ApplyTheme(this);
-                setupButtons(); LoadFavoritesPanel();
+                setupButtons();
+
+                // Only reload favorites on theme change if they are actually visible
+                if (pnlFavorites.Visible)
+                    LoadFavoritesPanel();
             };
 
             Text = $"EasyBiz: By Shamsuddin — {CurrentUser.FullName}" +
@@ -51,9 +55,9 @@ namespace EasyBiz
                         {
                             decimal cashBalance = reader.GetDecimal(0);
                             decimal bankBalance = reader.GetDecimal(1);
-                                                            
-                                lblShowBalanceDetail.Text =
-                                    $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";                                                  
+                                                                                        
+                            lblShowBalanceDetail.Text =
+                                $"Cash: {cashBalance:N2}\nBanks: {bankBalance:N2}";                                                 
                         }
                     }
                 }
@@ -282,7 +286,7 @@ namespace EasyBiz
 
             // Generate the PDF
             new TrialBalanceDocument(report).GeneratePdf(filePath);
-            
+
         }
 
         private void BtnSalesInvoice_Click(object sender, EventArgs e)
@@ -426,25 +430,25 @@ namespace EasyBiz
         {
             Button[] buttons =
             {
-        BtnCashPayment,
-        BtnCashReceipt,
-        BtnJournalVoucher,
-        BtnPurchaseInvoice,
-        BtnSalesInvoice,
-        BtnEditTransactions,
-        BtnLedgerReport,
-        BtnCashBook,
-        BtnBankPayment,
-        BtnBankReceipt,
-        BtnStockReport,
-        BtnTrialBalance,
-        BtnAccountsSetup,
-        BtnProductSetup,
-        BtnOpeningBalances,
-        BtnChequeBook,
-        BtnSettings,
-        BtnBackupData
-    };
+                BtnCashPayment,
+                BtnCashReceipt,
+                BtnJournalVoucher,
+                BtnPurchaseInvoice,
+                BtnSalesInvoice,
+                BtnEditTransactions,
+                BtnLedgerReport,
+                BtnCashBook,
+                BtnBankPayment,
+                BtnBankReceipt,
+                BtnStockReport,
+                BtnTrialBalance,
+                BtnAccountsSetup,
+                BtnProductSetup,
+                BtnOpeningBalances,
+                BtnChequeBook,
+                BtnSettings,
+                BtnBackupData
+            };
 
             const double imageWidthRatio = 0.32;
             const double imageHeightRatio = 0.32;
@@ -464,37 +468,53 @@ namespace EasyBiz
                 original.Dispose();
             }
         }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             setupButtons();
             GlobalConfig.LoadSettings();
             lblUsername.Text = $"Welcome: {CurrentUser.FullName}";
-
-            // If HasFavorites is true, Visible becomes true. If 0 favorites, it becomes false.
-            pnlFavorites.Visible = FavoritesService.HasFavorites();
-            if (pnlFavorites.Visible)
-            { LoadFavoritesPanel(); }
-
-            // Enforce per-user module rights (no-op for admins — they always see everything).
             ApplyUserRights();
+
+            // Sync Favorites Panel visibility with user config on application load
+            bool isFavEnabled = GlobalConfig.AppSettings.EnableFavorites && FavoritesService.HasFavorites();
+            enableFavoritesPanelToolStripMenuItem.Checked = isFavEnabled;
+            pnlFavorites.Visible = isFavEnabled;
+
+            if (isFavEnabled)
+            {
+                LoadFavoritesPanel();
+            }
         }
 
         private void LoadFavoritesPanel()
         {
-            // Check if any favorites exist and toggle the panel visibility immediately
-            pnlFavorites.Visible = FavoritesService.HasFavorites();
+            // Abort if panel shouldn't be visible to save resources
+            if (!pnlFavorites.Visible) return;
 
-            pnlFavorites.Controls.Clear();
+            // Dispose old favorite buttons to prevent memory leaks and UI glitches,
+            // while keeping lblFavHeader intact. Controls.Clear() causes memory leaks for dynamic controls.
+            for (int i = pnlFavorites.Controls.Count - 1; i >= 0; i--)
+            {
+                Control ctrl = pnlFavorites.Controls[i];
+                if (ctrl != lblFavHeader)
+                {
+                    pnlFavorites.Controls.RemoveAt(i);
+                    ctrl.Dispose();
+                }
+            }
 
-            if (!pnlFavorites.Visible)
-                enableFavoritesPanelToolStripMenuItem.Checked = false;
-            //return;
-            pnlFavorites.Controls.Add(lblFavHeader);
+            // Guarantee header is present just in case
+            if (!pnlFavorites.Controls.Contains(lblFavHeader))
+            {
+                pnlFavorites.Controls.Add(lblFavHeader);
+            }
+
             var favoriteKeys = FavoritesService.GetFavoriteKeys();
+            if (favoriteKeys == null) return;
 
             foreach (var key in favoriteKeys)
             {
-
                 var module = ModuleRegistry.GetByKey(key);
                 if (module == null) continue; // module might've been removed from registry
 
@@ -512,7 +532,6 @@ namespace EasyBiz
                 };
                 btn.Click += FavoriteButton_Click;
                 pnlFavorites.Controls.Add(btn);
-
             }
         }
 
@@ -606,7 +625,16 @@ namespace EasyBiz
             {
                 settingsForm.FavoritesUpdated += (s, e) =>
                 {
-                    LoadFavoritesPanel();
+                    // Keep visibility matched in case it was toggled during the Settings session
+                    bool isFavEnabled = GlobalConfig.AppSettings.EnableFavorites && FavoritesService.HasFavorites();
+                    enableFavoritesPanelToolStripMenuItem.Checked = isFavEnabled;
+                    pnlFavorites.Visible = isFavEnabled;
+
+                    if (isFavEnabled)
+                    {
+                        LoadFavoritesPanel();
+                    }
+
                     ApplyUserRights();
                 };
                 settingsForm.ShowDialog();
@@ -638,23 +666,38 @@ namespace EasyBiz
             }
         }
 
-        private void enableFavoritesPanelToolStripMenuItem_CheckStateChanged(object sender, EventArgs e)
+        private void enableFavoritesPanelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (enableFavoritesPanelToolStripMenuItem.Checked)
+            // Using 'Click' instead of 'CheckStateChanged' prevents re-entrancy issues.
+            bool isChecked = enableFavoritesPanelToolStripMenuItem.Checked;
+
+            if (isChecked)
             {
                 if (!FavoritesService.HasFavorites())
                 {
                     MessageBox.Show(
                         "You have no favorites set up. Please go to Settings > Favorites to add some.",
                         "No Favorites", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Revert the check state since they can't enable it
+                    GlobalConfig.AppSettings.EnableFavorites = false;
                     enableFavoritesPanelToolStripMenuItem.Checked = false;
+                    pnlFavorites.Visible = false;
                 }
-                else { pnlFavorites.Visible = true; }
+                else
+                {
+                    GlobalConfig.AppSettings.EnableFavorites = true;
+                    pnlFavorites.Visible = true;
+                    LoadFavoritesPanel();
+                }
             }
             else
             {
+                GlobalConfig.AppSettings.EnableFavorites = false;
                 pnlFavorites.Visible = false;
             }
+
+            GlobalConfig.SaveSettings();
         }
 
         private void abountMeToolStripMenuItem_Click(object sender, EventArgs e)

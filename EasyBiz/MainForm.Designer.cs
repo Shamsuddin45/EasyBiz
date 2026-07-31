@@ -596,7 +596,7 @@
             enableFavoritesPanelToolStripMenuItem.Name = "enableFavoritesPanelToolStripMenuItem";
             enableFavoritesPanelToolStripMenuItem.Size = new Size(239, 26);
             enableFavoritesPanelToolStripMenuItem.Text = "Enable favorites panel";
-            enableFavoritesPanelToolStripMenuItem.CheckStateChanged += enableFavoritesPanelToolStripMenuItem_CheckStateChanged;
+            enableFavoritesPanelToolStripMenuItem.CheckStateChanged += enableFavoritesPanelToolStripMenuItem_Click;
             // 
             // aboutToolStripMenuItem
             // 

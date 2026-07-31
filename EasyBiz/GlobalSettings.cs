@@ -10,6 +10,7 @@ namespace EasyBiz
     {
         public string InWords { get; set; } = "Off"; // numbers in words setting
         public string PrintSaleReceipt { get; set; } = "Always ask";
+        public bool EnableFavorites { get; set; } = false;
     }
    
     public static class GlobalConfig
