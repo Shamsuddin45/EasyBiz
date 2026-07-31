@@ -203,8 +203,7 @@ namespace EasyBiz
             _provider = AIProviderFactory.Create();
             lblProviderBadge.Text = $"Powered by {_provider.ProviderName}";
 
-            chatLog.Clear();
-            AppendSystemLine($"Hi {CurrentUser.FullName}, How can I help you with your business metrics?");
+            chatLog.Clear();            
             GenerateRandomSuggestions();
             txtInput.Select();
         }
@@ -225,6 +224,7 @@ namespace EasyBiz
 
             try
             {
+                // ONLY ask the user's question here
                 string answer = await _provider.AskAsync(question);
                 AppendAssistantLine(answer);
             }
@@ -279,6 +279,44 @@ namespace EasyBiz
 
             chatLog.AppendText(Environment.NewLine + Environment.NewLine);
             chatLog.ScrollToCaret();
+        }
+
+        protected override async void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            await GenerateWelcomeMessageAsync();
+        }
+
+        private async Task GenerateWelcomeMessageAsync()
+        {
+            if (_busy) return;
+
+            _busy = true;
+            btnSend.Enabled = false;
+            lblStatus.Text = "⚡ Waking up AI assistant...";
+
+            try
+            {
+                // Generate the greeting exactly once on load
+                string prompt = $"Write a 5-8 words, friendly welcome message for the user {CurrentUser.Username}. You are curious about the user";
+                string welcomeMsg = await _provider.AskAsync(prompt);
+
+                // Appending as Assistant Line looks more conversational than System Line
+                AppendAssistantLine(welcomeMsg);
+            }
+            catch (Exception ex)
+            {
+                // Fallback in case of a network error right at launch
+                AppendErrorLine("Failed to generate AI greeting: " + ex.Message);
+                AppendSystemLine($"Welcome to EasyBiz AI Assistant, {CurrentUser.Username}.");
+            }
+            finally
+            {
+                _busy = false;
+                btnSend.Enabled = true;
+                lblStatus.Text = "";
+                txtInput.Focus();
+            }
         }
     }
 }
