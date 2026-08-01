@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             comboSearchName = new ComboBox();
             label2 = new Label();
             comboSearchId = new ComboBox();
@@ -62,21 +62,22 @@
             // 
             comboSearchName.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboSearchName.AutoCompleteSource = AutoCompleteSource.ListItems;
-            comboSearchName.Font = new Font("Segoe UI", 12F);
+            comboSearchName.Font = new Font("Segoe UI", 11F);
             comboSearchName.FormattingEnabled = true;
-            comboSearchName.Location = new Point(304, 117);
+            comboSearchName.Location = new Point(190, 45);
             comboSearchName.Name = "comboSearchName";
-            comboSearchName.Size = new Size(479, 36);
-            comboSearchName.TabIndex = 5;
+            comboSearchName.Size = new Size(350, 33);
+            comboSearchName.TabIndex = 2;
             comboSearchName.SelectedIndexChanged += comboSearchName_SelectedIndexChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(304, 91);
+            label2.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            label2.ForeColor = Color.FromArgb(64, 64, 64);
+            label2.Location = new Point(186, 20);
             label2.Name = "label2";
-            label2.Size = new Size(90, 23);
+            label2.Size = new Size(85, 21);
             label2.TabIndex = 15;
             label2.Text = "A/C Name";
             // 
@@ -84,38 +85,39 @@
             // 
             comboSearchId.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboSearchId.AutoCompleteSource = AutoCompleteSource.ListItems;
-            comboSearchId.Font = new Font("Segoe UI", 12F);
+            comboSearchId.Font = new Font("Segoe UI", 11F);
             comboSearchId.FormattingEnabled = true;
-            comboSearchId.Location = new Point(67, 117);
+            comboSearchId.Location = new Point(20, 45);
             comboSearchId.Name = "comboSearchId";
-            comboSearchId.Size = new Size(192, 36);
-            comboSearchId.TabIndex = 4;
+            comboSearchId.Size = new Size(150, 33);
+            comboSearchId.TabIndex = 1;
             comboSearchId.SelectedIndexChanged += comboSearchId_SelectedIndexChanged;
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10.2F);
-            label6.Location = new Point(67, 91);
+            label6.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            label6.ForeColor = Color.FromArgb(64, 64, 64);
+            label6.Location = new Point(16, 20);
             label6.Name = "label6";
-            label6.Size = new Size(61, 23);
+            label6.Size = new Size(58, 21);
             label6.TabIndex = 19;
             label6.Text = "A/C ID";
             // 
             // BtnLoadLedger
             // 
-            BtnLoadLedger.BackColor = Color.FromArgb(52, 152, 219);
-            BtnLoadLedger.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnLoadLedger.BackColor = Color.FromArgb(13, 110, 253);
+            BtnLoadLedger.BackgroundColor = Color.FromArgb(13, 110, 253);
             BtnLoadLedger.BorderColor = Color.Transparent;
             BtnLoadLedger.BorderRadius = 4;
             BtnLoadLedger.BorderSize = 0;
             BtnLoadLedger.FlatAppearance.BorderSize = 0;
             BtnLoadLedger.FlatStyle = FlatStyle.Flat;
-            BtnLoadLedger.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnLoadLedger.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             BtnLoadLedger.ForeColor = Color.White;
-            BtnLoadLedger.Location = new Point(612, 37);
+            BtnLoadLedger.Location = new Point(980, 43);
             BtnLoadLedger.Name = "BtnLoadLedger";
-            BtnLoadLedger.Size = new Size(125, 34);
+            BtnLoadLedger.Size = new Size(110, 36);
             BtnLoadLedger.TabIndex = 6;
             BtnLoadLedger.Text = "Load";
             BtnLoadLedger.TextColor = Color.White;
@@ -123,20 +125,20 @@
             // 
             // BtnExportPdf
             // 
-            BtnExportPdf.BackColor = Color.Red;
-            BtnExportPdf.BackgroundColor = Color.Red;
+            BtnExportPdf.BackColor = Color.FromArgb(220, 53, 69);
+            BtnExportPdf.BackgroundColor = Color.FromArgb(220, 53, 69);
             BtnExportPdf.BorderColor = Color.Transparent;
             BtnExportPdf.BorderRadius = 4;
             BtnExportPdf.BorderSize = 0;
             BtnExportPdf.FlatAppearance.BorderSize = 0;
             BtnExportPdf.FlatStyle = FlatStyle.Flat;
-            BtnExportPdf.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            BtnExportPdf.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             BtnExportPdf.ForeColor = Color.White;
-            BtnExportPdf.Location = new Point(743, 37);
+            BtnExportPdf.Location = new Point(1110, 43);
             BtnExportPdf.Name = "BtnExportPdf";
-            BtnExportPdf.Size = new Size(229, 34);
+            BtnExportPdf.Size = new Size(160, 36);
             BtnExportPdf.TabIndex = 7;
-            BtnExportPdf.Text = "View / Export PDF";
+            BtnExportPdf.Text = "Export PDF";
             BtnExportPdf.TextColor = Color.White;
             BtnExportPdf.UseVisualStyleBackColor = false;
             BtnExportPdf.Click += BtnExportPdf_Click;
@@ -144,39 +146,41 @@
             // dateTimePicker1
             // 
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
-            dateTimePicker1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dateTimePicker1.Font = new Font("Segoe UI", 11F);
             dateTimePicker1.Format = DateTimePickerFormat.Short;
-            dateTimePicker1.Location = new Point(67, 37);
+            dateTimePicker1.Location = new Point(560, 45);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(192, 34);
-            dateTimePicker1.TabIndex = 1;
+            dateTimePicker1.Size = new Size(130, 32);
+            dateTimePicker1.TabIndex = 3;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 44);
+            label1.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(556, 20);
             label1.Name = "label1";
-            label1.Size = new Size(49, 23);
+            label1.Size = new Size(48, 21);
             label1.TabIndex = 32;
             label1.Text = "From";
             // 
             // dateTimePicker2
             // 
-            dateTimePicker2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dateTimePicker2.Font = new Font("Segoe UI", 11F);
             dateTimePicker2.Format = DateTimePickerFormat.Short;
-            dateTimePicker2.Location = new Point(304, 37);
+            dateTimePicker2.Location = new Point(710, 45);
             dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(192, 34);
-            dateTimePicker2.TabIndex = 2;
+            dateTimePicker2.Size = new Size(130, 32);
+            dateTimePicker2.TabIndex = 4;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10.2F);
-            label3.Location = new Point(271, 44);
+            label3.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(64, 64, 64);
+            label3.Location = new Point(706, 20);
             label3.Name = "label3";
-            label3.Size = new Size(27, 23);
+            label3.Size = new Size(27, 21);
             label3.TabIndex = 34;
             label3.Text = "To";
             // 
@@ -185,12 +189,12 @@
             checkAllDates.AutoSize = true;
             checkAllDates.Checked = true;
             checkAllDates.CheckState = CheckState.Checked;
-            checkAllDates.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkAllDates.Location = new Point(502, 37);
+            checkAllDates.Font = new Font("Segoe UI", 10.2F);
+            checkAllDates.Location = new Point(860, 49);
             checkAllDates.Name = "checkAllDates";
-            checkAllDates.Size = new Size(99, 29);
-            checkAllDates.TabIndex = 3;
-            checkAllDates.Text = "all dates";
+            checkAllDates.Size = new Size(97, 27);
+            checkAllDates.TabIndex = 5;
+            checkAllDates.Text = "All dates";
             checkAllDates.UseVisualStyleBackColor = true;
             checkAllDates.CheckedChanged += checkAllDates_CheckedChanged;
             // 
@@ -199,51 +203,51 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(245, 245, 245);
-            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(248, 249, 250);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(45, 45, 48);
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridView1.ColumnHeadersHeight = 45;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(33, 37, 41);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(33, 37, 41);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.ColumnHeadersHeight = 50;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, date, voucher_no, type, description, debit, credit, balance });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = Color.White;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.Padding = new Padding(5);
-            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 120, 215);
-            dataGridViewCellStyle6.SelectionForeColor = Color.White;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.Padding = new Padding(5);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(232, 240, 254);
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
-            dataGridView1.GridColor = Color.LightGray;
-            dataGridView1.Location = new Point(3, 176);
+            dataGridView1.GridColor = Color.FromArgb(224, 224, 224);
+            dataGridView1.Location = new Point(3, 103);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 40;
+            dataGridView1.RowTemplate.Height = 42;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1283, 457);
-            dataGridView1.TabIndex = 36;
+            dataGridView1.Size = new Size(1283, 530);
+            dataGridView1.TabIndex = 8;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
             // sno
             // 
-            sno.HeaderText = "Sno";
+            sno.HeaderText = "S.No";
             sno.MinimumWidth = 4;
             sno.Name = "sno";
             sno.ReadOnly = true;
@@ -299,6 +303,7 @@
             // 
             // panel1
             // 
+            panel1.BackColor = Color.White;
             panel1.Controls.Add(BtnExportPdf);
             panel1.Controls.Add(BtnLoadLedger);
             panel1.Controls.Add(comboSearchName);
@@ -311,23 +316,25 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(dateTimePicker1);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(3, 3);
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1283, 167);
+            panel1.Size = new Size(1289, 100);
             panel1.TabIndex = 37;
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.BackColor = Color.White;
             tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Controls.Add(panel1, 0, 0);
             tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 27.2012577F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 72.7987442F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.Size = new Size(1289, 636);
             tableLayoutPanel1.TabIndex = 35;
             // 
@@ -335,41 +342,44 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1289, 636);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ViewLedger";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "ViewLedger";
+            Text = "View Ledger";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
+
         }
 
         #endregion
-        private ComboBox comboSearchName;
-        private Label label2;
-        private ComboBox comboSearchId;
-        private Label label6;
-        private CustomButton BtnLoadLedger;
-        private CustomButton BtnExportPdf;
-        private DateTimePicker dateTimePicker1;
-        private Label label1;
-        private DateTimePicker dateTimePicker2;
-        private Label label3;
-        private CheckBox checkAllDates;
-        private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn sno;
-        private DataGridViewTextBoxColumn date;
-        private DataGridViewTextBoxColumn voucher_no;
-        private DataGridViewTextBoxColumn type;
-        private DataGridViewTextBoxColumn description;
-        private DataGridViewTextBoxColumn debit;
-        private DataGridViewTextBoxColumn credit;
-        private DataGridViewTextBoxColumn balance;
-        private Panel panel1;
-        private TableLayoutPanel tableLayoutPanel1;
+
+        private System.Windows.Forms.ComboBox comboSearchName;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboSearchId;
+        private System.Windows.Forms.Label label6;
+        private EasyBiz.CustomButton BtnLoadLedger;
+        private EasyBiz.CustomButton BtnExportPdf;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkAllDates;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn voucher_no;
+        private System.Windows.Forms.DataGridViewTextBoxColumn type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn debit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn credit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn balance;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }

@@ -599,6 +599,7 @@
             // 
             // BtnClose
             // 
+            BtnClose.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnClose.BackColor = Color.FromArgb(231, 76, 60);
             BtnClose.BackgroundColor = Color.FromArgb(231, 76, 60);
             BtnClose.BorderColor = Color.Transparent;

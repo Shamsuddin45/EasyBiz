@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new Label();
             dateFrom = new DateTimePicker();
             dateTo = new DateTimePicker();
@@ -63,7 +66,9 @@
             BtnExportMovements = new CustomButton();
             BtnExportSummary = new CustomButton();
             panel1 = new Panel();
+            label7 = new Label();
             panel2 = new Panel();
+            label8 = new Label();
             panel3 = new Panel();
             label6 = new Label();
             comboPaymentFilter = new ComboBox();
@@ -83,10 +88,9 @@
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Left;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F);
-            label1.Location = new Point(58, 67);
+            label1.Location = new Point(140, 22);
             label1.Name = "label1";
             label1.Size = new Size(49, 23);
             label1.TabIndex = 0;
@@ -94,30 +98,27 @@
             // 
             // dateFrom
             // 
-            dateFrom.Anchor = AnchorStyles.Left;
-            dateFrom.Font = new Font("Segoe UI", 12F);
+            dateFrom.Font = new Font("Segoe UI", 10.8F);
             dateFrom.Format = DateTimePickerFormat.Short;
-            dateFrom.Location = new Point(113, 62);
+            dateFrom.Location = new Point(195, 18);
             dateFrom.Name = "dateFrom";
-            dateFrom.Size = new Size(185, 34);
+            dateFrom.Size = new Size(140, 31);
             dateFrom.TabIndex = 2;
             // 
             // dateTo
             // 
-            dateTo.Anchor = AnchorStyles.Left;
-            dateTo.Font = new Font("Segoe UI", 12F);
+            dateTo.Font = new Font("Segoe UI", 10.8F);
             dateTo.Format = DateTimePickerFormat.Short;
-            dateTo.Location = new Point(337, 60);
+            dateTo.Location = new Point(390, 18);
             dateTo.Name = "dateTo";
-            dateTo.Size = new Size(185, 34);
+            dateTo.Size = new Size(140, 31);
             dateTo.TabIndex = 3;
             // 
             // label2
             // 
-            label2.Anchor = AnchorStyles.Left;
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.2F);
-            label2.Location = new Point(304, 67);
+            label2.Location = new Point(355, 22);
             label2.Name = "label2";
             label2.Size = new Size(27, 23);
             label2.TabIndex = 2;
@@ -125,15 +126,37 @@
             // 
             // gridStock
             // 
-            gridStock.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridStock.AllowUserToAddRows = false;
+            gridStock.BackgroundColor = Color.White;
+            gridStock.BorderStyle = BorderStyle.None;
+            gridStock.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridStock.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(240, 242, 245);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+            dataGridViewCellStyle1.ForeColor = Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(240, 242, 245);
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            gridStock.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            gridStock.ColumnHeadersHeight = 40;
             gridStock.Columns.AddRange(new DataGridViewColumn[] { csNo, csId, csProduct, csUnit, csQty, csWeight, csWeightUnit, csMinQty, csSaleRate, csPurRate, csValue });
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle2.ForeColor = Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            gridStock.DefaultCellStyle = dataGridViewCellStyle2;
             gridStock.Dock = DockStyle.Fill;
-            gridStock.Location = new Point(0, 0);
+            gridStock.EnableHeadersVisualStyles = false;
+            gridStock.Location = new Point(15, 35);
             gridStock.Name = "gridStock";
+            gridStock.RowHeadersVisible = false;
             gridStock.RowHeadersWidth = 51;
-            gridStock.Size = new Size(1421, 397);
+            gridStock.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridStock.Size = new Size(1894, 350);
             gridStock.TabIndex = 4;
-            gridStock.TabStop = false;
             // 
             // csNo
             // 
@@ -141,7 +164,7 @@
             csNo.HeaderText = "Sr#";
             csNo.MinimumWidth = 6;
             csNo.Name = "csNo";
-            csNo.Width = 60;
+            csNo.Width = 62;
             // 
             // csId
             // 
@@ -149,15 +172,14 @@
             csId.HeaderText = "Id";
             csId.MinimumWidth = 6;
             csId.Name = "csId";
-            csId.Width = 51;
+            csId.Width = 52;
             // 
             // csProduct
             // 
-            csProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            csProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             csProduct.HeaderText = "Product";
             csProduct.MinimumWidth = 6;
             csProduct.Name = "csProduct";
-            csProduct.Width = 89;
             // 
             // csUnit
             // 
@@ -217,21 +239,21 @@
             // 
             // comboProductFilter
             // 
-            comboProductFilter.Anchor = AnchorStyles.Left;
-            comboProductFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboProductFilter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboProductFilter.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboProductFilter.Font = new Font("Segoe UI", 10.8F);
             comboProductFilter.FormattingEnabled = true;
-            comboProductFilter.Location = new Point(248, 150);
+            comboProductFilter.Location = new Point(325, 71);
             comboProductFilter.Name = "comboProductFilter";
-            comboProductFilter.Size = new Size(310, 36);
+            comboProductFilter.Size = new Size(323, 33);
             comboProductFilter.TabIndex = 6;
             comboProductFilter.SelectedIndexChanged += comboProductFilter_SelectedIndexChanged;
             // 
             // label3
             // 
-            label3.Anchor = AnchorStyles.Left;
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.2F);
-            label3.Location = new Point(248, 119);
+            label3.Location = new Point(245, 75);
             label3.Name = "label3";
             label3.Size = new Size(74, 23);
             label3.TabIndex = 6;
@@ -239,15 +261,31 @@
             // 
             // gridMovements
             // 
-            gridMovements.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            gridMovements.AllowUserToAddRows = false;
+            gridMovements.BackgroundColor = Color.White;
+            gridMovements.BorderStyle = BorderStyle.None;
+            gridMovements.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridMovements.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            gridMovements.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            gridMovements.ColumnHeadersHeight = 40;
             gridMovements.Columns.AddRange(new DataGridViewColumn[] { smNo, smDate, smVoucher, smProduct, smQtyIn, smQtyOut, smWtIn, smWtOut, smRate, smAmount, smBalQty, smBalWt });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10.2F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(52, 152, 219);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            gridMovements.DefaultCellStyle = dataGridViewCellStyle3;
             gridMovements.Dock = DockStyle.Fill;
-            gridMovements.Location = new Point(0, 0);
+            gridMovements.EnableHeadersVisualStyles = false;
+            gridMovements.Location = new Point(15, 45);
             gridMovements.Name = "gridMovements";
+            gridMovements.RowHeadersVisible = false;
             gridMovements.RowHeadersWidth = 51;
-            gridMovements.Size = new Size(1421, 357);
+            gridMovements.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            gridMovements.Size = new Size(1894, 403);
             gridMovements.TabIndex = 7;
-            gridMovements.TabStop = false;
             // 
             // smNo
             // 
@@ -255,7 +293,7 @@
             smNo.HeaderText = "Sr#";
             smNo.MinimumWidth = 6;
             smNo.Name = "smNo";
-            smNo.Width = 60;
+            smNo.Width = 62;
             // 
             // smDate
             // 
@@ -263,7 +301,7 @@
             smDate.HeaderText = "Date";
             smDate.MinimumWidth = 6;
             smDate.Name = "smDate";
-            smDate.Width = 70;
+            smDate.Width = 73;
             // 
             // smVoucher
             // 
@@ -271,15 +309,13 @@
             smVoucher.HeaderText = "Voucher";
             smVoucher.MinimumWidth = 6;
             smVoucher.Name = "smVoucher";
-            smVoucher.Width = 91;
             // 
             // smProduct
             // 
-            smProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            smProduct.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             smProduct.HeaderText = "Product";
             smProduct.MinimumWidth = 6;
             smProduct.Name = "smProduct";
-            smProduct.Width = 89;
             // 
             // smQtyIn
             // 
@@ -339,19 +375,17 @@
             // 
             // BtnLoadMovements
             // 
-            BtnLoadMovements.Anchor = AnchorStyles.Left;
             BtnLoadMovements.BackColor = Color.FromArgb(52, 152, 219);
             BtnLoadMovements.BackgroundColor = Color.FromArgb(52, 152, 219);
             BtnLoadMovements.BorderColor = Color.Transparent;
-            BtnLoadMovements.BorderRadius = 2;
+            BtnLoadMovements.BorderRadius = 4;
             BtnLoadMovements.BorderSize = 0;
-            BtnLoadMovements.FlatAppearance.BorderSize = 0;
             BtnLoadMovements.FlatStyle = FlatStyle.Flat;
-            BtnLoadMovements.Font = new Font("Segoe UI", 10.2F);
+            BtnLoadMovements.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             BtnLoadMovements.ForeColor = Color.White;
-            BtnLoadMovements.Location = new Point(528, 58);
+            BtnLoadMovements.Location = new Point(550, 16);
             BtnLoadMovements.Name = "BtnLoadMovements";
-            BtnLoadMovements.Size = new Size(118, 36);
+            BtnLoadMovements.Size = new Size(120, 35);
             BtnLoadMovements.TabIndex = 4;
             BtnLoadMovements.Text = "Load";
             BtnLoadMovements.TextColor = Color.White;
@@ -360,21 +394,19 @@
             // 
             // BtnExportMovements
             // 
-            BtnExportMovements.Anchor = AnchorStyles.Left;
-            BtnExportMovements.BackColor = Color.FromArgb(0, 192, 0);
-            BtnExportMovements.BackgroundColor = Color.FromArgb(0, 192, 0);
+            BtnExportMovements.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnExportMovements.BackColor = Color.FromArgb(46, 204, 113);
+            BtnExportMovements.BackgroundColor = Color.FromArgb(46, 204, 113);
             BtnExportMovements.BorderColor = Color.Transparent;
-            BtnExportMovements.BorderRadius = 8;
+            BtnExportMovements.BorderRadius = 4;
             BtnExportMovements.BorderSize = 0;
-            BtnExportMovements.FlatAppearance.BorderSize = 0;
             BtnExportMovements.FlatStyle = FlatStyle.Flat;
-            BtnExportMovements.Font = new Font("Segoe UI", 10.2F);
+            BtnExportMovements.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             BtnExportMovements.ForeColor = Color.White;
-            BtnExportMovements.Location = new Point(1123, 76);
+            BtnExportMovements.Location = new Point(1635, 22);
             BtnExportMovements.Name = "BtnExportMovements";
-            BtnExportMovements.Size = new Size(286, 52);
+            BtnExportMovements.Size = new Size(247, 40);
             BtnExportMovements.TabIndex = 13;
-            BtnExportMovements.TabStop = false;
             BtnExportMovements.Text = "Export Movements [F1]";
             BtnExportMovements.TextColor = Color.White;
             BtnExportMovements.UseVisualStyleBackColor = false;
@@ -382,21 +414,19 @@
             // 
             // BtnExportSummary
             // 
-            BtnExportSummary.Anchor = AnchorStyles.Left;
+            BtnExportSummary.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnExportSummary.BackColor = Color.DodgerBlue;
             BtnExportSummary.BackgroundColor = Color.DodgerBlue;
             BtnExportSummary.BorderColor = Color.Transparent;
-            BtnExportSummary.BorderRadius = 8;
+            BtnExportSummary.BorderRadius = 4;
             BtnExportSummary.BorderSize = 0;
-            BtnExportSummary.FlatAppearance.BorderSize = 0;
             BtnExportSummary.FlatStyle = FlatStyle.Flat;
-            BtnExportSummary.Font = new Font("Segoe UI", 10.2F);
+            BtnExportSummary.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
             BtnExportSummary.ForeColor = Color.White;
-            BtnExportSummary.Location = new Point(1123, 134);
+            BtnExportSummary.Location = new Point(1635, 70);
             BtnExportSummary.Name = "BtnExportSummary";
-            BtnExportSummary.Size = new Size(286, 52);
+            BtnExportSummary.Size = new Size(247, 40);
             BtnExportSummary.TabIndex = 14;
-            BtnExportSummary.TabStop = false;
             BtnExportSummary.Text = "Export Stock Summary [F2]";
             BtnExportSummary.TextColor = Color.White;
             BtnExportSummary.UseVisualStyleBackColor = false;
@@ -404,29 +434,51 @@
             // 
             // panel1
             // 
-            panel1.AutoScroll = true;
-            panel1.AutoScrollMargin = new Size(10, 10);
             panel1.Controls.Add(gridStock);
+            panel1.Controls.Add(label7);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 581);
+            panel1.Location = new Point(0, 578);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1421, 397);
+            panel1.Padding = new Padding(15, 0, 15, 15);
+            panel1.Size = new Size(1924, 400);
             panel1.TabIndex = 15;
+            // 
+            // label7
+            // 
+            label7.Dock = DockStyle.Top;
+            label7.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label7.ForeColor = Color.FromArgb(44, 62, 80);
+            label7.Location = new Point(15, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(1894, 35);
+            label7.TabIndex = 5;
+            label7.Text = "Items Stock";
             // 
             // panel2
             // 
-            panel2.AutoScroll = true;
-            panel2.AutoScrollMargin = new Size(10, 10);
             panel2.Controls.Add(gridMovements);
-            panel2.Dock = DockStyle.Bottom;
-            panel2.Location = new Point(0, 224);
+            panel2.Controls.Add(label8);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 120);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1421, 357);
+            panel2.Padding = new Padding(15, 10, 15, 10);
+            panel2.Size = new Size(1924, 458);
             panel2.TabIndex = 16;
+            // 
+            // label8
+            // 
+            label8.Dock = DockStyle.Top;
+            label8.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold);
+            label8.ForeColor = Color.FromArgb(44, 62, 80);
+            label8.Location = new Point(15, 10);
+            label8.Name = "label8";
+            label8.Size = new Size(1894, 35);
+            label8.TabIndex = 8;
+            label8.Text = "Movements";
             // 
             // panel3
             // 
-            panel3.AutoScroll = true;
+            panel3.BackColor = Color.White;
             panel3.Controls.Add(label6);
             panel3.Controls.Add(comboPaymentFilter);
             panel3.Controls.Add(checkAllDates);
@@ -443,30 +495,31 @@
             panel3.Controls.Add(BtnExportSummary);
             panel3.Controls.Add(comboProductFilter);
             panel3.Controls.Add(label3);
-            panel3.Dock = DockStyle.Bottom;
-            panel3.Location = new Point(0, 2);
+            panel3.Dock = DockStyle.Top;
+            panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1421, 222);
+            panel3.Size = new Size(1924, 120);
             panel3.TabIndex = 17;
             // 
             // label6
             // 
-            label6.Anchor = AnchorStyles.Left;
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10.2F);
-            label6.Location = new Point(878, 119);
+            label6.Location = new Point(1062, 74);
             label6.Name = "label6";
-            label6.Size = new Size(118, 23);
+            label6.Size = new Size(80, 23);
             label6.TabIndex = 21;
-            label6.Text = "Payment type:";
+            label6.Text = "Payment:";
             // 
             // comboPaymentFilter
             // 
-            comboPaymentFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboPaymentFilter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPaymentFilter.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboPaymentFilter.Font = new Font("Segoe UI", 10.8F);
             comboPaymentFilter.FormattingEnabled = true;
-            comboPaymentFilter.Location = new Point(878, 150);
+            comboPaymentFilter.Location = new Point(1147, 70);
             comboPaymentFilter.Name = "comboPaymentFilter";
-            comboPaymentFilter.Size = new Size(185, 36);
+            comboPaymentFilter.Size = new Size(160, 33);
             comboPaymentFilter.TabIndex = 8;
             comboPaymentFilter.SelectedIndexChanged += comboPaymentFilter_SelectedIndexChanged;
             // 
@@ -475,22 +528,19 @@
             checkAllDates.AutoSize = true;
             checkAllDates.Checked = true;
             checkAllDates.CheckState = CheckState.Checked;
-            checkAllDates.FlatAppearance.BorderColor = Color.Red;
-            checkAllDates.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            checkAllDates.Location = new Point(264, 12);
+            checkAllDates.Font = new Font("Segoe UI", 10.2F);
+            checkAllDates.Location = new Point(25, 20);
             checkAllDates.Name = "checkAllDates";
             checkAllDates.Size = new Size(99, 27);
             checkAllDates.TabIndex = 1;
             checkAllDates.Text = "All Dates";
-            checkAllDates.UseVisualStyleBackColor = true;
             checkAllDates.CheckedChanged += checkAllDates_CheckedChanged;
             // 
             // label5
             // 
-            label5.Anchor = AnchorStyles.Left;
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.2F);
-            label5.Location = new Point(57, 119);
+            label5.Location = new Point(25, 75);
             label5.Name = "label5";
             label5.Size = new Size(49, 23);
             label5.TabIndex = 18;
@@ -498,20 +548,21 @@
             // 
             // comboMovementType
             // 
-            comboMovementType.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboMovementType.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboMovementType.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboMovementType.Font = new Font("Segoe UI", 10.8F);
             comboMovementType.FormattingEnabled = true;
-            comboMovementType.Location = new Point(57, 150);
+            comboMovementType.Location = new Point(80, 71);
             comboMovementType.Name = "comboMovementType";
-            comboMovementType.Size = new Size(185, 36);
+            comboMovementType.Size = new Size(150, 33);
             comboMovementType.TabIndex = 5;
             comboMovementType.SelectedIndexChanged += comboMovementType_SelectedIndexChanged;
             // 
             // label4
             // 
-            label4.Anchor = AnchorStyles.Left;
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.2F);
-            label4.Location = new Point(564, 119);
+            label4.Location = new Point(654, 75);
             label4.Name = "label4";
             label4.Size = new Size(52, 23);
             label4.TabIndex = 16;
@@ -519,32 +570,34 @@
             // 
             // comboPartyFilter
             // 
-            comboPartyFilter.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            comboPartyFilter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboPartyFilter.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboPartyFilter.Font = new Font("Segoe UI", 10.8F);
             comboPartyFilter.FormattingEnabled = true;
-            comboPartyFilter.Location = new Point(564, 150);
+            comboPartyFilter.Location = new Point(709, 71);
             comboPartyFilter.Name = "comboPartyFilter";
-            comboPartyFilter.Size = new Size(308, 36);
+            comboPartyFilter.Size = new Size(347, 33);
             comboPartyFilter.TabIndex = 7;
             comboPartyFilter.SelectedIndexChanged += comboPartyFilter_SelectedIndexChanged;
             // 
             // panelContainer
             // 
-            panelContainer.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panelContainer.AutoScroll = true;
-            panelContainer.AutoScrollMargin = new Size(10, 10);
-            panelContainer.Controls.Add(panel3);
+            panelContainer.BackColor = Color.FromArgb(245, 246, 250);
             panelContainer.Controls.Add(panel2);
             panelContainer.Controls.Add(panel1);
+            panelContainer.Controls.Add(panel3);
+            panelContainer.Dock = DockStyle.Fill;
             panelContainer.Location = new Point(0, 0);
             panelContainer.Name = "panelContainer";
-            panelContainer.Size = new Size(1421, 978);
+            panelContainer.Size = new Size(1924, 978);
             panelContainer.TabIndex = 15;
             // 
             // StockReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1421, 978);
+            BackColor = Color.FromArgb(245, 246, 250);
+            ClientSize = new Size(1924, 978);
             Controls.Add(panelContainer);
             Name = "StockReport";
             StartPosition = FormStartPosition.CenterParent;
@@ -607,5 +660,7 @@
         private DataGridViewTextBoxColumn smBalWt;
         private Label label6;
         private ComboBox comboPaymentFilter;
+        private Label label7;
+        private Label label8;
     }
 }

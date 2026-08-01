@@ -15,6 +15,7 @@ namespace EasyBiz
             LoadAccounts();
             setupDates();
             ThemeManager.ApplyTheme(this);
+            comboSearchName.Select();
         }
 
         private void setupDates()

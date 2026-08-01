@@ -22,42 +22,49 @@
 
         #region Windows Form Designer generated code
 
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private CheckedListBox clbFavorites;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.CheckedListBox clbFavorites;
         private CustomButton BtnSaveFavorites;
         private CustomButton btnUsersManagement;
 
-        private DataGridView gridUsers;
-        private DataGridViewTextBoxColumn colUserId;
-        private DataGridViewTextBoxColumn colUsername;
-        private DataGridViewTextBoxColumn colFullName;
-        private DataGridViewCheckBoxColumn colIsAdmin;
-        private DataGridViewCheckBoxColumn colIsActive;
+        private System.Windows.Forms.DataGridView gridUsers;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUserId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUsername;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colFullName;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colIsAdmin;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colIsActive;
 
-        private GroupBox grpAddUser;
-        private Label label_newUsername;
-        private TextBox txtNewUsername;
-        private Label label_newPassword;
-        private TextBox txtNewPassword;
-        private Label label_newFullName;
-        private TextBox txtNewFullName;
-        private CheckBox chkNewIsAdmin;
+        private System.Windows.Forms.GroupBox grpAddUser;
+        private System.Windows.Forms.Label label_newUsername;
+        private System.Windows.Forms.TextBox txtNewUsername;
+        private System.Windows.Forms.Label label_newPassword;
+        private System.Windows.Forms.TextBox txtNewPassword;
+        private System.Windows.Forms.Label label_newFullName;
+        private System.Windows.Forms.TextBox txtNewFullName;
+        private System.Windows.Forms.CheckBox chkNewIsAdmin;
         private CustomButton BtnAddUser;
 
-        private GroupBox grpEditUser;
-        private CheckBox chkEditIsAdmin;
-        private CheckBox chkEditIsActive;
+        private System.Windows.Forms.GroupBox grpEditUser;
+        private System.Windows.Forms.CheckBox chkEditIsAdmin;
+        private System.Windows.Forms.CheckBox chkEditIsActive;
         private CustomButton BtnUpdateUser;
-        private Label label_resetPassword;
-        private TextBox txtResetPassword;
+        private System.Windows.Forms.Label label_resetPassword;
+        private System.Windows.Forms.TextBox txtResetPassword;
         private CustomButton BtnResetPassword;
         private CustomButton BtnDeleteUser;
 
-        private GroupBox grpRights;
-        private CheckedListBox clbUserRights;
+        private System.Windows.Forms.GroupBox grpRights;
+        private System.Windows.Forms.CheckedListBox clbUserRights;
         private CustomButton BtnSaveRights;
+
+        private CustomButton btnUpdate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboInWordsSettings;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboPrintSaleReceipt;
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -65,6 +72,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             tabControl1 = new TabControl();
             tabPage3 = new TabPage();
             label2 = new Label();
@@ -119,160 +127,178 @@
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
+            tabControl1.Padding = new Point(15, 8);
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(980, 640);
+            tabControl1.Size = new Size(980, 632);
             tabControl1.TabIndex = 0;
             // 
             // tabPage3
             // 
-            tabPage3.BackColor = Color.Transparent;
+            tabPage3.BackColor = Color.White;
             tabPage3.Controls.Add(label2);
             tabPage3.Controls.Add(comboPrintSaleReceipt);
             tabPage3.Controls.Add(label1);
             tabPage3.Controls.Add(comboInWordsSettings);
             tabPage3.Controls.Add(btnUpdate);
-            tabPage3.Location = new Point(4, 29);
+            tabPage3.Location = new Point(4, 42);
             tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(972, 607);
+            tabPage3.Padding = new Padding(30);
+            tabPage3.Size = new Size(972, 746);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "General";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(58, 220);
+            label2.ForeColor = Color.FromArgb(64, 64, 64);
+            label2.Location = new Point(33, 130);
             label2.Name = "label2";
-            label2.Size = new Size(119, 20);
+            label2.Size = new Size(137, 23);
             label2.TabIndex = 6;
             label2.Text = "Print sale receipt";
             // 
             // comboPrintSaleReceipt
             // 
             comboPrintSaleReceipt.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboPrintSaleReceipt.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboPrintSaleReceipt.FormattingEnabled = true;
             comboPrintSaleReceipt.Items.AddRange(new object[] { "Auto print", "Do not print", "Always ask" });
-            comboPrintSaleReceipt.Location = new Point(58, 243);
+            comboPrintSaleReceipt.Location = new Point(33, 156);
             comboPrintSaleReceipt.Name = "comboPrintSaleReceipt";
-            comboPrintSaleReceipt.Size = new Size(238, 31);
+            comboPrintSaleReceipt.Size = new Size(350, 31);
             comboPrintSaleReceipt.TabIndex = 5;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(58, 116);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(33, 40);
             label1.Name = "label1";
-            label1.Size = new Size(160, 20);
+            label1.Size = new Size(185, 23);
             label1.TabIndex = 4;
             label1.Text = "Show amount in words";
             // 
             // comboInWordsSettings
             // 
             comboInWordsSettings.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboInWordsSettings.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboInWordsSettings.FormattingEnabled = true;
             comboInWordsSettings.Items.AddRange(new object[] { "Off", "English", "Sindhi" });
-            comboInWordsSettings.Location = new Point(58, 139);
+            comboInWordsSettings.Location = new Point(33, 66);
             comboInWordsSettings.Name = "comboInWordsSettings";
-            comboInWordsSettings.Size = new Size(238, 31);
+            comboInWordsSettings.Size = new Size(350, 31);
             comboInWordsSettings.TabIndex = 3;
             // 
             // btnUpdate
             // 
-            btnUpdate.BackColor = Color.FromArgb(192, 0, 0);
-            btnUpdate.BackgroundColor = Color.FromArgb(192, 0, 0);
+            btnUpdate.BackColor = Color.FromArgb(41, 128, 185);
+            btnUpdate.BackgroundColor = Color.FromArgb(41, 128, 185);
             btnUpdate.BorderColor = Color.Transparent;
-            btnUpdate.BorderRadius = 2;
+            btnUpdate.BorderRadius = 4;
             btnUpdate.BorderSize = 0;
             btnUpdate.FlatAppearance.BorderSize = 0;
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(58, 364);
+            btnUpdate.Location = new Point(33, 220);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(122, 34);
+            btnUpdate.Size = new Size(150, 40);
             btnUpdate.TabIndex = 2;
-            btnUpdate.Text = "Update";
+            btnUpdate.Text = "Save Settings";
             btnUpdate.TextColor = Color.White;
             btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
             // 
             // tabPage1
             // 
+            tabPage1.BackColor = Color.White;
             tabPage1.Controls.Add(BtnSaveFavorites);
             tabPage1.Controls.Add(clbFavorites);
-            tabPage1.Location = new Point(4, 29);
+            tabPage1.Location = new Point(4, 42);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(972, 607);
+            tabPage1.Padding = new Padding(20);
+            tabPage1.Size = new Size(972, 746);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Favourites";
-            tabPage1.UseVisualStyleBackColor = true;
             // 
             // BtnSaveFavorites
             // 
-            BtnSaveFavorites.BackColor = Color.LimeGreen;
-            BtnSaveFavorites.BackgroundColor = Color.LimeGreen;
+            BtnSaveFavorites.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            BtnSaveFavorites.BackColor = Color.FromArgb(39, 174, 96);
+            BtnSaveFavorites.BackgroundColor = Color.FromArgb(39, 174, 96);
             BtnSaveFavorites.BorderColor = Color.Transparent;
-            BtnSaveFavorites.BorderRadius = 10;
+            BtnSaveFavorites.BorderRadius = 4;
             BtnSaveFavorites.BorderSize = 0;
             BtnSaveFavorites.FlatAppearance.BorderSize = 0;
             BtnSaveFavorites.FlatStyle = FlatStyle.Flat;
             BtnSaveFavorites.ForeColor = Color.White;
-            BtnSaveFavorites.Location = new Point(287, 486);
+            BtnSaveFavorites.Location = new Point(799, 526);
             BtnSaveFavorites.Name = "BtnSaveFavorites";
-            BtnSaveFavorites.Size = new Size(133, 41);
+            BtnSaveFavorites.Size = new Size(150, 42);
             BtnSaveFavorites.TabIndex = 1;
-            BtnSaveFavorites.Text = "Update";
+            BtnSaveFavorites.Text = "Save Favourites";
             BtnSaveFavorites.TextColor = Color.White;
             BtnSaveFavorites.UseVisualStyleBackColor = false;
             BtnSaveFavorites.Click += btnSave_Click;
             // 
             // clbFavorites
             // 
-            clbFavorites.BackColor = Color.WhiteSmoke;
-            clbFavorites.BorderStyle = BorderStyle.None;
+            clbFavorites.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            clbFavorites.BackColor = Color.White;
+            clbFavorites.BorderStyle = BorderStyle.FixedSingle;
             clbFavorites.CheckOnClick = true;
-            clbFavorites.Font = new Font("Segoe UI", 10F);
-            clbFavorites.ForeColor = Color.DimGray;
+            clbFavorites.ForeColor = Color.FromArgb(64, 64, 64);
             clbFavorites.FormattingEnabled = true;
-            clbFavorites.Location = new Point(20, 20);
+            clbFavorites.Location = new Point(23, 23);
             clbFavorites.Name = "clbFavorites";
-            clbFavorites.Size = new Size(400, 450);
+            clbFavorites.Size = new Size(926, 477);
             clbFavorites.TabIndex = 0;
             // 
             // tabPage2
             // 
+            tabPage2.BackColor = Color.White;
             tabPage2.Controls.Add(gridUsers);
             tabPage2.Controls.Add(grpAddUser);
             tabPage2.Controls.Add(grpEditUser);
             tabPage2.Controls.Add(grpRights);
-            tabPage2.Location = new Point(4, 29);
+            tabPage2.Location = new Point(4, 42);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(972, 607);
+            tabPage2.Padding = new Padding(15);
+            tabPage2.Size = new Size(972, 586);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Users Management";
-            tabPage2.UseVisualStyleBackColor = true;
             // 
             // gridUsers
             // 
             gridUsers.AllowUserToAddRows = false;
             gridUsers.AllowUserToDeleteRows = false;
             gridUsers.AllowUserToResizeRows = false;
+            gridUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             gridUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridUsers.ColumnHeadersHeight = 29;
+            gridUsers.BackgroundColor = Color.White;
+            gridUsers.BorderStyle = BorderStyle.Fixed3D;
+            gridUsers.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            gridUsers.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(240, 240, 240);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(64, 64, 64);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(240, 240, 240);
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            gridUsers.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            gridUsers.ColumnHeadersHeight = 40;
             gridUsers.Columns.AddRange(new DataGridViewColumn[] { colUserId, colUsername, colFullName, colIsAdmin, colIsActive });
-            gridUsers.Location = new Point(15, 15);
+            gridUsers.EnableHeadersVisualStyles = false;
+            gridUsers.Location = new Point(18, 18);
             gridUsers.MultiSelect = false;
             gridUsers.Name = "gridUsers";
             gridUsers.ReadOnly = true;
             gridUsers.RowHeadersVisible = false;
             gridUsers.RowHeadersWidth = 51;
+            gridUsers.RowTemplate.Height = 35;
             gridUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gridUsers.Size = new Size(940, 200);
+            gridUsers.Size = new Size(936, 210);
             gridUsers.TabIndex = 0;
             gridUsers.SelectionChanged += gridUsers_SelectionChanged;
             // 
@@ -314,6 +340,7 @@
             // 
             // grpAddUser
             // 
+            grpAddUser.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             grpAddUser.Controls.Add(label_newUsername);
             grpAddUser.Controls.Add(txtNewUsername);
             grpAddUser.Controls.Add(label_newPassword);
@@ -322,9 +349,9 @@
             grpAddUser.Controls.Add(txtNewFullName);
             grpAddUser.Controls.Add(chkNewIsAdmin);
             grpAddUser.Controls.Add(BtnAddUser);
-            grpAddUser.Location = new Point(15, 225);
+            grpAddUser.Location = new Point(18, 235);
             grpAddUser.Name = "grpAddUser";
-            grpAddUser.Size = new Size(300, 260);
+            grpAddUser.Size = new Size(305, 300);
             grpAddUser.TabIndex = 1;
             grpAddUser.TabStop = false;
             grpAddUser.Text = "Add New User";
@@ -332,77 +359,77 @@
             // label_newUsername
             // 
             label_newUsername.AutoSize = true;
-            label_newUsername.Location = new Point(15, 30);
+            label_newUsername.Location = new Point(16, 25);
             label_newUsername.Name = "label_newUsername";
-            label_newUsername.Size = new Size(75, 20);
+            label_newUsername.Size = new Size(87, 23);
             label_newUsername.TabIndex = 0;
             label_newUsername.Text = "Username";
             // 
             // txtNewUsername
             // 
-            txtNewUsername.Font = new Font("Segoe UI", 10.5F);
-            txtNewUsername.Location = new Point(15, 52);
+            txtNewUsername.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtNewUsername.Location = new Point(20, 50);
             txtNewUsername.Name = "txtNewUsername";
-            txtNewUsername.Size = new Size(260, 31);
+            txtNewUsername.Size = new Size(265, 30);
             txtNewUsername.TabIndex = 1;
             // 
             // label_newPassword
             // 
             label_newPassword.AutoSize = true;
-            label_newPassword.Location = new Point(15, 88);
+            label_newPassword.Location = new Point(16, 85);
             label_newPassword.Name = "label_newPassword";
-            label_newPassword.Size = new Size(70, 20);
+            label_newPassword.Size = new Size(80, 23);
             label_newPassword.TabIndex = 2;
             label_newPassword.Text = "Password";
             // 
             // txtNewPassword
             // 
-            txtNewPassword.Font = new Font("Segoe UI", 10.5F);
-            txtNewPassword.Location = new Point(15, 110);
+            txtNewPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtNewPassword.Location = new Point(20, 110);
             txtNewPassword.Name = "txtNewPassword";
-            txtNewPassword.Size = new Size(260, 31);
+            txtNewPassword.Size = new Size(265, 30);
             txtNewPassword.TabIndex = 3;
             txtNewPassword.UseSystemPasswordChar = true;
             // 
             // label_newFullName
             // 
             label_newFullName.AutoSize = true;
-            label_newFullName.Location = new Point(15, 146);
+            label_newFullName.Location = new Point(16, 145);
             label_newFullName.Name = "label_newFullName";
-            label_newFullName.Size = new Size(76, 20);
+            label_newFullName.Size = new Size(87, 23);
             label_newFullName.TabIndex = 4;
             label_newFullName.Text = "Full Name";
             // 
             // txtNewFullName
             // 
-            txtNewFullName.Font = new Font("Segoe UI", 10.5F);
-            txtNewFullName.Location = new Point(15, 168);
+            txtNewFullName.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtNewFullName.Location = new Point(20, 170);
             txtNewFullName.Name = "txtNewFullName";
-            txtNewFullName.Size = new Size(260, 31);
+            txtNewFullName.Size = new Size(265, 30);
             txtNewFullName.TabIndex = 5;
             // 
             // chkNewIsAdmin
             // 
             chkNewIsAdmin.AutoSize = true;
-            chkNewIsAdmin.Location = new Point(15, 205);
+            chkNewIsAdmin.Location = new Point(20, 225);
             chkNewIsAdmin.Name = "chkNewIsAdmin";
-            chkNewIsAdmin.Size = new Size(96, 24);
+            chkNewIsAdmin.Size = new Size(107, 27);
             chkNewIsAdmin.TabIndex = 6;
             chkNewIsAdmin.Text = "Is Admin?";
             // 
             // BtnAddUser
             // 
-            BtnAddUser.BackColor = Color.ForestGreen;
-            BtnAddUser.BackgroundColor = Color.ForestGreen;
+            BtnAddUser.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnAddUser.BackColor = Color.FromArgb(39, 174, 96);
+            BtnAddUser.BackgroundColor = Color.FromArgb(39, 174, 96);
             BtnAddUser.BorderColor = Color.Transparent;
-            BtnAddUser.BorderRadius = 8;
+            BtnAddUser.BorderRadius = 4;
             BtnAddUser.BorderSize = 0;
-            BtnAddUser.FlatAppearance.BorderSize = 0;
             BtnAddUser.FlatStyle = FlatStyle.Flat;
             BtnAddUser.ForeColor = Color.White;
-            BtnAddUser.Location = new Point(130, 202);
+            BtnAddUser.Location = new Point(140, 220);
             BtnAddUser.Name = "BtnAddUser";
-            BtnAddUser.Size = new Size(145, 36);
+            BtnAddUser.Size = new Size(145, 40);
             BtnAddUser.TabIndex = 7;
             BtnAddUser.Text = "Add User";
             BtnAddUser.TextColor = Color.White;
@@ -411,6 +438,7 @@
             // 
             // grpEditUser
             // 
+            grpEditUser.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             grpEditUser.Controls.Add(chkEditIsAdmin);
             grpEditUser.Controls.Add(chkEditIsActive);
             grpEditUser.Controls.Add(BtnUpdateUser);
@@ -418,9 +446,9 @@
             grpEditUser.Controls.Add(txtResetPassword);
             grpEditUser.Controls.Add(BtnResetPassword);
             grpEditUser.Controls.Add(BtnDeleteUser);
-            grpEditUser.Location = new Point(330, 225);
+            grpEditUser.Location = new Point(335, 235);
             grpEditUser.Name = "grpEditUser";
-            grpEditUser.Size = new Size(300, 260);
+            grpEditUser.Size = new Size(305, 300);
             grpEditUser.TabIndex = 2;
             grpEditUser.TabStop = false;
             grpEditUser.Text = "Edit Selected User";
@@ -428,37 +456,34 @@
             // chkEditIsAdmin
             // 
             chkEditIsAdmin.AutoSize = true;
-            chkEditIsAdmin.Enabled = false;
-            chkEditIsAdmin.Location = new Point(15, 30);
+            chkEditIsAdmin.Location = new Point(20, 35);
             chkEditIsAdmin.Name = "chkEditIsAdmin";
-            chkEditIsAdmin.Size = new Size(96, 24);
+            chkEditIsAdmin.Size = new Size(107, 27);
             chkEditIsAdmin.TabIndex = 0;
             chkEditIsAdmin.Text = "Is Admin?";
             // 
             // chkEditIsActive
             // 
             chkEditIsActive.AutoSize = true;
-            chkEditIsActive.Enabled = false;
-            chkEditIsActive.Location = new Point(150, 30);
+            chkEditIsActive.Location = new Point(150, 35);
             chkEditIsActive.Name = "chkEditIsActive";
-            chkEditIsActive.Size = new Size(93, 24);
+            chkEditIsActive.Size = new Size(103, 27);
             chkEditIsActive.TabIndex = 1;
             chkEditIsActive.Text = "Is Active?";
             // 
             // BtnUpdateUser
             // 
-            BtnUpdateUser.BackColor = Color.FromArgb(52, 152, 219);
-            BtnUpdateUser.BackgroundColor = Color.FromArgb(52, 152, 219);
+            BtnUpdateUser.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnUpdateUser.BackColor = Color.FromArgb(41, 128, 185);
+            BtnUpdateUser.BackgroundColor = Color.FromArgb(41, 128, 185);
             BtnUpdateUser.BorderColor = Color.Transparent;
-            BtnUpdateUser.BorderRadius = 8;
+            BtnUpdateUser.BorderRadius = 4;
             BtnUpdateUser.BorderSize = 0;
-            BtnUpdateUser.Enabled = false;
-            BtnUpdateUser.FlatAppearance.BorderSize = 0;
             BtnUpdateUser.FlatStyle = FlatStyle.Flat;
             BtnUpdateUser.ForeColor = Color.White;
-            BtnUpdateUser.Location = new Point(15, 65);
+            BtnUpdateUser.Location = new Point(20, 70);
             BtnUpdateUser.Name = "BtnUpdateUser";
-            BtnUpdateUser.Size = new Size(260, 34);
+            BtnUpdateUser.Size = new Size(265, 40);
             BtnUpdateUser.TabIndex = 2;
             BtnUpdateUser.Text = "Save Admin/Active flags";
             BtnUpdateUser.TextColor = Color.White;
@@ -468,35 +493,34 @@
             // label_resetPassword
             // 
             label_resetPassword.AutoSize = true;
-            label_resetPassword.Location = new Point(15, 112);
+            label_resetPassword.Location = new Point(16, 120);
             label_resetPassword.Name = "label_resetPassword";
-            label_resetPassword.Size = new Size(104, 20);
+            label_resetPassword.Size = new Size(119, 23);
             label_resetPassword.TabIndex = 3;
             label_resetPassword.Text = "New Password";
             // 
             // txtResetPassword
             // 
-            txtResetPassword.Font = new Font("Segoe UI", 10.5F);
-            txtResetPassword.Location = new Point(15, 134);
+            txtResetPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtResetPassword.Location = new Point(20, 145);
             txtResetPassword.Name = "txtResetPassword";
-            txtResetPassword.Size = new Size(260, 31);
+            txtResetPassword.Size = new Size(265, 30);
             txtResetPassword.TabIndex = 4;
             txtResetPassword.UseSystemPasswordChar = true;
             // 
             // BtnResetPassword
             // 
-            BtnResetPassword.BackColor = Color.DarkOrange;
-            BtnResetPassword.BackgroundColor = Color.DarkOrange;
+            BtnResetPassword.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnResetPassword.BackColor = Color.FromArgb(230, 126, 34);
+            BtnResetPassword.BackgroundColor = Color.FromArgb(230, 126, 34);
             BtnResetPassword.BorderColor = Color.Transparent;
-            BtnResetPassword.BorderRadius = 8;
+            BtnResetPassword.BorderRadius = 4;
             BtnResetPassword.BorderSize = 0;
-            BtnResetPassword.Enabled = false;
-            BtnResetPassword.FlatAppearance.BorderSize = 0;
             BtnResetPassword.FlatStyle = FlatStyle.Flat;
             BtnResetPassword.ForeColor = Color.White;
-            BtnResetPassword.Location = new Point(15, 170);
+            BtnResetPassword.Location = new Point(20, 185);
             BtnResetPassword.Name = "BtnResetPassword";
-            BtnResetPassword.Size = new Size(260, 34);
+            BtnResetPassword.Size = new Size(265, 40);
             BtnResetPassword.TabIndex = 5;
             BtnResetPassword.Text = "Reset Password";
             BtnResetPassword.TextColor = Color.White;
@@ -505,18 +529,17 @@
             // 
             // BtnDeleteUser
             // 
-            BtnDeleteUser.BackColor = Color.Firebrick;
-            BtnDeleteUser.BackgroundColor = Color.Firebrick;
+            BtnDeleteUser.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnDeleteUser.BackColor = Color.FromArgb(231, 76, 60);
+            BtnDeleteUser.BackgroundColor = Color.FromArgb(231, 76, 60);
             BtnDeleteUser.BorderColor = Color.Transparent;
-            BtnDeleteUser.BorderRadius = 8;
+            BtnDeleteUser.BorderRadius = 4;
             BtnDeleteUser.BorderSize = 0;
-            BtnDeleteUser.Enabled = false;
-            BtnDeleteUser.FlatAppearance.BorderSize = 0;
             BtnDeleteUser.FlatStyle = FlatStyle.Flat;
             BtnDeleteUser.ForeColor = Color.White;
-            BtnDeleteUser.Location = new Point(15, 210);
+            BtnDeleteUser.Location = new Point(20, 240);
             BtnDeleteUser.Name = "BtnDeleteUser";
-            BtnDeleteUser.Size = new Size(260, 34);
+            BtnDeleteUser.Size = new Size(265, 40);
             BtnDeleteUser.TabIndex = 6;
             BtnDeleteUser.Text = "Delete User";
             BtnDeleteUser.TextColor = Color.White;
@@ -525,40 +548,40 @@
             // 
             // grpRights
             // 
+            grpRights.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             grpRights.Controls.Add(clbUserRights);
             grpRights.Controls.Add(BtnSaveRights);
-            grpRights.Location = new Point(645, 225);
+            grpRights.Location = new Point(650, 235);
             grpRights.Name = "grpRights";
-            grpRights.Size = new Size(310, 370);
+            grpRights.Size = new Size(305, 300);
             grpRights.TabIndex = 3;
             grpRights.TabStop = false;
             grpRights.Text = "Module Rights (selected user)";
             // 
             // clbUserRights
             // 
+            clbUserRights.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            clbUserRights.BorderStyle = BorderStyle.FixedSingle;
             clbUserRights.CheckOnClick = true;
-            clbUserRights.Enabled = false;
-            clbUserRights.Font = new Font("Segoe UI", 9.5F);
             clbUserRights.FormattingEnabled = true;
-            clbUserRights.Location = new Point(12, 25);
+            clbUserRights.Location = new Point(20, 35);
             clbUserRights.Name = "clbUserRights";
-            clbUserRights.Size = new Size(286, 268);
+            clbUserRights.Size = new Size(265, 177);
             clbUserRights.TabIndex = 0;
             // 
             // BtnSaveRights
             // 
-            BtnSaveRights.BackColor = Color.SeaGreen;
-            BtnSaveRights.BackgroundColor = Color.SeaGreen;
+            BtnSaveRights.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnSaveRights.BackColor = Color.FromArgb(46, 204, 113);
+            BtnSaveRights.BackgroundColor = Color.FromArgb(46, 204, 113);
             BtnSaveRights.BorderColor = Color.Transparent;
-            BtnSaveRights.BorderRadius = 8;
+            BtnSaveRights.BorderRadius = 4;
             BtnSaveRights.BorderSize = 0;
-            BtnSaveRights.Enabled = false;
-            BtnSaveRights.FlatAppearance.BorderSize = 0;
             BtnSaveRights.FlatStyle = FlatStyle.Flat;
             BtnSaveRights.ForeColor = Color.White;
-            BtnSaveRights.Location = new Point(12, 322);
+            BtnSaveRights.Location = new Point(20, 240);
             BtnSaveRights.Name = "BtnSaveRights";
-            BtnSaveRights.Size = new Size(286, 36);
+            BtnSaveRights.Size = new Size(265, 40);
             BtnSaveRights.TabIndex = 1;
             BtnSaveRights.Text = "Save Rights";
             BtnSaveRights.TextColor = Color.White;
@@ -578,23 +601,23 @@
             btnUsersManagement.Name = "btnUsersManagement";
             btnUsersManagement.Size = new Size(1, 1);
             btnUsersManagement.TabIndex = 99;
-            btnUsersManagement.TabStop = false;
             btnUsersManagement.TextColor = Color.White;
             btnUsersManagement.UseVisualStyleBackColor = false;
             btnUsersManagement.Visible = false;
-            btnUsersManagement.Click += btnUsersManagement_Click;
             // 
             // Settings
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(9F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(980, 640);
+            BackColor = Color.FromArgb(248, 249, 250);
+            ClientSize = new Size(980, 632);
             Controls.Add(tabControl1);
             Controls.Add(btnUsersManagement);
+            Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point, 0);
             MinimumSize = new Size(996, 679);
             Name = "Settings";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Settings";
+            Text = "Settings - EasyBiz";
             tabControl1.ResumeLayout(false);
             tabPage3.ResumeLayout(false);
             tabPage3.PerformLayout();
@@ -610,12 +633,5 @@
         }
 
         #endregion
-
-        private TabPage tabPage3;
-        private CustomButton btnUpdate;
-        private Label label1;
-        private ComboBox comboInWordsSettings;
-        private Label label2;
-        private ComboBox comboPrintSaleReceipt;
     }
 }

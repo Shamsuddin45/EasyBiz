@@ -341,6 +341,7 @@
             ClientSize = new Size(708, 500);
             Controls.Add(panel1);
             MaximizeBox = false;
+            MinimumSize = new Size(726, 547);
             Name = "AccountsSetup";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Accounts Setup";

@@ -213,7 +213,7 @@ namespace EasyBiz
             cmd.CommandText = "SELECT product_id, product_name FROM products ORDER BY product_name";
             using var r = cmd.ExecuteReader();
             while (r.Read())
-                comboProductFilter.Items.Add($"{r.GetInt32(0)} - {SafeString(r, 1)}");
+                comboProductFilter.Items.Add($"{SafeString(r, 1)} - {r.GetInt32(0)}");
             comboProductFilter.SelectedIndex = 0;
         }
 
@@ -226,7 +226,7 @@ namespace EasyBiz
             cmd.CommandText = "SELECT account_id, account_name FROM accounts ORDER BY account_name";
             using var r = cmd.ExecuteReader();
             while (r.Read())
-                comboPartyFilter.Items.Add($"{r.GetInt32(0)} - {SafeString(r, 1)}");
+                comboPartyFilter.Items.Add($"{SafeString(r, 1)} - {r.GetInt32(0)}");
             comboPartyFilter.SelectedIndex = 0;
         }
 
@@ -271,7 +271,7 @@ namespace EasyBiz
         {
             if (comboPartyFilter.SelectedIndex <= 0) return 0;
             string sel = comboPartyFilter.SelectedItem!.ToString()!;
-            return int.Parse(sel.Split('-')[0].Trim());
+            return int.Parse(sel.Split('-')[1].Trim());
         }
 
         // FEATURE: builds the SQL fragment for the Cash/Credit filter based on
@@ -294,7 +294,7 @@ namespace EasyBiz
             if (comboProductFilter.SelectedIndex > 0)
             {
                 string sel = comboProductFilter.SelectedItem!.ToString()!;
-                productId = int.Parse(sel.Split('-')[0].Trim());
+                productId = int.Parse(sel.Split('-')[1].Trim());
                 productFilter = " AND sm.product_id = @pid";
             }
 
@@ -416,7 +416,7 @@ namespace EasyBiz
             if (comboProductFilter.SelectedIndex > 0)
             {
                 string sel = comboProductFilter.SelectedItem!.ToString()!;
-                productId = int.Parse(sel.Split('-')[0].Trim());
+                productId = int.Parse(sel.Split('-')[1].Trim());
                 productFilter = " AND sm.product_id = @pid";
             }
 
