@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Drawing;
 using EasyBiz.Forms;
 using Syncfusion.Windows.Forms.PdfViewer;
+using System.Net.NetworkInformation;
 
 
 namespace EasyBiz
@@ -654,15 +655,55 @@ namespace EasyBiz
             }
         }
 
-        private void btnAiAssistant_Click(object sender, EventArgs e)
+        private async void btnAiAssistant_Click(object sender, EventArgs e)
         {
+            // Disable button temporarily to prevent multiple clicks while checking
+            btnAiAssistant.Enabled = false;
+
             try
             {
-                new AIChatForm().Show(); // non-modal, so you can keep it open while you work
+                bool hasInternet = await HasInternetConnectionAsync();
+
+                if (!hasInternet)
+                {
+                    MessageBox.Show(
+                        "Internet connection is required to use the AI Assistant. Please check your connection and try again.",
+                        "No Internet Connection",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
+                new AIChatForm().Show(); // non-modal window
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                btnAiAssistant.Enabled = true;
+            }
+        }
+
+        // Helper method to verify actual web connectivity
+        private async Task<bool> HasInternetConnectionAsync()
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    // Set a short timeout so the user isn't left waiting if offline
+                    client.Timeout = TimeSpan.FromSeconds(3);
+
+                    // Ping a highly reliable public server (e.g., Cloudflare or Google)
+                    HttpResponseMessage response = await client.GetAsync("https://www.cloudflare.com/favicon.ico");
+                    return response.IsSuccessStatusCode;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
 
