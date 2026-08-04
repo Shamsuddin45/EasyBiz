@@ -84,6 +84,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             flowLayoutPanel2 = new FlowLayoutPanel();
             BtnAccountsSetup = new CustomButton();
+            sqlQueryRunnerToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             pnlFavorites.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -600,7 +601,7 @@
             // 
             // aboutToolStripMenuItem
             // 
-            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abountMeToolStripMenuItem });
+            aboutToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abountMeToolStripMenuItem, sqlQueryRunnerToolStripMenuItem });
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(64, 24);
             aboutToolStripMenuItem.Text = "About";
@@ -608,7 +609,7 @@
             // abountMeToolStripMenuItem
             // 
             abountMeToolStripMenuItem.Name = "abountMeToolStripMenuItem";
-            abountMeToolStripMenuItem.Size = new Size(166, 26);
+            abountMeToolStripMenuItem.Size = new Size(224, 26);
             abountMeToolStripMenuItem.Text = "Abount Me";
             abountMeToolStripMenuItem.Click += abountMeToolStripMenuItem_Click;
             // 
@@ -904,6 +905,13 @@
             BtnAccountsSetup.UseVisualStyleBackColor = false;
             BtnAccountsSetup.Click += BtnAccountsSetup_Click;
             // 
+            // sqlQueryRunnerToolStripMenuItem
+            // 
+            sqlQueryRunnerToolStripMenuItem.Name = "sqlQueryRunnerToolStripMenuItem";
+            sqlQueryRunnerToolStripMenuItem.Size = new Size(224, 26);
+            sqlQueryRunnerToolStripMenuItem.Text = "Sql Query Runner";
+            sqlQueryRunnerToolStripMenuItem.Click += sqlQueryRunnerToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -991,5 +999,6 @@
         public ToolStripMenuItem enableFavoritesPanelToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem abountMeToolStripMenuItem;
+        private ToolStripMenuItem sqlQueryRunnerToolStripMenuItem;
     }
 }

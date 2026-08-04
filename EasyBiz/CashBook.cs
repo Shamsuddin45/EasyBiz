@@ -64,22 +64,26 @@ namespace EasyBiz
             decimal storedOB = 0;
             await using (var obCmd = connection.CreateCommand())
             {
-                obCmd.CommandText = "SELECT IFNULL(opening_balance, 0) FROM accounts WHERE account_id = 10001";
+                obCmd.CommandText = "SELECT IFNULL(opening_balance, 0) FROM accounts WHERE account_id BETWEEN 10001 AND 20000";
                 var obResult = await obCmd.ExecuteScalarAsync(ct);
-                storedOB = Convert.ToDecimal(obResult);
+
+                // Safely check for null/DBNull just in case the account row doesn't exist yet
+                storedOB = obResult == null || obResult == DBNull.Value ? 0m : Convert.ToDecimal(obResult);
             }
 
             await using var cmd = connection.CreateCommand();
+
+            // FIX: Changed the WHERE clause to match the logic used in your main transaction queries
             cmd.CommandText = @"
         SELECT IFNULL(SUM(credit), 0) - IFNULL(SUM(debit), 0)
         FROM   transactions
         WHERE  date(transaction_date) < date(@BeforeDate)
-        AND    lower(account_name) != 'cash in hand'";
+        AND    (account_id < 10001 OR account_id >= 20001)";
 
             var p = cmd.CreateParameter();
             p.ParameterName = "@BeforeDate";
-            p.DbType = System.Data.DbType.String;              // <-- string, not Date
-            p.Value = beforeDate.Date.ToString("yyyy-MM-dd");   // <-- formatted string
+            p.DbType = System.Data.DbType.String;
+            p.Value = beforeDate.Date.ToString("yyyy-MM-dd");
             cmd.Parameters.Add(p);
 
             var result = await cmd.ExecuteScalarAsync(ct);
@@ -120,12 +124,12 @@ namespace EasyBiz
                 credit
             FROM transactions
             WHERE date(transaction_date) BETWEEN date(@FromDate) AND date(@ToDate)
-            AND   lower(account_name) != 'cash in hand'
+            AND (account_id < 10001 OR account_id >= 20001)
             ORDER BY transaction_type ASC, transaction_date ASC";
 
                     cmd.Parameters.AddWithValue("@FromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
                     cmd.Parameters.AddWithValue("@ToDate", dateTo.Value.ToString("yyyy-MM-dd"));
-
+                    
                     await using (var reader = await cmd.ExecuteReaderAsync(ct))
                     {
                         int srNo = 1;
@@ -171,7 +175,7 @@ namespace EasyBiz
                 {
                     await Task.Run(() => CashbookReportPDF.Generate(
                         outputPath: filePath,
-                        cashAccountName: "Cash In Hand",
+                        cashAccountName: "Cash Accounts",
                         branchOrLocation: "",
                         fromDate: dateFrom.Value.Date,
                         toDate: dateTo.Value.Date,
@@ -236,7 +240,7 @@ namespace EasyBiz
                         srNo++,
                         dateFrom.Value.ToString("dd-MM-yyyy"),
                         "Opening Balance",
-                        "Cash In Hand",
+                        "Cash Accounts",
                         "Brought Forward Opening Balance",
                         "0",                            // Debit Column
                         "0",                            // Credit Column
@@ -259,7 +263,7 @@ namespace EasyBiz
             credit
         FROM transactions
         WHERE date(transaction_date) BETWEEN date(@fromDate) AND date(@toDate)
-        AND lower(account_name) != 'cash in hand'
+        AND (account_id < 10001 OR account_id >= 20001)
         ORDER BY transaction_type ASC, transaction_date ASC";
 
                         // Bind as formatted strings, same as PrintCashbookAsync(), not DbType.Date

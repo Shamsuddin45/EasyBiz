@@ -746,5 +746,11 @@ namespace EasyBiz
             AboutBox aboutBox = new AboutBox();
             aboutBox.Show();
         }
+
+        private void sqlQueryRunnerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SqlQueryRunnerForm sqlqueryform = new SqlQueryRunnerForm();
+            sqlqueryform.ShowDialog();
+        }
     }
 }
