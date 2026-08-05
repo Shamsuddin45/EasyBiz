@@ -27,6 +27,7 @@ namespace EasyBiz.Forms
         {
             InitializeComponent();
             BeautifyGrid(dgvResults); // existing app-wide grid styling helper
+            ThemeManager.ApplyTheme(this); // existing app-wide theming helper
         }
 
         private void txtQuery_KeyDown(object sender, KeyEventArgs e)
