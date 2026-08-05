@@ -28,326 +28,319 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.dateTo = new System.Windows.Forms.DateTimePicker();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateFrom = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.sno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.accontname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.desc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.debit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.credit = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.BtnExport = new EasyBiz.CustomButton();
-            this.BtnLoad = new EasyBiz.CustomButton();
-            this.lblTotalDr = new System.Windows.Forms.Label();
-            this.lblTotalCr = new System.Windows.Forms.Label();
-            this.lblRunningBalance = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.SuspendLayout();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            dateTo = new DateTimePicker();
+            label3 = new Label();
+            dateFrom = new DateTimePicker();
+            label1 = new Label();
+            dataGridView1 = new DataGridView();
+            panel1 = new Panel();
+            BtnExport = new CustomButton();
+            BtnLoad = new CustomButton();
+            lblTotalDr = new Label();
+            lblTotalCr = new Label();
+            lblRunningBalance = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            sno = new DataGridViewTextBoxColumn();
+            date = new DataGridViewTextBoxColumn();
+            type = new DataGridViewTextBoxColumn();
+            accountname = new DataGridViewTextBoxColumn();
+            desc = new DataGridViewTextBoxColumn();
+            debit = new DataGridViewTextBoxColumn();
+            credit = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel1.SuspendLayout();
+            flowLayoutPanel1.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            SuspendLayout();
             // 
             // dateTo
             // 
-            this.dateTo.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.dateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTo.Location = new System.Drawing.Point(320, 20);
-            this.dateTo.Name = "dateTo";
-            this.dateTo.Size = new System.Drawing.Size(160, 32);
-            this.dateTo.TabIndex = 36;
+            dateTo.Font = new Font("Segoe UI", 11F);
+            dateTo.Format = DateTimePickerFormat.Short;
+            dateTo.Location = new Point(320, 20);
+            dateTo.Name = "dateTo";
+            dateTo.Size = new Size(160, 32);
+            dateTo.TabIndex = 36;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label3.Location = new System.Drawing.Point(280, 24);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 25);
-            this.label3.TabIndex = 38;
-            this.label3.Text = "To";
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            label3.ForeColor = Color.FromArgb(64, 64, 64);
+            label3.Location = new Point(280, 24);
+            label3.Name = "label3";
+            label3.Size = new Size(31, 25);
+            label3.TabIndex = 38;
+            label3.Text = "To";
             // 
             // dateFrom
             // 
-            this.dateFrom.Font = new System.Drawing.Font("Segoe UI", 11F);
-            this.dateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateFrom.Location = new System.Drawing.Point(80, 20);
-            this.dateFrom.Name = "dateFrom";
-            this.dateFrom.Size = new System.Drawing.Size(160, 32);
-            this.dateFrom.TabIndex = 35;
+            dateFrom.Font = new Font("Segoe UI", 11F);
+            dateFrom.Format = DateTimePickerFormat.Short;
+            dateFrom.Location = new Point(80, 20);
+            dateFrom.Name = "dateFrom";
+            dateFrom.Size = new Size(160, 32);
+            dateFrom.TabIndex = 35;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label1.Location = new System.Drawing.Point(15, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 25);
-            this.label1.TabIndex = 37;
-            this.label1.Text = "From";
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(15, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(57, 25);
+            label1.TabIndex = 37;
+            label1.Text = "From";
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Semibold", 10.8F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView1.ColumnHeadersHeight = 50;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.sno,
-            this.date,
-            this.type,
-            this.accontname,
-            this.desc,
-            this.debit,
-            this.credit});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            dataGridViewCellStyle3.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(242)))), ((int)(((byte)(253)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.EnableHeadersVisualStyles = false;
-            this.dataGridView1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.dataGridView1.Location = new System.Drawing.Point(0, 70);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(0);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 45;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1080, 438);
-            this.dataGridView1.TabIndex = 40;
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
-            // 
-            // sno
-            // 
-            this.sno.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.sno.HeaderText = "Sno";
-            this.sno.MinimumWidth = 6;
-            this.sno.Name = "sno";
-            this.sno.ReadOnly = true;
-            this.sno.Width = 82;
-            // 
-            // date
-            // 
-            this.date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.date.HeaderText = "Date";
-            this.date.MinimumWidth = 6;
-            this.date.Name = "date";
-            this.date.ReadOnly = true;
-            this.date.Width = 88;
-            // 
-            // type
-            // 
-            this.type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.type.HeaderText = "Type";
-            this.type.MinimumWidth = 6;
-            this.type.Name = "type";
-            this.type.ReadOnly = true;
-            this.type.Width = 89;
-            // 
-            // accontname
-            // 
-            this.accontname.HeaderText = "Account Name";
-            this.accontname.MinimumWidth = 6;
-            this.accontname.Name = "accontname";
-            this.accontname.ReadOnly = true;
-            // 
-            // desc
-            // 
-            this.desc.HeaderText = "Description";
-            this.desc.MinimumWidth = 6;
-            this.desc.Name = "desc";
-            this.desc.ReadOnly = true;
-            // 
-            // debit
-            // 
-            this.debit.HeaderText = "Debit";
-            this.debit.MinimumWidth = 6;
-            this.debit.Name = "debit";
-            this.debit.ReadOnly = true;
-            // 
-            // credit
-            // 
-            this.credit.HeaderText = "Credit";
-            this.credit.MinimumWidth = 6;
-            this.credit.Name = "credit";
-            this.credit.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(250, 250, 250);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.ColumnHeadersHeight = 50;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, date, type, accountname, desc, debit, credit });
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(30, 30, 30);
+            dataGridViewCellStyle3.Padding = new Padding(5, 0, 5, 0);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(227, 242, 253);
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView1.Dock = DockStyle.Fill;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.GridColor = Color.FromArgb(230, 230, 230);
+            dataGridView1.Location = new Point(0, 70);
+            dataGridView1.Margin = new Padding(0);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.RowTemplate.Height = 45;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(1080, 438);
+            dataGridView1.TabIndex = 40;
+            dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.BtnExport);
-            this.panel1.Controls.Add(this.BtnLoad);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.dateFrom);
-            this.panel1.Controls.Add(this.dateTo);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1080, 70);
-            this.panel1.TabIndex = 41;
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(BtnExport);
+            panel1.Controls.Add(BtnLoad);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(dateFrom);
+            panel1.Controls.Add(dateTo);
+            panel1.Controls.Add(label3);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1080, 70);
+            panel1.TabIndex = 41;
             // 
             // BtnExport
             // 
-            this.BtnExport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(160)))), ((int)(((byte)(133)))));
-            this.BtnExport.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(160)))), ((int)(((byte)(133)))));
-            this.BtnExport.BorderColor = System.Drawing.Color.Transparent;
-            this.BtnExport.BorderRadius = 6;
-            this.BtnExport.BorderSize = 0;
-            this.BtnExport.FlatAppearance.BorderSize = 0;
-            this.BtnExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnExport.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold);
-            this.BtnExport.ForeColor = System.Drawing.Color.White;
-            this.BtnExport.Location = new System.Drawing.Point(650, 16);
-            this.BtnExport.Name = "BtnExport";
-            this.BtnExport.Size = new System.Drawing.Size(180, 40);
-            this.BtnExport.TabIndex = 42;
-            this.BtnExport.Text = "View / Export [F1]";
-            this.BtnExport.TextColor = System.Drawing.Color.White;
-            this.BtnExport.UseVisualStyleBackColor = false;
-            this.BtnExport.Click += new System.EventHandler(this.BtnExport_Click);
+            BtnExport.BackColor = Color.FromArgb(22, 160, 133);
+            BtnExport.BackgroundColor = Color.FromArgb(22, 160, 133);
+            BtnExport.BorderColor = Color.Transparent;
+            BtnExport.BorderRadius = 6;
+            BtnExport.BorderSize = 0;
+            BtnExport.FlatAppearance.BorderSize = 0;
+            BtnExport.FlatStyle = FlatStyle.Flat;
+            BtnExport.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+            BtnExport.ForeColor = Color.White;
+            BtnExport.Location = new Point(650, 16);
+            BtnExport.Name = "BtnExport";
+            BtnExport.Size = new Size(180, 40);
+            BtnExport.TabIndex = 42;
+            BtnExport.Text = "View / Export [F1]";
+            BtnExport.TextColor = Color.White;
+            BtnExport.UseVisualStyleBackColor = false;
+            BtnExport.Click += BtnExport_Click;
             // 
             // BtnLoad
             // 
-            this.BtnLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.BtnLoad.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.BtnLoad.BorderColor = System.Drawing.Color.Transparent;
-            this.BtnLoad.BorderRadius = 6;
-            this.BtnLoad.BorderSize = 0;
-            this.BtnLoad.FlatAppearance.BorderSize = 0;
-            this.BtnLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnLoad.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold);
-            this.BtnLoad.ForeColor = System.Drawing.Color.White;
-            this.BtnLoad.Location = new System.Drawing.Point(500, 16);
-            this.BtnLoad.Name = "BtnLoad";
-            this.BtnLoad.Size = new System.Drawing.Size(140, 40);
-            this.BtnLoad.TabIndex = 41;
-            this.BtnLoad.Text = "Load [F5]";
-            this.BtnLoad.TextColor = System.Drawing.Color.White;
-            this.BtnLoad.UseVisualStyleBackColor = false;
-            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
+            BtnLoad.BackColor = Color.FromArgb(41, 128, 185);
+            BtnLoad.BackgroundColor = Color.FromArgb(41, 128, 185);
+            BtnLoad.BorderColor = Color.Transparent;
+            BtnLoad.BorderRadius = 6;
+            BtnLoad.BorderSize = 0;
+            BtnLoad.FlatAppearance.BorderSize = 0;
+            BtnLoad.FlatStyle = FlatStyle.Flat;
+            BtnLoad.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold);
+            BtnLoad.ForeColor = Color.White;
+            BtnLoad.Location = new Point(500, 16);
+            BtnLoad.Name = "BtnLoad";
+            BtnLoad.Size = new Size(140, 40);
+            BtnLoad.TabIndex = 41;
+            BtnLoad.Text = "Load [F5]";
+            BtnLoad.TextColor = Color.White;
+            BtnLoad.UseVisualStyleBackColor = false;
+            BtnLoad.Click += BtnLoad_Click;
             // 
             // lblTotalDr
             // 
-            this.lblTotalDr.AutoSize = true;
-            this.lblTotalDr.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTotalDr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(57)))), ((int)(((byte)(43)))));
-            this.lblTotalDr.Location = new System.Drawing.Point(180, 12);
-            this.lblTotalDr.Margin = new System.Windows.Forms.Padding(10, 12, 30, 10);
-            this.lblTotalDr.Name = "lblTotalDr";
-            this.lblTotalDr.Size = new System.Drawing.Size(84, 28);
-            this.lblTotalDr.TabIndex = 42;
-            this.lblTotalDr.Text = "Debit: -";
+            lblTotalDr.AutoSize = true;
+            lblTotalDr.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblTotalDr.ForeColor = Color.FromArgb(192, 57, 43);
+            lblTotalDr.Location = new Point(143, 12);
+            lblTotalDr.Margin = new Padding(10, 12, 30, 10);
+            lblTotalDr.Name = "lblTotalDr";
+            lblTotalDr.Size = new Size(83, 28);
+            lblTotalDr.TabIndex = 42;
+            lblTotalDr.Text = "Debit: -";
             // 
             // lblTotalCr
             // 
-            this.lblTotalCr.AutoSize = true;
-            this.lblTotalCr.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblTotalCr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(174)))), ((int)(((byte)(96)))));
-            this.lblTotalCr.Location = new System.Drawing.Point(15, 12);
-            this.lblTotalCr.Margin = new System.Windows.Forms.Padding(15, 12, 30, 10);
-            this.lblTotalCr.Name = "lblTotalCr";
-            this.lblTotalCr.Size = new System.Drawing.Size(91, 28);
-            this.lblTotalCr.TabIndex = 43;
-            this.lblTotalCr.Text = "Credit: -";
+            lblTotalCr.AutoSize = true;
+            lblTotalCr.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblTotalCr.ForeColor = Color.FromArgb(39, 174, 96);
+            lblTotalCr.Location = new Point(15, 12);
+            lblTotalCr.Margin = new Padding(15, 12, 30, 10);
+            lblTotalCr.Name = "lblTotalCr";
+            lblTotalCr.Size = new Size(88, 28);
+            lblTotalCr.TabIndex = 43;
+            lblTotalCr.Text = "Credit: -";
             // 
             // lblRunningBalance
             // 
-            this.lblRunningBalance.AutoSize = true;
-            this.lblRunningBalance.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            this.lblRunningBalance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(62)))), ((int)(((byte)(80)))));
-            this.lblRunningBalance.Location = new System.Drawing.Point(340, 12);
-            this.lblRunningBalance.Margin = new System.Windows.Forms.Padding(10, 12, 30, 10);
-            this.lblRunningBalance.Name = "lblRunningBalance";
-            this.lblRunningBalance.Size = new System.Drawing.Size(107, 28);
-            this.lblRunningBalance.TabIndex = 44;
-            this.lblRunningBalance.Text = "Balance: -";
+            lblRunningBalance.AutoSize = true;
+            lblRunningBalance.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblRunningBalance.ForeColor = Color.FromArgb(44, 62, 80);
+            lblRunningBalance.Location = new Point(266, 12);
+            lblRunningBalance.Margin = new Padding(10, 12, 30, 10);
+            lblRunningBalance.Name = "lblRunningBalance";
+            lblRunningBalance.Size = new Size(105, 28);
+            lblRunningBalance.TabIndex = 44;
+            lblRunningBalance.Text = "Balance: -";
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.flowLayoutPanel1.Controls.Add(this.lblTotalCr);
-            this.flowLayoutPanel1.Controls.Add(this.lblTotalDr);
-            this.flowLayoutPanel1.Controls.Add(this.lblRunningBalance);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 508);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1080, 50);
-            this.flowLayoutPanel1.TabIndex = 45;
+            flowLayoutPanel1.BackColor = Color.WhiteSmoke;
+            flowLayoutPanel1.Controls.Add(lblTotalCr);
+            flowLayoutPanel1.Controls.Add(lblTotalDr);
+            flowLayoutPanel1.Controls.Add(lblRunningBalance);
+            flowLayoutPanel1.Dock = DockStyle.Fill;
+            flowLayoutPanel1.Location = new Point(0, 508);
+            flowLayoutPanel1.Margin = new Padding(0);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(1080, 50);
+            flowLayoutPanel1.TabIndex = 45;
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.White;
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1080, 558);
-            this.tableLayoutPanel1.TabIndex = 46;
+            tableLayoutPanel1.BackColor = Color.White;
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
+            tableLayoutPanel1.Controls.Add(dataGridView1, 0, 1);
+            tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel1.Size = new Size(1080, 558);
+            tableLayoutPanel1.TabIndex = 46;
+            // 
+            // sno
+            // 
+            sno.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            sno.HeaderText = "Sno";
+            sno.MinimumWidth = 6;
+            sno.Name = "sno";
+            sno.ReadOnly = true;
+            sno.Width = 81;
+            // 
+            // date
+            // 
+            date.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            date.HeaderText = "Date";
+            date.MinimumWidth = 6;
+            date.Name = "date";
+            date.ReadOnly = true;
+            date.Width = 88;
+            // 
+            // type
+            // 
+            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            type.HeaderText = "Type";
+            type.MinimumWidth = 6;
+            type.Name = "type";
+            type.ReadOnly = true;
+            type.Width = 88;
+            // 
+            // accountname
+            // 
+            accountname.HeaderText = "Account Name";
+            accountname.MinimumWidth = 6;
+            accountname.Name = "accountname";
+            accountname.ReadOnly = true;
+            // 
+            // desc
+            // 
+            desc.HeaderText = "Description";
+            desc.MinimumWidth = 6;
+            desc.Name = "desc";
+            desc.ReadOnly = true;
+            // 
+            // debit
+            // 
+            debit.HeaderText = "Debit";
+            debit.MinimumWidth = 6;
+            debit.Name = "debit";
+            debit.ReadOnly = true;
+            // 
+            // credit
+            // 
+            credit.HeaderText = "Credit";
+            credit.MinimumWidth = 6;
+            credit.Name = "credit";
+            credit.ReadOnly = true;
             // 
             // CashBook
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1080, 558);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "CashBook";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "CashBook";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(1080, 558);
+            Controls.Add(tableLayoutPanel1);
+            Name = "CashBook";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "CashBook";
+            WindowState = FormWindowState.Maximized;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            flowLayoutPanel1.ResumeLayout(false);
+            flowLayoutPanel1.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 
@@ -366,12 +359,12 @@
         private System.Windows.Forms.Label lblRunningBalance;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sno;
-        private System.Windows.Forms.DataGridViewTextBoxColumn date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn accontname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn desc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn debit;
-        private System.Windows.Forms.DataGridViewTextBoxColumn credit;
+        private DataGridViewTextBoxColumn sno;
+        private DataGridViewTextBoxColumn date;
+        private DataGridViewTextBoxColumn type;
+        private DataGridViewTextBoxColumn accountname;
+        private DataGridViewTextBoxColumn desc;
+        private DataGridViewTextBoxColumn debit;
+        private DataGridViewTextBoxColumn credit;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Composition;
 using System.Data;
 using System.Data.Common;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EasyBiz
 {
@@ -236,16 +237,24 @@ namespace EasyBiz
                     // =========================================
                     // ADD OPENING BALANCE ROW (Fixed columns count)
                     // =========================================
-                    dataGridView1.Rows.Add(
-                        srNo++,
-                        dateFrom.Value.ToString("dd-MM-yyyy"),
-                        "Opening Balance",
-                        "Cash Accounts",
-                        "Brought Forward Opening Balance",
-                        "0",                            // Debit Column
-                        "0",                            // Credit Column
-                        runningBalance.ToString("N0")   // Balance Column
-                    );
+
+                    int rowIndex = dataGridView1.Rows.Add();
+
+                    DataGridViewRow row = dataGridView1.Rows[rowIndex];
+
+                    row.Cells["sno"].Value = srNo++;
+                    row.Cells["date"].Value = dateFrom.Value.ToString("dd-MM-yyyy");
+                    row.Cells["type"].Value = "Opening Balance";
+                    row.Cells["accountname"].Value = "Cash Accounts";
+                    row.Cells["desc"].Value = "Brought Forward Opening Balance";
+                    if (runningBalance > 0) { 
+                        row.Cells["debit"].Value = "0";
+                        row.Cells["credit"].Value = runningBalance.ToString("N0");
+                    } else
+                    {
+                        row.Cells["debit"].Value = runningBalance.ToString("N0");
+                        row.Cells["credit"].Value = "0";
+                    }                                        
 
                     // =========================================
                     // LOAD CASH BOOK ENTRIES

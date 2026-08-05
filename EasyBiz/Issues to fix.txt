@@ -1,6 +1,3 @@
 ﻿--------------------
 -------------------------
 ----------------------------
-
-In CashBook.cs:
-opening balance is always showing 0.

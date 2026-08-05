@@ -15,7 +15,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             BtnBackupData.Click += BtnBackupData_Click;
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JAaF5cX2pCfFN0Q35Zd0NwdUVGYVZURHxdSlZhSXxVdkJhXH9fdXRXTmFfUE19XEY=");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JAaF5cXmFCd1p/TH5YfUNzdUVEY1ZUTXxaS1ZhSXxVdk1jXH9fdHdVRWhaU0Z9XEY=");
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
