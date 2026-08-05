@@ -195,6 +195,7 @@
             comboCategory.Name = "comboCategory";
             comboCategory.Size = new Size(210, 33);
             comboCategory.TabIndex = 4;
+            comboCategory.SelectedIndexChanged += comboCategory_SelectedIndexChanged_1;
             comboCategory.KeyDown += comboCategory_KeyDown;
             // 
             // groupBox1

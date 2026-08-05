@@ -4,7 +4,3 @@
 
 In CashBook.cs:
 opening balance is always showing 0.
-
-In AccountsSetup.cs: 
-account_id is 0 at beginning!
-

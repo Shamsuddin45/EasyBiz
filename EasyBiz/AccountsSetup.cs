@@ -377,7 +377,7 @@ namespace EasyBiz
 
         private void AccountsSetup_Load(object sender, EventArgs e)
         {
-
+            numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
         }
 
         private void AccountsSetup_FormClosing(object sender, FormClosingEventArgs e)
@@ -404,7 +404,12 @@ namespace EasyBiz
                 numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
                 txtNewAccount.Focus();
             }
-    }
+        }
+
+        private void comboCategory_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            numAccountId.Value = PeekNextAccountId(comboCategory.SelectedItem.ToString());
+        }
     }
 }
 
