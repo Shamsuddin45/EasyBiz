@@ -16,7 +16,7 @@ namespace EasyBiz
             DatabaseHelper.InitializeDatabase();
             GlobalConfig.LoadSettings();
             LoadAccounts();
-            LoadProducts();            
+            LoadProducts();
             ShowVoucherNo();
             BeautifyGrid();
             comboPartyName.SelectedItem = "Cash In Hand";
@@ -346,47 +346,70 @@ namespace EasyBiz
             decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
             bool isUnit = Convert.ToInt32(prod[7]) == 1;
 
-            int rowIndex = gridItems.Rows.Add();
-            var row = gridItems.Rows[rowIndex];
-            row.Cells["colProductId"].Value = prod[0].ToString();
-            row.Cells["colProductName"].Value = prod[1].ToString();
-            if (isUnit)
+            // ═══════════════════════════════════════════════════════════════
+            // UPDATE MODE: Replace existing row
+            // ═══════════════════════════════════════════════════════════════
+            if (_editingRowIndex >= 0)
             {
-                // Enable Unit/Qty
-                row.Cells["colUnit"].ReadOnly = false;
-                row.Cells["colQty"].ReadOnly = false;
+                var row = gridItems.Rows[_editingRowIndex];
 
-                // Set Unit/Qty Values
-                row.Cells["colUnit"].Value = prod[5].ToString();
-                row.Cells["colQty"].Value = qty;
+                if (isUnit)
+                {                    
+                    row.Cells["colUnit"].Value = prod[5].ToString();
+                    row.Cells["colQty"].Value = qty;                    
+                    row.Cells["colWeightUnit"].Value = "-";
+                    row.Cells["colWeight"].Value = "-";
+                }
+                else
+                {                    
+                    row.Cells["colUnit"].Value = "-";
+                    row.Cells["colQty"].Value = "-";                    
+                    row.Cells["colWeightUnit"].Value = prod[6].ToString();
+                    row.Cells["colWeight"].Value = weight;
+                }
 
-                // Disable Weight
-                row.Cells["colWeight"].ReadOnly = true;
+                row.Cells["colProductId"].Value = prod[0].ToString();
+                row.Cells["colProductName"].Value = prod[1].ToString();
+                row.Cells["colRate"].Value = rate;
+                row.Cells["colAmount"].Value = amount;
 
-                // Clear Weight Values
-                row.Cells["colWeightUnit"].Value = "-";
-                row.Cells["colWeight"].Value = "-";
+                // Reset edit mode
+                _editingRowIndex = -1;
+                RecalcTotal();
+                ResetItemInputs();
+
+                // Restore button to normal state
+                BtnAddItem.Text = "Add Item";
+                BtnAddItem.BackColor = SystemColors.Control;
+
+                return;
+            }
+
+            // ═══════════════════════════════════════════════════════════════
+            // ADD MODE: Insert new row (original logic)
+            // ═══════════════════════════════════════════════════════════════
+            int rowIndex = gridItems.Rows.Add();
+            var newRow = gridItems.Rows[rowIndex];
+            newRow.Cells["colProductId"].Value = prod[0].ToString();
+            newRow.Cells["colProductName"].Value = prod[1].ToString();
+
+            if (isUnit)
+            {                
+                newRow.Cells["colUnit"].Value = prod[5].ToString();
+                newRow.Cells["colQty"].Value = qty;                
+                newRow.Cells["colWeightUnit"].Value = "-";
+                newRow.Cells["colWeight"].Value = "-";
             }
             else
-            {
-                // Disable Unit/Qty
-                row.Cells["colUnit"].ReadOnly = true;
-                row.Cells["colQty"].ReadOnly = true;
-
-                // Clear Unit/Qty Values
-                row.Cells["colUnit"].Value = "-";
-                row.Cells["colQty"].Value = "-";
-
-                // Enable Weight
-                row.Cells["colWeight"].ReadOnly = false;
-
-                // Set Weight Values
-                row.Cells["colWeightUnit"].Value = prod[6].ToString();
-                row.Cells["colWeight"].Value = weight;
+            {             
+                newRow.Cells["colUnit"].Value = "-";
+                newRow.Cells["colQty"].Value = "-";             
+                newRow.Cells["colWeightUnit"].Value = prod[6].ToString();
+                newRow.Cells["colWeight"].Value = weight;
             }
 
-            row.Cells["colRate"].Value = rate;
-            row.Cells["colAmount"].Value = amount;
+            newRow.Cells["colRate"].Value = rate;
+            newRow.Cells["colAmount"].Value = amount;
 
             RecalcTotal();
             ResetItemInputs();
@@ -452,7 +475,7 @@ namespace EasyBiz
                 string date = dateInvoice.Value.ToString("yyyy-MM-dd");
                 int accountId = int.TryParse(comboPartyId.SelectedItem!.ToString()!, out var accId) ? accId : 0;
                 string accountName = comboPartyName.SelectedItem!.ToString()!;
-                // ── REMOVED payMode VARIABLE HERE ──
+
                 decimal total = decimal.TryParse(txtTotal.Text, out var t) ? t : 0;
                 decimal discount = decimal.TryParse(txtDiscount.Text, out var d) ? d : 0;
                 decimal net = decimal.TryParse(txtNetAmount.Text, out var n) ? n : 0;
@@ -583,6 +606,11 @@ namespace EasyBiz
 
                     int productId = int.Parse(row.Cells["colProductId"].Value!.ToString()!);
                     string productName = row.Cells["colProductName"].Value!.ToString()!;
+                    if (row.Cells["colUnit"].Value!.ToString()! == "-")
+                    {
+                        row.Cells["colUnit"].Value = "-";
+                        row.Cells["colQty"].Value = 0;
+                    }
                     decimal qty = decimal.Parse(row.Cells["colQty"].Value!.ToString()!);
                     decimal weight = decimal.Parse(row.Cells["colWeight"].Value!.ToString()!);
                     string weightUnit = row.Cells["colWeightUnit"].Value!.ToString()!;
@@ -719,7 +747,7 @@ namespace EasyBiz
                     // ── NEW: offer to print a thermal receipt ───────────────────────
                     if (MessageBox.Show("Print receipt now?", "Print Receipt",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {                        
+                    {
                         ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount));
                     }
                 }
@@ -727,7 +755,7 @@ namespace EasyBiz
                 {
                     ThermalReceiptPrinter.Print(BuildReceiptData(voucherNo, accountName, net, total, discount));
                 }
-                
+
                 // Reset to new-entry mode
                 _editingVoucherNo = null;
                 txtVoucherNo.ReadOnly = false;
@@ -930,5 +958,43 @@ namespace EasyBiz
             }
 
         }
-    }
+        private int _editingRowIndex = -1;  // Track which row is being edited
+        private void gridItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore header row
+            if (e.RowIndex < 0)
+                return;
+
+            var row = gridItems.Rows[e.RowIndex];
+
+            // Get product data from the grid
+            int productId = int.Parse(row.Cells["colProductId"].Value?.ToString() ?? "0");
+            string productName = row.Cells["colProductName"].Value?.ToString() ?? "";
+
+            // Find product in combo and select it
+            for (int i = 0; i < comboProduct.Items.Count; i++)
+            {
+                if (comboProduct.Items[i].ToString() == productName)
+                {
+                    comboProduct.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            // Populate textboxes from grid row
+            txtQty.Text = row.Cells["colQty"].Value?.ToString() ?? "0";
+            txtWeight.Text = row.Cells["colWeight"].Value?.ToString() ?? "0";
+            txtRate.Text = row.Cells["colRate"].Value?.ToString() ?? "0";
+            txtAmount.Text = row.Cells["colAmount"].Value?.ToString() ?? "0";
+
+            // Mark this row as being edited
+            _editingRowIndex = e.RowIndex;
+
+            // Change button text to indicate update mode
+            BtnAddItem.Text = "Update Item";
+            BtnAddItem.BackColor = Color.Orange;  // Visual indicator
+
+            comboProduct.Select();
+        }
+    }    
 }

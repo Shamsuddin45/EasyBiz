@@ -239,7 +239,7 @@ namespace EasyBiz
                 using var r = cmd.ExecuteReader();
                 while (r.Read())
                 {
-                    int productId = r.GetInt32(0);
+                    int productId = r.GetInt32(0);                    
 
                     // Fetch unit from products table
                     string unit = "";
@@ -253,16 +253,15 @@ namespace EasyBiz
                     }
 
                     int rowIndex = gridItems.Rows.Add();
-                    var row = gridItems.Rows[rowIndex];
-
-                    row.Cells["colProductId"].Value = productId.ToString();
-                    row.Cells["colProductName"].Value = r.GetString(1);
-                    row.Cells["colUnit"].Value = unit;
-                    row.Cells["colQty"].Value = r.GetDouble(2).ToString("N3");
-                    row.Cells["colWeight"].Value = r.GetDouble(3).ToString("N3");
-                    row.Cells["colWeightUnit"].Value = r.IsDBNull(4) ? "" : r.GetString(4);
-                    row.Cells["colRate"].Value = r.GetDouble(5).ToString("N2");
-                    row.Cells["colAmount"].Value = r.GetDouble(6).ToString("N2");
+                    var row = gridItems.Rows[rowIndex];                    
+                        row.Cells["colProductId"].Value = productId.ToString();
+                        row.Cells["colProductName"].Value = r.GetString(1);
+                        row.Cells["colUnit"].Value = unit;
+                        row.Cells["colQty"].Value = r.GetDouble(2).ToString("N3");
+                        row.Cells["colWeight"].Value = r.GetDouble(3).ToString("N3");                    
+                        row.Cells["colWeightUnit"].Value = r.IsDBNull(4) ? "" : r.GetString(4);
+                        row.Cells["colRate"].Value = r.GetDouble(5).ToString("N2");
+                        row.Cells["colAmount"].Value = r.GetDouble(6).ToString("N2");
                 }
             }
 
@@ -311,11 +310,14 @@ namespace EasyBiz
 
         private void BtnAddItem_Click(object sender, EventArgs e)
         {
-            if (comboProduct.SelectedIndex < 0) { MessageBox.Show("Select a product."); return; }
+            if (comboProduct.SelectedIndex < 0)
+            { MessageBox.Show("Select a product."); return; }
             if (txtQty.Text == "0" && txtWeight.Text == "0")
             { MessageBox.Show("Enter quantity or weight."); return; }
-            if (txtRate.Text == "0") { MessageBox.Show("Enter a valid rate."); return; }
-            if (txtAmount.Text == "0") { MessageBox.Show("Enter amount properly!"); return; }
+            if (txtRate.Text == "0")
+            { MessageBox.Show("Rate cannot be zero."); return; }
+            if (txtAmount.Text == "0")
+            { MessageBox.Show("Amount cannot be zero."); return; }
             if (string.IsNullOrWhiteSpace(txtDiscount.Text))
             { txtDiscount.Text = "0"; }
 
@@ -325,51 +327,73 @@ namespace EasyBiz
             decimal qty = decimal.TryParse(txtQty.Text, out var q) ? q : 0;
             decimal weight = decimal.TryParse(txtWeight.Text, out var w) ? w : 0;
             decimal rate = decimal.TryParse(txtRate.Text, out var r) ? r : 0;
-            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0; ;
+            decimal amount = decimal.TryParse(txtAmount.Text, out var a) ? a : 0;
             bool isUnit = Convert.ToInt32(prod[7]) == 1;
 
+            // ═══════════════════════════════════════════════════════════════
+            // UPDATE MODE: Replace existing row
+            // ═══════════════════════════════════════════════════════════════
+            if (_editingRowIndex >= 0)
+            {
+                var row = gridItems.Rows[_editingRowIndex];
+
+                if (isUnit)
+                {
+                    row.Cells["colUnit"].Value = prod[5].ToString();
+                    row.Cells["colQty"].Value = qty;
+                    row.Cells["colWeightUnit"].Value = "-";
+                    row.Cells["colWeight"].Value = "-";
+                }
+                else
+                {
+                    row.Cells["colUnit"].Value = "-";
+                    row.Cells["colQty"].Value = "-";
+                    row.Cells["colWeightUnit"].Value = prod[6].ToString();
+                    row.Cells["colWeight"].Value = weight;
+                }
+
+                row.Cells["colProductId"].Value = prod[0].ToString();
+                row.Cells["colProductName"].Value = prod[1].ToString();
+                row.Cells["colRate"].Value = rate;
+                row.Cells["colAmount"].Value = amount;
+
+                // Reset edit mode
+                _editingRowIndex = -1;
+                RecalcTotal();
+                ResetItemInputs();
+
+                // Restore button to normal state
+                BtnAddItem.Text = "Add Item";
+                BtnAddItem.BackColor = SystemColors.Control;
+
+                return;
+            }
+
+            // ═══════════════════════════════════════════════════════════════
+            // ADD MODE: Insert new row (original logic)
+            // ═══════════════════════════════════════════════════════════════
             int rowIndex = gridItems.Rows.Add();
-            var row = gridItems.Rows[rowIndex];
-            row.Cells["colProductId"].Value = prod[0].ToString();
-            row.Cells["colProductName"].Value = prod[1].ToString();
+            var newRow = gridItems.Rows[rowIndex];
+            newRow.Cells["colProductId"].Value = prod[0].ToString();
+            newRow.Cells["colProductName"].Value = prod[1].ToString();
 
             if (isUnit)
             {
-                // Enable Unit/Qty
-                row.Cells["colUnit"].ReadOnly = false;
-                row.Cells["colQty"].ReadOnly = false;
-
-                // Set Unit/Qty Values
-                row.Cells["colUnit"].Value = prod[5].ToString();
-                row.Cells["colQty"].Value = qty;
-
-                // Disable Weight
-                row.Cells["colWeight"].ReadOnly = true;
-
-                // Clear Weight Values
-                row.Cells["colWeightUnit"].Value = "-";
-                row.Cells["colWeight"].Value = "-";
+                newRow.Cells["colUnit"].Value = prod[5].ToString();
+                newRow.Cells["colQty"].Value = qty;
+                newRow.Cells["colWeightUnit"].Value = "-";
+                newRow.Cells["colWeight"].Value = "-";
             }
             else
             {
-                // Disable Unit/Qty
-                row.Cells["colUnit"].ReadOnly = true;
-                row.Cells["colQty"].ReadOnly = true;
-
-                // Clear Unit/Qty Values
-                row.Cells["colUnit"].Value = "-";
-                row.Cells["colQty"].Value = "-";
-
-                // Enable Weight
-                row.Cells["colWeight"].ReadOnly = false;
-
-                // Set Weight Values
-                row.Cells["colWeightUnit"].Value = prod[6].ToString();
-                row.Cells["colWeight"].Value = weight;
+                newRow.Cells["colUnit"].Value = "-";
+                newRow.Cells["colQty"].Value = "-";
+                newRow.Cells["colWeightUnit"].Value = prod[6].ToString();
+                newRow.Cells["colWeight"].Value = weight;
             }
 
-            row.Cells["colRate"].Value = rate;
-            row.Cells["colAmount"].Value = amount;
+            newRow.Cells["colRate"].Value = rate;
+            newRow.Cells["colAmount"].Value = amount;
 
             RecalcTotal();
             ResetItemInputs();
@@ -552,6 +576,11 @@ namespace EasyBiz
 
                     int productId = int.Parse(row.Cells["colProductId"].Value!.ToString()!);
                     string productName = row.Cells["colProductName"].Value!.ToString()!;
+                    if (row.Cells["colUnit"].Value!.ToString()! == "-")
+                    {
+                        row.Cells["colUnit"].Value = "-";
+                        row.Cells["colQty"].Value = 0;
+                    }
                     decimal qty = decimal.Parse(row.Cells["colQty"].Value!.ToString()!);
                     decimal weight = decimal.Parse(row.Cells["colWeight"].Value!.ToString()!);
                     string weightUnit = row.Cells["colWeightUnit"].Value!.ToString()!;
@@ -816,6 +845,44 @@ namespace EasyBiz
                 lblInWords.Visible = true;
                 numberstowords = false;
             }
+        }
+        private int _editingRowIndex = -1;  // Track which row is being edited
+        private void gridItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // Ignore header row
+            if (e.RowIndex < 0)
+                return;
+
+            var row = gridItems.Rows[e.RowIndex];
+
+            // Get product data from the grid
+            int productId = int.Parse(row.Cells["colProductId"].Value?.ToString() ?? "0");
+            string productName = row.Cells["colProductName"].Value?.ToString() ?? "";
+
+            // Find product in combo and select it
+            for (int i = 0; i < comboProduct.Items.Count; i++)
+            {
+                if (comboProduct.Items[i].ToString() == productName)
+                {
+                    comboProduct.SelectedIndex = i;
+                    break;
+                }
+            }
+
+            // Populate textboxes from grid row
+            txtQty.Text = row.Cells["colQty"].Value?.ToString() ?? "0";
+            txtWeight.Text = row.Cells["colWeight"].Value?.ToString() ?? "0";
+            txtRate.Text = row.Cells["colRate"].Value?.ToString() ?? "0";
+            txtAmount.Text = row.Cells["colAmount"].Value?.ToString() ?? "0";
+
+            // Mark this row as being edited
+            _editingRowIndex = e.RowIndex;
+
+            // Change button text to indicate update mode
+            BtnAddItem.Text = "Update Item";
+            BtnAddItem.BackColor = System.Drawing.Color.Orange;  // Visual indicator
+
+            comboProduct.Select();
         }
     }
 

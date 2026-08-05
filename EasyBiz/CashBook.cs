@@ -79,7 +79,11 @@ namespace EasyBiz
         SELECT IFNULL(SUM(credit), 0) - IFNULL(SUM(debit), 0)
         FROM   transactions
         WHERE  date(transaction_date) < date(@BeforeDate)
-        AND    (account_id < 10001 OR account_id >= 20001)";
+        AND (
+    account_id < 10001
+    OR account_id >= 20001
+    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice')
+)";
 
             var p = cmd.CreateParameter();
             p.ParameterName = "@BeforeDate";
@@ -125,7 +129,11 @@ namespace EasyBiz
                 credit
             FROM transactions
             WHERE date(transaction_date) BETWEEN date(@FromDate) AND date(@ToDate)
-            AND (account_id < 10001 OR account_id >= 20001)
+            AND (
+    account_id < 10001
+    OR account_id >= 20001
+    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice')
+)
             ORDER BY transaction_type ASC, transaction_date ASC";
 
                     cmd.Parameters.AddWithValue("@FromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
@@ -272,7 +280,11 @@ namespace EasyBiz
             credit
         FROM transactions
         WHERE date(transaction_date) BETWEEN date(@fromDate) AND date(@toDate)
-        AND (account_id < 10001 OR account_id >= 20001)
+        AND (
+    account_id < 10001
+    OR account_id >= 20001
+    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice')
+)
         ORDER BY transaction_type ASC, transaction_date ASC";
 
                         // Bind as formatted strings, same as PrintCashbookAsync(), not DbType.Date

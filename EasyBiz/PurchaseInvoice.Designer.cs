@@ -227,6 +227,7 @@
             gridItems.Size = new Size(935, 225);
             gridItems.TabIndex = 22;
             gridItems.TabStop = false;
+            gridItems.CellDoubleClick += gridItems_CellDoubleClick;
             // 
             // colProductId
             // 
@@ -257,6 +258,7 @@
             colQty.HeaderText = "Qty";
             colQty.MinimumWidth = 6;
             colQty.Name = "colQty";
+            colQty.ReadOnly = true;
             colQty.Width = 125;
             // 
             // colWeight
@@ -264,6 +266,7 @@
             colWeight.HeaderText = "Weight";
             colWeight.MinimumWidth = 6;
             colWeight.Name = "colWeight";
+            colWeight.ReadOnly = true;
             colWeight.Width = 125;
             // 
             // colWeightUnit
@@ -279,6 +282,7 @@
             colRate.HeaderText = "Rate";
             colRate.MinimumWidth = 6;
             colRate.Name = "colRate";
+            colRate.ReadOnly = true;
             colRate.Width = 125;
             // 
             // colAmount
@@ -286,6 +290,7 @@
             colAmount.HeaderText = "Amount";
             colAmount.MinimumWidth = 6;
             colAmount.Name = "colAmount";
+            colAmount.ReadOnly = true;
             colAmount.Width = 125;
             // 
             // label11
@@ -661,6 +666,8 @@
         private TextBox txtDiscount;
         private TextBox txtTotal;
         private TextBox txtNetAmount;
+        private Label lblInWords;
+        private Button btnAiPredict;
         private DataGridViewTextBoxColumn colProductId;
         private DataGridViewTextBoxColumn colProductName;
         private DataGridViewTextBoxColumn colUnit;
@@ -669,7 +676,5 @@
         private DataGridViewTextBoxColumn colWeightUnit;
         private DataGridViewTextBoxColumn colRate;
         private DataGridViewTextBoxColumn colAmount;
-        private Label lblInWords;
-        private Button btnAiPredict;
     }
 }
