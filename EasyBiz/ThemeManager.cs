@@ -14,7 +14,8 @@ namespace EasyBiz
         Sepia,
         Pinkish,
         WarmHoney,
-        RedRose
+        RedRose,
+        Custom
     }
 
     public class ThemePalette
@@ -175,6 +176,22 @@ namespace EasyBiz
                 GridBackColor = Color.White,                      // White main grid rows
                 GridForeColor = Color.FromArgb(60, 20, 30),     // Deep wine charcoal text
                 AccentColor = Color.FromArgb(165, 25, 45)          // Primary rose crimson accent
+            },
+            [AppTheme.Custom] = new ThemePalette
+            {
+                FormBackColor = Color.FromArgb(245, 246, 248),
+                PanelBackColor = Color.FromArgb(245, 246, 248),
+                ForeColor = Color.FromArgb(33, 37, 41),
+                ControlBackColor = Color.White,
+                ControlForeColor = Color.FromArgb(33, 37, 41),
+                MenuBackColor = Color.FromArgb(245, 246, 248),
+                MenuForeColor = Color.Black,
+                GridHeaderBackColor = Color.FromArgb(52, 152, 219),
+                GridHeaderForeColor = Color.White,
+                GridAltRowBackColor = Color.FromArgb(248, 249, 250),
+                GridBackColor = Color.White,
+                GridForeColor = Color.Black,
+                AccentColor = Color.FromArgb(52, 152, 219)
             }
         };
 
@@ -190,11 +207,13 @@ namespace EasyBiz
             AppTheme.Pinkish => "Pinkish",
             AppTheme.WarmHoney => "Warm Honey",
             AppTheme.RedRose => "Red Rose",
+            AppTheme.Custom => "Custom",
             _ => theme.ToString()
         };
 
         // ── Persistence ──────────────────────────────────────────────────
         private const string SettingKey = "AppTheme";
+        private const string CustomPaletteKey = "CustomThemePalette";
 
         private static void EnsureSettingsTable()
         {
@@ -213,12 +232,24 @@ namespace EasyBiz
         {
             EnsureSettingsTable();
             using var conn = DatabaseHelper.GetConnection();
-            using var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT SettingValue FROM AppSettings WHERE SettingKey = @k";
-            cmd.Parameters.AddWithValue("@k", SettingKey);
-            var result = cmd.ExecuteScalar();
-            if (result != null && Enum.TryParse<AppTheme>(result.ToString(), out var saved))
-                CurrentTheme = saved;
+
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "SELECT SettingValue FROM AppSettings WHERE SettingKey = @k";
+                cmd.Parameters.AddWithValue("@k", CustomPaletteKey);
+                var customData = cmd.ExecuteScalar();
+                if (customData != null)
+                    _palettes[AppTheme.Custom] = DeserializePalette(customData.ToString());
+            }
+
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = "SELECT SettingValue FROM AppSettings WHERE SettingKey = @k";
+                cmd.Parameters.AddWithValue("@k", SettingKey);
+                var result = cmd.ExecuteScalar();
+                if (result != null && Enum.TryParse<AppTheme>(result.ToString(), out var saved))
+                    CurrentTheme = saved;
+            }
         }
 
         public static void SaveTheme(AppTheme theme)
@@ -238,8 +269,74 @@ namespace EasyBiz
 
             ThemeChanged?.Invoke(null, EventArgs.Empty);
         }
+        public static void SaveCustomPalette(ThemePalette palette)
+        {
+            _palettes[AppTheme.Custom] = ClonePalette(palette);
 
-        // ── Applying to a control tree ───────────────────────────────────
+            EnsureSettingsTable();
+            using (var conn = DatabaseHelper.GetConnection())
+            using (var cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = @"
+                    INSERT INTO AppSettings (SettingKey, SettingValue) VALUES (@k, @v)
+                    ON CONFLICT(SettingKey) DO UPDATE SET SettingValue = @v";
+                cmd.Parameters.AddWithValue("@k", CustomPaletteKey);
+                cmd.Parameters.AddWithValue("@v", SerializePalette(palette));
+                cmd.ExecuteNonQuery();
+            }
+
+            SaveTheme(AppTheme.Custom); // sets CurrentTheme, persists it, fires ThemeChanged
+        }
+
+        private static ThemePalette ClonePalette(ThemePalette src) => new ThemePalette
+        {
+            FormBackColor = src.FormBackColor,
+            PanelBackColor = src.PanelBackColor,
+            ForeColor = src.ForeColor,
+            ControlBackColor = src.ControlBackColor,
+            ControlForeColor = src.ControlForeColor,
+            MenuBackColor = src.MenuBackColor,
+            MenuForeColor = src.MenuForeColor,
+            GridHeaderBackColor = src.GridHeaderBackColor,
+            GridHeaderForeColor = src.GridHeaderForeColor,
+            GridAltRowBackColor = src.GridAltRowBackColor,
+            GridBackColor = src.GridBackColor,
+            GridForeColor = src.GridForeColor,
+            AccentColor = src.AccentColor
+        };
+
+        private static string SerializePalette(ThemePalette p) => string.Join("|", new[]
+        {
+            p.FormBackColor, p.PanelBackColor, p.ForeColor, p.ControlBackColor, p.ControlForeColor,
+            p.MenuBackColor, p.MenuForeColor, p.GridHeaderBackColor, p.GridHeaderForeColor,
+            p.GridAltRowBackColor, p.GridBackColor, p.GridForeColor, p.AccentColor
+        }.Select(c => c.ToArgb().ToString()));
+
+        private static ThemePalette DeserializePalette(string data)
+        {
+            var parts = data.Split('|');
+            if (parts.Length != 13)
+                return ClonePalette(_palettes[AppTheme.Light]);
+
+            Color C(int i) => Color.FromArgb(int.Parse(parts[i]));
+
+            return new ThemePalette
+            {
+                FormBackColor = C(0),
+                PanelBackColor = C(1),
+                ForeColor = C(2),
+                ControlBackColor = C(3),
+                ControlForeColor = C(4),
+                MenuBackColor = C(5),
+                MenuForeColor = C(6),
+                GridHeaderBackColor = C(7),
+                GridHeaderForeColor = C(8),
+                GridAltRowBackColor = C(9),
+                GridBackColor = C(10),
+                GridForeColor = C(11),
+                AccentColor = C(12)
+            };
+        }
 
         /// <summary>Recursively repaints a form (or any control) with the active theme.</summary>
         public static void ApplyTheme(Control root)

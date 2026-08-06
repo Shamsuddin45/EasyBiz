@@ -83,7 +83,9 @@ namespace EasyBiz
     account_id < 10001
     OR account_id >= 20001
     OR transaction_type IN ('Journal Voucher')
-)";
+    )
+    AND transaction_type NOT IN ('Sale Invoice', 'Purchase Invoice')
+";
 
             var p = cmd.CreateParameter();
             p.ParameterName = "@BeforeDate";
@@ -133,7 +135,8 @@ namespace EasyBiz
     account_id < 10001
     OR account_id >= 20001
     OR transaction_type IN ('Journal Voucher')
-)
+    )
+    AND transaction_type NOT IN ('Sale Invoice', 'Purchase Invoice')
             ORDER BY transaction_type ASC, transaction_date ASC";
 
                     cmd.Parameters.AddWithValue("@FromDate", dateFrom.Value.ToString("yyyy-MM-dd"));
@@ -284,7 +287,8 @@ namespace EasyBiz
     account_id < 10001
     OR account_id >= 20001
     OR transaction_type IN ('Journal Voucher')
-)
+    )
+    AND transaction_type NOT IN ('Sale Invoice', 'Purchase Invoice')
         ORDER BY transaction_type ASC, transaction_date ASC";
 
                         // Bind as formatted strings, same as PrintCashbookAsync(), not DbType.Date

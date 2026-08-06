@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace EasyBiz
-{    
+{
     public partial class Settings : Form
     {
         private List<UserAccount> _users = new();
@@ -16,37 +17,72 @@ namespace EasyBiz
             InitUsersTab();
             InitThemeTab();
             ThemeManager.ApplyTheme(this);
+
             comboInWordsSettings.SelectedItem = GlobalConfig.AppSettings.InWords.ToString();
             comboPrintSaleReceipt.SelectedItem = GlobalConfig.AppSettings.PrintSaleReceipt.ToString();
-        }        
-        
-        private FlowLayoutPanel _themeSwatchPanel;
+        }
+
+        private FlowLayoutPanel _themeSwatchPanel;        
 
         private void InitThemeTab()
         {
-            var tabPage = new TabPage("Theme");
+            var tabPage = new TabPage("Theme") { Padding = new Padding(10) };
+
+            var topPanel = new Panel { Dock = DockStyle.Top, Height = 40 };
 
             var lbl = new Label
             {
                 Text = "Choose a color theme for EasyBiz:",
                 Font = new Font("Segoe UI", 11F),
                 AutoSize = true,
-                Location = new Point(12, 12)
+                Location = new Point(0, 8)
             };
-            tabPage.Controls.Add(lbl);
+
+            var btnCustomize = new CustomButton
+            {
+                Text = "Customize…",
+                Size = new Size(120, 30),
+                Dock = DockStyle.Right,
+                BorderRadius = 6,
+                BackgroundColor = Color.FromArgb(52, 73, 94),
+                TextColor = Color.White,
+                Font = new Font("Segoe UI", 9F)
+            };
+            btnCustomize.Click += BtnCustomizeTheme_Click;
+
+            topPanel.Controls.Add(lbl);
+            topPanel.Controls.Add(btnCustomize);           
 
             _themeSwatchPanel = new FlowLayoutPanel
             {
-                Location = new Point(12, 45),
-                Size = new Size(760, 340),
-                AutoScroll = true
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                Padding = new Padding(0)
             };
-            tabPage.Controls.Add(_themeSwatchPanel);
 
-            RefreshThemeSwatches();
+            tabPage.Controls.Add(_themeSwatchPanel);
+            tabPage.Controls.Add(topPanel);            
+
+            RefreshThemeSwatches();            
 
             tabControl1.TabPages.Add(tabPage);
         }
+
+        private void BtnCustomizeTheme_Click(object sender, EventArgs e)
+        {
+            // Start from whatever palette is currently active — Custom if it's
+            // already active (so re-editing continues from the saved custom colors),
+            // otherwise the currently applied built-in theme, as a starting point.
+            var startingPalette = ThemeManager.PaletteFor(ThemeManager.CurrentTheme);
+
+            using var dlg = new ThemeCustomizeDialog(startingPalette);
+            if (dlg.ShowDialog(this) == DialogResult.OK && dlg.ResultPalette != null)
+            {
+                ThemeManager.SaveCustomPalette(dlg.ResultPalette);
+                ThemeManager.ApplyTheme(this);
+                RefreshThemeSwatches();         
+            }
+        }        
 
         private void RefreshThemeSwatches()
         {
@@ -71,8 +107,8 @@ namespace EasyBiz
                 btn.Click += (s, e) =>
                 {
                     ThemeManager.SaveTheme(theme);
-                    ThemeManager.ApplyTheme(this);   // repaint the Settings form itself
-                    RefreshThemeSwatches();          // move the ✓ to the new active swatch
+                    ThemeManager.ApplyTheme(this);   // Repaint the Settings form itself
+                    RefreshThemeSwatches();          // Move the ✓ to the new active swatch                    
                 };
 
                 _themeSwatchPanel.Controls.Add(btn);
@@ -96,7 +132,6 @@ namespace EasyBiz
                 if (favoriteKeys.Contains(ModuleRegistry.AllModules[i].Key))
                     clbFavorites.SetItemChecked(i, true);
             }
-
         }
 
         public event EventHandler FavoritesUpdated;
@@ -105,7 +140,6 @@ namespace EasyBiz
         {
             var selectedKeys = new List<string>();
 
-            // 1. Correctly map the checked display names back to their registry keys
             for (int i = 0; i < clbFavorites.Items.Count; i++)
             {
                 if (clbFavorites.GetItemChecked(i))
@@ -114,14 +148,10 @@ namespace EasyBiz
                 }
             }
 
-            // 2. Save the mapped keys to the database
             FavoritesService.SaveFavorites(selectedKeys);
-
-            // 3. Keep the settings checkbox list visible (or change its visibility if desired)
             clbFavorites.Visible = true;
             MessageBox.Show("Favourites Updated.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // 4. This fires the event that tells the ALREADY open MainForm to redraw itself!
             FavoritesUpdated?.Invoke(this, EventArgs.Empty);
         }
 
@@ -129,8 +159,6 @@ namespace EasyBiz
 
         private void InitUsersTab()
         {
-            // Only admins may manage users and rights. Non-admins still see
-            // the tab (so they know it exists) but it's disabled.
             if (!CurrentUser.IsAdmin)
             {
                 tabPage2.Enabled = false;
@@ -141,16 +169,12 @@ namespace EasyBiz
             foreach (var module in ModuleRegistry.AllModules)
                 clbUserRights.Items.Add(module.DisplayName);
 
-            // Extra rights that gate MainForm buttons but aren't launchable
-            // "modules" in ModuleRegistry (Trial Balance and Backup Data are
-            // handled inline on MainForm rather than as separate forms).
             clbUserRights.Items.Add("Trial Balance");
             clbUserRights.Items.Add("Backup Data");
 
             LoadUsersGrid();
         }
 
-        /// <summary>Maps a clbUserRights list index back to its module/right key.</summary>
         private static string RightKeyForIndex(int index)
         {
             if (index < ModuleRegistry.AllModules.Count)
@@ -255,7 +279,6 @@ namespace EasyBiz
             var user = SelectedUser();
             if (user == null) return;
 
-            // Guard: don't allow removing admin status from the last remaining admin.
             if (user.IsAdmin && !chkEditIsAdmin.Checked && UserRightsService.IsLastAdmin(user.UserId))
             {
                 MessageBox.Show("This is the last remaining admin account — it must stay an admin.",
@@ -339,25 +362,22 @@ namespace EasyBiz
             LoadUsersGrid();
         }
 
-        // Legacy handler kept only so the hidden compatibility button (see
-        // Designer) still compiles; the real Users Management UI above
-        // replaces what this button used to open.
         private void btnUsersManagement_Click(object sender, EventArgs e) { }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (comboInWordsSettings.SelectedItem != null)
-            {                
+            {
                 GlobalConfig.AppSettings.InWords = comboInWordsSettings.SelectedItem.ToString();
                 comboInWordsSettings.SelectedItem = comboInWordsSettings.SelectedItem.ToString();
             }
-            if (comboPrintSaleReceipt.SelectedItem != null) 
-            { 
+            if (comboPrintSaleReceipt.SelectedItem != null)
+            {
                 GlobalConfig.AppSettings.PrintSaleReceipt = comboPrintSaleReceipt.SelectedItem.ToString();
                 comboPrintSaleReceipt.SelectedItem = comboPrintSaleReceipt.SelectedItem.ToString();
             }
             GlobalConfig.SaveSettings();
-            MessageBox.Show("Settings updated successfully!","Success",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            MessageBox.Show("Settings updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
