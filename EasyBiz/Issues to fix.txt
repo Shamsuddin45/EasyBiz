@@ -2,3 +2,5 @@
 -------------------------
 ----------------------------
 
+In Cashbook.cs:
+sale-invoice & purchase-invoice is showing only single entry in the cashbook

@@ -137,7 +137,6 @@ namespace EasyBiz
 
         }
 
-
         // ── Voucher Number ───────────────────────────────────────────────────
         private void ShowVoucherNo()
         {
