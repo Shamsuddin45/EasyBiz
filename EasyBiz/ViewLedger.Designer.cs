@@ -136,9 +136,9 @@
             BtnExportPdf.ForeColor = Color.White;
             BtnExportPdf.Location = new Point(1110, 43);
             BtnExportPdf.Name = "BtnExportPdf";
-            BtnExportPdf.Size = new Size(160, 36);
+            BtnExportPdf.Size = new Size(182, 36);
             BtnExportPdf.TabIndex = 7;
-            BtnExportPdf.Text = "Export PDF";
+            BtnExportPdf.Text = "View / Export PDF";
             BtnExportPdf.TextColor = Color.White;
             BtnExportPdf.UseVisualStyleBackColor = false;
             BtnExportPdf.Click += BtnExportPdf_Click;
@@ -241,7 +241,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 42;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1283, 530);
+            dataGridView1.Size = new Size(1312, 530);
             dataGridView1.TabIndex = 8;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
@@ -319,7 +319,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1289, 100);
+            panel1.Size = new Size(1318, 100);
             panel1.TabIndex = 37;
             // 
             // tableLayoutPanel1
@@ -335,7 +335,7 @@
             tableLayoutPanel1.RowCount = 2;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(1289, 636);
+            tableLayoutPanel1.Size = new Size(1318, 636);
             tableLayoutPanel1.TabIndex = 35;
             // 
             // ViewLedger
@@ -343,12 +343,13 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1289, 636);
+            ClientSize = new Size(1318, 636);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "ViewLedger";
             StartPosition = FormStartPosition.CenterParent;
             Text = "View Ledger";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

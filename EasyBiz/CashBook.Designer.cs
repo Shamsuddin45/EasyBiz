@@ -28,22 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             dateTo = new DateTimePicker();
             label3 = new Label();
             dateFrom = new DateTimePicker();
             label1 = new Label();
             dataGridView1 = new DataGridView();
-            panel1 = new Panel();
-            BtnExport = new CustomButton();
-            BtnLoad = new CustomButton();
-            lblTotalDr = new Label();
-            lblTotalCr = new Label();
-            lblRunningBalance = new Label();
-            flowLayoutPanel1 = new FlowLayoutPanel();
-            tableLayoutPanel1 = new TableLayoutPanel();
             sno = new DataGridViewTextBoxColumn();
             date = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
@@ -51,6 +43,15 @@
             desc = new DataGridViewTextBoxColumn();
             debit = new DataGridViewTextBoxColumn();
             credit = new DataGridViewTextBoxColumn();
+            panel1 = new Panel();
+            lblInfo = new Label();
+            BtnExport = new CustomButton();
+            BtnLoad = new CustomButton();
+            lblTotalDr = new Label();
+            lblTotalCr = new Label();
+            lblRunningBalance = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             flowLayoutPanel1.SuspendLayout();
@@ -102,33 +103,33 @@
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(250, 250, 250);
-            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(250, 250, 250);
+            dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(44, 62, 80);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(44, 62, 80);
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI Semibold", 10.8F, FontStyle.Bold);
+            dataGridViewCellStyle5.ForeColor = Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView1.ColumnHeadersHeight = 50;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sno, date, type, accountname, desc, debit, credit });
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle3.ForeColor = Color.FromArgb(30, 30, 30);
-            dataGridViewCellStyle3.Padding = new Padding(5, 0, 5, 0);
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(227, 242, 253);
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.White;
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new Padding(5, 0, 5, 0);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(227, 242, 253);
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(230, 230, 230);
@@ -145,9 +146,65 @@
             dataGridView1.TabIndex = 40;
             dataGridView1.CellFormatting += dataGridView1_CellFormatting;
             // 
+            // sno
+            // 
+            sno.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            sno.HeaderText = "Sno";
+            sno.MinimumWidth = 6;
+            sno.Name = "sno";
+            sno.ReadOnly = true;
+            sno.Width = 81;
+            // 
+            // date
+            // 
+            date.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            date.HeaderText = "Date";
+            date.MinimumWidth = 6;
+            date.Name = "date";
+            date.ReadOnly = true;
+            date.Width = 88;
+            // 
+            // type
+            // 
+            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            type.HeaderText = "Type";
+            type.MinimumWidth = 6;
+            type.Name = "type";
+            type.ReadOnly = true;
+            type.Width = 88;
+            // 
+            // accountname
+            // 
+            accountname.HeaderText = "Account Name";
+            accountname.MinimumWidth = 6;
+            accountname.Name = "accountname";
+            accountname.ReadOnly = true;
+            // 
+            // desc
+            // 
+            desc.HeaderText = "Description";
+            desc.MinimumWidth = 6;
+            desc.Name = "desc";
+            desc.ReadOnly = true;
+            // 
+            // debit
+            // 
+            debit.HeaderText = "Debit";
+            debit.MinimumWidth = 6;
+            debit.Name = "debit";
+            debit.ReadOnly = true;
+            // 
+            // credit
+            // 
+            credit.HeaderText = "Credit";
+            credit.MinimumWidth = 6;
+            credit.Name = "credit";
+            credit.ReadOnly = true;
+            // 
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(lblInfo);
             panel1.Controls.Add(BtnExport);
             panel1.Controls.Add(BtnLoad);
             panel1.Controls.Add(label1);
@@ -160,6 +217,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1080, 70);
             panel1.TabIndex = 41;
+            // 
+            // lblInfo
+            // 
+            lblInfo.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblInfo.AutoSize = true;
+            lblInfo.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblInfo.ForeColor = Color.DarkGray;
+            lblInfo.Location = new Point(877, 20);
+            lblInfo.Name = "lblInfo";
+            lblInfo.Size = new Size(445, 34);
+            lblInfo.TabIndex = 43;
+            lblInfo.Text = "Note: \r\nSale and Purchase is not included You can view them at Stock Report Form.";
             // 
             // BtnExport
             // 
@@ -268,61 +337,6 @@
             tableLayoutPanel1.Size = new Size(1080, 558);
             tableLayoutPanel1.TabIndex = 46;
             // 
-            // sno
-            // 
-            sno.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            sno.HeaderText = "Sno";
-            sno.MinimumWidth = 6;
-            sno.Name = "sno";
-            sno.ReadOnly = true;
-            sno.Width = 81;
-            // 
-            // date
-            // 
-            date.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            date.HeaderText = "Date";
-            date.MinimumWidth = 6;
-            date.Name = "date";
-            date.ReadOnly = true;
-            date.Width = 88;
-            // 
-            // type
-            // 
-            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            type.HeaderText = "Type";
-            type.MinimumWidth = 6;
-            type.Name = "type";
-            type.ReadOnly = true;
-            type.Width = 88;
-            // 
-            // accountname
-            // 
-            accountname.HeaderText = "Account Name";
-            accountname.MinimumWidth = 6;
-            accountname.Name = "accountname";
-            accountname.ReadOnly = true;
-            // 
-            // desc
-            // 
-            desc.HeaderText = "Description";
-            desc.MinimumWidth = 6;
-            desc.Name = "desc";
-            desc.ReadOnly = true;
-            // 
-            // debit
-            // 
-            debit.HeaderText = "Debit";
-            debit.MinimumWidth = 6;
-            debit.Name = "debit";
-            debit.ReadOnly = true;
-            // 
-            // credit
-            // 
-            credit.HeaderText = "Credit";
-            credit.MinimumWidth = 6;
-            credit.Name = "credit";
-            credit.ReadOnly = true;
-            // 
             // CashBook
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -366,5 +380,6 @@
         private DataGridViewTextBoxColumn desc;
         private DataGridViewTextBoxColumn debit;
         private DataGridViewTextBoxColumn credit;
+        private Label lblInfo;
     }
 }

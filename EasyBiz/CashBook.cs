@@ -82,7 +82,7 @@ namespace EasyBiz
         AND (
     account_id < 10001
     OR account_id >= 20001
-    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice', 'Journal Voucher')
+    OR transaction_type IN ('Journal Voucher')
 )";
 
             var p = cmd.CreateParameter();
@@ -132,7 +132,7 @@ namespace EasyBiz
             AND (
     account_id < 10001
     OR account_id >= 20001
-    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice', 'Journal Voucher')
+    OR transaction_type IN ('Journal Voucher')
 )
             ORDER BY transaction_type ASC, transaction_date ASC";
 
@@ -283,7 +283,7 @@ namespace EasyBiz
         AND (
     account_id < 10001
     OR account_id >= 20001
-    OR transaction_type IN ('Sale Invoice', 'Purchase Invoice', 'Journal Voucher')
+    OR transaction_type IN ('Journal Voucher')
 )
         ORDER BY transaction_type ASC, transaction_date ASC";
 
