@@ -194,6 +194,7 @@ namespace EasyBiz
             BtnExit.Text = "Exit";
             BtnExit.TextColor = Color.White;
             BtnExit.UseVisualStyleBackColor = false;
+            BtnExit.Click += BtnExit_Click;
             // 
             // LoginForm
             // 

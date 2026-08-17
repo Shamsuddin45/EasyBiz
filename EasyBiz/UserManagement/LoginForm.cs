@@ -86,7 +86,7 @@ namespace EasyBiz
         }
 
         private void BtnExit_Click(object sender, EventArgs e)
-        {
+        {            
             DialogResult = DialogResult.Cancel;
             Close();
         }
@@ -115,35 +115,35 @@ namespace EasyBiz
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
 
-     
+
 
         public List<string> GetUsers()
         {
-        // 1. Create a list to hold the usernames
-        List<string> usersList = new List<string>();
+            // 1. Create a list to hold the usernames
+            List<string> usersList = new List<string>();
 
-        using var conn = DatabaseHelper.GetConnection();
+            using var conn = DatabaseHelper.GetConnection();
 
-        // Note: If GetConnection() doesn't open the connection automatically, 
-        // you will need to call conn.Open(); here before executing the command.
+            // Note: If GetConnection() doesn't open the connection automatically, 
+            // you will need to call conn.Open(); here before executing the command.
 
-        using var cmd = conn.CreateCommand();
-        cmd.CommandText = "SELECT username FROM users";
+            using var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT username FROM users";
 
-        using var reader = cmd.ExecuteReader();
-        while (reader.Read())
-        {
-            string username = reader.GetString(0);
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                string username = reader.GetString(0);
 
-            // 2. Add each username to the list
-            usersList.Add(username);
+                // 2. Add each username to the list
+                usersList.Add(username);
+            }
+
+            // 3. Return the populated list
+            return usersList;
         }
 
-        // 3. Return the populated list
-        return usersList;
-    }
-
-    private void LoginForm_Load(object sender, EventArgs e)
+        private void LoginForm_Load(object sender, EventArgs e)
         {
             // 1. Create the specific collection WinForms expects
             var autoComplete = new AutoCompleteStringCollection();
@@ -154,6 +154,6 @@ namespace EasyBiz
             // 3. Assign the collection to the textbox
             txtUsername.AutoCompleteCustomSource = autoComplete;
 
-        }
+        }      
     }
 }
