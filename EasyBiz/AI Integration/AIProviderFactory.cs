@@ -12,7 +12,7 @@ namespace EasyBiz
         public const string KeyProvider = "AIProvider";
 
         /// <summary>Internal provider keys, in the order shown in the Settings dropdown.</summary>
-        public static readonly string[] ProviderKeys = { "Gemini", "OpenAI", "Groq", "Ollama" };
+        public static readonly string[] ProviderKeys = { "Gemini", "OpenAI", "Groq", "OpenRouter", "Ollama" };
 
         public static bool RequiresApiKey(string providerKey) => providerKey != "Ollama";
 
@@ -21,6 +21,7 @@ namespace EasyBiz
             "Gemini" => "gemini-2.5-flash",
             "OpenAI" => "gpt-4o-mini",
             "Groq" => "llama-3.3-70b-versatile",
+            "OpenRouter" => "openai/gpt-4o-mini",
             "Ollama" => "llama3.1",
             _ => ""
         };
@@ -45,6 +46,13 @@ namespace EasyBiz
                         baseUrl: "https://api.groq.com/openai/v1",
                         apiKey: AISettingsHelper.GetSetting("GroqApiKey", ""),
                         model: AISettingsHelper.GetSetting("GroqModel", DefaultModelFor("Groq")));
+
+                case "OpenRouter":
+                    return new OpenAICompatibleChatProvider(
+                        displayName: "OpenRouter",
+                        baseUrl: "https://openrouter.ai/api/v1",
+                        apiKey: AISettingsHelper.GetSetting("OpenRouterApiKey", ""),
+                        model: AISettingsHelper.GetSetting("OpenRouterModel", DefaultModelFor("OpenRouter")));
 
                 case "Ollama":
                     return new OllamaChatProvider(

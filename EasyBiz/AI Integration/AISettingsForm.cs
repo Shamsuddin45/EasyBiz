@@ -53,6 +53,7 @@ namespace EasyBiz
                 "Gemini",
                 "OpenAI (ChatGPT)",
                 "Groq",
+                "OpenRouter (OpenAI-compatible)",
                 "Ollama (local)"
             });
             comboProvider.SelectedIndexChanged += ComboProvider_SelectedIndexChanged;
@@ -143,7 +144,8 @@ namespace EasyBiz
             0 => "Gemini",
             1 => "OpenAI",
             2 => "Groq",
-            3 => "Ollama",
+            3 => "OpenRouter",
+            4 => "Ollama",
             _ => "Gemini"
         };
 
@@ -155,7 +157,8 @@ namespace EasyBiz
             {
                 "OpenAI" => 1,
                 "Groq" => 2,
-                "Ollama" => 3,
+                "OpenRouter" => 3,
+                "Ollama" => 4,
                 _ => 0
             };
             LoadFieldsForCurrentProvider();
@@ -238,6 +241,10 @@ namespace EasyBiz
                 case "Groq":
                     AISettingsHelper.SaveSetting("GroqApiKey", txtKeyOrUrl.Text.Trim());
                     AISettingsHelper.SaveSetting("GroqModel", model);
+                    break;
+                case "OpenRouter":
+                    AISettingsHelper.SaveSetting("OpenRouterApiKey", txtKeyOrUrl.Text.Trim());
+                    AISettingsHelper.SaveSetting("OpenRouterModel", model);
                     break;
                 case "Ollama":
                     AISettingsHelper.SaveSetting("OllamaBaseUrl",
