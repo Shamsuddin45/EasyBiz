@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -14,12 +15,11 @@ namespace EasyBiz.Forms
     /// to inspect data. SELECT statements populate the grid; write statements
     /// (INSERT/UPDATE/DELETE/DDL) are blocked unless "Allow writes" is checked.
     ///
-    /// Wire this up from a menu item (e.g. Tools > SQL Query Runner) that is only
-    /// visible to admin users — this form has no business-logic guardrails of its own,
-    /// so it should not be reachable by regular users.
+    /// Protected by hardcoded admin password ("syslock").
     /// </summary>
     public partial class SqlQueryRunnerForm : Form
     {
+        private const string AdminPassword = "syslock";
         private readonly List<string> _history = new List<string>();
         private DataTable _lastResult;
 
@@ -28,6 +28,56 @@ namespace EasyBiz.Forms
             InitializeComponent();
             BeautifyGrid(dgvResults); // existing app-wide grid styling helper
             ThemeManager.ApplyTheme(this); // existing app-wide theming helper
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+
+            if (!AuthenticateUser())
+            {
+                Close();
+            }
+        }
+
+        private bool AuthenticateUser()
+        {
+            using (var prompt = new Form())
+            {
+                prompt.Width = 320;
+                prompt.Height = 200;
+                prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+                prompt.Text = "Developer Authentication";
+                prompt.StartPosition = FormStartPosition.CenterParent;
+                prompt.MaximizeBox = false;
+                prompt.MinimizeBox = false;
+
+                var lblPrompt = new Label() { Left = 20, Top = 15, Text = "Enter Developer Password:", AutoSize = true };
+                var txtPassword = new TextBox() { Left = 20, Top = 40, Width = 260, PasswordChar = '*' };
+                var btnOk = new Button() { Text = "OK", Left = 120, Width = 75, Height = 30, Top = 75, DialogResult = DialogResult.OK };
+                var btnCancel = new Button() { Text = "Cancel", Left = 205, Width = 75, Height = 30, Top = 75, DialogResult = DialogResult.Cancel };
+
+                prompt.Controls.Add(lblPrompt);
+                prompt.Controls.Add(txtPassword);
+                prompt.Controls.Add(btnOk);
+                prompt.Controls.Add(btnCancel);
+
+                prompt.AcceptButton = btnOk;
+                prompt.CancelButton = btnCancel;
+
+                if (prompt.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (txtPassword.Text == AdminPassword)
+                    {
+                        return true;
+                    }
+
+                    MessageBox.Show("Incorrect password. Access denied.", "Authentication Failed",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                return false;
+            }
         }
 
         private void txtQuery_KeyDown(object sender, KeyEventArgs e)
@@ -174,15 +224,9 @@ namespace EasyBiz.Forms
             }
         }
 
-        /// <summary>
-        /// Rough classifier: treat SELECT / PRAGMA / EXPLAIN / WITH (CTE) as read-only.
-        /// Not bulletproof (e.g. "WITH ... INSERT ..." CTEs writing), which is exactly
-        /// why writes still require the explicit checkbox + confirmation above.
-        /// </summary>
         private static bool IsSelectLikeStatement(string sql)
         {
             string trimmed = sql.TrimStart();
-            // strip leading SQL comments so "-- note\nSELECT ..." still classifies correctly
             while (trimmed.StartsWith("--"))
             {
                 int nl = trimmed.IndexOf('\n');
@@ -236,23 +280,13 @@ namespace EasyBiz.Forms
             return value;
         }
 
-        // ---------------------------------------------------------------
-        // BeautifyGrid is assumed to already exist elsewhere in EasyBiz
-        // (per StockReport / other grid-using forms). If this form is the
-        // first to reference it from this namespace, either add a
-        // `using` for wherever it lives, or delete this call.
-        // ---------------------------------------------------------------
         private void BeautifyGrid(DataGridView grid)
         {
-            // If EasyBiz already has a shared BeautifyGrid(DataGridView) helper
-            // (e.g. a static method on a Utils/ThemeManager class), delete this
-            // method body and call that one instead — this is a minimal fallback
-            // so the form compiles standalone.
             grid.EnableHeadersVisualStyles = false;
-            grid.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            grid.ColumnHeadersDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(240, 240, 245);
-            grid.RowsDefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(210, 225, 245);
-            grid.RowsDefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            grid.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI Semibold", 9F);
+            grid.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 245);
+            grid.RowsDefaultCellStyle.SelectionBackColor = Color.FromArgb(210, 225, 245);
+            grid.RowsDefaultCellStyle.SelectionForeColor = Color.Black;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             grid.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
         }

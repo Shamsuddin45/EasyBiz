@@ -17,6 +17,17 @@ namespace EasyBiz
         public decimal Balance { get; set; }   // raw numeric — negative = Cr
     }
 
+    /// <summary>Stock snapshot shown at the bottom of a product's ledger report.</summary>
+    public class ProductStockInfo
+    {
+        public double Qty { get; set; }
+        public double Weight { get; set; }
+        public bool IsUnit { get; set; }
+        public string Unit { get; set; } = "";
+        public string WeightUnit { get; set; } = "";
+        public double MinStockQty { get; set; }
+    }
+
     internal static class LedgerReportPDF
     {
         static LedgerReportPDF()
@@ -33,10 +44,15 @@ namespace EasyBiz
         private static readonly string DebitRed = "#C0392B";
         private static readonly string CreditGreen = "#1E8449";
         private static readonly string BorderGrey = "#BDC3C7";
+        private static readonly string StockBandBg = "#EAF2FB";
+        private static readonly string StockLowBg = "#FDEDEC";
 
         // ── Public entry point ───────────────────────────────────────────────
         /// <summary>
-        /// Generates a customer ledger PDF and saves it to <paramref name="outputPath"/>.
+        /// Generates a customer/account (or product) ledger PDF and saves it
+        /// to <paramref name="outputPath"/>. Pass <paramref name="stockInfo"/>
+        /// (non-null) to render a stock-on-hand band at the bottom — used for
+        /// product-linked accounts.
         /// </summary>
         public static void Generate(
             string outputPath,
@@ -46,7 +62,8 @@ namespace EasyBiz
             DateTime fromDate,
             DateTime toDate,
             decimal openingBalance,
-            List<LedgerRow> rows)
+            List<LedgerRow> rows,
+            ProductStockInfo? stockInfo = null)
         {
             Document.Create(container =>
             {
@@ -59,8 +76,13 @@ namespace EasyBiz
                     page.Header().Element(ctx => ComposeHeader(ctx, accountName, accountId,
                                                                accountType, fromDate, toDate));
 
-                    page.Content().PaddingTop(8).Element(ctx =>
-                        ComposeTable(ctx, rows, openingBalance));
+                    page.Content().PaddingTop(8).Column(col =>
+                    {
+                        col.Item().Element(ctx => ComposeTable(ctx, rows, openingBalance));
+
+                        if (stockInfo != null)
+                            col.Item().PaddingTop(10).Element(ctx => ComposeStockBand(ctx, stockInfo));
+                    });
 
                     page.Footer().Element(ComposeFooter);
                 });
@@ -85,7 +107,7 @@ namespace EasyBiz
                         {
                             c.Item().Text("EasyBiz")
                                 .FontSize(22).Bold().FontColor(White);
-                            c.Item().Text("Customer Ledger Report")
+                            c.Item().Text("Account Ledger Report")
                                 .FontSize(11).FontColor("#AED6F1");
                         });
 
@@ -284,6 +306,38 @@ namespace EasyBiz
                        .Text(closingText)
                        .FontColor(closingBalance < 0 ? "#82E0AA" : "#F1948A")
                        .Bold().FontSize(9));
+        }
+
+        // ── Stock band (product accounts only) ─────────────────────────────
+        private static void ComposeStockBand(IContainer container, ProductStockInfo stock)
+        {
+            string qtyText = stock.IsUnit
+                ? $"{stock.Qty:N3} {stock.Unit}"
+                : $"{stock.Weight:N3} {stock.WeightUnit}";
+
+            bool lowStock = stock.MinStockQty > 0 &&
+                (stock.IsUnit ? stock.Qty <= stock.MinStockQty : stock.Weight <= stock.MinStockQty);
+
+            container
+                .Border(1).BorderColor(lowStock ? DebitRed : SubHeaderBg)
+                .Background(lowStock ? StockLowBg : StockBandBg)
+                .Padding(10)
+                .Row(row =>
+                {
+                    row.RelativeItem().Text(txt =>
+                    {
+                        txt.Span("Current Stock on Hand: ").FontSize(10).FontColor(TextDark);
+                        txt.Span(qtyText).Bold().FontSize(12)
+                           .FontColor(lowStock ? DebitRed : CreditGreen);
+                    });
+
+                    if (lowStock)
+                    {
+                        row.RelativeItem().AlignRight()
+                           .Text("⚠ At or below minimum stock level")
+                           .FontColor(DebitRed).Bold().FontSize(9);
+                    }
+                });
         }
 
         // ── Footer ───────────────────────────────────────────────────────────

@@ -19,6 +19,7 @@ namespace EasyBiz
             // Ensure bank-specific DB tables exist
             DatabaseHelper.InitializeDatabase();
             BankDatabaseHelper.InitializeBankTables();
+            ProductAccountsDatabaseHelper.InitializeProductAccountLinks();
             //ShowCashDetails();
             ThemeManager.LoadSavedTheme();
             ThemeManager.ApplyTheme(this);

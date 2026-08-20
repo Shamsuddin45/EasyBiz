@@ -31,7 +31,7 @@ namespace EasyBiz
                 dateTimePicker2.Value = new DateTime(2100, 01, 01);
             }
         }
-
+        
         // ── PDF Export ───────────────────────────────────────────────────────
         private void PrintLedger(string accountName, DateTime fromDate, DateTime toDate)
         {
@@ -82,18 +82,18 @@ namespace EasyBiz
             using (var cmd = connection.CreateCommand())
             {
                 cmd.CommandText = @"
-                    SELECT
-                        transaction_date,
-                        voucher_no,
-                        transaction_type,
-                        description,
-                        debit,
-                        credit
-                    FROM transactions
-                    WHERE account_id  = @AccountId
-                      AND transaction_date >= @FromDate
-                      AND transaction_date <= @ToDate
-                    ORDER BY transaction_date, transaction_id";
+            SELECT
+                transaction_date,
+                voucher_no,
+                transaction_type,
+                description,
+                debit,
+                credit
+            FROM transactions
+            WHERE account_id  = @AccountId
+              AND transaction_date >= @FromDate
+              AND transaction_date <= @ToDate
+            ORDER BY transaction_date, transaction_id";
 
                 cmd.Parameters.AddWithValue("@AccountId", accountId);
                 cmd.Parameters.AddWithValue("@FromDate", fromDate.ToString("yyyy-MM-dd"));
@@ -131,7 +131,6 @@ namespace EasyBiz
             string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             folderPath = Path.Combine(folderPath, "CashbookAIReports");
 
-
             // Ensure the directory exists; create it if it doesn't
             if (!Directory.Exists(folderPath))
             {
@@ -140,8 +139,25 @@ namespace EasyBiz
 
             // Combine folder path and file name to get the full file path
             string filePath = Path.Combine(folderPath, "AccountLedger.pdf");
-            
-            
+
+            // 4. If this account is linked to a product, pull its current stock so
+            //    it can be shown at the bottom of the report.
+            ProductStockInfo? stockInfo = null;
+            var stockData = ProductAccountsDatabaseHelper.GetStockForAccount(accountId);
+            if (stockData.HasValue)
+            {
+                var s = stockData.Value;
+                stockInfo = new ProductStockInfo
+                {
+                    Qty = s.Qty,
+                    Weight = s.Weight,
+                    IsUnit = s.IsUnit,
+                    Unit = s.Unit,
+                    WeightUnit = s.WeightUnit,
+                    MinStockQty = s.MinStockQty
+                };
+            }
+
             // 5. Generate PDF
             try
             {
@@ -153,9 +169,9 @@ namespace EasyBiz
                     fromDate: fromDate,
                     toDate: toDate,
                     openingBalance: openingBalance,
-                    rows: rows);
-                
-                }
+                    rows: rows,
+                    stockInfo: stockInfo);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to generate PDF:\n\n{ex.Message}",

@@ -16,6 +16,7 @@ namespace EasyBiz
         {
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
+            ProductAccountsDatabaseHelper.InitializeProductAccountLinks();
             comboUnit.Items.AddRange(new[] { "PCS", "KG", "TON", "MTR", "LTR", "BAG", "BOX" });
             comboWeightUnit.Items.AddRange(new[] { "KG", "TON", "G", "LBS", "MUN" });
             comboUnit.SelectedItem = "PCS";
@@ -154,9 +155,10 @@ namespace EasyBiz
             using var conn = DatabaseHelper.GetConnection();
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                INSERT INTO products (product_name, description, unit, weight_unit,
-                                      isUnit, sale_rate, purchase_rate, min_stock_qty)
-                VALUES (@name, @desc, @unit, @wu, @isUnit, @sr, @pr, @min)";
+        INSERT INTO products (product_name, description, unit, weight_unit,
+                              isUnit, sale_rate, purchase_rate, min_stock_qty)
+        VALUES (@name, @desc, @unit, @wu, @isUnit, @sr, @pr, @min);
+        SELECT last_insert_rowid();";
             cmd.Parameters.AddWithValue("@name", txtProductName.Text.Trim());
             cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim());
             cmd.Parameters.AddWithValue("@unit", comboUnit.Text);
@@ -175,7 +177,13 @@ namespace EasyBiz
 
             try
             {
-                cmd.ExecuteNonQuery();
+                long newProductId = (long)cmd.ExecuteScalar();
+
+                // Give the product its own account so it can be posted to like
+                // any other account, and shows up in View Ledger.
+                ProductAccountsDatabaseHelper.CreateProductAccount(
+                    conn, (int)newProductId, txtProductName.Text.Trim());
+
                 MessageBox.Show("Product saved successfully!", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadProducts();
@@ -207,6 +215,11 @@ namespace EasyBiz
             try
             {
                 cmd.ExecuteNonQuery();
+
+                // Keep the product's linked account name in sync
+                ProductAccountsDatabaseHelper.RenameProductAccount(
+                    (int)numProductId.Value, txtProductName.Text.Trim());
+
                 MessageBox.Show("Product updated!", "Success",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ClearForm();
