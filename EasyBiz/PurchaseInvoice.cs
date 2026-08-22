@@ -342,12 +342,12 @@ namespace EasyBiz
                     row.Cells["colUnit"].Value = prod[5].ToString();
                     row.Cells["colQty"].Value = qty;
                     row.Cells["colWeightUnit"].Value = "-";
-                    row.Cells["colWeight"].Value = "-";
+                    row.Cells["colWeight"].Value = 0;
                 }
                 else
                 {
                     row.Cells["colUnit"].Value = "-";
-                    row.Cells["colQty"].Value = "-";
+                    row.Cells["colQty"].Value = 0;
                     row.Cells["colWeightUnit"].Value = prod[6].ToString();
                     row.Cells["colWeight"].Value = weight;
                 }
@@ -382,12 +382,12 @@ namespace EasyBiz
                 newRow.Cells["colUnit"].Value = prod[5].ToString();
                 newRow.Cells["colQty"].Value = qty;
                 newRow.Cells["colWeightUnit"].Value = "-";
-                newRow.Cells["colWeight"].Value = "-";
+                newRow.Cells["colWeight"].Value = 0;
             }
             else
             {
                 newRow.Cells["colUnit"].Value = "-";
-                newRow.Cells["colQty"].Value = "-";
+                newRow.Cells["colQty"].Value = 0;
                 newRow.Cells["colWeightUnit"].Value = prod[6].ToString();
                 newRow.Cells["colWeight"].Value = weight;
             }

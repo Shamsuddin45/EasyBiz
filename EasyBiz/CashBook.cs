@@ -258,14 +258,17 @@ namespace EasyBiz
                     row.Cells["type"].Value = "Opening Balance";
                     row.Cells["accountname"].Value = "Cash Accounts";
                     row.Cells["desc"].Value = "Brought Forward Opening Balance";
-                    if (runningBalance > 0) { 
+                    if (runningBalance < 0)
+                    {
                         row.Cells["debit"].Value = "0";
-                        row.Cells["credit"].Value = runningBalance.ToString("N0");
-                    } else
+                        // Math.Abs removes the negative sign
+                        row.Cells["credit"].Value = Math.Abs(runningBalance).ToString("N0");
+                    }
+                    else
                     {
                         row.Cells["debit"].Value = runningBalance.ToString("N0");
                         row.Cells["credit"].Value = "0";
-                    }                                        
+                    }
 
                     // =========================================
                     // LOAD CASH BOOK ENTRIES
