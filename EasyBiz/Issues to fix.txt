@@ -2,8 +2,7 @@
 -------------------------
 ----------------------------
 
-In Cashbook.cs:
-sale-invoice & purchase-invoice is showing only single entry in the cashbook
+a product's ledger is not showing its transaction history. It is only showing the current stock and not the previous transactions.
+This needs to be fixed so that users can view the complete transaction history for each product in the ledger.
 
-In CashbookPDF.cs:
-renew it
+

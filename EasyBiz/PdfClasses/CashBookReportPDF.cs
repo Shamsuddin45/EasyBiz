@@ -1,23 +1,43 @@
-﻿using QuestPDF.Fluent;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
 namespace EasyBiz
 {
-    // One row of cashbook data passed into the PDF generator
+    // ============================================================
+    // CASHBOOK ROW
+    // ============================================================
     public class CashbookRow
     {
         public int SrNo { get; set; }
+
         public string Date { get; set; } = "";
+
         public string VoucherNo { get; set; } = "";
-        public string Type { get; set; } = "";        // e.g. Receipt / Payment / Contra
-        public string AccountName { get; set; } = ""; // opposite account
-        public string Description { get; set; } = "";        
-        public decimal CashIn { get; set; }           // receipts / inflows
-        public decimal CashOut { get; set; }          // payments / outflows
-        public decimal Balance { get; set; }          // running balance; negative = overdraft
+
+        public string Type { get; set; } = "";
+
+        public string AccountName { get; set; } = "";
+
+        public string Description { get; set; } = "";
+
+        // Money received
+        public decimal CashIn { get; set; }
+
+        // Money paid
+        public decimal CashOut { get; set; }
+
+        // Running cash balance
+        public decimal Balance { get; set; }
     }
 
+
+    // ============================================================
+    // CASHBOOK PDF REPORT
+    // ============================================================
     internal static class CashbookReportPDF
     {
         static CashbookReportPDF()
@@ -25,337 +45,728 @@ namespace EasyBiz
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
-        // ── Colours ──────────────────────────────────────────────────────────
-        private static readonly string HeaderBg = "#1B4F72";   // deep teal-navy
-        private static readonly string SubHeaderBg = "#148F77";   // teal band
-        private static readonly string RowAlt = "#E8F8F5";   // light mint stripe
-        private static readonly string White = "#FFFFFF";
-        private static readonly string TextDark = "#1A1A2E";
-        private static readonly string InGreen = "#1E8449";   // cash-in
-        private static readonly string OutRed = "#C0392B";   // cash-out
-        private static readonly string BorderGrey = "#BDC3C7";
 
-        // ── Public entry point ───────────────────────────────────────────────
-        /// <summary>
-        /// Generates a cashbook PDF and saves it to <paramref name="outputPath"/>.
-        /// </summary>
+        // ============================================================
+        // COLORS
+        // ============================================================
+        private const string HeaderBg = "#1B4F72";
+        private const string SubHeaderBg = "#148F77";
+
+        private const string White = "#FFFFFF";
+        private const string TextDark = "#1A1A2E";
+
+        private const string RowAlt = "#F4F9F8";
+        private const string OpeningBg = "#E8F6F3";
+
+        private const string BorderGrey = "#D5D8DC";
+
+        private const string InGreen = "#1E8449";
+        private const string OutRed = "#C0392B";
+
+        private const string OpeningBlue = "#21618C";
+
+
+        // ============================================================
+        // PUBLIC GENERATE METHOD
+        // ============================================================
         public static void Generate(
             string outputPath,
-            string cashAccountName,      // e.g. "Main Cash Account"
-            string branchOrLocation,     // e.g. "Head Office" — pass "" to hide
+            string cashAccountName,
+            string branchOrLocation,
             DateTime fromDate,
             DateTime toDate,
             decimal openingBalance,
             List<CashbookRow> rows)
         {
-            Document.Create(container =>
+            if (rows == null)
+                rows = new List<CashbookRow>();
+
+            // --------------------------------------------------------
+            // Calculate period totals.
+            //
+            // IMPORTANT:
+            // These totals are ONLY transactions during the selected
+            // period. Opening balance is displayed separately.
+            // --------------------------------------------------------
+            decimal totalCashIn =
+                rows.Sum(x => x.CashIn);
+
+            decimal totalCashOut =
+                rows.Sum(x => x.CashOut);
+
+            // --------------------------------------------------------
+            // Closing balance.
+            //
+            // CashBook convention:
+            //
+            // Balance = Opening + Cash In - Cash Out
+            // --------------------------------------------------------
+            decimal closingBalance =
+                openingBalance +
+                totalCashIn -
+                totalCashOut;
+
+
+            Document.Create(document =>
             {
-                container.Page(page =>
+                document.Page(page =>
                 {
-                    page.Size(PageSizes.A4.Landscape());   // wider — more columns
-                    page.Margin(25);
-                    page.DefaultTextStyle(x =>
-                        x.FontFamily("Arial").FontSize(9).FontColor(TextDark));
+                    page.Size(PageSizes.A4.Landscape());
 
-                    page.Header().Element(ctx =>
-                        ComposeHeader(ctx, cashAccountName, branchOrLocation,
-                                      fromDate, toDate, openingBalance));
+                    page.MarginHorizontal(22);
+                    page.MarginVertical(20);
 
-                    page.Content().PaddingTop(8).Element(ctx =>
-                        ComposeTable(ctx, rows, openingBalance));
+                    page.DefaultTextStyle(style =>
+                        style
+                            .FontFamily("Arial")
+                            .FontSize(8)
+                            .FontColor(TextDark));
 
-                    page.Footer().Element(ComposeFooter);
+                    // HEADER
+                    page.Header()
+                        .Element(container =>
+                            ComposeHeader(
+                                container,
+                                cashAccountName,
+                                branchOrLocation,
+                                fromDate,
+                                toDate,
+                                openingBalance));
+
+                    // CONTENT
+                    page.Content()
+                        .PaddingTop(8)
+                        .Element(container =>
+                            ComposeTable(
+                                container,
+                                rows,
+                                openingBalance,
+                                totalCashIn,
+                                totalCashOut,
+                                closingBalance));
+
+                    // FOOTER
+                    page.Footer()
+                        .Element(ComposeFooter);
                 });
             })
             .GeneratePdf(outputPath);
         }
 
-        // ── Header ───────────────────────────────────────────────────────────
-        private static void ComposeHeader(IContainer container,
-            string cashAccountName, string branchOrLocation,
-            DateTime fromDate, DateTime toDate, decimal openingBalance)
+
+        // ============================================================
+        // HEADER
+        // ============================================================
+        private static void ComposeHeader(
+            IContainer container,
+            string cashAccountName,
+            string branchOrLocation,
+            DateTime fromDate,
+            DateTime toDate,
+            decimal openingBalance)
         {
-            container.Column(col =>
+            container.Column(column =>
             {
-                // Title bar
-                col.Item()
+                // ----------------------------------------------------
+                // TITLE
+                // ----------------------------------------------------
+                column.Item()
                     .Background(HeaderBg)
-                    .Padding(12)
+                    .Padding(11)
                     .Row(row =>
                     {
-                        row.RelativeItem().Column(c =>
-                        {
-                            c.Item().Text("EasyBiz")
-                                .FontSize(22).Bold().FontColor(White);
-                            c.Item().Text("Cashbook Report")
-                                .FontSize(11).FontColor("#A9DFBF");
-                        });
+                        row.RelativeItem()
+                            .Column(left =>
+                            {
+                                left.Item()
+                                    .Text("EasyBiz")
+                                    .FontSize(21)
+                                    .Bold()
+                                    .FontColor(White);
 
-                        row.ConstantItem(220).AlignRight().Column(c =>
-                        {
-                            c.Item().Text($"Printed: {DateTime.Now:dd-MMM-yyyy  hh:mm tt}")
-                                .FontSize(8).FontColor("#A9DFBF");
-                            c.Item().PaddingTop(4)
-                                .Text($"Period:  {fromDate:dd-MMM-yyyy}  →  {toDate:dd-MMM-yyyy}")
-                                .FontSize(8).FontColor(White);
-                        });
+                                left.Item()
+                                    .PaddingTop(2)
+                                    .Text("Cash Book Report")
+                                    .FontSize(10)
+                                    .FontColor("#A9DFBF");
+                            });
+
+
+                        row.ConstantItem(245)
+                            .AlignRight()
+                            .Column(right =>
+                            {
+                                right.Item()
+                                    .Text(
+                                        $"Printed: {DateTime.Now:dd-MMM-yyyy hh:mm tt}")
+                                    .FontSize(8)
+                                    .FontColor("#D5F5E3");
+
+                                right.Item()
+                                    .PaddingTop(3)
+                                    .Text(
+                                        $"Period: {fromDate:dd-MMM-yyyy}  →  {toDate:dd-MMM-yyyy}")
+                                    .FontSize(8)
+                                    .FontColor(White);
+                            });
                     });
 
-                // Account info band
-                col.Item()
+
+                // ----------------------------------------------------
+                // ACCOUNT INFORMATION
+                // ----------------------------------------------------
+                column.Item()
                     .Background(SubHeaderBg)
-                    .PaddingHorizontal(12).PaddingVertical(6)
+                    .PaddingHorizontal(11)
+                    .PaddingVertical(6)
                     .Row(row =>
                     {
-                        row.RelativeItem().Text(txt =>
-                        {
-                            txt.Span("Cash Account: ").FontColor(White).FontSize(10);
-                            txt.Span(cashAccountName).Bold().FontColor(White).FontSize(11);
-                        });
+                        // Cash account
+                        row.RelativeItem()
+                            .Text(text =>
+                            {
+                                text.Span("Cash Account: ")
+                                    .FontColor("#D5F5E3")
+                                    .FontSize(8);
 
+                                text.Span(
+                                        string.IsNullOrWhiteSpace(cashAccountName)
+                                            ? "Cash Accounts"
+                                            : cashAccountName)
+                                    .Bold()
+                                    .FontColor(White)
+                                    .FontSize(9);
+                            });
+
+
+                        // Branch
                         if (!string.IsNullOrWhiteSpace(branchOrLocation))
                         {
-                            row.RelativeItem().AlignCenter().Text(txt =>
-                            {
-                                txt.Span("Branch / Location: ").FontColor("#A9DFBF").FontSize(9);
-                                txt.Span(branchOrLocation).Bold().FontColor(White).FontSize(10);
-                            });
+                            row.RelativeItem()
+                                .AlignCenter()
+                                .Text(text =>
+                                {
+                                    text.Span("Branch: ")
+                                        .FontColor("#D5F5E3")
+                                        .FontSize(8);
+
+                                    text.Span(branchOrLocation)
+                                        .Bold()
+                                        .FontColor(White)
+                                        .FontSize(9);
+                                });
                         }
 
-                        row.RelativeItem().AlignRight().Text(txt =>
-                        {
-                            txt.Span("Opening Balance: ").FontColor("#A9DFBF").FontSize(9);
-                            txt.Span(openingBalance < 0
-                                    ? $"{Math.Abs(openingBalance):N0} OD"
-                                    : $"{openingBalance:N0}")
-                               .Bold().FontColor(White).FontSize(10);
-                        });
+
+                        // Opening balance
+                        row.RelativeItem()
+                            .AlignRight()
+                            .Text(text =>
+                            {
+                                text.Span("Opening Balance: ")
+                                    .FontColor("#D5F5E3")
+                                    .FontSize(8);
+
+                                text.Span(
+                                        FormatBalance(openingBalance))
+                                    .Bold()
+                                    .FontColor(White)
+                                    .FontSize(9);
+                            });
                     });
             });
         }
 
-        // ── Table ────────────────────────────────────────────────────────────
-        private static void ComposeTable(IContainer container,
-            List<CashbookRow> rows, decimal openingBalance)
+
+        // ============================================================
+        // TABLE
+        // ============================================================
+        private static void ComposeTable(
+            IContainer container,
+            List<CashbookRow> rows,
+            decimal openingBalance,
+            decimal totalCashIn,
+            decimal totalCashOut,
+            decimal closingBalance)
         {
             container.Table(table =>
             {
-                // Column widths (landscape A4 ≈ 792 pt usable)
-                table.ColumnsDefinition(cols =>
+                // ----------------------------------------------------
+                // COLUMN DEFINITIONS
+                // ----------------------------------------------------
+                table.ColumnsDefinition(columns =>
                 {
-                    cols.ConstantColumn(30);    // Sr
-                    cols.ConstantColumn(72);    // Date
-                    cols.ConstantColumn(60);    // Voucher
-                    cols.RelativeColumn(1.2f);  // Type
-                    cols.RelativeColumn(2f);    // Account
-                    cols.RelativeColumn(2.8f);  // Description                    
-                    cols.ConstantColumn(90);    // Cash In
-                    cols.ConstantColumn(90);    // Cash Out
-                    cols.ConstantColumn(100);   // Balance
+                    columns.ConstantColumn(28);     // #
+                    columns.ConstantColumn(68);     // Date
+                    columns.ConstantColumn(58);     // Voucher
+
+                    columns.RelativeColumn(1.35f);  // Type
+                    columns.RelativeColumn(1.9f);   // Account
+                    columns.RelativeColumn(3.0f);   // Description
+
+                    columns.ConstantColumn(78);     // Cash In
+                    columns.ConstantColumn(78);     // Cash Out
+                    columns.ConstantColumn(92);     // Balance
                 });
 
-                // Header row
+
+                // ----------------------------------------------------
+                // TABLE HEADER
+                // ----------------------------------------------------
                 table.Header(header =>
                 {
                     string[] titles =
                     {
-                        "#", "Date", "Voucher", "Type", "Account",
-                        "Description", "Cash In", "Cash Out", "Balance"
+                        "#",
+                        "Date",
+                        "Voucher",
+                        "Type",
+                        "Account",
+                        "Description",
+                        "Cash In",
+                        "Cash Out",
+                        "Balance"
                     };
-                    bool[] rightAlign =
-                    {
-                        false, false, false, false, false,
-                        false, true, true, true
-                    };
+
 
                     for (int i = 0; i < titles.Length; i++)
                     {
-                        int idx = i;
+                        int index = i;
+
                         header.Cell()
                             .Background(HeaderBg)
-                            .BorderBottom(1).BorderColor(White)
-                            .Padding(6)
-                            .Element(c =>
+                            .BorderBottom(1)
+                            .BorderColor(White)
+                            .PaddingVertical(6)
+                            .PaddingHorizontal(4)
+                            .Element(cell =>
                             {
-                                var aligned = rightAlign[idx]
-                                    ? c.AlignRight()
-                                    : c.AlignLeft();
-
-                                aligned.Text(titles[idx])
-                                    .FontColor(White)
-                                    .Bold()
-                                    .FontSize(9);
+                                if (index >= 6)
+                                {
+                                    cell.AlignRight()
+                                        .Text(titles[index])
+                                        .FontColor(White)
+                                        .Bold()
+                                        .FontSize(8);
+                                }
+                                else if (index == 0)
+                                {
+                                    cell.AlignCenter()
+                                        .Text(titles[index])
+                                        .FontColor(White)
+                                        .Bold()
+                                        .FontSize(8);
+                                }
+                                else
+                                {
+                                    cell.AlignLeft()
+                                        .Text(titles[index])
+                                        .FontColor(White)
+                                        .Bold()
+                                        .FontSize(8);
+                                }
                             });
                     }
                 });
 
-                // Opening balance row
-                TableRow(table, 0, "", "", "", "Opening Balance", "",
-                         0, 0, openingBalance, isOpeningBalance: true);
 
-                // Data rows
-                foreach (var r in rows)
+                // ----------------------------------------------------
+                // OPENING BALANCE ROW
+                // ----------------------------------------------------
+                AddOpeningBalanceRow(
+                    table,
+                    openingBalance);
+
+
+                // ----------------------------------------------------
+                // TRANSACTION ROWS
+                // ----------------------------------------------------
+                foreach (CashbookRow row in rows)
                 {
-                    TableRow(table, r.SrNo, r.Date, r.VoucherNo, r.Type,
-                             r.AccountName, r.Description,
-                             r.CashIn, r.CashOut, r.Balance,
-                             isAlt: r.SrNo % 2 == 0);
+                    AddTransactionRow(
+                        table,
+                        row);
                 }
 
-                // Totals row
-                decimal totalIn = rows.Sum(r => r.CashIn);
-                decimal totalOut = rows.Sum(r => r.CashOut);
-                decimal closingBal = openingBalance + totalIn - totalOut;
-                TotalsRow(table, totalIn, totalOut, closingBal);
+
+                // ----------------------------------------------------
+                // TOTALS
+                // ----------------------------------------------------
+                AddTotalsRow(
+                    table,
+                    totalCashIn,
+                    totalCashOut,
+                    closingBalance);
             });
         }
 
-        private static void TableRow(TableDescriptor table,
-            int srNo, string date, string voucherNo, string type,
-            string accountName, string description,
-            decimal cashIn, decimal cashOut, decimal balance,
-            bool isAlt = false, bool isOpeningBalance = false)
+
+        // ============================================================
+        // OPENING BALANCE ROW
+        // ============================================================
+        private static void AddOpeningBalanceRow(
+            TableDescriptor table,
+            decimal openingBalance)
         {
-            string bg = isOpeningBalance ? "#D1F2EB"
-                      : isAlt ? RowAlt
-                                        : White;
+            string bg = OpeningBg;
+
 
             void Cell(Action<IContainer> content)
             {
                 table.Cell()
                     .Background(bg)
-                    .BorderBottom(1).BorderColor(BorderGrey)
-                    .PaddingVertical(5).PaddingHorizontal(5)
-                    .Element(c => { content(c); });
+                    .BorderBottom(1)
+                    .BorderColor(BorderGrey)
+                    .PaddingVertical(5)
+                    .PaddingHorizontal(4)
+                    .Element(content);
             }
 
-            // Sr#
-            Cell(c => c.AlignCenter()
-                       .Text(isOpeningBalance ? "" : srNo.ToString())
-                       .FontSize(8));
 
-            // Date
-            Cell(c => c.Text(date).FontSize(8));
+            // #
+            Cell(c =>
+                c.AlignCenter()
+                    .Text("")
+                    .FontSize(8));
 
-            // Voucher
-            Cell(c => c.Text(voucherNo).FontSize(8));
 
-            // Type
-            Cell(c => c.Text(type).FontSize(8));
+            // DATE
+            Cell(c =>
+                c.Text("")
+                    .FontSize(8));
 
-            // Account
-            Cell(c => c.Text(accountName).FontSize(8));
 
-            // Description
-            Cell(c => c.Text(isOpeningBalance
-                    ? "Opening Balance b/f"
-                    : description)
-                .FontSize(8).Italic(isOpeningBalance));            
+            // VOUCHER
+            Cell(c =>
+                c.Text("")
+                    .FontSize(8));
 
-            // Cash In
-            Cell(c => c.AlignRight()
-                       .Text(cashIn != 0 ? cashIn.ToString("N0") : "-")
-                       .FontColor(cashIn != 0 ? InGreen : TextDark)
-                       .FontSize(8));
 
-            // Cash Out
-            Cell(c => c.AlignRight()
-                       .Text(cashOut != 0 ? cashOut.ToString("N0") : "-")
-                       .FontColor(cashOut != 0 ? OutRed : TextDark)
-                       .FontSize(8));
+            // TYPE
+            Cell(c =>
+                c.Text("Opening Balance")
+                    .Bold()
+                    .FontColor(OpeningBlue)
+                    .FontSize(8));
 
-            // Balance
-            string balText;
-            string balColor;
 
-            if (isOpeningBalance && balance == 0)
+            // ACCOUNT
+            Cell(c =>
+                c.Text("Cash Accounts")
+                    .Bold()
+                    .FontColor(OpeningBlue)
+                    .FontSize(8));
+
+
+            // DESCRIPTION
+            Cell(c =>
+                c.Text("Brought Forward / Opening Balance")
+                    .Italic()
+                    .FontColor(OpeningBlue)
+                    .FontSize(8));
+
+
+            // CASH IN
+            Cell(c =>
+                c.AlignRight()
+                    .Text("-")
+                    .FontSize(8));
+
+
+            // CASH OUT
+            Cell(c =>
+                c.AlignRight()
+                    .Text("-")
+                    .FontSize(8));
+
+
+            // BALANCE
+            Cell(c =>
+                c.AlignRight()
+                    .Text(FormatBalance(openingBalance))
+                    .Bold()
+                    .FontColor(
+                        openingBalance < 0
+                            ? OutRed
+                            : OpeningBlue)
+                    .FontSize(8));
+        }
+
+
+        // ============================================================
+        // TRANSACTION ROW
+        // ============================================================
+        private static void AddTransactionRow(
+            TableDescriptor table,
+            CashbookRow row)
+        {
+            string background =
+                row.SrNo % 2 == 0
+                    ? RowAlt
+                    : White;
+
+
+            void Cell(Action<IContainer> content)
             {
-                balText = "0";
-                balColor = TextDark;
+                table.Cell()
+                    .Background(background)
+                    .BorderBottom(1)
+                    .BorderColor(BorderGrey)
+                    .PaddingVertical(4.5f)
+                    .PaddingHorizontal(4)
+                    .Element(content);
             }
-            else
-            {
-                balText = balance < 0
-                    ? $"{Math.Abs(balance):N0}"
-                    : $"{balance:N0}";
-                balColor = balance < 0 ? OutRed : InGreen;
-            }
+
+
+            // --------------------------------------------------------
+            // SERIAL
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignCenter()
+                    .Text(row.SrNo.ToString())
+                    .FontSize(7.5f));
+
+
+            // --------------------------------------------------------
+            // DATE
+            // --------------------------------------------------------
+            Cell(c =>
+                c.Text(row.Date ?? "")
+                    .FontSize(7.5f));
+
+
+            // --------------------------------------------------------
+            // VOUCHER
+            // --------------------------------------------------------
+            string voucher =
+                string.IsNullOrWhiteSpace(row.VoucherNo)
+                    ? ""
+                    : "#" + row.VoucherNo.Trim();
+
 
             Cell(c =>
-            {
-                var txt = c.AlignRight()
-                           .Text(balText)
-                           .FontColor(balColor)
-                           .FontSize(8);
+                c.Text(voucher)
+                    .FontSize(7.5f));
 
-                if (isOpeningBalance)
-                    txt.Bold();
+
+            // --------------------------------------------------------
+            // TYPE
+            // --------------------------------------------------------
+            Cell(c =>
+                c.Text(row.Type ?? "")
+                    .FontSize(7.5f));
+
+
+            // --------------------------------------------------------
+            // ACCOUNT
+            // --------------------------------------------------------
+            Cell(c =>
+                c.Text(row.AccountName ?? "")
+                    .FontSize(7.5f));
+
+
+            // --------------------------------------------------------
+            // DESCRIPTION
+            // --------------------------------------------------------
+            Cell(c =>
+                c.Text(row.Description ?? "")
+                    .FontSize(7.5f));
+
+
+            // --------------------------------------------------------
+            // CASH IN
+            // --------------------------------------------------------
+            Cell(c =>
+            {
+                string value =
+                    row.CashIn == 0
+                        ? "-"
+                        : row.CashIn.ToString("N0");
+
+                c.AlignRight()
+                    .Text(value)
+                    .FontColor(
+                        row.CashIn != 0
+                            ? InGreen
+                            : TextDark)
+                    .FontSize(7.5f);
             });
+
+
+            // --------------------------------------------------------
+            // CASH OUT
+            // --------------------------------------------------------
+            Cell(c =>
+            {
+                string value =
+                    row.CashOut == 0
+                        ? "-"
+                        : row.CashOut.ToString("N0");
+
+                c.AlignRight()
+                    .Text(value)
+                    .FontColor(
+                        row.CashOut != 0
+                            ? OutRed
+                            : TextDark)
+                    .FontSize(7.5f);
+            });
+
+
+            // --------------------------------------------------------
+            // BALANCE
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignRight()
+                    .Text(FormatBalance(row.Balance))
+                    .Bold()
+                    .FontColor(
+                        row.Balance < 0
+                            ? OutRed
+                            : InGreen)
+                    .FontSize(7.5f));
         }
 
-        private static void TotalsRow(TableDescriptor table,
-            decimal totalIn, decimal totalOut, decimal closingBalance)
+
+        // ============================================================
+        // TOTALS ROW
+        // ============================================================
+        private static void AddTotalsRow(
+            TableDescriptor table,
+            decimal totalCashIn,
+            decimal totalCashOut,
+            decimal closingBalance)
         {
-            void Cell(Action<IContainer> content, int span = 1)
+            void Cell(
+                Action<IContainer> content,
+                int columnSpan = 1)
             {
-                table.Cell().ColumnSpan((uint)span)
+                table.Cell()
+                    .ColumnSpan((uint)columnSpan)
                     .Background(HeaderBg)
-                    .PaddingVertical(6).PaddingHorizontal(5)
-                    .Element(c => { content(c); });
+                    .PaddingVertical(6)
+                    .PaddingHorizontal(5)
+                    .Element(content);
             }
 
-            // Span first 6 columns for label
-            Cell(c => c.AlignRight()
-                       .Text("TOTALS / CLOSING BALANCE")
-                       .FontColor(White)
-                       .Bold()
-                       .FontSize(9), 6);
 
-            // Cash In total
-            Cell(c => c.AlignRight()
-                       .Text(totalIn.ToString("N0"))
-                       .FontColor("#82E0AA").Bold().FontSize(9));
+            // --------------------------------------------------------
+            // LABEL
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignRight()
+                    .Text("PERIOD TOTALS")
+                    .FontColor(White)
+                    .Bold()
+                    .FontSize(8),
+                6);
 
-            // Cash Out total
-            Cell(c => c.AlignRight()
-                       .Text(totalOut.ToString("N0"))
-                       .FontColor("#F1948A").Bold().FontSize(9));
 
-            // Closing balance
-            string closingText = closingBalance < 0
-                ? $"{Math.Abs(closingBalance):N0} OD"
-                : closingBalance.ToString("N0");
+            // --------------------------------------------------------
+            // CASH IN
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignRight()
+                    .Text(
+                        totalCashIn == 0
+                            ? "-"
+                            : totalCashIn.ToString("N0"))
+                    .FontColor("#82E0AA")
+                    .Bold()
+                    .FontSize(8));
 
-            Cell(c => c.AlignRight()
-                       .Text(closingText)
-                       .FontColor(closingBalance < 0 ? "#F1948A" : "#82E0AA")
-                       .Bold().FontSize(9));
+
+            // --------------------------------------------------------
+            // CASH OUT
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignRight()
+                    .Text(
+                        totalCashOut == 0
+                            ? "-"
+                            : totalCashOut.ToString("N0"))
+                    .FontColor("#F1948A")
+                    .Bold()
+                    .FontSize(8));
+
+
+            // --------------------------------------------------------
+            // CLOSING BALANCE
+            // --------------------------------------------------------
+            Cell(c =>
+                c.AlignRight()
+                    .Text(FormatBalance(closingBalance))
+                    .FontColor(
+                        closingBalance < 0
+                            ? "#F1948A"
+                            : "#82E0AA")
+                    .Bold()
+                    .FontSize(8));
         }
 
-        // ── Footer ───────────────────────────────────────────────────────────
-        private static void ComposeFooter(IContainer container)
+
+        // ============================================================
+        // FOOTER
+        // ============================================================
+        private static void ComposeFooter(
+            IContainer container)
         {
             container
-                .BorderTop(1).BorderColor(BorderGrey)
+                .BorderTop(1)
+                .BorderColor(BorderGrey)
                 .PaddingTop(5)
                 .Row(row =>
                 {
                     row.RelativeItem()
-                       .Text("EasyBiz — Accounting Software")
-                       .FontSize(8).FontColor("#7F8C8D");
+                        .Text("EasyBiz — Accounting Software")
+                        .FontSize(7.5f)
+                        .FontColor("#7F8C8D");
 
-                    row.RelativeItem().AlignCenter()
-                       .Text("** This is a computer-generated report **")
-                       .FontSize(8).FontColor("#7F8C8D").Italic();
 
-                    row.RelativeItem().AlignRight().Text(txt =>
-                    {
-                        txt.Span("Page ").FontSize(8).FontColor("#7F8C8D");
-                        txt.CurrentPageNumber().FontSize(8).FontColor("#7F8C8D");
-                        txt.Span(" of ").FontSize(8).FontColor("#7F8C8D");
-                        txt.TotalPages().FontSize(8).FontColor("#7F8C8D");
-                    });
+                    row.RelativeItem()
+                        .AlignCenter()
+                        .Text("Computer-generated report")
+                        .FontSize(7.5f)
+                        .FontColor("#7F8C8D")
+                        .Italic();
+
+
+                    row.RelativeItem()
+                        .AlignRight()
+                        .Text(text =>
+                        {
+                            text.Span("Page ")
+                                .FontSize(7.5f)
+                                .FontColor("#7F8C8D");
+
+                            text.CurrentPageNumber()
+                                .FontSize(7.5f)
+                                .FontColor("#7F8C8D");
+
+                            text.Span(" of ")
+                                .FontSize(7.5f)
+                                .FontColor("#7F8C8D");
+
+                            text.TotalPages()
+                                .FontSize(7.5f)
+                                .FontColor("#7F8C8D");
+                        });
                 });
+        }
+
+
+        // ============================================================
+        // FORMAT BALANCE
+        // ============================================================
+        private static string FormatBalance(
+            decimal balance)
+        {
+            if (balance < 0)
+            {
+                return $"{Math.Abs(balance):N0} OD";
+            }
+
+            return balance.ToString("N0");
         }
     }
 }

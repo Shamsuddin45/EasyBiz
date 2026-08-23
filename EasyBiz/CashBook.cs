@@ -22,6 +22,9 @@ namespace EasyBiz
             InitializeComponent();
             DatabaseHelper.InitializeDatabase();
             ThemeManager.ApplyTheme(this);            
+            lblTotalCr.ForeColor = Color.FromArgb(39, 174, 96);
+            lblTotalDr.ForeColor = Color.FromArgb(192, 57, 43);
+            lblRunningBalance.ForeColor = Color.FromArgb(44, 62, 80);
 
             // Constructors cannot be async.
             _pendingOperation = LoadCashBookEntriesAsync();
@@ -531,7 +534,7 @@ AND NOT
                             totalDebit += debit;
                             totalCredit += credit;
 
-                            runningBalance += credit - debit;
+                            runningBalance += debit - credit;
 
                             // =========================================
                             // DISPLAY TRANSACTION
@@ -564,24 +567,10 @@ AND NOT
                     $"Debit: {totalDebit:N2}";
 
                 lblTotalCr.Text =
-                    $"Credit: {totalCredit:N2}";
-
-                if (runningBalance > 0)
-                {
-                    lblRunningBalance.ForeColor = Color.Green;
-                }
-                else if (runningBalance < 0)
-                {
-                    lblRunningBalance.ForeColor = Color.Red;
-                }
-                else
-                {
-                    lblRunningBalance.ForeColor =
-                        dataGridView1.DefaultCellStyle.ForeColor;
-                }
+                    $"Credit: {totalCredit:N2}";                
 
                 lblRunningBalance.Text =
-                    $"Balance: {totalCredit - totalDebit:N2}";
+                    $"Balance: {runningBalance:N2}";
             }
             catch (OperationCanceledException)
             {
